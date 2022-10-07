@@ -1,0 +1,31 @@
+.login-page, .register-page {
+    background-color: #ff5927 !important;
+}
+.invalid-feedback{
+    display: block;
+}
+.btn-orange {
+    color: #fff;
+    background-color: #ff5927;
+    border-color: #ff5927;
+    box-shadow: none;
+}
+.btn-black {
+    color: #ff5927;
+    background-color: #000000;
+    border-color: #000000;
+    box-shadow: none;
+}
+.btn-black:hover {
+    color: #000000;
+    background-color: #ff5927;
+    border-color: #ff5927;
+    box-shadow: none;
+}
+.text-orange {
+    color: #ff5927;
+}
+.brand-link {
+    text-align: center;
+    padding: 9px;
+}
