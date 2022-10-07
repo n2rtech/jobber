@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
-        <img src="dist/img/logo.png" alt="DaltonTv CRM" style="opacity: .8">
+        <img src="{{ asset('dist/img/logo.png') }}" alt="DaltonTv CRM" style="opacity: .8">
     </a>
 
     <!-- Sidebar -->

@@ -16,9 +16,25 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('users.list');
+        $users = User::query();
+
+        $filter_name    = $request->name;
+
+        $filter_email   = $request->email;
+
+        $filter_status  = $request->status;
+
+        isset($filter_name) ? $users->where('name', 'like', '%'.$filter_name.'%') : $users;
+
+        isset($filter_email) ? $users->where('email', $filter_email) : $users;
+
+        isset($filter_status) ? $users->where('status', $filter_status) : $users;
+
+        $users = $users->orderBy('id', 'desc')->get();
+
+        return view('users.list', compact('users', 'filter_name', 'filter_email', 'filter_status'));
     }
 
     /**
@@ -28,7 +44,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -59,9 +75,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -71,7 +88,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -82,8 +99,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return redirect()->route('user-management.index')->with('success', 'User deleted successfully!');
     }
 }

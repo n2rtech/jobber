@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+
+    @yield('head')
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}">
 </head>
@@ -31,7 +33,7 @@
     <div class="wrapper">
 
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/logo-dark.png" alt="DaltonTV">
+            <img class="animation__shake" src="{{ asset('dist/img/logo-dark.png') }}" alt="DaltonTV">
         </div>
 
         @include('sections.navbar')
@@ -40,6 +42,7 @@
 
         <div class="content-wrapper">
 
+            @include('sections.flash-message')
             @yield('content')
 
         </div>
