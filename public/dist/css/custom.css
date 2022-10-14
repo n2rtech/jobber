@@ -29,3 +29,7 @@
     text-align: center;
     padding: 9px;
 }
+.small-box>.inner {
+    padding: 10px;
+    text-align: center;
+}

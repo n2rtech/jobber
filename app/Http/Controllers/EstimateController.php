@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class EstimateController extends Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('suppliers.list');
+        return view('estimates.list');
     }
 
     /**

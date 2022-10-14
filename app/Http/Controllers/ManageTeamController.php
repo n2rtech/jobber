@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class EnquiryController extends Controller
+class ManageTeamController extends Controller
 {
     public function __construct()
     {
@@ -15,9 +16,25 @@ class EnquiryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('enquiries.list');
+        $users = User::query();
+
+        $filter_name    = $request->name;
+
+        $filter_email   = $request->email;
+
+        $filter_status  = $request->status;
+
+        isset($filter_name) ? $users->where('name', 'like', '%'.$filter_name.'%') : $users;
+
+        isset($filter_email) ? $users->where('email', $filter_email) : $users;
+
+        isset($filter_status) ? $users->where('status', $filter_status) : $users;
+
+        $users = $users->orderBy('id', 'desc')->get();
+
+        return view('settings.manage-team.list', compact('users', 'filter_name', 'filter_email', 'filter_status'));
     }
 
     /**
@@ -27,7 +44,7 @@ class EnquiryController extends Controller
      */
     public function create()
     {
-        //
+        return view('settings.manage-team.create');
     }
 
     /**
@@ -44,10 +61,10 @@ class EnquiryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -55,19 +72,20 @@ class EnquiryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('settings.manage-team.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,11 +96,12 @@ class EnquiryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return redirect()->route('manage-team.index')->with('success', 'User deleted successfully!');
     }
 }

@@ -14,7 +14,11 @@ class ExampleTest extends TestCase
      */
     public function test_the_application_returns_a_successful_response()
     {
-        $response = $this->get('/');
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+                         ->withSession(['foo' => 'bar'])
+                         ->get('/');
 
         $response->assertStatus(200);
     }

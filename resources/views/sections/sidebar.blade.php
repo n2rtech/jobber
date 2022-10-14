@@ -33,100 +33,55 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ route('suppliers.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-users-cog"></i>
+                    <a href="{{ route('customers.create') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-plus"></i>
                         <p>
-                            Suppliers
+                            Add Customer
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('swapouts.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-exchange-alt"></i>
+                    <a href="{{ route('schedules.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
                         <p>
-                            Swapouts
+                            Schedules
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('bookings.index') }}" class="nav-link">
+                    <a href="{{ route('jobs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>
-                            Bookings
+                            Jobs
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('sales-enquiries.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-list"></i>
-                        <p>
-                            Sales Enquiries
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('invoices.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-credit-card"></i>
                         <p>
-                            Finance
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('invoices.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Invoices</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('recurrence.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Recurrence</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('payments.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Payments</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('sales-reports.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Sales Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('products.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Products
+                            Invoices
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('standard-letters.index') }}" class="nav-link">
-                        <i class="nav-icon far fa-envelope"></i>
+                    <a href="{{ route('estimates.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-calculator"></i>
                         <p>
-                            Standard Letters
+                            Estimates
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('user-management.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-friends"></i>
+                    <a href="{{ route('sales-leads.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
                         <p>
-                            User Management
+                            Sales leads
                         </p>
                     </a>
                 </li>
@@ -141,39 +96,33 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('all-settings') }}" class="nav-link">
+                            <a href="{{ route('job-forms.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>All Settings</p>
+                                <p>Job Form</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('system-settings') }}" class="nav-link">
+                            <a href="{{ route('manage-team.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>System</p>
+                                <p>Manage Team</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('tax-rates') }}" class="nav-link">
+                            <a href="{{ route('email-templates.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Tax Rates</p>
+                                <p>Email Templates</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('invoicing') }}" class="nav-link">
+                            <a href="{{ route('products.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Invoicing</p>
+                                <p>Products/Services</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('payment-types') }}" class="nav-link">
+                            <a href="{{ route('job-titles.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Payment Types</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('backup-database') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Backup Database</p>
+                                <p>Job Titles</p>
                             </a>
                         </li>
                     </ul>

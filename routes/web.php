@@ -1,22 +1,20 @@
 <?php
 
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\EnquiryController;
-use App\Http\Controllers\Finance\InvoiceController;
-use App\Http\Controllers\Finance\PaymentController;
-use App\Http\Controllers\Finance\RecurrenceController;
-use App\Http\Controllers\Finance\ReportController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EmailTemplateController;
+use App\Http\Controllers\EstimateController;
+use App\Http\Controllers\SalesLeadController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\StandardLetterController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\SwapoutController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobFormController;
+use App\Http\Controllers\JobTitleController;
+use App\Http\Controllers\ManageTeamController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,53 +43,32 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 #4 Customers Route
 Route::resource('customers', CustomerController::class);
 
-#5 Suppliers Route
-Route::resource('suppliers', SupplierController::class);
+#5 Schedules Route
+Route::resource('schedules', ScheduleController::class);
 
-#6 Swapouts Route
-Route::resource('swapouts', SwapoutController::class);
+#6 Jobs Route
+Route::resource('jobs', JobController::class);
 
-#7 Bookings Route
-Route::resource('bookings', BookingController::class);
-
-#8 Sales Enquiries Route
-Route::resource('sales-enquiries', EnquiryController::class);
-
-#9 Finance > Invoices Route
+#7 Invoice Route
 Route::resource('invoices', InvoiceController::class);
 
-#10 Finance > Recurrence Route
-Route::resource('recurrence', RecurrenceController::class);
+#8 Estimates Route
+Route::resource('estimates', EstimateController::class);
 
-#11 Finance > Payments Route
-Route::resource('payments', PaymentController::class);
+#9 Sales Leads Route
+Route::resource('sales-leads', SalesLeadController::class);
 
-#12 Finance > Sales Reports Route
-Route::resource('sales-reports', ReportController::class);
+#10 Job Forms Route
+Route::resource('job-forms', JobFormController::class);
 
-#13 Standard Letters Route
-Route::resource('standard-letters', StandardLetterController::class);
+#11 Manage Team Route
+Route::resource('manage-team', ManageTeamController::class);
 
-#14 Users Route
-Route::resource('user-management', UserController::class);
+#12 Email Template Route
+Route::resource('email-templates', EmailTemplateController::class);
 
-#15 All Settings Route
-Route::get('all-settings', [SettingsController::class, 'allSettings'])->name('all-settings');
+#13 job-titles Route
+Route::resource('job-titles', JobTitleController::class);
 
-#16 System Settings Route
-Route::get('system-settings', [SettingsController::class, 'systemSettings'])->name('system-settings');
-
-#17 Tax Rates Route
-Route::get('tax-rates', [SettingsController::class, 'taxrates'])->name('tax-rates');
-
-#18 Invoicing Route
-Route::get('invoicing', [SettingsController::class, 'invoicing'])->name('invoicing');
-
-#19 Payment Types Route
-Route::get('payment-types', [SettingsController::class, 'paymentTypes'])->name('payment-types');
-
-#20 Backup Database Route
-Route::get('backup-database', [SettingsController::class, 'backupDatabase'])->name('backup-database');
-
-#21 Products Route
+#14 Products Route
 Route::resource('products', ProductController::class);

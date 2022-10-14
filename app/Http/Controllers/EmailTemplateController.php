@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Finance;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RecurrenceController extends Controller
+class EmailTemplateController extends Controller
 {
     public function __construct()
     {
@@ -18,7 +17,7 @@ class RecurrenceController extends Controller
      */
     public function index()
     {
-        return view('finance.recurrence.list');
+        return view('settings.email-template.list');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SwapoutController extends Controller
+class SalesLeadController extends Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class SwapoutController extends Controller
      */
     public function index()
     {
-        return view('swapouts.list');
+        return view('sales-lead.list');
     }
 
     /**

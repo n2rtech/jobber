@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Finance;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -18,7 +17,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return view('finance.invoices.list');
+        return view('invoices.list');
     }
 
     /**

@@ -10,8 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="#">User Management</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('user-management.index') }}">Users</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('manage-team.index') }}">Manage Team</a></li>
                         <li class="breadcrumb-item active">Edit User</li>
                     </ol>
                 </div>
@@ -27,7 +26,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form id="RoleForm" method="POST" action="{{ route('user-management.update', $user->id) }}">
+                <form id="RoleForm" method="POST" action="{{ route('manage-team.update', $user->id) }}">
                     @csrf
                     <div class="form-group">
                         <label for="role">Role</label>
