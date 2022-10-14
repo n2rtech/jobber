@@ -4,8 +4,8 @@ services:
   - mysql:5.7
 
 variables:
-  MYSQL_DATABASE: daltontvcrm
-  MYSQL_ROOT_PASSWORD: password
+  MYSQL_DATABASE: daltontvcrmtest
+  MYSQL_ROOT_PASSWORD: Temp@@9921
   DB_HOST: mysql
   DB_USERNAME: root
 
