@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -16,9 +17,29 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('customers.list');
+        $customers              = Customer::query();
+
+        $filter_name            = $request->name;
+
+        $filter_email           = $request->email;
+
+        $filter_phone           = $request->phone;
+
+        $filter_status          = $request->status;
+
+        isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
+
+        isset($filter_email)    ? $customers->where('email', $filter_email) : $customers;
+
+        isset($filter_phone)    ? $customers->where('phone', $filter_phone) : $customers;
+
+        isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
+
+        $customers              = $customers->orderBy('id', 'desc')->get();
+
+        return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status'));
     }
 
     /**
@@ -28,7 +49,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -61,7 +82,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('customers.edit');
     }
 
     /**
