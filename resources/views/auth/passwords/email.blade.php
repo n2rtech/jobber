@@ -54,6 +54,7 @@
                     <button type="submit" form="emailForm" class="btn btn-block btn-black">
                         {{ __('Send Password Reset Link') }}
                     </button>
+                    <a href="{{ route('login') }}" class="text-orange mt-2">Back to Login</a>
                 </div>
             </div>
         </div>

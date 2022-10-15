@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Customer</h1>
+                    <h1>{{ __('Add Customer') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ url()->previous() }}" class="btn btn-dark">
@@ -27,7 +27,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="name" name="name"
                                         placeholder="Enter Name" value="{{ old('name') }}">
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <label for="email" class="col-sm-2 col-form-label">{{ __('Email') }}</label>
                                 <div class="col-sm-10">
                                     <input type="email" class="form-control" id="email" name="email"
                                         placeholder="Enter Email" value="{{ old('email') }}">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                                <label for="phone" class="col-sm-2 col-form-label">{{ __('Phone') }}</label>
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="phone" name="phone"
                                         placeholder="Enter Phone" value="{{ old('phone') }}">
@@ -61,35 +61,35 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-2 col-form-label">Mobile 1</label>
+                                <label for="mobile_1" class="col-sm-2 col-form-label">{{ __('Mobile 1') }}</label>
                                 <div class="col-sm-5">
-                                    <input type="tel" class="form-control" id="phone" name="phone"
-                                        placeholder="Enter Mobile 1" value="{{ old('phone') }}">
-                                    @error('phone')
+                                    <input type="tel" class="form-control" id="mobile_1" name="mobile_1"
+                                        placeholder="Enter Mobile 1" value="{{ old('mobile_1') }}">
+                                    @error('mobile_1')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="phone_name" name="phone_name"
-                                        placeholder="Enter Name" value="{{ old('phone_name') }}">
+                                    <input type="text" class="form-control" id="mobile_1_name" name="mobile_1_name"
+                                        placeholder="Enter Name" value="{{ old('mobile_1_name') }}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-2 col-form-label">Mobile 2</label>
+                                <label for="mobile_2" class="col-sm-2 col-form-label">{{ __('Mobile 2') }}</label>
                                 <div class="col-sm-5">
-                                    <input type="tel" class="form-control" id="phone" name="phone"
-                                        placeholder="Enter Mobile 2" value="{{ old('phone') }}">
-                                    @error('phone')
+                                    <input type="tel" class="form-control" id="mobile_2" name="mobile_2"
+                                        placeholder="Enter Mobile 2" value="{{ old('mobile_2') }}">
+                                    @error('mobile_2')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="phone_name" name="phone_name"
-                                        placeholder="Enter Name" value="{{ old('phone_name') }}">
+                                    <input type="text" class="form-control" id="mobile_2_name" name="mobile_2_name"
+                                        placeholder="Enter Name" value="{{ old('mobile_2_name') }}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="address_1" class="col-sm-2 col-form-label">Address 1</label>
+                                <label for="address_1" class="col-sm-2 col-form-label">{{ __('Address 1') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="address_1" name="address_1"
                                         placeholder="Enter Street Address 1" value="{{ old('address_1') }}">
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="address_2" class="col-sm-2 col-form-label">Address 2</label>
+                                <label for="address_2" class="col-sm-2 col-form-label">{{ __('Address 2') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="address_2" name="address_2"
                                         placeholder="Enter Street Address 2" value="{{ old('address_2') }}">
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="city" class="col-sm-2 col-form-label">City</label>
+                                <label for="city" class="col-sm-2 col-form-label">{{ __('City') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="city" name="city"
                                         placeholder="Enter City" value="{{ old('city') }}">
@@ -125,7 +125,7 @@
                     <div class="card pb-4">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="country" class="col-sm-2 col-form-label">Country</label>
+                                <label for="country" class="col-sm-2 col-form-label">{{ __('Country') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="country" name="country"
                                         placeholder="Enter Country" value="{{ old('country') }}">
@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="eir_code" class="col-sm-2 col-form-label">Eircode</label>
+                                <label for="eir_code" class="col-sm-2 col-form-label">{{ __('Eircode') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="eir_code" name="eir_code"
                                         placeholder="Enter Eircode" value="{{ old('eir_code') }}">
@@ -145,20 +145,18 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="directions" class="col-sm-2 col-form-label">Direction</label>
+                                <label for="directions" class="col-sm-2 col-form-label">{{ __('Direction') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="5" class="form-control" id="directions" name="directions"
-                                        placeholder="Enter Directions">{{ old('directions') }}</textarea>
+                                    <textarea rows="5" class="form-control" id="directions" name="directions" placeholder="Enter Directions">{{ old('directions') }}</textarea>
                                     @error('directions')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+                                <label for="notes" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="5" class="form-control" id="notes" name="notes"
-                                        placeholder="Enter Notes">{{ old('notes') }}</textarea>
+                                    <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
                                     @error('notes')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Customers')
+@section('title', 'Jobs')
 
 @section('head')
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -17,20 +17,20 @@
             <div class="row mb-2">
 
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Customers') }}</h1>
+                    <h1 class="m-0">{{ __('Jobs') }}</h1>
                 </div>
 
                 <div class="col-sm-6 text-right">
 
-                    <button type="submit" form="customerSearchForm" class="btn btn-success">
+                    <button type="submit" form="jobSearchForm" class="btn btn-success">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
                     </button>
 
-                    <a href="{{ route('customers.index') }}" class="btn btn-indigo">
+                    <a href="{{ route('jobs.index') }}" class="btn btn-indigo">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
                     </a>
 
-                    <a href="{{ route('customers.create') }}" class="btn btn-danger">
+                    <a href="{{ route('jobs.create') }}" class="btn btn-danger">
                         <i class="btn-icon fas fa-plus-circle"></i> {{ __('Add New') }}
                     </a>
 
@@ -43,9 +43,9 @@
 
         <div class="container-fluid">
 
-            @include('customers.filter')
+            @include('jobs.filter')
 
-            @include('customers.listing')
+            @include('jobs.listing')
 
         </div>
 

@@ -12,13 +12,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $customer)
+                @foreach ($jobs as $job)
                     <tr>
-                        <td>{{ $customer->name }}</td>
-                        <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->phone }}</td>
+                        <td>{{ $job->name }}</td>
+                        <td>{{ $job->email }}</td>
+                        <td>{{ $job->phone }}</td>
                         <td>
-                            @if ($customer->status == 'pending')
+                            @if ($job->status == 'pending')
                                 <span class="badge bg-danger">{{ __('Pending') }}</span>
                             @else
                                 <span class="badge bg-success">{{ __('Completed') }}</span>
@@ -26,12 +26,12 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('customers.edit', $customer) }}" class="btn btn-warning"> <i
+                                <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning"> <i
                                         class="fas fa-pen"></i> </a>
-                                <button type="button" onclick="confirmDelete({{ $customer->id }})"
+                                <button type="button" onclick="confirmDelete({{ $job->id }})"
                                     class="btn btn-danger"><i class="fas fa-trash"></i> </button>
-                                <form id='delete-form{{ $customer->id }}'
-                                    action='{{ route('customers.destroy', $customer) }}' method='POST'>
+                                <form id='delete-form{{ $job->id }}'
+                                    action='{{ route('jobs.destroy', $job) }}' method='POST'>
                                     <input type='hidden' name='_token' value='{{ csrf_token() }}'>
                                     <input type='hidden' name='_method' value='DELETE'>
                                 </form>

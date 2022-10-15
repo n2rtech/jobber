@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -15,9 +16,37 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('jobs.list');
+        $jobs                       = Job::query();
+
+        $filter_name                = $request->name;
+
+        $filter_email               = $request->email;
+
+        $filter_phone               = $request->phone;
+
+        $filter_scheduled           = $request->scheduled;
+
+        $filter_date                = $request->date;
+
+        $filter_job_title           = $request->job_title;
+
+        isset($filter_name)         ? $jobs->where('name', 'like', '%'.$filter_name.'%') : $jobs;
+
+        isset($filter_email)        ? $jobs->where('email', $filter_email) : $jobs;
+
+        isset($filter_phone)        ? $jobs->where('phone', $filter_phone) : $jobs;
+
+        isset($filter_scheduled)    ? $jobs->where('scheduled', $filter_scheduled) : $jobs;
+
+        isset($filter_date)         ? $jobs->where('start', $filter_date) : $jobs;
+
+        isset($filter_job_title)    ? $jobs->where('job_title', $filter_job_title) : $jobs;
+
+        $jobs                       = $jobs->orderBy('id', 'desc')->get();
+
+        return view('jobs.index', compact('jobs', 'filter_name', 'filter_email', 'filter_phone', 'filter_scheduled', 'filter_date', 'filter_job_title'));
     }
 
     /**
@@ -27,7 +56,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobs.create');
     }
 
     /**
