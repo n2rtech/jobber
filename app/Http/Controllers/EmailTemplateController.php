@@ -19,7 +19,7 @@ class EmailTemplateController extends Controller
     public function index()
     {
         $standard_templates = EmailTemplate::where('type', 'standard')->where('mode','standard')->get();
-        return view('settings.email-template.index');
+        return view('settings.email-template.index', compact('standard_templates'));
     }
 
     /**

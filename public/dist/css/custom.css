@@ -89,3 +89,26 @@
 .text-align-right{
     text-align: right;
 }
+
+.custom-switch .custom-control-label::after {
+    top: calc(0.25rem + 2px);
+    left: -22px;
+}
+.custom-switch .custom-control-label::before {
+    left: -37px;
+    width: 41px;
+    pointer-events: all;
+    border-radius: 0.5rem;
+}
+.post .user-block {
+    margin-bottom: 0px;
+    width: 100%;
+}
+.btn-light {
+    color: #1f2d3d;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+.dropdown-toggle::after {
+    display: none;
+}

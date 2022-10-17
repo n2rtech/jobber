@@ -1,82 +1,183 @@
 @extends('layouts.app')
-@section('title', 'Create User')
+@section('title', 'Edit User')
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit User</h1>
+                    <h1>{{ __('Edit User') }}</h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('manage-team.index') }}">Manage Team</a></li>
-                        <li class="breadcrumb-item active">Edit User</li>
-                    </ol>
+                <div class="col-sm-6 text-right">
+                    <a href="{{ url()->previous() }}" class="btn btn-dark">
+                        <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
+                    </a>
+                    <button type="submit" class="btn btn-danger" form="userForm">
+                        <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="content">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-tools">
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">Back</a>
+        <form id="userForm" method="POST" action="{{ route('manage-team.update', $user->id) }}"
+            enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">{{ __('Name') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        placeholder="Enter Name" value="{{ old('name', $user->name) }}">
+                                    @error('name')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">{{ __('Email') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Enter Email" value="{{ old('email', $user->email) }}">
+                                    @error('email')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="phone" class="col-sm-3 col-form-label">{{ __('Mobile') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" id="mobile" name="mobile"
+                                        placeholder="Enter mobile" value="{{ old('mobile', $user->mobile) }}">
+                                    @error('mobile')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-3 col-form-label">{{ __('Address') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        placeholder="Enter Address" value="{{ old('address', $user->address) }}">
+                                    @error('address')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="town" class="col-sm-3 col-form-label">{{ __('Town') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="town" name="town"
+                                        placeholder="Enter Town" value="{{ old('town', $user->town) }}">
+                                    @error('town')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="zipcode" class="col-sm-3 col-form-label">{{ __('Zipcode') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="zipcode" name="zipcode"
+                                        placeholder="Enter Zipcode" value="{{ old('zipcode', $user->zipcode) }}">
+                                    @error('zipcode')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card pb-4">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-3 col-form-label">{{ __('City') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="city" name="city"
+                                        placeholder="Enter City" value="{{ old('city', $user->city) }}">
+                                    @error('city')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="country" class="col-sm-3 col-form-label">{{ __('Country') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="country" name="country"
+                                        placeholder="Enter Country" value="{{ old('country', $user->country) }}">
+                                    @error('country')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="password" class="col-sm-3 col-form-label">{{ __('Password') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Enter Password" value="{{ old('password') }}">
+                                    <small class="text-info"><i class="fa-solid fa-circle-info mr-2"></i>
+                                        {{ __('Enter only to change Password') }}</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="notes" class="col-sm-3 col-form-label">{{ __('Upload Image') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="avatar" name="avatar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">{{ __('Preset permission levels') }}</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        class="custom-control-input custom-control-input-success custom-control-input-outline"
+                                        type="radio" id="role" name="role" value="administrator"
+                                        @if ($user->role == 'administrator') checked @endif>
+                                    <label for="role" class="custom-control-label">{{ __('Make Administrator') }}</label>
+                                    <br />
+                                    <small>{{ __('This allows them access to everything within the account - including invoice,
+                                        estimate, customer list, editing all team members permissions, etc.') }}</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        class="custom-control-input custom-control-input-success custom-control-input-outline"
+                                        type="radio" id="role" value="worker" name="role"
+                                        @if ($user->role == 'worker') checked @endif>
+                                    <label for="role" class="custom-control-label">{{ __('Make Worker') }}</label>
+                                    <br />
+                                    <small>{{ __('This allows them access only assigned customer booking.') }}</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-1 col-form-label">{{ __('Status') }}</label>
+                                <div class="col-sm-11 mt-2">
+                                    <div
+                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" class="custom-control-input" id="status"
+                                            value="1" @if ($user->status == 1) checked @endif>
+                                        <label class="custom-control-label" for="status"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-danger" form="userForm">
+                                <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <form id="RoleForm" method="POST" action="{{ route('manage-team.update', $user->id) }}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="role">Role</label>
-                        <input type="text" class="form-control" id="role" name="role"
-                            value="{{ $user->role }}" readonly>
-                        @error('role')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Full Name"
-                            value="{{ old('name', $user->name) }}">
-                        @error('name')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Address"
-                            value="{{ old('email', $user->email) }}">
-                        @error('email')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="password">New Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"
-                            value="{{ old('password') }}">
-                        @error('password')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                       <select name="status" id="statuses" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="0" @if($user->status == 0) selected  @endif>Disable</option>
-                        <option value="1" @if($user->status == 1) selected  @endif>Enable</option>
-                       </select>
-                        @error('status')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer text-right">
-                <button type="submit" class="btn btn-success" form="RoleForm">Save</button>
-            </div>
-        </div>
+        </form>
     </section>
 @endsection

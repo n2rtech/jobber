@@ -6,9 +6,10 @@
             </h4>
         </div>
         <div class="card-body">
+            @foreach ($standard_templates as $template)
             <div class="row">
                 <div class="col-sm-7">
-                    <b>Estimates Confirmation</b>
+                    <b>{{ $template->subject }}</b>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
@@ -28,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>

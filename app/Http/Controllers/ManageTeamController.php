@@ -24,17 +24,21 @@ class ManageTeamController extends Controller
 
         $filter_email   = $request->email;
 
-        $filter_status  = $request->status;
+        $filter_mobile   = $request->mobile;
+
+        $filter_role  = $request->role;
 
         isset($filter_name) ? $users->where('name', 'like', '%'.$filter_name.'%') : $users;
 
         isset($filter_email) ? $users->where('email', $filter_email) : $users;
 
-        isset($filter_status) ? $users->where('status', $filter_status) : $users;
+        isset($filter_mobile) ? $users->where('mobile', $filter_mobile) : $users;
+
+        isset($filter_role) ? $users->where('role', $filter_role) : $users;
 
         $users = $users->orderBy('id', 'desc')->get();
 
-        return view('settings.manage-team.list', compact('users', 'filter_name', 'filter_email', 'filter_status'));
+        return view('settings.manage-team.list', compact('users', 'filter_name', 'filter_email', 'filter_mobile', 'filter_role'));
     }
 
     /**
