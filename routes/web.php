@@ -72,3 +72,12 @@ Route::resource('job-titles', JobTitleController::class);
 
 #14 Products Route
 Route::resource('products', ProductController::class);
+
+Route::get('refresh-database', function () {
+
+    Artisan::call('migrate:fresh');
+    Artisan::call('db:seed');
+
+    dd("Hello ! Database has been refreshed and sample data has been inserted!");
+
+});
