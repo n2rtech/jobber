@@ -43,6 +43,7 @@
         <div class="content-wrapper">
 
             @include('sections.flash-message')
+
             @yield('content')
 
         </div>

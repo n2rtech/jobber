@@ -116,7 +116,7 @@
                         <li class="nav-item">
                             <a href="{{ route('products.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Products/Services</p>
+                                <p>Product & Service</p>
                             </a>
                         </li>
                         <li class="nav-item">

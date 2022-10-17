@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -17,7 +18,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('settings.products.list');
+        $products = Product::get();
+        return view('settings.products.index', compact('products'));
     }
 
     /**
@@ -38,7 +40,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->has('id') ? Product::where('id', $request->id)->update(['name' => $request->name, 'description' => $request->description]) : Product::create(['name' => $request->name, 'description' => $request->description]);
+
+        if($request->has('id')){
+
+            return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+
+        }else{
+
+            return redirect()->route('products.index')->with('success', 'Product saved successfully!');
+        }
     }
 
     /**
@@ -83,6 +94,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
     }
 }

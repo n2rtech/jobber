@@ -15,5 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UserSeed::class);
+
+        $this->call(JobTitleSeed::class);
+
+        $this->call(ProductSeed::class);
+
+        $this->call(EmailTemplateSeed::class);
     }
 }

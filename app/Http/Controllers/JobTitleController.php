@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobTitle;
 use Illuminate\Http\Request;
 
 class JobTitleController extends Controller
@@ -17,7 +18,8 @@ class JobTitleController extends Controller
      */
     public function index()
     {
-        return view('settings.job-title.list');
+        $job_titles = JobTitle::get();
+        return view('settings.job-title.index', compact('job_titles'));
     }
 
     /**
@@ -38,7 +40,16 @@ class JobTitleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->has('id') ? JobTitle::where('id', $request->id)->update(['title' => $request->title]) : JobTitle::create(['title' => $request->title]);
+
+        if($request->has('id')){
+
+            return redirect()->route('job-titles.index')->with('success', 'Job Title updated successfully!');
+
+        }else{
+
+            return redirect()->route('job-titles.index')->with('success', 'Job Title saved successfully!');
+        }
     }
 
     /**
@@ -83,6 +94,7 @@ class JobTitleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        JobTitle::find($id)->delete();
+        return redirect()->route('job-titles.index')->with('success', 'Job Title deleted successfully!');
     }
 }

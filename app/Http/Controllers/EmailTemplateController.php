@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 
 class EmailTemplateController extends Controller
@@ -17,7 +18,8 @@ class EmailTemplateController extends Controller
      */
     public function index()
     {
-        return view('settings.email-template.list');
+        $standard_templates = EmailTemplate::where('type', 'standard')->where('mode','standard')->get();
+        return view('settings.email-template.index');
     }
 
     /**
