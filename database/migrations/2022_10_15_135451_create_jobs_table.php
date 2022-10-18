@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->string('job_title')->nullable();
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('job_title_id')->constrained('job_titles')->onDelete('cascade');
             $table->string('invoicing')->nullable();
             $table->enum('scheduled',['yes', 'no'])->default('no');
             $table->timestamp('start')->nullable();

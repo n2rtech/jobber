@@ -164,7 +164,7 @@
                                     <div
                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" class="custom-control-input" id="status"
-                                            value="1" @if ($user->status == 1) checked @endif>
+                                            value="1" @if ($user->status == '1') checked @endif>
                                         <label class="custom-control-label" for="status"></label>
                                     </div>
                                 </div>

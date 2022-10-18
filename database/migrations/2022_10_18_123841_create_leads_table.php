@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('eir_code')->nullable();
             $table->longText('directions')->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'converted'])->default('pending');
             $table->timestamps();
         });
     }
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('leads');
     }
 };

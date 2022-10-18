@@ -88,8 +88,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <div
-                                            class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <div class="ml-5 mt-2 custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                             <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
                                             <label class="custom-control-label" for="customSwitch3"></label>
                                         </div>
@@ -102,8 +101,8 @@
                                                 <i class="fa fa-ellipsis-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu" role="menu" style="">
-                                              <a class="dropdown-item" href="{{ route('manage-team.edit', $user->id) }}">Edit</a>
-                                              <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $user->id }})">Delete</a>
+                                              <a class="dropdown-item" href="{{ route('manage-team.edit', $user->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                              <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $user->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
                                               <form id='delete-form{{ $user->id }}'
                                                 action='{{ route('manage-team.destroy', $user->id) }}' method='POST'>
                                                 <input type='hidden' name='_token' value='{{ csrf_token() }}'>

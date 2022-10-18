@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lead;
 use Illuminate\Http\Request;
 
 class SalesLeadController extends Controller
@@ -15,9 +16,29 @@ class SalesLeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('sales-lead.list');
+        $customers              = Lead::query();
+
+        $filter_name            = $request->name;
+
+        $filter_email           = $request->email;
+
+        $filter_phone           = $request->phone;
+
+        $filter_date            = $request->date;
+
+        isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
+
+        isset($filter_email)    ? $customers->where('email', $filter_email) : $customers;
+
+        isset($filter_phone)    ? $customers->where('phone', $filter_phone) : $customers;
+
+        isset($filter_date)     ? $customers->whereDate('created_at', $filter_date) : $customers;
+
+        $customers              = $customers->orderBy('id', 'desc')->get();
+
+        return view('sales-lead.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_date'));
     }
 
     /**
@@ -27,7 +48,7 @@ class SalesLeadController extends Controller
      */
     public function create()
     {
-        //
+        return view('sales-lead.create');
     }
 
     /**
@@ -60,7 +81,7 @@ class SalesLeadController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('sales-lead.edit');
     }
 
     /**

@@ -63,14 +63,14 @@
     border-color: #e83e8c;
 }
 .btn-lime{
-    color: #fff;
+    color: #1f2d3d;
     background-color: #01ff70;
     border-color: #01ff70;
     box-shadow: none;
 
 }
 .btn-lime:hover {
-    color: #fff;
+    color: #1f2d3d;
     background-color: #5BFFA2;
     border-color: #5BFFA2;
 }
@@ -89,26 +89,37 @@
 .text-align-right{
     text-align: right;
 }
-
-.custom-switch .custom-control-label::after {
-    top: calc(0.25rem + 2px);
-    left: -22px;
-}
-.custom-switch .custom-control-label::before {
-    left: -37px;
-    width: 41px;
-    pointer-events: all;
-    border-radius: 0.5rem;
-}
 .post .user-block {
     margin-bottom: 0px;
     width: 100%;
 }
 .btn-light {
     color: #1f2d3d;
-    background-color: #e2e6ea;
+    background-color: #ffffff;
     border-color: #dae0e5;
 }
 .dropdown-toggle::after {
     display: none;
+}
+.dropdown-menu.show {
+    left: -63px !important;
+}
+.form-name {
+    display: block;
+    margin-left: 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-description {
+    display: block;
+    margin-left: 0px;
+    color: #6c757d;
+    font-size: 13px;
+    margin-top: -3px;
+}
+.job-form-footer {
+    padding: 1.25rem 1.25rem;
+    background-color: rgba(0,0,0,.03);
+    border: 1px solid rgba(0,0,0,.125);
 }
