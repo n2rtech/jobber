@@ -126,8 +126,18 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="card pb-4">
+                    <div class="card pb-3">
                         <div class="card-body">
+                            <div class="form-group row">
+                                <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="state" name="state"
+                                        placeholder="Enter State" value="{{ old('state') }}">
+                                    @error('State')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="country" class="col-sm-2 col-form-label">{{ __('Country') }}</label>
                                 <div class="col-sm-10">

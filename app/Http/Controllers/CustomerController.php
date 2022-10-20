@@ -37,7 +37,7 @@ class CustomerController extends Controller
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
-        $customers              = $customers->orderBy('id', 'desc')->get();
+        $customers              = $customers->orderBy('id', 'desc')->paginate(20);
 
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status'));
     }

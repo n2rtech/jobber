@@ -27,5 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JobFormQuestionSeeder::class);
 
         $this->call(JobFormQuestionOptionSeeder::class);
+
+        $this->call(CustomerSeeder::class);
     }
 }

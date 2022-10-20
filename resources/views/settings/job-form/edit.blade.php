@@ -88,7 +88,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                        <div  id="job-form-option{{ $key }}">
+                                        <div id="job-form-option{{ $key }}">
                                             @foreach($question->options as $option_key => $option)
                                             <div class="form-group mt-3 option-row{{ $key }}" id="option{{ $key }}-row{{ $option_key }}">
                                             <div class="input-group">
@@ -100,11 +100,13 @@
                                             </div>
                                             @endforeach
                                         </div>
-                                        <div class="form-group text-right" id="job-form-option-add{{ $key }}" style="display: none;">
+                                        @if($question->type == 'checkbox' || $question->type == 'dropdown' || $question->type == 'radio')
+                                        <div class="form-group text-right" id="job-form-option-add{{ $key }}">
                                             <button type="button" class="btn btn-info" onclick="addOption({{ $key }});">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 @endforeach

@@ -31,10 +31,10 @@
 </script>
 <script>
     $(function () {
-      $("#leadDataTable").DataTable({
+      $("#customerDataTable").DataTable({
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
-      }).buttons().container().appendTo('#leadDataTable_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#customerDataTable_wrapper .col-md-6:eq(0)');
     });
 
 

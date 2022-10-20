@@ -1,5 +1,5 @@
 <script>
-    var question_row = 1;
+    var question_row = @isset($job_form->questions) {{ count($job_form->questions) }}  @else 1 @endisset;
 
     function addQuestion() {
         html = '<div class="card" id="question-row' + question_row + '">';

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone_name')->nullable();
             $table->string('mobile_1')->nullable();
@@ -26,11 +26,12 @@ return new class extends Migration
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('eir_code')->nullable();
             $table->longText('directions')->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'completed', 'Booking'])->default('pending');
             $table->timestamps();
         });
     }

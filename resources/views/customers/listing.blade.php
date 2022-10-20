@@ -1,7 +1,7 @@
 <!-- Listing Box Starts Here -->
 <div class="card">
     <div class="card-body">
-        <table id="dataTable" class="table table-bordered table-striped">
+        <table id="customerDataTable" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
@@ -41,6 +41,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-2">
+            {{$customers->appends(request()->query())->links("pagination::bootstrap-4")}}
+        </div>
     </div>
 </div>
 <!-- Listing Box Starts Here -->

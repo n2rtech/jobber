@@ -29,8 +29,8 @@
                         <label for="statuses">{{ __('Customer Status') }}</label>
                         <select class="form-control form-control-sm" name="status" id="statuses">
                             <option value="">{{ __('Select Status') }}</option>
-                            <option value="0" @if($filter_status == 'pending') selected @endif>{{ __('Pending') }}</option>
-                            <option value="1" @if($filter_status == 'completed') selected @endif>{{ __('Completed') }}</option>
+                            <option value="pending" @if($filter_status == 'pending') selected @endif>{{ __('Pending') }}</option>
+                            <option value="completed" @if($filter_status == 'completed') selected @endif>{{ __('Completed') }}</option>
                         </select>
                     </div>
                 </div>
