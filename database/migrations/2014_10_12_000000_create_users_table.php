@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
             $table->longText('address')->nullable();
-            $table->string('town')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('role')->default('administrator');
             $table->string('avatar')->nullable();

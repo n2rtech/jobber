@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ManageTeamController extends Controller
 {
@@ -59,7 +60,58 @@ class ManageTeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile'                => 'required',
+            'address'               => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+            'password'              => ['required', 'string', 'min:6', 'confirmed'],
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter User name.",
+            'email.required'            => "Please enter User email.",
+            'mobile.required'           => "Please enter User Mobile.",
+            'address.required'          => "Please enter User address.",
+            'city.required'             => "Please enter User city.",
+            'state.required'            => "Please enter User state.",
+            'country.required'          => "Please enter User country.",
+            'password.required'         => "Please enter User Password.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $user                   = new user();
+        $user->name             = $request->name;
+        $user->email            = $request->email;
+        $user->mobile           = $request->mobile;
+        $user->address          = $request->address;
+        $user->city             = $request->city;
+        $user->state            = $request->state;
+        $user->country          = $request->country;
+        $user->zipcode          = $request->zipcode;
+        $user->role             = $request->role;
+        $user->status           = $request->has('status') ? 1 : 0;
+        $user->password         = Hash::make($request->password);
+
+        if($request->hasfile('avatar')){
+
+            $file = $request->file('avatar');
+
+            $filename = $file->getClientOriginalName();
+
+            $file->storeAs('uploads/users/', $filename, 'public');
+
+            $user->avatar = $filename;
+
+        }
+
+        $user->save();
+
+        return redirect()->route('manage-team.index')->with('success', 'User added successfully!');
     }
 
     /**
@@ -82,6 +134,7 @@ class ManageTeamController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $user->avatar = isset($user->avatar) ? asset('storage/uploads/users/'.$user->avatar) : asset('dist/img/avatar.png') ;
         return view('settings.manage-team.edit', compact('user'));
     }
 
@@ -94,7 +147,59 @@ class ManageTeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+            'mobile'                => 'required',
+            'address'               => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter User name.",
+            'email.required'            => "Please enter User email.",
+            'mobile.required'           => "Please enter User Mobile.",
+            'address.required'          => "Please enter User address.",
+            'city.required'             => "Please enter User city.",
+            'state.required'            => "Please enter User state.",
+            'country.required'          => "Please enter User country."
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $user                   = User::find($id);
+        $user->name             = $request->name;
+        $user->email            = $request->email;
+        $user->mobile           = $request->mobile;
+        $user->address          = $request->address;
+        $user->city             = $request->city;
+        $user->state            = $request->state;
+        $user->country          = $request->country;
+        $user->zipcode          = $request->zipcode;
+        $user->role             = $request->role;
+        $user->status           = $request->has('status') ? 1 : 0;
+
+        if(isset($request->password)){
+            $user->password         = Hash::make($request->password);
+        }
+
+        if($request->hasfile('avatar')){
+
+            $file = $request->file('avatar');
+
+            $filename = $file->getClientOriginalName();
+
+            $file->storeAs('uploads/users/', $filename, 'public');
+
+            $user->avatar = $filename;
+
+        }
+        $user->save();
+
+
+        return redirect()->route('manage-team.index')->with('success', 'User updated successfully!');
     }
 
     /**
