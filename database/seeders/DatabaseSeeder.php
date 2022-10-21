@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeed::class);
 
+        $this->call(CompanyDetailSeeder::class);
+
         $this->call(JobTitleSeed::class);
 
         $this->call(ProductSeed::class);
@@ -33,6 +35,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(LeadSeeder::class);
 
-        // $this->call(CustomerSeeder::class);
+        $this->call(CustomerSeeder::class);
     }
 }

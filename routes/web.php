@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EstimateController;
@@ -74,8 +75,11 @@ Route::resource('job-titles', JobTitleController::class);
 #14 Products Route
 Route::resource('products', ProductController::class);
 
-#15 Products Route
+#15 Tax rates Route
 Route::resource('tax-rates', TaxRateController::class);
+
+#16 Products Route
+Route::resource('company-settings', CompanyController::class);
 
 Route::get('refresh-database', function () {
 
