@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,10 @@ class DatabaseSeeder extends Seeder
         $this->call(JobFormQuestionSeeder::class);
 
         $this->call(JobFormQuestionOptionSeeder::class);
+
+        $this->call(TaxRateSeeder::class);
+
+        $this->call(LeadSeeder::class);
 
         $this->call(CustomerSeeder::class);
     }

@@ -26,11 +26,13 @@ return new class extends Migration
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('eir_code')->nullable();
             $table->longText('directions')->nullable();
-            $table->string('avatar')->nullable();
             $table->enum('status', ['pending', 'converted'])->default('pending');
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
     }

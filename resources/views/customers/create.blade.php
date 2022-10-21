@@ -129,7 +129,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="state" name="state"
                                         placeholder="Enter State" value="{{ old('state') }}">
-                                    @error('State')
+                                    @error('state')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -164,10 +164,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="notes" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
+                                <label for="note" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="4" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
-                                    @error('notes')
+                                    <textarea rows="4" class="form-control" id="note" name="note" placeholder="Enter Note">{{ old('note') }}</textarea>
+                                    @error('note')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

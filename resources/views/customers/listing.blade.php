@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
-                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Address') }}</th>
                     <th>{{ __('Phone') }}</th>
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Action') }}</th>
@@ -15,7 +15,7 @@
                 @foreach ($customers as $customer)
                     <tr>
                         <td>{{ $customer->name }}</td>
-                        <td>{{ $customer->email }}</td>
+                        <td>{{ $customer->address_1 }} @isset($customer->address_2) {{ $customer->address_2 }} @endisset</td>
                         <td>{{ $customer->phone }}</td>
                         <td>
                             @if ($customer->status == 'pending')

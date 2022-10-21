@@ -13,17 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('customer_notes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->unsignedBigInteger('job_title_id')->nullable();
-            $table->foreign('job_title_id')->references('id')->on('job_titles')->onDelete('cascade');
-            $table->string('invoicing')->nullable();
-            $table->enum('scheduled',['yes', 'no'])->default('no');
-            $table->timestamp('start')->nullable();
-            $table->timestamp('end')->nullable();
-            $table->string('total');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('customer_notes');
     }
 };

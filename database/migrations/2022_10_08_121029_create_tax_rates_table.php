@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('tax_rates', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['product', 'service'])->default('product');
             $table->string('name');
-            $table->longText('description')->nullable();
-            $table->longText('tax_rates')->nullable();
+            $table->decimal('rate', 10, 2);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('tax_rates');
     }
 };

@@ -114,6 +114,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('tax-rates.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>Tax Rates</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('products.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Product & Service</p>

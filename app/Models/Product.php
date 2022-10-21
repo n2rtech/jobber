@@ -11,7 +11,11 @@ class Product extends Model
 
     protected $table        = 'products';
 
-    protected $fillable     = ['name', 'description'];
+    protected $fillable     = ['type' ,'name', 'description', 'tax_rates'];
 
     public $timestamps      = true;
+
+    protected $casts        = [
+        'tax_rates' => 'array',
+    ];
 }

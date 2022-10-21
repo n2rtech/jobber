@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\TaxRate;
+use App\Http\Requests\StoreTaxRateRequest;
+use App\Http\Requests\UpdateTaxRateRequest;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class TaxRateController extends Controller
 {
     public function __construct()
     {
@@ -19,9 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
-        $taxes    = TaxRate::get();
-        return view('settings.products.index', compact('products', 'taxes'));
+        $taxes = TaxRate::get();
+        return view('settings.tax-rate.index', compact('taxes'));
     }
 
     /**
@@ -37,30 +37,30 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreTaxRateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->has('id') ? Product::where('id', $request->id)->update(['type' => $request->type, 'name' => $request->name, 'description' => $request->description, 'tax_rates' => $request->tax_rates]) : Product::create(['type' => $request->type,'name' => $request->name, 'description' => $request->description, 'tax_rates' => $request->tax_rates]);
+        $request->has('id') ? TaxRate::where('id', $request->id)->update(['name' => $request->name, 'rate' => $request->rate]) : TaxRate::create(['name' => $request->name, 'rate' => $request->rate]);
 
         if($request->has('id')){
 
-            return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+            return redirect()->route('tax-rates.index')->with('success', 'Tax Rate updated successfully!');
 
         }else{
 
-            return redirect()->route('products.index')->with('success', 'Product saved successfully!');
+            return redirect()->route('tax-rates.index')->with('success', 'Tax Rate saved successfully!');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\TaxRate  $taxRate
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TaxRate $taxRate)
     {
         //
     }
@@ -68,10 +68,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\TaxRate  $taxRate
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TaxRate $taxRate)
     {
         //
     }
@@ -79,11 +79,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateTaxRateRequest  $request
+     * @param  \App\Models\TaxRate  $taxRate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTaxRateRequest $request, TaxRate $taxRate)
     {
         //
     }
@@ -91,12 +91,12 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\TaxRate  $taxRate
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        TaxRate::find($id)->delete();
+        return redirect()->route('tax-rates.index')->with('success', 'Tax Rate deleted successfully!');
     }
 }

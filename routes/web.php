@@ -14,6 +14,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobFormController;
 use App\Http\Controllers\JobTitleController;
 use App\Http\Controllers\ManageTeamController;
+use App\Http\Controllers\TaxRateController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -72,6 +73,9 @@ Route::resource('job-titles', JobTitleController::class);
 
 #14 Products Route
 Route::resource('products', ProductController::class);
+
+#15 Products Route
+Route::resource('tax-rates', TaxRateController::class);
 
 Route::get('refresh-database', function () {
 

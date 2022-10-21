@@ -11,12 +11,28 @@
                 <form method="POST" id="productForm" action="{{ route('products.store') }}">
                     @csrf
                     <div class="form-group">
+                        <label for="type">Type</label>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="product">Product</option>
+                            <option value="service">Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Product Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Product name here" required>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
                         <textarea class="form-control" id="description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose Tax</label>
+                            @foreach($taxes as $tax)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="tax{{ $loop->iteration }}" value="{{ $tax->id }}" name="tax_rates[]">
+                                <label class="form-check-label" for="tax{{ $loop->iteration }}">{{ $tax->name }}</label>
+                            </div>
+                            @endforeach
                     </div>
                 </form>
             </div>
@@ -42,12 +58,28 @@
                     @csrf
                     <input type="hidden" value="" name="id" id="product_id">
                     <div class="form-group">
+                        <label for="type">Type</label>
+                        <select class="form-control" id="edit_type" name="type" required>
+                            <option value="product">Product</option>
+                            <option value="service">Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="edit_title">Product Name</label>
                         <input type="text" class="form-control" id="edit_name" name="name" placeholder="Enter Product name here" required>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
                         <textarea class="form-control" id="edit_description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose Tax</label>
+                            @foreach($taxes as $tax)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit_tax{{ $tax->id }}" value="{{ $tax->id }}" name="tax_rates[]">
+                                <label class="form-check-label" for="edit_tax{{ $tax->id }}">{{ $tax->name }}</label>
+                            </div>
+                            @endforeach
                     </div>
                 </form>
             </div>

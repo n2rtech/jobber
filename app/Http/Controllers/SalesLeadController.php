@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class SalesLeadController extends Controller
      */
     public function index(Request $request)
     {
-        $customers              = Lead::query();
+        $leads                  = Lead::query();
 
         $filter_name            = $request->name;
 
@@ -28,17 +29,17 @@ class SalesLeadController extends Controller
 
         $filter_date            = $request->date;
 
-        isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
+        isset($filter_name)     ? $leads->where('name', 'like', '%'.$filter_name.'%') : $leads;
 
-        isset($filter_email)    ? $customers->where('email', $filter_email) : $customers;
+        isset($filter_email)    ? $leads->where('email', $filter_email) : $leads;
 
-        isset($filter_phone)    ? $customers->where('phone', $filter_phone) : $customers;
+        isset($filter_phone)    ? $leads->where('phone', $filter_phone) : $leads;
 
-        isset($filter_date)     ? $customers->whereDate('created_at', $filter_date) : $customers;
+        isset($filter_date)     ? $leads->whereDate('created_at', $filter_date) : $leads;
 
-        $customers              = $customers->orderBy('id', 'desc')->get();
+        $leads                  = $leads->orderBy('id', 'desc')->get();
 
-        return view('sales-lead.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_date'));
+        return view('sales-lead.index', compact('leads', 'filter_name', 'filter_email', 'filter_phone', 'filter_date'));
     }
 
     /**
@@ -59,7 +60,47 @@ class SalesLeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => 'required',
+            'phone'                 => 'required',
+            'address_1'             => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter Customer name.",
+            'email.required'            => "Please enter Customer email.",
+            'phone.required'            => "Please enter Customer phone.",
+            'address_1.required'        => "Please enter Customer address.",
+            'city.required'             => "Please enter Customer city.",
+            'state.required'            => "Please enter Customer state.",
+            'country.required'          => "Please enter Customer country.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $lead                   = new Lead();
+        $lead->name             = $request->name;
+        $lead->email            = $request->email;
+        $lead->phone            = $request->phone;
+        $lead->phone_name       = $request->phone_name;
+        $lead->mobile_1         = $request->mobile_1;
+        $lead->mobile_1_name    = $request->mobile_1_name;
+        $lead->mobile_2         = $request->mobile_2;
+        $lead->mobile_2_name    = $request->mobile_2_name;
+        $lead->address_1        = $request->address_1;
+        $lead->address_2        = $request->address_2;
+        $lead->city             = $request->city;
+        $lead->state            = $request->state;
+        $lead->country          = $request->country;
+        $lead->eir_code         = $request->eir_code;
+        $lead->directions       = $request->directions;
+        $lead->save();
+
+        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
     }
 
     /**
@@ -70,7 +111,29 @@ class SalesLeadController extends Controller
      */
     public function show($id)
     {
-        //
+        $lead = Lead::find($id);
+        $lead->status = 'converted';
+        $lead->save();
+
+        $customer                   = new Customer();
+        $customer->name             = $lead->name;
+        $customer->email            = $lead->email;
+        $customer->phone            = $lead->phone;
+        $customer->phone_name       = $lead->phone_name;
+        $customer->mobile_1         = $lead->mobile_1;
+        $customer->mobile_1_name    = $lead->mobile_1_name;
+        $customer->mobile_2         = $lead->mobile_2;
+        $customer->mobile_2_name    = $lead->mobile_2_name;
+        $customer->address_1        = $lead->address_1;
+        $customer->address_2        = $lead->address_2;
+        $customer->city             = $lead->city;
+        $customer->state            = $lead->state;
+        $customer->country          = $lead->country;
+        $customer->eir_code         = $lead->eir_code;
+        $customer->directions       = $lead->directions;
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
 
     /**
@@ -81,7 +144,8 @@ class SalesLeadController extends Controller
      */
     public function edit($id)
     {
-        return view('sales-lead.edit');
+        $lead = Lead::find($id);
+        return view('sales-lead.edit', compact('lead'));
     }
 
     /**
@@ -93,7 +157,47 @@ class SalesLeadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => 'required',
+            'phone'                 => 'required',
+            'address_1'             => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter Customer name.",
+            'email.required'            => "Please enter Customer email.",
+            'phone.required'            => "Please enter Customer phone.",
+            'address_1.required'        => "Please enter Customer address.",
+            'city.required'             => "Please enter Customer city.",
+            'state.required'            => "Please enter Customer state.",
+            'country.required'          => "Please enter Customer country.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $lead                   = Lead::find($id);
+        $lead->name             = $request->name;
+        $lead->email            = $request->email;
+        $lead->phone            = $request->phone;
+        $lead->phone_name       = $request->phone_name;
+        $lead->mobile_1         = $request->mobile_1;
+        $lead->mobile_1_name    = $request->mobile_1_name;
+        $lead->mobile_2         = $request->mobile_2;
+        $lead->mobile_2_name    = $request->mobile_2_name;
+        $lead->address_1        = $request->address_1;
+        $lead->address_2        = $request->address_2;
+        $lead->city             = $request->city;
+        $lead->state            = $request->state;
+        $lead->country          = $request->country;
+        $lead->eir_code         = $request->eir_code;
+        $lead->directions       = $request->directions;
+        $lead->save();
+
+        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead updated successfully!');
     }
 
     /**
@@ -104,6 +208,7 @@ class SalesLeadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Lead::find($id)->delete();
+        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead deleted successfully!');
     }
 }

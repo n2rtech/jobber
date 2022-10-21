@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerNote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -60,7 +62,55 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => 'required',
+            'phone'                 => 'required',
+            'address_1'             => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter Customer name.",
+            'email.required'            => "Please enter Customer email.",
+            'phone.required'            => "Please enter Customer phone.",
+            'address_1.required'        => "Please enter Customer address.",
+            'city.required'             => "Please enter Customer city.",
+            'state.required'            => "Please enter Customer state.",
+            'country.required'          => "Please enter Customer country.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $customer                   = new Customer();
+        $customer->name             = $request->name;
+        $customer->email            = $request->email;
+        $customer->phone            = $request->phone;
+        $customer->phone_name       = $request->phone_name;
+        $customer->mobile_1         = $request->mobile_1;
+        $customer->mobile_1_name    = $request->mobile_1_name;
+        $customer->mobile_2         = $request->mobile_2;
+        $customer->mobile_2_name    = $request->mobile_2_name;
+        $customer->address_1        = $request->address_1;
+        $customer->address_2        = $request->address_2;
+        $customer->city             = $request->city;
+        $customer->state            = $request->state;
+        $customer->country          = $request->country;
+        $customer->eir_code         = $request->eir_code;
+        $customer->directions       = $request->directions;
+        $customer->save();
+
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
+
+        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
 
     /**
@@ -82,7 +132,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        return view('customers.edit');
+        $customer = Customer::find($id);
+        return view('customers.edit', compact('customer'));
     }
 
     /**
@@ -94,7 +145,55 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name'                  => 'required',
+            'email'                 => 'required',
+            'phone'                 => 'required',
+            'address_1'             => 'required',
+            'city'                  => 'required',
+            'state'                 => 'required',
+            'country'               => 'required',
+        ];
+
+        $messages = [
+            'name.required'             => "Please enter Customer name.",
+            'email.required'            => "Please enter Customer email.",
+            'phone.required'            => "Please enter Customer phone.",
+            'address_1.required'        => "Please enter Customer address.",
+            'city.required'             => "Please enter Customer city.",
+            'state.required'            => "Please enter Customer state.",
+            'country.required'          => "Please enter Customer country.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $customer                   = Customer::find($id);
+        $customer->name             = $request->name;
+        $customer->email            = $request->email;
+        $customer->phone            = $request->phone;
+        $customer->phone_name       = $request->phone_name;
+        $customer->mobile_1         = $request->mobile_1;
+        $customer->mobile_1_name    = $request->mobile_1_name;
+        $customer->mobile_2         = $request->mobile_2;
+        $customer->mobile_2_name    = $request->mobile_2_name;
+        $customer->address_1        = $request->address_1;
+        $customer->address_2        = $request->address_2;
+        $customer->city             = $request->city;
+        $customer->state            = $request->state;
+        $customer->country          = $request->country;
+        $customer->eir_code         = $request->eir_code;
+        $customer->directions       = $request->directions;
+        $customer->save();
+
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }
 
     /**
@@ -105,6 +204,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::find($id)->delete();
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
 }
