@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('type', ['product', 'service'])->default('product');
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->decimal('unit_price', 10, 2)->nullable();
             $table->longText('tax_rates')->nullable();
             $table->timestamps();
         });

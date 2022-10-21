@@ -16,6 +16,7 @@ use App\Http\Controllers\JobFormController;
 use App\Http\Controllers\JobTitleController;
 use App\Http\Controllers\ManageTeamController;
 use App\Http\Controllers\TaxRateController;
+use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -80,6 +81,14 @@ Route::resource('tax-rates', TaxRateController::class);
 
 #16 Products Route
 Route::resource('company-settings', CompanyController::class);
+
+Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploadForm'])->name('customer.upload-photos');
+
+Route::get('customer/upload-documents/{id}', [UtilityController::class, 'documentsUploadForm'])->name('customer.upload-documents');
+
+Route::get('customer/add-notes/{id}', [UtilityController::class, 'notesUploadForm'])->name('customer.add-notes');
+
+Route::get('customer/send-email/{id}', [UtilityController::class, 'sendEmailForm'])->name('customer.send-email');
 
 Route::get('refresh-database', function () {
 

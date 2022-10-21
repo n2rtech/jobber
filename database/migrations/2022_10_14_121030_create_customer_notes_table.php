@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('note')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

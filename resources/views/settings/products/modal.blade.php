@@ -26,6 +26,10 @@
                         <textarea class="form-control" id="description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="unit_price">Unit Price (£)</label>
+                        <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
+                    </div>
+                    <div class="form-group">
                         <label>Choose Tax</label>
                             @foreach($taxes as $tax)
                             <div class="form-check">
@@ -71,6 +75,10 @@
                     <div class="form-group">
                         <label for="description">Description</label>
                         <textarea class="form-control" id="edit_description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_unitprice">Unit Price (£)</label>
+                        <input type="number" class="form-control" id="edit_unitprice" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
                     </div>
                     <div class="form-group">
                         <label>Choose Tax</label>

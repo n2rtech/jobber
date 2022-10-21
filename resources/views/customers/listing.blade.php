@@ -26,8 +26,9 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('customers.edit', $customer) }}" class="btn btn-warning"> <i
+                                <a href="{{ route('customers.edit', $customer) }}" class="btn btn-info"> <i
                                         class="fas fa-pen"></i> </a>
+                                <a href="{{ route('customers.show', $customer) }}" class="btn btn-warning"> <i class="fas fa-eye"></i> </a>
                                 <button type="button" onclick="confirmDelete({{ $customer->id }})"
                                     class="btn btn-danger"><i class="fas fa-trash"></i> </button>
                                 <form id='delete-form{{ $customer->id }}'

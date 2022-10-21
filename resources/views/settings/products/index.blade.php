@@ -59,10 +59,12 @@
             var id = $(this).data('id');
             var type = $(this).data('type');
             var name = $(this).data('name');
+            var unitprice = $(this).data('unitprice');
             var description = $(this).data('description');
             $('#edit_type').val(type);
             $('#edit_name').val(name);
             $('#edit_description').val(description);
+            $('#edit_unitprice').val(unitprice);
             $('#product_id').val(id);
         });
     </script>
