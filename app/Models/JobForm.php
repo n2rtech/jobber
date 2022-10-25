@@ -19,4 +19,5 @@ class JobForm extends Model
     {
         return $this->hasMany(JobFormQuestion::class);
     }
+
 }

@@ -11,7 +11,7 @@
                     <a href="{{ url()->previous() }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
-                    <a href="javascript:void(0)" class="btn btn-indigo">
+                    <a href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}" class="btn btn-indigo">
                         <i class="btn-icon fas fa-check-circle"></i> {{ __('Create Job') }}
                     </a>
                     <button type="submit" class="btn btn-danger" form="customerForm">

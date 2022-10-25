@@ -28,4 +28,9 @@ class Customer extends Model
     {
         return $this->hasMany(sentEmail::class);
     }
+
+    public function job()
+    {
+        return $this->hasMany(Job::class);
+    }
 }

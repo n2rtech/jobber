@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Job;
+use App\Models\JobForm;
+use App\Models\JobProduct;
+use App\Models\JobTitle;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -54,9 +59,21 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('jobs.create');
+        if(isset($request->customer_id)){
+            $job_titles = JobTitle::get();
+            $job_forms  = JobForm::get();
+            $products   = Product::get();
+            $customer   = Customer::find($request->customer_id);
+            return view('jobs.convert', compact('job_titles', 'job_forms', 'products', 'customer'));
+        }else{
+            $job_titles = JobTitle::get();
+            $job_forms  = JobForm::get();
+            $products   = Product::get();
+            return view('jobs.create', compact('job_titles', 'job_forms', 'products'));
+        }
+
     }
 
     /**
@@ -67,7 +84,32 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $job                    = new Job();
+        $job->customer_id       = $request->customer_id;
+        $job->job_title_id      = $request->job_title_id;
+        $job->instructions      = $request->instructions;
+        $job->invoice_remind    = $request->has('invoice_remind') ? true : false;
+        $job->job_forms         = $request->job_forms;
+        $job->total             = 0;
+        $job->save();
+
+        if(!empty($request->product) && is_array($request->product)){
+            foreach($request->product as $key => $value){
+                $product                = new JobProduct();
+                $product->job_id        = $job->id;
+                $product->product_id    = $value['product'];
+                $product->description   = $value['description'];
+                $product->quantity      = $value['quantity'];
+                $product->unit_price    = $value['unit_price'];
+                $product->total         = $value['total'];
+                $product->save();
+            }
+        }
+        $total =JobProduct::where('job_id', $job->id)->sum('total');
+        Job::where('id', $job->id)->update(['total' => $total]);
+
+        return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
+
     }
 
     /**
@@ -89,7 +131,11 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        //
+        $job        = Job::find($id);
+        $job_titles = JobTitle::get();
+        $job_forms  = JobForm::get();
+        $products   = Product::get();
+        return view('jobs.edit', compact('job_titles', 'job_forms', 'job', 'products'));
     }
 
     /**
@@ -101,7 +147,32 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $job                    = Job::find($id);
+        $job->customer_id       = $request->customer_id;
+        $job->job_title_id      = $request->job_title_id;
+        $job->instructions      = $request->instructions;
+        $job->invoice_remind    = $request->has('invoice_remind') ? true : false;
+        $job->job_forms         = $request->job_forms;
+        $job->total             = 0;
+        $job->save();
+
+        JobProduct::where('job_id', $id)->delete();
+        if(!empty($request->product) && is_array($request->product)){
+            foreach($request->product as $key => $value){
+                $product                = new JobProduct();
+                $product->job_id        = $job->id;
+                $product->product_id    = $value['product'];
+                $product->description   = $value['description'];
+                $product->quantity      = $value['quantity'];
+                $product->unit_price    = $value['unit_price'];
+                $product->total         = $value['total'];
+                $product->save();
+            }
+        }
+        $total =JobProduct::where('job_id', $job->id)->sum('total');
+        Job::where('id', $job->id)->update(['total' => $total]);
+
+        return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
     }
 
     /**

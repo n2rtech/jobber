@@ -5,25 +5,27 @@
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
-                    <th>{{ __('Email') }}</th>
-                    <th>{{ __('Phone') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Address') }}</th>
+                    <th>{{ __('Contact') }}</th>
+                    <th>{{ __('Scheduled') }}</th>
+                    <th>{{ __('Total') }}</th>
                     <th>{{ __('Action') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jobs as $job)
                     <tr>
-                        <td>{{ $job->name }}</td>
-                        <td>{{ $job->email }}</td>
-                        <td>{{ $job->phone }}</td>
+                        <td>{{ $job->customer->name }}</td>
+                        <td>{{ $job->customer->address_1 }} @isset($job->customer->address_2) {{ $job->customer->address_2 }} @endisset</td>
+                        <td>{{ $job->customer->phone }}</td>
                         <td>
-                            @if ($job->status == 'pending')
-                                <span class="badge bg-danger">{{ __('Pending') }}</span>
+                            @if ($job->scheduled == 'no')
+                                <span class="badge bg-danger">{{ __('No') }}</span>
                             @else
-                                <span class="badge bg-success">{{ __('Completed') }}</span>
+                                <span class="badge bg-success">{{ __('Yes') }}</span>
                             @endif
                         </td>
+                        <td>£ {{ $job->total }}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="{{ route('jobs.edit', $job) }}" class="btn btn-warning"> <i

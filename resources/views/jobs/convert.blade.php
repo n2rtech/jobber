@@ -26,7 +26,7 @@
     <section class="content">
         <form id="jobForm" method="POST" action="{{ route('jobs.store') }}">
             @csrf
-            <input type="hidden" name="customer_id" id="customer_id">
+            <input type="hidden" name="customer_id" id="customer_id" value="{{ Request::get('customer_id') }}">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -309,7 +309,8 @@
         }
     </script>
     <script>
-
+        $("#select2-name-container").text("{{ $customer->name }}");
+        $("#customer_id").val("{{ $customer->id }}");
         function showProductOptions(element, row){
             var unitprice   = $(element).find(':selected').data('unitprice');
             var description = $(element).find(':selected').data('description');

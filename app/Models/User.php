@@ -52,4 +52,9 @@ class User extends Authenticatable
         return $this->hasMany(SentEmail::class);
     }
 
+    public function job()
+    {
+        return $this->hasMany(Job::class);
+    }
+
 }

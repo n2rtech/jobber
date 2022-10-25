@@ -19,11 +19,15 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->unsignedBigInteger('job_title_id')->nullable();
             $table->foreign('job_title_id')->references('id')->on('job_titles')->onDelete('cascade');
-            $table->string('invoicing')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->longText('instructions')->nullable();
+            $table->boolean('invoice_remind')->default(0);
+            $table->longText('job_forms')->nullable();
             $table->enum('scheduled',['yes', 'no'])->default('no');
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
-            $table->string('total');
+            $table->string('total')->nullable();
             $table->timestamps();
         });
     }

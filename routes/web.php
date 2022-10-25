@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailTemplateController;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 */
 
-#1 Clear Cache Route
+# Clear Cache Route
 Route::get('clear-cache', function () {
 
     Artisan::call('view:clear');
@@ -37,67 +38,78 @@ Route::get('clear-cache', function () {
 
 });
 
-#2 Authentication Routes
+# Authentication Routes
 Auth::routes(['register' => false]);
 
-#3 Homepage Route
+# Homepage Route
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-#4 Customers Route
+# Customers Route
 Route::resource('customers', CustomerController::class);
 
-#5 Schedules Route
+Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomplete'])->name('customers.autocomplete');
+
+# Schedules Route
 Route::resource('schedules', ScheduleController::class);
 
-#6 Jobs Route
+# Jobs Route
 Route::resource('jobs', JobController::class);
 
-#7 Invoice Route
+# Invoice Route
 Route::resource('invoices', InvoiceController::class);
 
-#8 Estimates Route
+# Estimates Route
 Route::resource('estimates', EstimateController::class);
 
-#9 Sales Leads Route
+# Sales Leads Route
 Route::resource('sales-leads', SalesLeadController::class);
 
-#10 Job Forms Route
+# Job Forms Route
 Route::resource('job-forms', JobFormController::class);
 
-#11 Manage Team Route
+# Manage Team Route
 Route::resource('manage-team', ManageTeamController::class);
 
-#12 Email Template Route
+# Email Template Route
 Route::resource('email-templates', EmailTemplateController::class);
 
-#13 job-titles Route
+# job-titles Route
 Route::resource('job-titles', JobTitleController::class);
 
-#14 Products Route
+# Products Route
 Route::resource('products', ProductController::class);
 
-#15 Tax rates Route
+# Tax rates Route
 Route::resource('tax-rates', TaxRateController::class);
 
-#16 Products Route
+# Company Settings Route
 Route::resource('company-settings', CompanyController::class);
 
+# Upload Photo Form Route
 Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploadForm'])->name('customer.upload-photos');
 
+# Upload Photo Route
 Route::post('customer/photos/upload', [UtilityController::class, 'photosUpload'])->name('customer.photos-upload');
 
+# Upload Document Form Route
 Route::get('customer/upload-documents/{id}', [UtilityController::class, 'documentsUploadForm'])->name('customer.upload-documents');
 
+# Upload Document Route
 Route::post('customer/documents/upload', [UtilityController::class, 'documentsUpload'])->name('customer.documents-upload');
 
+# Add Note Form Route
 Route::get('customer/add-notes/{id}', [UtilityController::class, 'notesUploadForm'])->name('customer.add-notes');
 
+# Add Note Route
 Route::post('customer/notes/add', [UtilityController::class, 'notesUpload'])->name('customer.notes-add');
 
+# Send Email Form Route
 Route::get('customer/send-email/{id}', [UtilityController::class, 'sendEmailForm'])->name('customer.send-email');
 
+# Send Email Route
 Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->name('customer.email-send');
 
+# Refresh Database Route
 Route::get('refresh-database', function () {
 
     Artisan::call('migrate:fresh');
