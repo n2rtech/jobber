@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Job::class);
     }
 
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
 }

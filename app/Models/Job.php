@@ -38,4 +38,8 @@ class Job extends Model
     {
         return $this->belongsTo(JobTitle::class);
     }
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

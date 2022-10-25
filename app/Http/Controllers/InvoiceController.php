@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -15,9 +18,35 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('invoices.list');
+        $invoices                   = Invoice::query();
+
+        $filter_name                = $request->name;
+
+        $filter_email               = $request->email;
+
+        $filter_phone               = $request->phone;
+
+        $filter_status              = $request->status;
+
+        $filter_date                = $request->date;
+
+
+        isset($filter_name)         ? $invoices->where('name', 'like', '%'.$filter_name.'%') : $invoices;
+
+        isset($filter_email)        ? $invoices->where('email', $filter_email) : $invoices;
+
+        isset($filter_phone)        ? $invoices->where('phone', $filter_phone) : $invoices;
+
+        isset($filter_status)       ? $invoices->where('status', $filter_status) : $invoices;
+
+        isset($filter_date)         ? $invoices->where('invoice_date', $filter_date) : $invoices;
+
+
+        $invoices                   = $invoices->orderBy('id', 'desc')->get();
+
+        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date'));
     }
 
     /**
@@ -25,9 +54,16 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if(isset($request->customer_id)){
+            $products   = Product::get();
+            $customer   = Customer::find($request->customer_id);
+            return view('invoices.convert', compact('products', 'customer'));
+        }else{
+            $products   = Product::get();
+            return view('invoices.create', compact('products'));
+        }
     }
 
     /**
