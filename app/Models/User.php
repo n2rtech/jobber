@@ -47,4 +47,9 @@ class User extends Authenticatable
         return $this->hasMany(CustomerNote::class);
     }
 
+    public function sentEmails()
+    {
+        return $this->hasMany(SentEmail::class);
+    }
+
 }

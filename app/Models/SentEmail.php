@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerNote extends Model
+class SentEmail extends Model
 {
-
     use HasFactory;
 
-    protected $table        = 'customer_notes';
+    protected $table        = 'sent_emails';
 
-    protected $fillable     = ['customer_id', 'user_id', 'note', 'file'];
+    protected $fillable     = ['customer_id', 'user_id','email', 'subject', 'message', 'attachments'];
 
     public $timestamps      = true;
 
@@ -25,5 +24,4 @@ class CustomerNote extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 }

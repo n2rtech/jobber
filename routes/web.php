@@ -84,11 +84,19 @@ Route::resource('company-settings', CompanyController::class);
 
 Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploadForm'])->name('customer.upload-photos');
 
+Route::post('customer/photos/upload', [UtilityController::class, 'photosUpload'])->name('customer.photos-upload');
+
 Route::get('customer/upload-documents/{id}', [UtilityController::class, 'documentsUploadForm'])->name('customer.upload-documents');
+
+Route::post('customer/documents/upload', [UtilityController::class, 'documentsUpload'])->name('customer.documents-upload');
 
 Route::get('customer/add-notes/{id}', [UtilityController::class, 'notesUploadForm'])->name('customer.add-notes');
 
+Route::post('customer/notes/add', [UtilityController::class, 'notesUpload'])->name('customer.notes-add');
+
 Route::get('customer/send-email/{id}', [UtilityController::class, 'sendEmailForm'])->name('customer.send-email');
+
+Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->name('customer.email-send');
 
 Route::get('refresh-database', function () {
 

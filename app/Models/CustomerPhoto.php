@@ -5,25 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerNote extends Model
+class CustomerPhoto extends Model
 {
 
     use HasFactory;
 
-    protected $table        = 'customer_notes';
+    protected $table        = 'customer_photos';
 
-    protected $fillable     = ['customer_id', 'user_id', 'note', 'file'];
+    protected $fillable     = ['customer_id', 'image'];
 
     public $timestamps      = true;
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

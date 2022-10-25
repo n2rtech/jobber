@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Show Customer')
+@section('head')
+    <link rel="stylesheet" href="{{ asset('plugins/simple-lightbox/simple-lightbox.css') }}" />
+@endsection
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -212,16 +215,62 @@
                             <p class="text-center mt-4"> No Invoice Found</p>
                           </div>
                           <div class="tab-pane fade" id="custom-tabs-one-photos" role="tabpanel" aria-labelledby="custom-tabs-one-photos-tab">
-                            <p class="text-center mt-4"> No Photos Found</p>
+                            <div class="gallery">
+                                @forelse($customer->photos as $photo)
+                                    <a href="{{ $photo->path }}" class="big"><img src="{{ $photo->path }}"
+                                            alt="{{ $photo->image }}" title="Uploaded On :{{ $photo->created_at }}"
+                                            width="150px" height="150px" /></a>
+                                @empty
+                                    <p class="text-center mt-4">{{ __('No Photos Uploaded') }}</p>
+                                @endforelse
+                                <div class="clear"></div>
+                            </div>
                           </div>
                           <div class="tab-pane fade" id="custom-tabs-one-reminders" role="tabpanel" aria-labelledby="custom-tabs-one-reminders-tab">
                             <p class="text-center mt-4"> No Reminders Found</p>
                           </div>
                           <div class="tab-pane fade" id="custom-tabs-one-notes" role="tabpanel" aria-labelledby="custom-tabs-one-notes-tab">
-                            <p class="text-center mt-4"> No Call / Notes Found</p>
+                            <div class="card card-widget widget-user-2">
+                                <div class="card-body card-comments">
+                                    @forelse($customer->notes as $note)
+                                    <div class="card-comment">
+
+                                        <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
+
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                {{  $note->user->name }}
+                                                <span class="text-muted float-right">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
+                                            </span>
+                                            {{ $note->note }}
+                                        </div>
+
+                                    </div>
+                                    @empty
+                                    <div class="card-comment">
+                                        <p class="text-center mt-4">No Notes Added.</p>
+                                    </div>
+                                    @endforelse
+                                </div>
+                            </div>
                          </div>
                          <div class="tab-pane fade" id="custom-tabs-one-documents" role="tabpanel" aria-labelledby="custom-tabs-one-documents-tab">
-                            <p class="text-center mt-4"> No Documents Found</p>
+                            <div class="card card-widget widget-user-2">
+                                <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="card-footer p-0">
+                                        <ul class="nav flex-column">
+                                            @forelse($customer->documents as $document)
+                                            <li class="nav-item">
+                                                <a href="{{ $document->path }}" class="nav-link" download="">
+                                                  {{ $document->document }} <span class="float-right badge bg-primary">{{ $document->created_at }}</span>
+                                                </a>
+                                              </li>
+                                            @empty
+                                                <p class="text-center mt-4">{{ __('No Documents uploaded') }}</p>
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                            </div>
                          </div>
                          <div class="tab-pane fade" id="custom-tabs-one-letters" role="tabpanel" aria-labelledby="custom-tabs-one-letters-tab">
                             <p class="text-center mt-4"> No Letters Found</p>
@@ -250,5 +299,10 @@
     </section>
 @endsection
 @push('scripts')
-
+<script src="{{ asset('plugins/simple-lightbox/simple-lightbox.js') }}"></script>
+<script>
+    (function() {
+        var $gallery = new SimpleLightbox('.gallery a', {});
+    })();
+</script>
 @endpush

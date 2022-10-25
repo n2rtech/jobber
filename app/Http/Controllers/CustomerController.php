@@ -122,6 +122,15 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
+        foreach($customer->photos as $photo){
+            $photo->path = asset('storage/uploads/customers/' . $id . '/photos' .'/'. $photo->image);
+        }
+        foreach($customer->documents as $document){
+            $document->path = asset('storage/uploads/customers/' . $id . '/documents' .'/'. $document->document);
+        }
+        foreach($customer->notes as $note){
+            $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
+        }
         return view('customers.view', compact('customer'));
     }
 

@@ -13,4 +13,19 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerNote::class);
     }
+
+    public function photos()
+    {
+        return $this->hasMany(CustomerPhoto::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(CustomerDocument::class);
+    }
+
+    public function sentEmails()
+    {
+        return $this->hasMany(sentEmail::class);
+    }
 }

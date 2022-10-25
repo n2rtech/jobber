@@ -25,8 +25,65 @@
                 </div>
             </div>
             <div class="card-body">
-                <p class="text-center mt-4">Coming Soon</p>
+                <form id="emailForm" method="POST" action="{{ route('customer.email-send') }}">
+                    @csrf
+                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">{{ __('Customer Email') }}</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter Customer Email" value="{{ old('email', $customer->email) }}" readonly>
+                            @error('email')
+                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="subject" class="col-sm-2 col-form-label">{{ __('Subject') }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="subject" name="subject"
+                                placeholder="Enter Subject" value="{{ old('subject', $customer->subject) }}">
+                            @error('subject')
+                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="message" class="col-sm-2 col-form-label">{{ __('Message') }}</label>
+                        <div class="col-sm-10">
+                            <textarea rows="4" class="form-control" id="message" name="message" placeholder="Enter Message">{{ old('message') }}</textarea>
+                            @error('message')
+                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="attachment" class="col-sm-2 col-form-label">{{ __('Attachment') }}</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="attachment" name="attachment"
+                                        multiple>
+                                    <label class="custom-file-label" for="attachment">{{ __('Choose Attachment') }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-success" form="emailForm">
+                            <i class="btn-icon fas fa-envelope"></i> {{ __('Send') }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
+@endpush
