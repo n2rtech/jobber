@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -59,10 +62,38 @@ class InvoiceController extends Controller
         if(isset($request->customer_id)){
             $products   = Product::get();
             $customer   = Customer::find($request->customer_id);
-            return view('invoices.convert', compact('products', 'customer'));
+            $customer->address ='';
+            if(isset($customer->address_1) && strlen($customer->address_1) > 0){
+                $customer->address .= $customer->address_1;
+            }
+
+            if(isset($customer->address_2) && strlen($customer->address_2) > 0){
+                $customer->address .= ', '.$customer->address_2;
+            }
+
+            if(isset($customer->city) && strlen($customer->city) > 0){
+                $customer->address .= ', '.$customer->city;
+            }
+
+            if(isset($customer->state) && strlen($customer->state) > 0){
+                $customer->address .= ', '.$customer->state;
+            }
+
+            if(isset($customer->country) && strlen($customer->country) > 0){
+                $customer->address .= ', '.$customer->country;
+            }
+
+            if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
+                $customer->address .= ', '.$customer->eir_code;
+            }
+            $count      = Invoice::count();
+            $invoice_no = $count + 1;
+            return view('invoices.convert', compact('products', 'customer', 'invoice_no'));
         }else{
             $products   = Product::get();
-            return view('invoices.create', compact('products'));
+            $count      = Invoice::count();
+            $invoice_no = $count + 1;
+            return view('invoices.create', compact('products', 'invoice_no'));
         }
     }
 
@@ -74,7 +105,39 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $invoice                        = new Invoice();
+        $invoice->customer_id           = $request->customer_id;
+        $invoice->user_id               = Auth::user()->id;
+        $invoice->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
+        $invoice->terms                 = $request->terms;
+        $invoice->due_date              = $request->due_date;
+        $invoice->invoice_date          = $request->invoice_date;
+        $invoice->discount              = $request->discount;
+        $invoice->discount_type         = $request->discount_type;
+        $invoice->tax                   = $request->tax;
+        $invoice->tax_type              = $request->tax_type;
+        $invoice->notes                 = $request->notes;
+        $invoice->conditions            = $request->conditions;
+        $invoice->total                 = $request->invoice_total;
+        $invoice->save();
+
+        if(!empty($request->product) && is_array($request->product)){
+            foreach($request->product as $key => $value){
+                $product                = new InvoiceProduct();
+                $product->invoice_id    = $invoice->id;
+                $product->product_id    = $value['product'];
+                $product->description   = $value['description'];
+                $product->quantity      = $value['quantity'];
+                $product->unit_price    = $value['unit_price'];
+                $product->total         = $value['total'];
+                $product->save();
+            }
+        }
+        $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+        Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
+
+        return redirect()->route('invoices.index')->with('success', 'Invoice added successfully!');
     }
 
     /**
@@ -96,7 +159,33 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $invoice    = Invoice::find($id);
+        $invoice->customer->address ='';
+        if(isset($invoice->customer->address_1) && strlen($invoice->customer->address_1) > 0){
+            $invoice->customer->address .= $invoice->customer->address_1;
+        }
+
+        if(isset($invoice->customer->address_2) && strlen($invoice->customer->address_2) > 0){
+            $invoice->customer->address .= ', '.$invoice->customer->address_2;
+        }
+
+        if(isset($invoice->customer->city) && strlen($invoice->customer->city) > 0){
+            $invoice->customer->address .= ', '.$invoice->customer->city;
+        }
+
+        if(isset($invoice->customer->state) && strlen($invoice->customer->state) > 0){
+            $invoice->customer->address .= ', '.$invoice->customer->state;
+        }
+
+        if(isset($invoice->customer->country) && strlen($invoice->customer->country) > 0){
+            $invoice->customer->address .= ', '.$invoice->customer->country;
+        }
+
+        if(isset($invoice->customer->eir_code) && strlen($invoice->customer->eir_code) > 0){
+            $invoice->customer->address .= ', '.$invoice->customer->eir_code;
+        }
+        $products   = Product::get();
+        return view('invoices.edit', compact('invoice', 'products'));
     }
 
     /**
@@ -108,7 +197,39 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $invoice                        = Invoice::find($id);
+        $invoice->customer_id           = $request->customer_id;
+        $invoice->user_id               = Auth::user()->id;
+        $invoice->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
+        $invoice->terms                 = $request->terms;
+        $invoice->due_date              = $request->due_date;
+        $invoice->invoice_date          = $request->invoice_date;
+        $invoice->discount              = $request->discount;
+        $invoice->discount_type         = $request->discount_type;
+        $invoice->tax                   = $request->tax;
+        $invoice->tax_type              = $request->tax_type;
+        $invoice->notes                 = $request->notes;
+        $invoice->conditions            = $request->conditions;
+        $invoice->total                 = $request->invoice_total;
+        $invoice->save();
+
+        InvoiceProduct::where('invoice_id', $id)->delete();
+        if(!empty($request->product) && is_array($request->product)){
+            foreach($request->product as $key => $value){
+                $product                = new InvoiceProduct();
+                $product->invoice_id    = $invoice->id;
+                $product->product_id    = $value['product'];
+                $product->description   = $value['description'];
+                $product->quantity      = $value['quantity'];
+                $product->unit_price    = $value['unit_price'];
+                $product->total         = $value['total'];
+                $product->save();
+            }
+        }
+        $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+        Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
+
+        return redirect()->route('invoices.index')->with('success', 'Invoice updated successfully!');
     }
 
     /**
@@ -119,6 +240,8 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        InvoiceProduct::where('invoice_id', $id)->delete();
+        Invoice::find($id)->delete();
+        return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully!');
     }
 }

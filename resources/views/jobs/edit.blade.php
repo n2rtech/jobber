@@ -156,7 +156,7 @@
                                                         @foreach($job->products as $key => $product)
                                                         <tr id="item-row{{ $key }}">
                                                             <td>
-                                                                <select name="product[{{ $key }}][product]" id="product{{ $key }}" class="form-control form-control-sm" onchange="showProductOptions(this, {{ $key }})">
+                                                                <select name="product[{{ $key }}][product]" id="product{{ $key }}" class="form-control form-control-sm" onchange="showProductOptions(this, {{ $key }})" required>
                                                                     <option value="">Select Product</option>
                                                                         @foreach($products as $row_product)
                                                                             <option value="{{ $row_product->id }}" @if($row_product->id == $product->product_id) selected @endif data-unitprice="{{ $row_product->unit_price }}" data-description="{{ $row_product->description }}">{{ $row_product->name }}</option>
@@ -178,7 +178,7 @@
                                                                     <input type="number"
                                                                         class="form-control form-control-sm text-align-right"
                                                                         id="unit_price{{ $key }}" name="product[{{ $key }}][unit_price]"
-                                                                        placeholder="Unit Price" min="0" step="any" oninput="totalUpdate({{ $key }})" required value="{{ $product->unit_price }}">
+                                                                        placeholder="Unit Price" oninput="totalUpdate({{ $key }})" value="{{ $product->unit_price }}" min="0" step="any" required>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -187,9 +187,9 @@
                                                                         <span class="input-group-text text-sm">£</span>
                                                                     </div>
                                                                     <input type="number"
-                                                                        class="form-control form-control-sm text-align-right"
+                                                                        class="form-control form-control-sm text-align-right totalpriceinput"
                                                                         id="total{{ $key }}" name="product[{{ $key }}][total]"
-                                                                        placeholder="Total" min="0" step="any" required value="{{ $product->total }}">
+                                                                        placeholder="Total" value="{{ $product->total }}" min="0" step="any" required>
                                                                 </div>
                                                             </td>
                                                             <td class="text-right"><button type="button"
@@ -213,14 +213,14 @@
                                 </div>
                             </div>
 
-                           <div class="form-group row">
+                            <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <div class="card card-dark">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Totals') }}</h3>
                                             <div class="card-tools">
-                                                <h6>£ <span>{{ $job->total }}</span></h6>
+                                                <h6>£ <span id="totals">0</span></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -242,7 +242,16 @@
     </section>
 @endsection
 @push('scripts')
+
+    {{-- Load Select 2 Script --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{-- Define Global variable --}}
+    <script>
+        var item_row = {{ count($job->products) }};
+    </script>
+
+    {{-- Autocomplete Customer Field --}}
     <script>
         $("#name").select2({
             theme: 'bootstrap4',
@@ -256,17 +265,12 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term, // search term
+                        q: params.term,
                         page: params.page
                     };
                 },
                 processResults: function(data, params) {
-                    // parse the results into the format expected by Select2
-                    // since we are using custom formatting functions we do not need to
-                    // alter the remote JSON data, except to indicate that infinite
-                    // scrolling can be used
                     params.page = params.page || 1;
-                    console.log(data.items);
                     return {
                         results: data.items,
                         pagination: {
@@ -289,21 +293,17 @@
 
             var $container = $(
                 "<div class='select2-result-repository clearfix'>" +
-                "<div class='select2-result-repository__meta'>" +
-                "<div class='select2-result-repository__title'></div>" +
-                "<div class='select2-result-repository__statistics'>" +
-                "<div class='select2-result-repository__forks'><i class='fa fa-house'></i> </div> " +
-                "<div class='select2-result-repository__stargazers'><i class='fa fa-phone'></i> </div> " +
-                "<div class='select2-result-repository__watchers'><i class='fa fa-envelope'></i> </div> " +
+                "<div class='select2-result-repository__title' style='font-size:14px'><i class='fa fa-user' style='font-size:13px'></i>  </div>" +
+                "<div class='select2-result-repository__forks' style='font-size:13px'><i class='fa fa-house' style='font-size:12px'></i>  </div>" +
+                "<div class='select2-result-repository__stargazers' style='font-size:13px'><i class='fa fa-phone' style='font-size:12px'></i>  </div>" +
+                "<div class='select2-result-repository__watchers' style='font-size:13px'><i class='fa fa-envelope' style='font-size:12px'></i>  </div>" +
                 "</div>" +
                 "</div>" +
                 "</div>"
             );
 
-            $container.find(".select2-result-repository__title").text(repo.name);
-            $container.find(".select2-result-repository__description")
-            $container.find(".select2-result-repository__forks").append(repo.address_1 + ', ' + repo.address_2 + ', ' + repo
-                .city + ', ' + repo.state + ', ' + repo.country + ', ' + repo.eir_code);
+            $container.find(".select2-result-repository__title").append(repo.name);
+            $container.find(".select2-result-repository__forks").append(repo.address);
             $container.find(".select2-result-repository__stargazers").append(repo.phone);
             $container.find(".select2-result-repository__watchers").append(repo.email);
 
@@ -315,78 +315,98 @@
             return repo.name;
         }
     </script>
+
+    {{-- Add Line items --}}
     <script>
-       $("#select2-name-container").text("{{ $job->customer->name }}");
-        function showProductOptions(element, row){
-            var unitprice   = $(element).find(':selected').data('unitprice');
-            var description = $(element).find(':selected').data('description');
-            $("#quantity"+row).val(1);
-            $("#unit_price"+row).val(unitprice);
-            $("#description"+row).val(description);
-            var quantity    =  $("#quantity"+row).val();
-            var total       = quantity * unitprice;
-            $('#total'+row).val(total);
-            // setTotalAmount(total)
+        function addLineItem() {
+            if (item_row < 50) {
+                html = '<tr id="item-row' + item_row + '">';
+                html +='<td>';
+                html +='<select name="product['+ item_row +'][product]" id="product'+ item_row +'" class="form-control form-control-sm" onchange="showProductOptions(this, '+ item_row +')" required>';
+                html +='<option value="">Select Product</option>';
+                html +='@foreach($products as $product)';
+                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>';
+                html +='@endforeach';
+                html +='</select>';
+                html +='<textarea name="product['+ item_row +'][description]" id="description'+ item_row +'" rows="2" placeholder="Description" class="form-control form-control-sm mt-1"></textarea>';
+                html +='</td>';
+                html +='<td>';
+                html +='<input type="number" class="form-control form-control-sm text-align-right" id="quantity'+ item_row +'" name="product['+ item_row +'][quantity]" placeholder="Quantity" oninput="totalUpdate('+ item_row +')" min="1" value="1">';
+                html +='</td>';
+                html +='<td>';
+                html +='<div class="input-group">';
+                html +='<div class="input-group-prepend">';
+                html +='<span class="input-group-text text-sm">£</span>';
+                html +='</div>';
+                html +='<input type="number" class="form-control form-control-sm text-align-right" id="unit_price'+ item_row +'" name="product['+ item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" oninput="totalUpdate('+ item_row +')" value="0.00" required>';
+                html +='</div>';
+                html +='</td>';
+                html +='<td>';
+                html +='<div class="input-group">';
+                html +='<div class="input-group-prepend">';
+                html +='<span class="input-group-text text-sm">£</span>';
+                html +='</div>';
+                html +='<input type="number" class="form-control form-control-sm text-align-right totalpriceinput" id="total'+ item_row +'" name="product['+ item_row +'][total]" placeholder="Total" min="0" value="0.00" step="any" required>';
+                html +='</div>';
+                html +='</td>';
+                html +='<td class="text-right"><button type="button" class="btn btn-sm btn-danger" onclick="$(\'#item-row' + item_row +'\').remove();"><i class="fa fa-minus"></i></button></td>';
+                html += '</tr>';
+
+                $('#line_items tbody').append(html);
+
+                item_row++;
+            }
         }
     </script>
+
+    {{-- Show Product Options --}}
+    <script>
+
+        function showProductOptions(element, row){
+
+            var unitprice    = $(element).find(':selected').data('unitprice');
+
+            var description  = $(element).find(':selected').data('description');
+
+            $("#unit_price"  + row).val(unitprice);
+
+            $("#description" + row).val(description);
+
+            var quantity     = $("#quantity" + row).val();
+
+            var total       = (Math.round(quantity * 100) / 100).toFixed(2) * (Math.round(unitprice * 100) / 100).toFixed(2);
+
+            $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
+        }
+    </script>
+
+    {{-- Update Product Total By Quantity --}}
      <script>
         function totalUpdate(row){
-            var quantity    =  $("#quantity"+row).val();
-            var unitprice   =  $("#unit_price"+row).val();
-            var total       = quantity * unitprice;
-            $('#total'+row).val(total);
-            // setTotalAmount(total)
+            var quantity    = $("#quantity"+row).val();
+            var unitprice   = $("#unit_price"+row).val();
+            var total       = (Math.round(quantity * 100) / 100).toFixed(2) * (Math.round(unitprice * 100) / 100).toFixed(2);
+            $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
         }
     </script>
-    {{-- <script>
-        function setTotalAmount(total){
-            var amount = $('#total_amount').val();
-            var total_amount = parseFloat(amount) + parseFloat(total);
-            var amount = $('#total_amount').val(total_amount);
-            $('#amount').text(total_amount);
-        }
-    </script> --}}
-   <script>
-    var item_row = 1;
 
-    function addLineItem() {
-        if (item_row < 50) {
-            html = '<tr id="item-row' + item_row + '">';
-            html +='<td>';
-            html +='<select name="product['+ item_row +'][product]" id="product'+ item_row +'" class="form-control form-control-sm" onchange="showProductOptions(this, '+ item_row +')">';
-            html +='<option value="">Select Product</option>';
-            html +='@foreach($products as $product)';
-            html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>';
-            html +='@endforeach';
-            html +='</select>';
-            html +='<textarea name="product['+ item_row +'][description]" id="description'+ item_row +'" rows="2" placeholder="Description" class="form-control form-control-sm mt-1"></textarea>';
-            html +='</td>';
-            html +='<td>';
-            html +='<input type="number" class="form-control form-control-sm text-align-right" id="quantity'+ item_row +'" name="product['+ item_row +'][quantity]" placeholder="Quantity" oninput="totalUpdate('+ item_row +')" min="1" value="1">';
-            html +='</td>';
-            html +='<td>';
-            html +='<div class="input-group">';
-            html +='<div class="input-group-prepend">';
-            html +='<span class="input-group-text text-sm">£</span>';
-            html +='</div>';
-            html +='<input type="number" class="form-control form-control-sm text-align-right" id="unit_price'+ item_row +'" name="product['+ item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" oninput="totalUpdate('+ item_row +')" value="0" required>';
-            html +='</div>';
-            html +='</td>';
-            html +='<td>';
-            html +='<div class="input-group">';
-            html +='<div class="input-group-prepend">';
-            html +='<span class="input-group-text text-sm">£</span>';
-            html +='</div>';
-            html +='<input type="number" class="form-control form-control-sm text-align-right" id="total'+ item_row +'" name="product['+ item_row +'][total]" placeholder="Total" min="0" value="0" step="any" required>';
-            html +='</div>';
-            html +='</td>';
-            html +='<td class="text-right"><button type="button" class="btn btn-sm btn-danger" onclick="$(\'#item-row' + item_row +'\').remove();"><i class="fa fa-minus"></i></button></td>';
-            html += '</tr>';
+    {{-- Update Total of Products --}}
+    <script>
+        setInterval(function(){
+            var sum = 0;
+            $('.totalpriceinput').each(function() {
+                sum += Number($(this).val());
+            });
+            $('#totals').text((Math.round(sum * 100) / 100).toFixed(2));
+        }, 500);
+    </script>
 
-            $('#line_items tbody').append(html);
+    {{-- Set Default Customer --}}
+    <script>
+       $(document).ready(function () {
+            $("#select2-name-container").text("{{ $job->customer->name }}");
+            $("#customer_id").val("{{ $job->customer_id }}");
+       });
+    </script>
 
-            item_row++;
-        }
-    }
-</script>
 @endpush

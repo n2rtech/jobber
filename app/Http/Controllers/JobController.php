@@ -183,6 +183,8 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        JobProduct::where('job_id', $id)->delete();
+        Job::find($id)->delete();
+        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
     }
 }

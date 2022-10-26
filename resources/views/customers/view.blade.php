@@ -290,7 +290,7 @@
                     <a href="{{ route('customer.upload-documents', $customer->id) }}" class="btn btn-info">Upload Document</a>
                     <a href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}" class="btn btn-warning">New Job</a>
                     <a href="{{ route('customer.add-notes', $customer->id) }}" class="btn btn-success">Add Note</a>
-                    <a href="{{ route('invoices.create') }}" class="btn btn-dark">New Invoice</a>
+                    <a href="{{ route('invoices.create', ['customer_id' => $customer->id]) }}" class="btn btn-dark">New Invoice</a>
                     <a href="{{ route('estimates.create') }}" class="btn btn-danger">New Estimate</a>
                     <a href="{{ route('customer.send-email', $customer->id) }}" class="btn btn-indigo">Send Email</a>
                 </div>

@@ -26,13 +26,16 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->date('invoice_date')->nullable();
             $table->decimal('discount', 10, 2)->nullable();
-            $table->boolean('discount_type')->default(0);
+            $table->enum('discount_type', ['percentage', 'amount'])->default('percentage');
             $table->decimal('tax', 10, 2)->nullable();
-            $table->boolean('tax_type')->default(0);
-            $table->string('total')->nullable();
+            $table->enum('tax_type', ['percentage', 'amount'])->default('percentage');
+            $table->decimal('subtotal', 10, 2)->nullable();
+            $table->decimal('total', 10, 2)->nullable();
+            $table->decimal('paid', 10, 2)->default(0);
             $table->longText('notes')->nullable();
             $table->longText('conditions')->nullable();
             $table->string('file')->nullable();
+            $table->enum('status', ['paid', 'unpaid', 'canelled', 'partial'])->default('unpaid');
             $table->timestamps();
         });
     }
