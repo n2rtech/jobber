@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Add Invoice')
+@section('title', 'Edit Invoice')
 @section('head')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" rel="stylesheet" />
@@ -9,7 +9,7 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1>{{ __('Add Invoice') }}</h1>
+            <h1>{{ __('Edit Invoice') }}</h1>
          </div>
          <div class="col-sm-6 text-right">
             <a href="{{ url()->previous() }}" class="btn btn-dark">

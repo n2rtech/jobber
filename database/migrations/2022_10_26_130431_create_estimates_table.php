@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('estimates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->unsignedBigInteger('job_id')->nullable();
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('shipping_address')->nullable();
@@ -35,7 +33,7 @@ return new class extends Migration
             $table->longText('notes')->nullable();
             $table->longText('conditions')->nullable();
             $table->string('file')->nullable();
-            $table->enum('status', ['paid', 'unpaid', 'cancelled', 'partial'])->default('unpaid');
+            $table->enum('status', ['sent', 'expired', 'cancelled', 'created'])->default('created');
             $table->timestamps();
         });
     }
@@ -47,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('estimates');
     }
 };
