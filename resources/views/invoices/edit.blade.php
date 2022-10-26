@@ -23,7 +23,7 @@
    </div>
 </section>
 <section class="content">
-   <form id="invoiceForm" method="POST" action="{{ route('invoices.update') }}" enctype="multipart/form-data">
+   <form id="invoiceForm" method="POST" action="{{ route('invoices.update', $invoice->id) }}" enctype="multipart/form-data">
       @csrf
       @method('PUT')
       <input type="hidden" name="customer_id" id="customer_id">
