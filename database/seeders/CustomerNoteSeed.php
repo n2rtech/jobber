@@ -6684,24 +6684,6 @@ class CustomerNoteSeed extends Seeder
 
 
 
-        CustomerNote::create([
-            'id' => 846,
-            'customer_id' => 15062,
-            'user_id' => 1,
-            'note' => 'Jenifer arranged for Sky+ HD box to be collected from Barlo Nissan (van in for service). Invoiced. 289.00',
-            'created_at' => '2012-09-20 13:17:10'
-        ]);
-
-
-
-        CustomerNote::create([
-            'id' => 847,
-            'customer_id' => 15062,
-            'user_id' => 1,
-            'note' => 'Box stuck in standby. Collected replacement from shop. Faulty box to be returned to DTV.',
-            'created_at' => '2012-09-20 13:26:12'
-        ]);
-
 
 
         CustomerNote::create([
