@@ -9811,14 +9811,6 @@ class CustomerNoteSeed extends Seeder
         ]);
 
         CustomerNote::create([
-            'id' => 1192,
-            'customer_id' => 15062,
-            'user_id' => 1,
-            'note' => 'box returned and paid',
-            'created_at' => '2012-10-16 10:53:39'
-        ]);
-
-        CustomerNote::create([
             'id' => 1193,
             'customer_id' => 16675,
             'user_id' => 1,
