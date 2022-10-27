@@ -8,7 +8,7 @@
                     <h1>{{ __('Send Email') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">
+                    <a href="{{ route('customers.show', $customer) }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
                 </div>
