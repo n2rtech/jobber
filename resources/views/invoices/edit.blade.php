@@ -16,7 +16,7 @@
             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
             </a>
             <button type="submit" class="btn btn-danger" form="invoiceForm">
-            <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
+            <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
             </button>
          </div>
       </div>
@@ -57,14 +57,16 @@
                             <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox" id="same_as_billing_address" name="same_as_billing_address" value="1" onchange="shippingAddressOptions();" @if(!isset($invoice->shipping_address)) checked @endif>
                             <label for="same_as_billing_address" class="custom-control-label"><small>Same as Billing Address</small></label>
                           </div>
-                          @isset($invoice->shipping_address)
-                        <textarea id="shipping_address_div" class="form-control form-control-sm mt-2" rows="3" name="shipping_address" placeholder="Enter Shipping Address"></textarea>
-                          @endisset
                     </div>
                      <div class="col-sm-6 text-right">
                         <label for="invoice_no" class="col-form-label" style="padding-bottom:0px">{{ __('Invoice No.') }}</label>
                         <p id="invoice_no" class="text-muted"><small>#{{ $invoice->id }}</small></p>
                      </div>
+                     @isset($invoice->shipping_address)
+                     <div class="col-sm-12">
+                        <input id="shipping_address_div" class="form-control form-control-sm" name="shipping_address" placeholder="Enter Shipping Address" />
+                     </div>
+                     @endisset
                   </div>
                </div>
             </div>
@@ -293,7 +295,7 @@
                </div>
             </div>
          </div>
-         <div class="col-lg-12 text-center">
+         {{-- <div class="col-lg-12 text-center">
             <div class="form-group">
                 <div class="input-group">
                     <div class="custom-file">
@@ -303,10 +305,10 @@
                     </div>
                 </div>
             </div>
-         </div>
+         </div> --}}
          <div class="col-lg-12 text-right mb-5">
             <button type="submit" class="btn btn-danger" form="invoiceForm">
-            <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
+            <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
             </button>
          </div>
       </div>

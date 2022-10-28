@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('eir_code')->nullable();
             $table->longText('directions')->nullable();
+            $table->longText('notes')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('status', ['pending', 'completed', 'Booking'])->default('pending');
             $table->timestamps();

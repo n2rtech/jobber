@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('shipping_address')->nullable();
             $table->enum('terms',[30, 60, 0])->default(0);
-            $table->date('due_date')->nullable();
-            $table->date('invoice_date')->nullable();
+            $table->date('expiry_date')->nullable();
+            $table->date('estimate_date')->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->enum('discount_type', ['percentage', 'amount'])->default('percentage');
             $table->decimal('tax', 10, 2)->nullable();
