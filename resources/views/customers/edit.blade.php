@@ -201,25 +201,19 @@
                     </div>
 
                     <div class="card-body card-comments">
-                        @forelse($customer->notes as $note)
+                        @isset($customer->notes)
                         <div class="card-comment">
 
-                            <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
-
                             <div class="comment-text">
-                                <span class="username">
-                                    {{  $note->user->name }}
-                                    <span class="text-muted float-right">{{ $note->created_at }}</span>
-                                </span>
-                                {{ $note->note }}
+                                {!! $customer->notes !!}
                             </div>
 
                         </div>
-                        @empty
+                        @else
                         <div class="card-comment">
                             <p class="text-center mt-4">No Notes Found.</p>
                         </div>
-                        @endforelse
+                        @endisset
                     </div>
                 </div>
             </div>

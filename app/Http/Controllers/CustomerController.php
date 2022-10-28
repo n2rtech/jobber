@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerNote;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,15 +101,16 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
+        $customer->notes            = 'Date :'. Carbon::now().' Note: '.$request->note;
         $customer->save();
 
-        if(isset($request->note)){
-            $note                   = new CustomerNote();
-            $note->customer_id      = $customer->id;
-            $note->user_id          = Auth::user()->id;
-            $note->note             = $request->note;
-            $note->save();
-        }
+        // if(isset($request->note)){
+        //     $note                   = new CustomerNote();
+        //     $note->customer_id      = $customer->id;
+        //     $note->user_id          = Auth::user()->id;
+        //     $note->note             = $request->note;
+        //     $note->save();
+        // }
 
         return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
@@ -128,7 +130,7 @@ class CustomerController extends Controller
         foreach($customer->documents as $document){
             $document->path = asset('storage/uploads/customers/' . $id . '/documents' .'/'. $document->document);
         }
-        foreach($customer->notes as $note){
+        foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('customers.view', compact('customer'));
@@ -193,15 +195,16 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
+        $customer->notes            = 'Date :'. Carbon::now() .' Note: '. $request->note.'<br/>'.$customer->notes;
         $customer->save();
 
-        if(isset($request->note)){
-            $note                   = new CustomerNote();
-            $note->customer_id      = $customer->id;
-            $note->user_id          = Auth::user()->id;
-            $note->note             = $request->note;
-            $note->save();
-        }
+        // if(isset($request->note)){
+        //     $note                   = new CustomerNote();
+        //     $note->customer_id      = $customer->id;
+        //     $note->user_id          = Auth::user()->id;
+        //     $note->note             = $request->note;
+        //     $note->save();
+        // }
 
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }

@@ -199,6 +199,9 @@
                             <a class="nav-link" id="custom-tabs-one-notes-tab" data-toggle="pill" href="#custom-tabs-one-notes" role="tab" aria-controls="custom-tabs-one-notes" aria-selected="false">Calls / Notes</a>
                           </li>
                           <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-archive-tab" data-toggle="pill" href="#custom-tabs-one-archive" role="tab" aria-controls="custom-tabs-one-archive" aria-selected="false">Archive Notes</a>
+                          </li>
+                          <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-documents-tab" data-toggle="pill" href="#custom-tabs-one-documents" role="tab" aria-controls="custom-tabs-one-documents" aria-selected="false">Documents</a>
                           </li>
                           <li class="nav-item">
@@ -232,7 +235,7 @@
                           <div class="tab-pane fade" id="custom-tabs-one-notes" role="tabpanel" aria-labelledby="custom-tabs-one-notes-tab">
                             <div class="card card-widget widget-user-2">
                                 <div class="card-body card-comments">
-                                    @forelse($customer->notes as $note)
+                                    @forelse($customer->allnotes as $note)
                                     <div class="card-comment">
 
                                         <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
@@ -251,6 +254,13 @@
                                         <p class="text-center mt-4">No Notes Added.</p>
                                     </div>
                                     @endforelse
+                                </div>
+                            </div>
+                         </div>
+                         <div class="tab-pane fade" id="custom-tabs-one-archive" role="tabpanel" aria-labelledby="custom-tabs-one-archive-tab">
+                            <div class="card card-widget widget-user-2">
+                                <div class="card-body card-comments">
+                                    {!! $customer->notes !!}
                                 </div>
                             </div>
                          </div>

@@ -59,7 +59,7 @@
                         </div>
                         <div class="card card-widget widget-user-2">
                             <div class="card-body card-comments">
-                                @forelse($customer->notes as $note)
+                                @forelse($customer->allnotes as $note)
                                 <div class="card-comment">
 
                                     <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">

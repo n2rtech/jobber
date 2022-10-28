@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    public function notes()
+    public function allnotes()
     {
         return $this->hasMany(CustomerNote::class);
     }

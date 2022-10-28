@@ -65,7 +65,7 @@ class UtilityController extends Controller{
 
     public function notesUploadForm($id){
         $customer = Customer::find($id);
-        foreach($customer->notes as $note){
+        foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('customers.utilities.notes', compact('customer'));
