@@ -47,6 +47,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 # Customers Route
 Route::resource('customers', CustomerController::class);
 
+Route::get('customers/convert/lead/{id}', [CustomerController::class, 'convertToLead'])->name('customers.lead');
+
 Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomplete'])->name('customers.autocomplete');
 
 # Schedules Route
@@ -112,8 +114,7 @@ Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->nam
 # Refresh Database Route
 Route::get('refresh-database', function () {
 
-    Artisan::call('migrate:fresh');
-    Artisan::call('db:seed');
+    Artisan::call('migrate:refresh --path=/database/migrations/2022_10_18_123841_create_leads_table.php');
 
     dd("Hello ! Database has been refreshed and sample data has been inserted!");
 

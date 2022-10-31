@@ -21,6 +21,9 @@
                         <a href="{{ url()->previous() }}" class="btn btn-dark">
                             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                         </a>
+                        <a href="javascript:void(0)" onclick="confirmAccept({{ $customer->id }})" class="btn btn-success">
+                            <i class="btn-icon fas fa-user-plus"></i> {{ __('Add as Sales Lead') }}
+                        </a>
                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-pink">
                         <i class="btn-icon fas fa-pen"></i> {{ __('Edit Customer') }}
                     </a>
@@ -339,5 +342,24 @@
             }
         })
     };
+</script>
+<script type="text/javascript">
+    function confirmAccept(id){
+        url_string = '{{ route("customers.lead", ":id") }}';
+        url = url_string.replace(':id', id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Add as Sales Lead!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        })
+    }
 </script>
 @endpush

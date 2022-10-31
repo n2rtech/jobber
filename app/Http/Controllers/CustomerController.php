@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Models\CustomerNote;
+use App\Models\Lead;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -199,5 +199,29 @@ class CustomerController extends Controller
     {
         Customer::find($id)->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
+    }
+
+    public function convertToLead($id){
+        $customer = Customer::find($id);
+
+        $lead                   = new Lead;
+        $lead->name             = $customer->name;
+        $lead->email            = $customer->email;
+        $lead->phone            = $customer->phone;
+        $lead->phone_name       = $customer->phone_name;
+        $lead->mobile_1         = $customer->mobile_1;
+        $lead->mobile_1_name    = $customer->mobile_1_name;
+        $lead->mobile_2         = $customer->mobile_2;
+        $lead->mobile_2_name    = $customer->mobile_2_name;
+        $lead->address_1        = $customer->address_1;
+        $lead->address_2        = $customer->address_2;
+        $lead->city             = $customer->city;
+        $lead->state            = $customer->state;
+        $lead->country          = $customer->country;
+        $lead->eir_code         = $customer->eir_code;
+        $lead->directions       = $customer->directions;
+        $lead->save();
+
+        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
     }
 }

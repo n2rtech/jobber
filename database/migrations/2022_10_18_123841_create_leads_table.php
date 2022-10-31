@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone_name')->nullable();
             $table->string('mobile_1')->nullable();
