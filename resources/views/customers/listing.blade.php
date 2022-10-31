@@ -15,8 +15,11 @@
                 @foreach ($customers as $customer)
                     <tr>
                         <td>{{ $customer->name }}</td>
-                        <td>{{ $customer->address_1 }} @isset($customer->address_2) {{ $customer->address_2 }} @endisset</td>
-                        <td>{{ $customer->phone }}</td>
+                        <td>{{ getAddress($customer->id) }}</td>
+                        <td>
+                            @isset($customer->phone) <i class="fa fa-square-phone"></i> {{ $customer->phone }} <br/> @endisset
+                            @isset($customer->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $customer->mobile_1 }} <br/> @endisset
+                            @isset($customer->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $customer->mobile_2 }}</td> @endisset
                         <td>
                             @if ($customer->status == 'pending')
                                 <span class="badge bg-danger">{{ __('Pending') }}</span>
@@ -29,13 +32,7 @@
                                 <a href="{{ route('customers.edit', $customer) }}" class="btn btn-info"> <i
                                         class="fas fa-pen"></i> </a>
                                 <a href="{{ route('customers.show', $customer) }}" class="btn btn-warning"> <i class="fas fa-eye"></i> </a>
-                                <button type="button" onclick="confirmDelete({{ $customer->id }})"
-                                    class="btn btn-danger"><i class="fas fa-trash"></i> </button>
-                                <form id='delete-form{{ $customer->id }}'
-                                    action='{{ route('customers.destroy', $customer) }}' method='POST'>
-                                    <input type='hidden' name='_token' value='{{ csrf_token() }}'>
-                                    <input type='hidden' name='_method' value='DELETE'>
-                                </form>
+
                             </div>
                         </td>
                     </tr>

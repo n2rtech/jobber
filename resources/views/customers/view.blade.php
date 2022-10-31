@@ -11,9 +11,16 @@
                     <h1>{{ __('Customer Details') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">
-                        <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
-                    </a>
+                    <form id='delete-form{{ $customer->id }}'
+                        action='{{ route('customers.destroy', $customer) }}' method='POST'>
+                        <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                        <input type='hidden' name='_method' value='DELETE'>
+                    </form>
+                    <a href="javascript:void(0)" onclick="confirmDelete({{ $customer->id }})"
+                        class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-dark">
+                            <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
+                        </a>
                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-pink">
                         <i class="btn-icon fas fa-pen"></i> {{ __('Edit Customer') }}
                     </a>
@@ -314,5 +321,23 @@
     (function() {
         var $gallery = new SimpleLightbox('.gallery a', {});
     })();
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+    function confirmDelete(no){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form'+no).submit();
+            }
+        })
+    };
 </script>
 @endpush

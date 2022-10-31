@@ -65,22 +65,12 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'email'                 => 'required',
             'phone'                 => 'required',
-            'address_1'             => 'required',
-            'city'                  => 'required',
-            'state'                 => 'required',
-            'country'               => 'required',
         ];
 
         $messages = [
             'name.required'             => "Please enter Customer name.",
-            'email.required'            => "Please enter Customer email.",
             'phone.required'            => "Please enter Customer phone.",
-            'address_1.required'        => "Please enter Customer address.",
-            'city.required'             => "Please enter Customer city.",
-            'state.required'            => "Please enter Customer state.",
-            'country.required'          => "Please enter Customer country.",
         ];
 
         $this->validate($request, $rules, $messages);
@@ -159,22 +149,12 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'email'                 => 'required',
             'phone'                 => 'required',
-            'address_1'             => 'required',
-            'city'                  => 'required',
-            'state'                 => 'required',
-            'country'               => 'required',
         ];
 
         $messages = [
             'name.required'             => "Please enter Customer name.",
-            'email.required'            => "Please enter Customer email.",
             'phone.required'            => "Please enter Customer phone.",
-            'address_1.required'        => "Please enter Customer address.",
-            'city.required'             => "Please enter Customer city.",
-            'state.required'            => "Please enter Customer state.",
-            'country.required'          => "Please enter Customer country.",
         ];
 
         $this->validate($request, $rules, $messages);
