@@ -35,7 +35,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6">
-                        <button class="btn btn-block btn-sm btn-outline-dark">Edit</button>
+                        <a href="#" id="edit_job" class="btn btn-block btn-sm btn-outline-dark">Edit</a>
                     </div>
                     <div class="col-sm-6 text-right">
                         <button class="btn btn-block btn-sm btn-dark">View Details</button>

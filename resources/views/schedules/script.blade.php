@@ -64,6 +64,7 @@
                     customer: $(eventEl).data('customer'),
                     jobid: $(eventEl).data('jobid'),
                     location: $(eventEl).data('location'),
+                    href:$(eventEl).data('href'),
                     timePeriod: '',
                     allDay: false,
                 };
@@ -92,7 +93,8 @@
                         customer: '{{ $job->customer->name }}',
                         timePeriod: '{{ \Carbon\Carbon::parse($job->start)->format('h:i') }}'+ ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
                         jobid: '{{ $job->id }}',
-                        location: '{{ getAddress($job->customer_id) }}'
+                        location: '{{ getAddress($job->customer_id) }}',
+                        href: '{{ route("jobs.edit", $job->id) }}',
                     },
                 @endforeach
             ],
@@ -104,6 +106,7 @@
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
                 $("#successModal .modal-body .starts").text(info.event.start);
                 $("#successModal .modal-body .ends").text(info.event.end);
+                $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href)
             },
             eventContent: function(arg) {
 

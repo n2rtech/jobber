@@ -48,7 +48,7 @@
                   <div id="external-events">
                     @if(count($unscheduled_jobs) > 0)
                         @foreach($unscheduled_jobs as $unscheduled_job)
-                            <div class="external-event bg-light" data-customer="{{ $unscheduled_job->customer->name }}" data-location="{{ getAddress($unscheduled_job->customer_id) }}" data-jobid="{{ $unscheduled_job->id }}">{{ $unscheduled_job->jobTitle->title }}</div>
+                            <div class="external-event bg-light" data-customer="{{ $unscheduled_job->customer->name }}" data-location="{{ getAddress($unscheduled_job->customer_id) }}" data-jobid="{{ $unscheduled_job->id }}" data-href="{{ route('jobs.edit', $unscheduled_job->id) }}">{{ $unscheduled_job->jobTitle->title }}</div>
                         @endforeach
                         <div class="checkbox" style="display: none">
                         <label for="drop-remove">
