@@ -54,7 +54,7 @@
                     <a href="{{ route('jobs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>
-                            Jobs
+                            All Jobs
                         </p>
                     </a>
                 </li>

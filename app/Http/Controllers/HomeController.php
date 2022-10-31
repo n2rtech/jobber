@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Estimate;
+use App\Models\Invoice;
+use App\Models\Job;
+use App\Models\Lead;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +28,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $total_scheduled_jobs = Job::where('scheduled', 'yes ')->count();
+        $total_jobs           = Job::count();
+        $total_leads          = Lead::count();
+        $total_invoices       = Invoice::count();
+        $total_customers      = Customer::count();
+        $total_estimates      = Estimate::count();
+        return view('home', compact('total_scheduled_jobs', 'total_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates'));
     }
 }

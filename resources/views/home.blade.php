@@ -47,9 +47,9 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>1051</h3>
+                                    <h3>{{ $total_jobs }}</h3>
 
-                                    <p>Jobs</p>
+                                    <p>All Jobs</p>
                                 </div>
                                 <a href="{{ route('jobs.index') }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
@@ -60,11 +60,11 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                    <h3>{{ $total_scheduled_jobs }}</h3>
 
                                     <p>Scheduled Jobs</p>
                                 </div>
-                                <a href="{{ route('schedules.index') }}" class="small-box-footer">View All <i
+                                <a href="{{ route('jobs.index',['scheduled' => 'yes']) }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3>40</h3>
+                                    <h3>{{ $total_leads }}</h3>
 
                                     <p>Sales Leads</p>
                                 </div>
@@ -86,7 +86,7 @@
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>65</h3>
+                                    <h3>{{ $total_invoices }}</h3>
 
                                     <p>Invoices</p>
                                 </div>
@@ -99,7 +99,7 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>1051</h3>
+                                    <h3>{{ $total_customers }}</h3>
 
                                     <p>Customers</p>
                                 </div>
@@ -112,7 +112,7 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                    <h3>{{ $total_estimates }}</h3>
 
                                     <p>Estimates</p>
                                 </div>
