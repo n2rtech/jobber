@@ -7,7 +7,8 @@
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Address') }}</th>
                     <th>{{ __('Phone') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Mobile 1') }}</th>
+                    <th>{{ __('Mobile 2') }}</th>
                     <th>{{ __('Action') }}</th>
                 </tr>
             </thead>
@@ -17,23 +18,23 @@
                         <td>{{ $customer->name }}</td>
                         <td>{{ getAddress($customer->id) }}</td>
                         <td>
-                            @isset($customer->phone) <i class="fa fa-square-phone"></i> {{ $customer->phone }} <br/> @endisset
-                            @isset($customer->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $customer->mobile_1 }} <br/> @endisset
-                            @isset($customer->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $customer->mobile_2 }}</td> @endisset
+                            {{ $customer->phone }}
                         <td>
-                            @if ($customer->status == 'pending')
-                                <span class="badge bg-danger">{{ __('Pending') }}</span>
-                            @else
-                                <span class="badge bg-success">{{ __('Completed') }}</span>
-                            @endif
+                           {{ $customer->mobile_1 }}
+                        </td>
+                        <td>
+                           {{ $customer->mobile_2 }}
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('customers.edit', $customer) }}" class="btn btn-info"> <i
-                                        class="fas fa-pen"></i> </a>
-                                <a href="{{ route('customers.show', $customer) }}" class="btn btn-warning"> <i class="fas fa-eye"></i> </a>
-
-                            </div>
+                                <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-vertical"></i>
+                                </button>
+                                <div class="dropdown-menu" role="menu" style="">
+                                  <a class="dropdown-item" href="{{ route('customers.edit', $customer->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                  <a class="dropdown-item" href="{{ route('customers.show', $customer->id) }}"><i class="fas fa-eye"></i> View</a>
+                                </div>
+                              </div>
                         </td>
                     </tr>
                 @endforeach
