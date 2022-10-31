@@ -73,7 +73,7 @@ Route::resource('manage-team', ManageTeamController::class);
 # Email Template Route
 Route::resource('email-templates', EmailTemplateController::class);
 
-# job-titles Route
+# Job-titles Route
 Route::resource('job-titles', JobTitleController::class);
 
 # Products Route

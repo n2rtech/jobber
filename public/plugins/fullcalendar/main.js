@@ -4190,27 +4190,28 @@ var FullCalendar = (function (exports) {
         },
         direction: 'ltr',
         buttonText: {
-            prev: 'prev',
-            next: 'next',
+            prev: '<',
+            next: '>',
             prevYear: 'prev year',
             nextYear: 'next year',
-            year: 'year',
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day',
-            list: 'list',
+            year: 'Year',
+            today: 'Today',
+            month: 'Month',
+            week: 'Week',
+            timeGridWeek: 'Week',
+            day: 'Day',
+            list: 'List',
         },
         weekText: 'W',
         weekTextLong: 'Week',
         closeHint: 'Close',
         timeHint: 'Time',
         eventHint: 'Event',
-        allDayText: 'all-day',
-        moreLinkText: 'more',
+        allDayText: 'All-day',
+        moreLinkText: 'More',
         noEventsText: 'No events to display',
     };
-    var RAW_EN_LOCALE = __assign(__assign({}, MINIMAL_RAW_EN_LOCALE), { 
+    var RAW_EN_LOCALE = __assign(__assign({}, MINIMAL_RAW_EN_LOCALE), {
         // Includes things we don't want other locales to inherit,
         // things that derive from other translatable strings.
         buttonHints: {
@@ -6789,7 +6790,7 @@ var FullCalendar = (function (exports) {
         var endMarker = framingRange.end;
         var instanceStarts = [];
         while (dayMarker < endMarker) {
-            var instanceStart 
+            var instanceStart
             // if everyday, or this particular day-of-week
             = void 0;
             // if everyday, or this particular day-of-week
@@ -13816,7 +13817,7 @@ var FullCalendar = (function (exports) {
             if (!slatCoords) {
                 return null;
             }
-            return segs.map(function (seg, i) { return (createElement(NowIndicatorRoot, { isAxis: false, date: date, 
+            return segs.map(function (seg, i) { return (createElement(NowIndicatorRoot, { isAxis: false, date: date,
                 // key doesn't matter. will only ever be one
                 key: i }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timegrid-now-indicator-line'].concat(classNames).join(' '), style: { top: slatCoords.computeDateTop(seg.start, date) } }, innerContent)); })); });
         };
@@ -14203,6 +14204,13 @@ var FullCalendar = (function (exports) {
                 usesMinMaxTime: true,
                 allDaySlot: true,
                 slotDuration: '00:30:00',
+                slotLabelFormat:{
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    omitZeroMinute: false,
+                    meridiem: 'short',
+                    hour12: false
+                  },
                 slotEventOverlap: true, // a bad name. confused with overlap/constraint system
             },
             timeGridDay: {
@@ -14211,8 +14219,12 @@ var FullCalendar = (function (exports) {
             },
             timeGridWeek: {
                 type: 'timeGrid',
-                duration: { weeks: 1 },
+                dayCount: 4,
             },
+            timeGridFourDay: {
+                type: 'timeGrid',
+                dayCount: 4
+              }
         },
     });
 
@@ -14533,7 +14545,7 @@ var FullCalendar = (function (exports) {
         table: 'table-bordered',
         tableCellShaded: 'table-active',
         buttonGroup: 'btn-group',
-        button: 'btn btn-primary',
+        button: 'btn btn-outline-dark',
         buttonActive: 'active',
         popover: 'popover',
         popoverHeader: 'popover-header',

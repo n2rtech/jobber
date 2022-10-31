@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -17,7 +19,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return view('schedules.list');
+        $scheduled_jobs     = Job::where('scheduled', 'yes ')->get();
+        $unscheduled_jobs   = Job::where('scheduled', 'no ')->get();
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs'));
     }
 
     /**
@@ -38,7 +42,11 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $start = Carbon::createFromFormat('Y-m-d h:i:s', $request->date);
+        $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->date)->addHour();
+
+        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        return response()->json(['success' => 'success']);
     }
 
     /**
