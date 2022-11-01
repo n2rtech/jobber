@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobForm;
+use App\Models\JobFormQuestion;
+use App\Models\JobFormQuestionOption;
 use Illuminate\Http\Request;
 
 class JobFormController extends Controller
@@ -40,9 +42,39 @@ class JobFormController extends Controller
      */
     public function store(Request $request)
     {
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';
+        $jobform        = new JobForm;
+        $jobform->title = $request->title;
+        $jobform->save();
+
+        if(!empty($request->question && is_array($request->question))){
+
+            foreach($request->question as $key => $value){
+
+                $question               = new JobFormQuestion();
+                $question->job_form_id  = $jobform->id;
+                $question->question     = $value['question'];
+                $question->type         = $value['type'];
+                $question->save();
+
+                if(isset($value['option']) && !empty($value['option'] && is_array($value['option']))){
+
+                    foreach($value['option'] as $newkey => $optionvalue){
+
+                        $option                         = new JobFormQuestionOption();
+                        $option->job_form_id            = $jobform->id;
+                        $option->job_form_question_id   = $question->id;
+                        $option->option                 = $optionvalue;
+                        $option->save();
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return redirect()->route('job-forms.index')->with('success', 'Job Form Saved Successfully !');
 
     }
 
@@ -78,9 +110,45 @@ class JobFormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';
+        $jobform = JobForm::find($id);
+        $jobform->title = $request->title;
+        $jobform->save();
+
+        $jobform        = new JobForm;
+        $jobform->title = $request->title;
+        $jobform->save();
+
+        JobFormQuestion::where('job_form_id', $id)->delete();
+        JobFormQuestionOption::where('job_form_id', $id)->delete();
+        if(!empty($request->question && is_array($request->question))){
+
+            foreach($request->question as $key => $value){
+
+                $question               = new JobFormQuestion();
+                $question->job_form_id  = $jobform->id;
+                $question->question     = $value['question'];
+                $question->type         = $value['type'];
+                $question->save();
+
+                if(isset($value['option']) && !empty($value['option'] && is_array($value['option']))){
+
+                    foreach($value['option'] as $newkey => $optionvalue){
+
+                        $option                         = new JobFormQuestionOption();
+                        $option->job_form_id            = $jobform->id;
+                        $option->job_form_question_id   = $question->id;
+                        $option->option                 = $optionvalue;
+                        $option->save();
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return redirect()->route('job-forms.index')->with('success', 'Job Form Updated Successfully !');
     }
 
     /**

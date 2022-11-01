@@ -8,6 +8,7 @@ use App\Models\JobForm;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -120,7 +121,14 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        //
+        $job            = Job::find($id);
+        $products       = Product::get();
+        $users          = User::where('role', 'worker')->get(['id', 'name']);
+        $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+        foreach($job->jobnotes as $note){
+            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        }
+        return view('jobs.view', compact('job', 'users', 'products'));
     }
 
     /**
@@ -186,5 +194,28 @@ class JobController extends Controller
         JobProduct::where('job_id', $id)->delete();
         Job::find($id)->delete();
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
+    }
+
+    public function markAsComplete(Request $request){
+        $job = Job::where('id', $request->job_id)->first();
+        if($job->status == 'completed'){
+            Job::where('id', $request->job_id)->update(['status' => 'pending']);
+            return response()->json(['danger' => 'Job marked Incompleted successfully!']);
+        }else{
+            Job::where('id', $request->job_id)->update(['status' => 'completed']);
+            return response()->json(['success' => 'Job marked Completed successfully!']);
+        }
+    }
+
+    public function assignTeam(Request $request){
+        if(isset($request->user_id)){
+            $user = User::where('id', $request->user_id)->first();
+            Job::where('id', $request->job_id)->update(['user_id' => $user->id]);
+            return response()->json(['success' => 'Job has been assigned to '.$user->name.' successfully!']);
+        }else{
+            Job::where('id', $request->job_id)->update(['user_id' => null]);
+            return response()->json(['danger' => 'Job has been unassigned successfully!']);
+        }
+
     }
 }

@@ -42,4 +42,9 @@ class Job extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function jobnotes()
+    {
+        return $this->hasMany(JobNote::class);
+    }
 }

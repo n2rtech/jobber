@@ -29,17 +29,22 @@ class Customer extends Model
         return $this->hasMany(sentEmail::class);
     }
 
-    public function job()
+    public function jobs()
     {
         return $this->hasMany(Job::class);
     }
-    public function invoice()
+    public function invoices()
     {
         return $this->hasMany(Invoice::class);
     }
-    public function estimate()
+    public function estimates()
     {
         return $this->hasMany(Estimate::class);
+    }
+
+    public function jobnotes()
+    {
+        return $this->hasMany(JobNote::class);
     }
 
 }

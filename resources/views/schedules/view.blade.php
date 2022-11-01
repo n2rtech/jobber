@@ -12,23 +12,32 @@
                     <input type="checkbox" class="form-check-input" id="complete_job" value="" onchange="markJobComplete(this.value)">
                     <label class="form-check-label" for="complete_job">Completed</label>
                 </div>
+                <small id="mark_complete"></small>
                 <hr>
                 <span class="text-dark"> <strong>Details</strong></span>
                 <p class="text-dark"> <span class="customer_name"></span> - Job # <span class="job_id"></span></p>
                 <hr>
                 <span class="text-dark"> <strong>Team</strong></span>
-                <div class="mt-2"><button class="btn btn-sm btn-grey">John</button></div>
+                <div class="mt-2">
+                    <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);">
+                        <option value="">Choose Team Member</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <small id="assign_message"></small>
+                </div>
                 <hr>
                 <span class="text-dark"> <strong>Location</strong></span>
                 <p class="text-dark"> <span class="location"></span></p>
                 <hr>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p class="text-dark"> <strong>Starts</strong></p>
+                        <span class="text-dark"> <strong>Starts</strong></span>
                         <p class="text-dark"> <span class="starts"></span></p>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <p class="text-dark"> <strong>Ends</strong></p>
+                        <span class="text-dark"> <strong>Ends</strong></span>
                         <p class="text-dark"> <span class="ends"></span></p>
                     </div>
                 </div>
@@ -38,7 +47,7 @@
                         <a href="#" id="edit_job" class="btn btn-block btn-sm btn-outline-dark">Edit</a>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <button class="btn btn-block btn-sm btn-dark">View Details</button>
+                        <a href="#" id="show_job" class="btn btn-block btn-sm btn-dark">View Details</a>
                     </div>
                 </div>
             </div>

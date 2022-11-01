@@ -62,12 +62,10 @@ class SalesLeadController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 => 'required',
         ];
 
         $messages = [
             'name.required'             => "Please enter Customer name.",
-            'phone.required'            => "Please enter Customer phone.",
         ];
 
         $this->validate($request, $rules, $messages);
@@ -149,12 +147,10 @@ class SalesLeadController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 => 'required',
         ];
 
         $messages = [
             'name.required'             => "Please enter Customer name.",
-            'phone.required'            => "Please enter Customer phone.",
         ];
 
         $this->validate($request, $rules, $messages);

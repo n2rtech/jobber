@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerNote;
+use App\Models\Job;
+use App\Models\JobNote;
 use App\Models\SentEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -139,5 +141,44 @@ class UtilityController extends Controller{
         $email->save();
 
         return redirect()->route('customer.send-email', $request->customer_id)->with('success', 'Mail sent successfully!');
+    }
+
+    public function jobNotesUploadForm($id){
+        $job = Job::find($id);
+        foreach($job->jobnotes as $note){
+            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        }
+        return view('customers.utilities.notes', compact('customer'));
+    }
+
+    public function jobNotesUpload(Request $request){
+        $rules = [
+            'note'                  => 'required',
+        ];
+
+        $messages = [
+            'note.required'             => "Please Write Note.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+        $customer           = Customer::find($request->customer_id);
+        $note               = new JobNote();
+        $note->customer_id  = $customer->id;
+        $note->job_id       = $request->job_id;
+        $note->user_id      = Auth::user()->id;
+        $note->note         = $request->note;
+
+         // Save Customer Notes
+        if($request->hasfile('file')) {
+            $note_file = $request->file('file');
+            $name = $note_file->getClientOriginalName();
+            $note_file->storeAs('uploads/jobs/' . $request->job_id . '/notes', $name, 'public');
+
+            $note->file         = $name;
+        }
+
+        $note->save();
+
+        return redirect()->route('jobs.show', $request->job_id)->with('success', 'Note Added successfully!');
     }
 }

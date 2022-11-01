@@ -57,6 +57,18 @@ Route::resource('schedules', ScheduleController::class);
 # Jobs Route
 Route::resource('jobs', JobController::class);
 
+# Mark Job Complete Route
+Route::post('jobs/mark-complete', [JobController::class, 'markAsComplete'])->name('jobs.complete');
+
+# Assign Team Route
+Route::post('jobs/assign-team', [JobController::class, 'assignTeam'])->name('jobs.assign');
+
+# Add Note Form Route
+Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'])->name('job.add-notes');
+
+# Add Note Route
+Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name('job.notes-add');
+
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);
 

@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerNote extends Model
+class JobNote extends Model
 {
+    use HasFactory;
 
     use HasFactory;
 
-    protected $table        = 'customer_notes';
+    protected $table        = 'job_notes';
 
-    protected $fillable     = ['customer_id', 'user_id', 'note', 'file'];
+    protected $fillable     = ['job_id', 'customer_id', 'user_id', 'note', 'file'];
 
     public $timestamps      = true;
 
@@ -21,11 +22,13 @@ class CustomerNote extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-
-
 }

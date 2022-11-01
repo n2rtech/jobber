@@ -85,7 +85,7 @@
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input custom-control-input-success"
-                                                        type="checkbox" id="remind" name="invoice_remind" value="1">
+                                                        type="checkbox" id="remind" name="invoice_remind" value="1" checked>
                                                     <label for="remind" class="custom-control-label">Remind me to
                                                         invoice when i close the job</label>
                                                 </div>

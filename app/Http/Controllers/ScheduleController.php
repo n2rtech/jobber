@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\JobForm;
+use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,7 +24,8 @@ class ScheduleController extends Controller
     {
         $scheduled_jobs     = Job::where('scheduled', 'yes ')->get();
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->get();
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs'));
+        $users              = User::where('role', 'worker')->get(['id', 'name']);
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users'));
     }
 
     /**
@@ -57,7 +61,14 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
-        //
+        $job            = Job::find($id);
+        $products       = Product::get();
+        $users          = User::where('role', 'worker')->get(['id', 'name']);
+        $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+        foreach($job->jobnotes as $note){
+            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        }
+        return view('schedules.details', compact('job', 'users', 'products'));
     }
 
     /**

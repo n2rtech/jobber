@@ -14,9 +14,12 @@
                 // it doesn't need to have a start or end
                 var eventObject = {
                     title: $.trim($(this).text()), // use the element's text as the event title
-                    customer: $.trim($(this).attr("data-customer")), // use the element's text as the event customer
-                    jobid: $.trim($(this).attr("data-jobid")), // use the element's text as the event jobid
-                    location: $.trim($(this).attr("data-jobid")), // use the element's text as the event location
+                    customer: $.trim($(this).attr(
+                    "data-customer")), // use the element's text as the event customer
+                    jobid: $.trim($(this).attr(
+                    "data-jobid")), // use the element's text as the event jobid
+                    location: $.trim($(this).attr(
+                    "data-jobid")), // use the element's text as the event location
                 }
 
                 // store the Event Object in the DOM element so we can get to it later
@@ -63,8 +66,11 @@
                     textColor: 'rgb(255 255 255)',
                     customer: $(eventEl).data('customer'),
                     jobid: $(eventEl).data('jobid'),
+                    jobstatus: $(eventEl).data('jobstatus'),
                     location: $(eventEl).data('location'),
-                    href:$(eventEl).data('href'),
+                    team: $(eventEl).data('team'),
+                    href: $(eventEl).data('href'),
+                    show: $(eventEl).data('show'),
                     timePeriod: '',
                     allDay: false,
                 };
@@ -79,7 +85,7 @@
             },
             initialView: 'timeGridWeek',
             themeSystem: 'bootstrap',
-            scrollTime : '00:00:00',
+            scrollTime: '00:00:00',
             // Scheduled Job Events
             events: [
                 @foreach ($scheduled_jobs as $job)
@@ -89,12 +95,16 @@
                         end: '{{ $job->end }}',
                         allDay: false,
                         backgroundColor: '#000000',
-                        borderColor: 'rgb(255 0 0)',
+                        borderColor: '{{ $job->status == 'pending' ? '#ff0000' : '#00ff00' }}',
                         customer: '{{ $job->customer->name }}',
-                        timePeriod: '{{ \Carbon\Carbon::parse($job->start)->format('h:i') }}'+ ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
+                        timePeriod: '{{ \Carbon\Carbon::parse($job->start)->format('h:i') }}' +
+                            ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
                         jobid: '{{ $job->id }}',
+                        team: '{{ $job->user_id }}',
+                        jobstatus: '{{ $job->status }}',
                         location: '{{ getAddress($job->customer_id) }}',
-                        href: '{{ route("jobs.edit", $job->id) }}',
+                        href: '{{ route('jobs.edit', $job->id) }}',
+                        show: '{{ route('schedules.show', $job->id) }}',
                     },
                 @endforeach
             ],
@@ -103,11 +113,19 @@
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
-                $("#successModal .modal-body .customer_name").text(info.event.extendedProps.customer);
+                if (info.event.extendedProps.jobstatus == 'completed') {
+                    $("#successModal .modal-body #complete_job").prop("checked", true);
+                }
+                if (info.event.extendedProps.team !== undefined) {
+                    $("#successModal .modal-body #team").val(info.event.extendedProps.team);
+                }
+                $("#successModal .modal-body .customer_name").text(info.event.extendedProps
+                    .customer);
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
                 $("#successModal .modal-body .starts").text(info.event.start);
                 $("#successModal .modal-body .ends").text(info.event.end);
-                $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href)
+                $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
+                $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
             },
             eventContent: function(arg) {
 
@@ -136,9 +154,8 @@
                 var dateformatted = formatDate(info.date);
                 var formData = {
                     id: $(info.draggedEl).data('jobid'),
-                    date : dateformatted,
+                    date: dateformatted,
                 };
-                console.log(formData);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -146,13 +163,13 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route("schedules.store") }}',
+                    url: '{{ route('schedules.store') }}',
                     data: formData,
                     dataType: 'json',
-                    success: function (data) {
+                    success: function(data) {
                         location.reload();
                     },
-                    error: function (data) {
+                    error: function(data) {
                         console.log(data);
                     }
                 });
@@ -209,13 +226,68 @@
 </script>
 <script>
     function formatDate(d) {
-        var datestring = (d.getFullYear()) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
-        ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-    return datestring;
+        var datestring = (d.getFullYear()) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-
+                2) + ":" + ("0" + d.getSeconds()).slice(-2);
+        return datestring;
     }
 
-    function markJobComplete(value){
-        alert(value);
+    function markJobComplete(value) {
+        var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+        };
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('jobs.complete') }}',
+            data: formData,
+            dataType: 'json',
+            success: function(data) {
+                if(data.success){
+                    $('#mark_complete').css('color', 'green');
+                    $('#mark_complete').text(data.success);
+                }else{
+                    $('#mark_complete').css('color', 'red');
+                    $('#mark_complete').text(data.danger);
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
     }
 
+    function assignTeam(value) {
+        var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+            user_id: value,
+        };
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('jobs.assign') }}',
+            data: formData,
+            dataType: 'json',
+            success: function(data) {
+                if(data.success){
+                    $('#assign_message').css('color', 'green');
+                    $('#assign_message').text(data.success);
+                }else{
+                    $('#assign_message').css('color', 'red');
+                    $('#assign_message').text(data.danger);
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
 </script>
