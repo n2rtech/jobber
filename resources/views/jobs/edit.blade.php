@@ -50,7 +50,7 @@
                             <div class="form-group row">
                                 <label for="job_title_id" class="col-sm-2 col-form-label">{{ __('Title') }}</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="job_title_id" name="job_title_id">
+                                    <select class="form-control" id="job_title_id" name="job_title_id" required>
                                         <option value="">Select Job Title</option>
                                         @foreach ($job_titles as $job_title)
                                             <option value="{{ $job_title->id }}" @if($job_title->id == $job->job_title_id) selected @endif>{{ $job_title->title }}</option>

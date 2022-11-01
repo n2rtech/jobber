@@ -150,6 +150,30 @@
             },
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
+            eventDrop:function(eventDropInfo ) {
+                var dateformatted = formatDate(eventDropInfo.event.start);
+                var formData = {
+                    id: eventDropInfo.oldEvent.extendedProps.jobid,
+                    date: dateformatted,
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.store') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            },
             drop: function(info) {
                 var dateformatted = formatDate(info.date);
                 var formData = {
