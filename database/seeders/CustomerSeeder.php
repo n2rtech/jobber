@@ -36,7 +36,7 @@ class CustomerSeeder extends Seeder
         ]);
 
         Customer::create([
-            'id' => 1,
+            'id' => 2,
             'name' => 'Kenny D',
             'email' => 'info@daltontv.ie',
             'phone' => '8747856988',
