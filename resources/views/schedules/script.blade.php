@@ -102,6 +102,7 @@
                 $("#successModal").modal("show");
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
+                $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
                 $("#successModal .modal-body .customer_name").text(info.event.extendedProps.customer);
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
                 $("#successModal .modal-body .starts").text(info.event.start);
@@ -211,6 +212,10 @@
         var datestring = (d.getFullYear()) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
         ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
     return datestring;
+    }
+
+    function markJobComplete(value){
+        alert(value);
     }
 
 </script>

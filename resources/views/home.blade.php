@@ -20,25 +20,33 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-dark">All Dates</button>
-                        <button type="button" class="btn btn-dark dropdown-toggle dropdown-icon" data-toggle="dropdown"
-                            aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="#">Custom</a>
-                            <a class="dropdown-item" href="#">Today</a>
-                            <a class="dropdown-item" href="#">Yesterday</a>
-                            <a class="dropdown-item" href="#">This Week</a>
-                            <a class="dropdown-item" href="#">This Month</a>
-                            <a class="dropdown-item" href="#">This Year</a>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <a href="{{ route('home') }}" class="btn btn-dark">All Dates</a>
+                                    <button type="button" class="btn btn-dark dropdown-toggle filter-date-after dropdown-icon"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" role="menu">
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            onclick="showDateInput();">Custom</a>
+                                        <a class="dropdown-item" href="{{ route('home', ['filter' => 'today']) }}">Today</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('home', ['filter' => 'yesterday']) }}">Yesterday</a>
+                                        <a class="dropdown-item" href="{{ route('home', ['filter' => 'week']) }}">This
+                                            Week</a>
+                                        <a class="dropdown-item" href="{{ route('home', ['filter' => 'month']) }}">This
+                                            Month</a>
+                                        <a class="dropdown-item" href="{{ route('home', ['filter' => 'year']) }}">This
+                                            Year</a>
+                                    </div>
+                                </div>
+                                <input type="date" class="form-control" name="date" id="filter_date" onchange="handler(event);" @isset($filter_date) value="{{ $filter_date }}" @else style="display: none;" @endif>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card-tools">
-                        <input type="search" placeholder="Search" class="form-control">
-                      </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -47,11 +55,11 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>{{ $total_jobs }}</h3>
+                                    <h3>{{ $total_unscheduled_jobs }}</h3>
 
-                                    <p>All Jobs</p>
+                                    <p>Unscheduled Jobs</p>
                                 </div>
-                                <a href="{{ route('jobs.index') }}" class="small-box-footer">View All <i
+                                <a href="{{ route('jobs.index', ['scheduled' => 'no']) }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -64,8 +72,8 @@
 
                                     <p>Scheduled Jobs</p>
                                 </div>
-                                <a href="{{ route('jobs.index',['scheduled' => 'yes']) }}" class="small-box-footer">View All <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('jobs.index', ['scheduled' => 'yes']) }}" class="small-box-footer">View
+                                    All <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -127,3 +135,17 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+
+        function showDateInput() {
+            $('#filter_date').toggle();
+        }
+
+        function handler(e){
+            var base = "{!! route('home') !!}";
+            var url = base+'?date='+e.target.value ;
+            location.href = url;
+        }
+    </script>
+@endpush

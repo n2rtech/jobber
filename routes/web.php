@@ -114,7 +114,7 @@ Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->nam
 # Refresh Database Route
 Route::get('refresh-database', function () {
 
-    Artisan::call('migrate:refresh --path=/database/migrations/2022_10_18_123841_create_leads_table.php');
+    Artisan::call('migrate:refresh --path=/database/migrations/2022_10_15_135451_create_jobs_table.php');
 
     dd("Hello ! Database has been refreshed and sample data has been inserted!");
 

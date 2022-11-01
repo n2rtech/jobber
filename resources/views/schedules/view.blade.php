@@ -9,8 +9,8 @@
                 <p class="text-dark"> <strong><span class="customer_name"></span> - <span class="job_title"></span></strong>
                 </p>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Completed</label>
+                    <input type="checkbox" class="form-check-input" id="complete_job" value="" onchange="markJobComplete(this.value)">
+                    <label class="form-check-label" for="complete_job">Completed</label>
                 </div>
                 <hr>
                 <span class="text-dark"> <strong>Details</strong></span>

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('invoice_remind')->default(0);
             $table->longText('job_forms')->nullable();
             $table->enum('scheduled',['yes', 'no'])->default('no');
+            $table->enum('status',['pending', 'completed'])->default('pending');
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
             $table->string('total')->nullable();
