@@ -46,8 +46,20 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $start = Carbon::createFromFormat('Y-m-d h:i:s', $request->date);
-        $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->date)->addHour();
+        $start = Carbon::createFromFormat('Y-m-d h:i:s', $request->start);
+        switch ($request->end) {
+            case 'addHour':
+                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->start)->addHour();
+                break;
+
+            case 'allDay':
+                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->start)->endOfDay();
+                break;
+
+            default:
+                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->end);
+                break;
+        }
 
         $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
         return response()->json(['success' => 'success']);

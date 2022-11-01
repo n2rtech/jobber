@@ -150,11 +150,18 @@
             },
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
-            eventDrop:function(eventDropInfo ) {
-                var dateformatted = formatDate(eventDropInfo.event.start);
+            eventResize:function(eventResizeInfo  ) {
+                var start = formatDate(eventResizeInfo .event.start);
+                if(eventResizeInfo.event.end){
+                    var end = formatDate(eventResizeInfo.event.end);
+                }else{
+                    var end = 'allDay';
+                }
+
                 var formData = {
-                    id: eventDropInfo.oldEvent.extendedProps.jobid,
-                    date: dateformatted,
+                    id: eventResizeInfo.oldEvent.extendedProps.jobid,
+                    start: start,
+                    end: end,
                 };
                 $.ajaxSetup({
                     headers: {
@@ -174,11 +181,50 @@
                     }
                 });
             },
-            drop: function(info) {
-                var dateformatted = formatDate(info.date);
+            eventDrop:function(eventDropInfo ) {
+                var start = formatDate(eventDropInfo.event.start);
+
+                if(eventDropInfo.event.end){
+                    var end = formatDate(eventDropInfo.event.end);
+                }else{
+                    var end = 'allDay';
+                }
+
+                var formData = {
+                    id: eventDropInfo.oldEvent.extendedProps.jobid,
+                    start: start,
+                    end: end,
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.store') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            },
+            eventReceive: function(info) {
+                console.log(info);
+                var start = formatDate(info.event.start);
+                if(info.event.end){
+                    var end = formatDate(info.event.end);
+                }else{
+                    var end = 'addHour';
+                }
                 var formData = {
                     id: $(info.draggedEl).data('jobid'),
-                    date: dateformatted,
+                    start: start,
+                    end: end,
                 };
                 $.ajaxSetup({
                     headers: {
