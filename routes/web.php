@@ -126,9 +126,9 @@ Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->nam
 # Refresh Database Route
 Route::get('refresh-database', function () {
     Artisan::call('migrate:refresh --path=/database/migrations/2022_10_15_135452_create_job_products_table.php');
-    Artisan::call('migrate:refresh --path=/database/migrations/2022_10_15_135451_create_jobs_table.php');
     Artisan::call('migrate:refresh --path=/database/migrations/2022_10_17_040214_create_invoice_products_table.php');
     Artisan::call('migrate:refresh --path=/database/migrations/2022_10_17_040213_create_invoices_table.php');
+    Artisan::call('migrate:refresh --path=/database/migrations/2022_10_15_135451_create_jobs_table.php');
     dd("Hello ! Database has been refreshed and sample data has been inserted!");
 
 });
