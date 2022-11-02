@@ -24,17 +24,14 @@
                         <td>£ {{ $estimate->paid }}</td>
                         <th>£ {{ $estimate->total - $estimate->paid }}</th>
                         <td>
-                            @if ($estimate->status == 'paid')
+                            @if ($estimate->status == 'sent')
                                 <span class="badge bg-success">{{ ucfirst($estimate->status) }}</span>
                             @endif
-                            @if ($estimate->status == 'unpaid')
+                            @if ($estimate->status == 'expired')
                                 <span class="badge bg-danger">{{ ucfirst($estimate->status) }}</span>
                             @endif
                             @if ($estimate->status == 'cancelled')
                                 <span class="badge bg-warning">{{ ucfirst($estimate->status) }}</span>
-                            @endif
-                            @if ($estimate->status == 'partial')
-                                <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
                             @endif
                         </td>
                         <td>
