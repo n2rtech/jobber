@@ -76,7 +76,11 @@ class ScheduleController extends Controller
         $job            = Job::find($id);
         $products       = Product::get();
         $users          = User::where('role', 'worker')->get(['id', 'name']);
-        $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+        if(!empty($job->job_forms) && is_array($job->job_forms)){
+            $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+        }else{
+            $job->forms     = [];
+        }
         foreach($job->jobnotes as $note){
             $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
         }

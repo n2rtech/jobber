@@ -116,7 +116,7 @@
                                                 @foreach($job_forms as $job_form)
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input custom-control-input-success"
-                                                        type="checkbox" id="jobForm{{ $job_form->id }}" name="job_forms[]" value="{{ $job_form->id }}" @if(in_array($job_form->id, $job->job_forms)) checked @endif>
+                                                        type="checkbox" id="jobForm{{ $job_form->id }}" name="job_forms[]" value="{{ $job_form->id }}" @isset($job->job_forms) @if(in_array($job_form->id, $job->job_forms)) checked @endif @endisset>
                                                     <label for="jobForm{{ $job_form->id }}" class="custom-control-label">{{ $job_form->title }}</label>
                                                 </div>
                                                 @endforeach
