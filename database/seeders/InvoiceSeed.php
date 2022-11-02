@@ -31,9 +31,9 @@ class InvoiceSeed extends Seeder
             $invoice->shipping_address      = Null;
             $invoice->due_date              = Carbon::parse($job->created_at)->format('Y-m-d');
             $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
-            $invoice->discount              = 10;
+            $invoice->discount              = 0;
             $invoice->discount_type         = "percentage";
-            $invoice->tax                   = 20;
+            $invoice->tax                   = 0;
             $invoice->tax_type              = "percentage";
             $invoice->notes                 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
             $invoice->conditions            = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -41,13 +41,15 @@ class InvoiceSeed extends Seeder
             $invoice->save();
 
             foreach($job->products as $job_product){
+                $selected_product       = Product::where('id',  $job_product->product_id)->first();
                 $product                = new InvoiceProduct();
                 $product->invoice_id    = $invoice->id;
                 $product->product_id    = $job_product->product_id;
                 $product->description   = $job_product->description;
                 $product->quantity      = $job_product->quantity;
                 $product->unit_price    = $job_product->unit_price;
-                $product->total         = $job_product->total;
+                $product->tax_rate      = $selected_product->tax->rate;
+                $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
                 $product->save();
             }
 

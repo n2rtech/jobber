@@ -183,8 +183,8 @@
                                         </div>
                                         <input type="number"
                                            class="form-control form-control-sm text-align-right"
-                                           id="tax_rate0" name="product[0][tax_rate]"
-                                           placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
+                                           id="tax_rate{{ $key }}" name="product[{{ $key }}][tax_rate]"
+                                           placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate({{ $key }})" required value="{{ $product->tax_rate }}">
                                      </div>
                                  </td>
                                  <td>
