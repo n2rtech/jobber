@@ -139,6 +139,7 @@
                                  <th width="40%">{{ __('Product / Service') }}</th>
                                  <th class="text-right">{{ __('Quantity') }}</th>
                                  <th class="text-right">{{ __('Unit Price') }}</th>
+                                 <th class="text-right">{{ __('Tax') }}</th>
                                  <th class="text-right">{{ __('Total') }}</th>
                                  <th class="text-right"></th>
                               </tr>
@@ -149,7 +150,7 @@
                                     <select name="product[0][product]" id="product0" class="form-control form-control-sm" onchange="showProductOptions(this, 0)">
                                        <option value="">Select Product</option>
                                        @foreach($products as $product)
-                                       <option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>
+                                       <option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate}}">{{ $product->name }}</option>
                                        @endforeach
                                     </select>
                                     <textarea name="product[0][description]" id="description0" rows="2" placeholder="Description"
@@ -173,6 +174,17 @@
                                  </td>
                                  <td>
                                     <div class="input-group">
+                                        <div class="input-group-prepend">
+                                           <span class="input-group-text text-sm">%</span>
+                                        </div>
+                                        <input type="number"
+                                           class="form-control form-control-sm text-align-right"
+                                           id="tax_rate0" name="product[0][tax_rate]"
+                                           placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
+                                     </div>
+                                 </td>
+                                 <td>
+                                    <div class="input-group">
                                        <div class="input-group-prepend">
                                           <span class="input-group-text text-sm">£</span>
                                        </div>
@@ -189,7 +201,7 @@
                            </tbody>
                            <tfoot>
                               <tr>
-                                 <td class="text-right" colspan="5">
+                                 <td class="text-right" colspan="6">
                                     <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
                                        class="fa fa-plus"></i></button>
                                  </td>
@@ -396,7 +408,7 @@
                 html +='<select name="product['+ item_row +'][product]" id="product'+ item_row +'" class="form-control form-control-sm" onchange="showProductOptions(this, '+ item_row +')" required>';
                 html +='<option value="">Select Product</option>';
                 html +='@foreach($products as $product)';
-                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>';
+                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate}}">{{ $product->name }}</option>';
                 html +='@endforeach';
                 html +='</select>';
                 html +='<textarea name="product['+ item_row +'][description]" id="description'+ item_row +'" rows="2" placeholder="Description" class="form-control form-control-sm mt-1"></textarea>';
@@ -410,6 +422,14 @@
                 html +='<span class="input-group-text text-sm">£</span>';
                 html +='</div>';
                 html +='<input type="number" class="form-control form-control-sm text-align-right" id="unit_price'+ item_row +'" name="product['+ item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" oninput="totalUpdate('+ item_row +')" value="0.00" required>';
+                html +='</div>';
+                html +='</td>';
+                html +='<td>';
+                html +='<div class="input-group">';
+                html +='<div class="input-group-prepend">';
+                html +='<span class="input-group-text text-sm">%</span>';
+                html +='</div>';
+                html +='<input type="number" class="form-control form-control-sm text-align-right" id="tax_rate' + item_row + '" name="product[' + item_row + '][tax_rate]" placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate(' + item_row + ')" required value="0.00">';
                 html +='</div>';
                 html +='</td>';
                 html +='<td>';

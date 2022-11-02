@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->decimal('unit_price', 10, 2)->nullable();
-            $table->longText('tax_rates')->nullable();
+            $table->unsignedBigInteger('tax_rate_id')->nullable();
+            $table->foreign('tax_rate_id')->references('id')->on('tax_rates')->onDelete('cascade');
             $table->timestamps();
         });
     }

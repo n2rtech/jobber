@@ -14,4 +14,9 @@ class TaxRate extends Model
     protected $fillable     = ['name', 'rate'];
 
     public $timestamps      = true;
+
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 }

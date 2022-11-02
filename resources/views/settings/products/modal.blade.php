@@ -30,11 +30,11 @@
                         <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
                     </div>
                     <div class="form-group">
-                        <label>Choose Tax</label>
+                        <label>Default Tax</label>
                             @foreach($taxes as $tax)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="tax{{ $loop->iteration }}" value="{{ $tax->id }}" name="tax_rates[]">
-                                <label class="form-check-label" for="tax{{ $loop->iteration }}">{{ $tax->name }}</label>
+                                <input class="form-radio-input" type="radio" id="tax{{ $loop->iteration }}" value="{{ $tax->id }}" name="tax_rate_id">
+                                <label class="form-radio-label" for="tax{{ $loop->iteration }}">{{ $tax->name }}</label>
                             </div>
                             @endforeach
                     </div>
@@ -81,11 +81,11 @@
                         <input type="number" class="form-control" id="edit_unitprice" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
                     </div>
                     <div class="form-group">
-                        <label>Choose Tax</label>
+                        <label>Default Tax</label>
                             @foreach($taxes as $tax)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit_tax{{ $tax->id }}" value="{{ $tax->id }}" name="tax_rates[]">
-                                <label class="form-check-label" for="edit_tax{{ $tax->id }}">{{ $tax->name }}</label>
+                                <input class="form-radio-input" type="radio" id="edit_tax{{ $tax->id }}" value="{{ $tax->id }}" name="tax_rate_id">
+                                <label class="form-radio-label" for="edit_tax{{ $tax->id }}">{{ $tax->name }}</label>
                             </div>
                             @endforeach
                     </div>

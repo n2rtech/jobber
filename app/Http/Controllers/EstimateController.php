@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Estimate;
 use App\Models\EstimateProduct;
 use App\Models\Product;
+use App\Models\TaxRate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,13 +87,15 @@ class EstimateController extends Controller
                 $customer->address .= ', '.$customer->eir_code;
             }
             $count      = Estimate::count();
+            $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
-            return view('estimates.convert', compact('products', 'customer', 'estimate_no'));
+            return view('estimates.convert', compact('products', 'customer', 'estimate_no', 'tax_rates'));
         }else{
             $products   = Product::get();
             $count      = Estimate::count();
+            $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
-            return view('estimates.create', compact('products', 'estimate_no'));
+            return view('estimates.create', compact('products', 'estimate_no', 'tax_rates'));
         }
     }
 
@@ -129,6 +132,7 @@ class EstimateController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -184,7 +188,8 @@ class EstimateController extends Controller
             $estimate->customer->address .= ', '.$estimate->customer->eir_code;
         }
         $products   = Product::get();
-        return view('estimates.edit', compact('estimate', 'products'));
+        $tax_rates  = TaxRate::get();
+        return view('estimates.edit', compact('estimate', 'products', 'tax_rates'));
     }
 
     /**
@@ -221,6 +226,7 @@ class EstimateController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
                 $product->total         = $value['total'];
                 $product->save();
             }

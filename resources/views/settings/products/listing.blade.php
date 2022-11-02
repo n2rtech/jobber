@@ -18,7 +18,7 @@
                                     <div class="float-right">
                                         <a href="javascript:void(0)" class="btn btn-tool edit-product" data-toggle="modal"
                                             data-target="#modal-edit-product"  data-type="{{ $product->type }}" data-name="{{ $product->name }}" data-description="{{ $product->description }}"
-                                            data-id="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-taxes="{{ json_encode($product->tax_rates)}}">
+                                            data-id="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-tax="{{ $product->tax_rate_id }}">
                                             <i class="fas fa-edit text-success"></i>
                                         </a>
                                         <button type="button" class="btn btn-tool"

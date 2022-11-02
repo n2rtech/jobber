@@ -11,7 +11,7 @@ class InvoiceProduct extends Model
 
     protected $table        = 'invoice_products';
 
-    protected $fillable     = ['invoice_id', 'product_id', 'description','quantity', 'unit_price', 'total'];
+    protected $fillable     = ['invoice_id', 'product_id', 'description','quantity', 'unit_price', 'tax_rate','total'];
 
     public $timestamps      = true;
 

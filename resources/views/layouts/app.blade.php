@@ -32,9 +32,9 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-        <div class="preloader flex-column justify-content-center align-items-center">
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="{{ asset('dist/img/logo-dark.png') }}" alt="DaltonTV">
-        </div>
+        </div> --}}
 
         @include('sections.navbar')
 

@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(JobTitleSeed::class);
 
+        $this->call(TaxRateSeeder::class);
+
         $this->call(ProductSeed::class);
 
         $this->call(EmailTemplateSeed::class);
@@ -30,8 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(JobFormQuestionSeeder::class);
 
         $this->call(JobFormQuestionOptionSeeder::class);
-
-        $this->call(TaxRateSeeder::class);
 
         $this->call(LeadSeeder::class);
 

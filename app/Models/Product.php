@@ -11,11 +11,12 @@ class Product extends Model
 
     protected $table        = 'products';
 
-    protected $fillable     = ['type' ,'name', 'description', 'tax_rates', 'unit_price'];
+    protected $fillable     = ['type' ,'name', 'description', 'tax_rate_id', 'unit_price'];
 
     public $timestamps      = true;
 
-    protected $casts        = [
-        'tax_rates' => 'array',
-    ];
+    public function tax()
+    {
+        return $this->belongsTo(TaxRate::class, 'tax_rate_id');
+    }
 }

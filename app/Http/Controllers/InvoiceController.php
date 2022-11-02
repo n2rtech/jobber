@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\TaxRate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,12 +89,14 @@ class InvoiceController extends Controller
             }
             $count      = Invoice::count();
             $invoice_no = $count + 1;
-            return view('invoices.convert', compact('products', 'customer', 'invoice_no'));
+            $tax_rates  = TaxRate::get();
+            return view('invoices.convert', compact('products', 'customer', 'invoice_no','tax_rates'));
         }else{
             $products   = Product::get();
             $count      = Invoice::count();
             $invoice_no = $count + 1;
-            return view('invoices.create', compact('products', 'invoice_no'));
+            $tax_rates  = TaxRate::get();
+            return view('invoices.create', compact('products', 'invoice_no', 'tax_rates'));
         }
     }
 
@@ -130,6 +133,7 @@ class InvoiceController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -160,6 +164,7 @@ class InvoiceController extends Controller
     public function edit($id)
     {
         $invoice    = Invoice::find($id);
+        $tax_rates  = TaxRate::get();
         $invoice->customer->address ='';
         if(isset($invoice->customer->address_1) && strlen($invoice->customer->address_1) > 0){
             $invoice->customer->address .= $invoice->customer->address_1;
@@ -185,7 +190,7 @@ class InvoiceController extends Controller
             $invoice->customer->address .= ', '.$invoice->customer->eir_code;
         }
         $products   = Product::get();
-        return view('invoices.edit', compact('invoice', 'products'));
+        return view('invoices.edit', compact('invoice', 'products', 'tax_rates'));
     }
 
     /**
@@ -222,6 +227,7 @@ class InvoiceController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
                 $product->total         = $value['total'];
                 $product->save();
             }
