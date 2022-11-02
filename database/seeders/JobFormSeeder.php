@@ -15,11 +15,6 @@ class JobFormSeeder extends Seeder
      */
     public function run()
     {
-        JobForm::create(['title' => 'Job Form 1']);
-
-        JobForm::create(['title' => 'Job Form 2']);
-
-        JobForm::create(['title' => 'Job Form 3']);
-
+        JobForm::create(['title' => 'MPR Survey Form']);
     }
 }

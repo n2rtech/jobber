@@ -109,6 +109,7 @@ class JobController extends Controller
         $total =JobProduct::where('job_id', $job->id)->sum('total');
         Job::where('id', $job->id)->update(['total' => $total]);
 
+
         return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
 
     }

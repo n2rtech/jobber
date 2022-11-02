@@ -15,173 +15,96 @@ class JobFormQuestionOptionSeeder extends Seeder
      */
     public function run()
     {
-        // JobForm 1 Options
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 1,
-            'job_form_question_id'          => 1,
-            'option'                        => 'Job Form 1 > Question 1 > Checkbox Option 1'
-        ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 1,
-            'option'                        => 'Job Form 1 > Question 1 > Checkbox Option 2'
+            'option'                        => '1 Bar'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 1,
-            'option'                        => 'Job Form 1 > Question 1 > Checkbox Option 3'
+            'option'                        => '2 Bars'
+        ]);
+
+        JobFormQuestionOption::create([
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 1,
+            'option'                        => '3 Bars'
+        ]);
+
+        JobFormQuestionOption::create([
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 1,
+            'option'                        => '4 Bars'
+        ]);
+
+        JobFormQuestionOption::create([
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 1,
+            'option'                        => '5 Bars'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 2,
-            'option'                        => 'Job Form 1 > Question 2 > Dropdown Option 1'
+            'option'                        => '1 Bar'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 2,
-            'option'                        => 'Job Form 1 > Question 2 > Dropdown Option 2'
+            'option'                        => '2 Bars'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 2,
-            'option'                        => 'Job Form 1 > Question 2 > Dropdown Option 3'
+            'option'                        => '3 Bars'
+        ]);
+
+        JobFormQuestionOption::create([
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 2,
+            'option'                        => '4 Bars'
+        ]);
+
+        JobFormQuestionOption::create([
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 2,
+            'option'                        => '5 Bars'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 3,
-            'option'                        => 'Job Form 1 > Question 3 > Radio Option 1'
+            'option'                        => 'Vodafone'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 3,
-            'option'                        => 'Job Form 1 > Question 3 > Radio Option 2'
+            'option'                        => 'Three Mobile'
         ]);
 
         JobFormQuestionOption::create([
             'job_form_id'                   => 1,
             'job_form_question_id'          => 3,
-            'option'                        => 'Job Form 1 > Question 3 > Radio Option 3'
-        ]);
-
-        // Job Form 3 Options
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 6,
-            'option'                        => 'Job Form 2 > Question 1 > Checkbox Option 1'
+            'option'                        => 'Meteor'
         ]);
 
         JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 6,
-            'option'                        => 'Job Form 2 > Question 1 > Checkbox Option 2'
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 3,
+            'option'                        => 'Virgin'
         ]);
 
         JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 6,
-            'option'                        => 'Job Form 2 > Question 1 > Checkbox Option 3'
+            'job_form_id'                   => 1,
+            'job_form_question_id'          => 3,
+            'option'                        => 'Other'
         ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 7,
-            'option'                        => 'Job Form 2 > Question 2 > Dropdown Option 1'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 7,
-            'option'                        => 'Job Form 2 > Question 2 > Dropdown Option 2'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 7,
-            'option'                        => 'Job Form 2 > Question 2 > Dropdown Option 3'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 8,
-            'option'                        => 'Job Form 2 > Question 3 > Radio Option 1'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 8,
-            'option'                        => 'Job Form 2 > Question 3 > Radio Option 2'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 8,
-            'option'                        => 'Job Form 2 > Question 3 > Radio Option 3'
-        ]);
-
-        // Job Form 2 Options
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 11,
-            'option'                        => 'Job Form 3 > Question 1 > Checkbox Option 1'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 11,
-            'option'                        => 'Job Form 3 > Question 1 > Checkbox Option 2'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 11,
-            'option'                        => 'Job Form 3 > Question 1 > Checkbox Option 3'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 12,
-            'option'                        => 'Job Form 3 > Question 2 > Dropdown Option 1'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 12,
-            'option'                        => 'Job Form 3 > Question 2 > Dropdown Option 2'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 12,
-            'option'                        => 'Job Form 3 > Question 2 > Dropdown Option 3'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 13,
-            'option'                        => 'Job Form 3 > Question 3 > Radio Option 1'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 13,
-            'option'                        => 'Job Form 3 > Question 3 > Radio Option 2'
-        ]);
-
-        JobFormQuestionOption::create([
-            'job_form_id'                   => 3,
-            'job_form_question_id'          => 13,
-            'option'                        => 'Job Form 3 > Question 3 > Radio Option 3'
-        ]);
-
 
     }
 }
