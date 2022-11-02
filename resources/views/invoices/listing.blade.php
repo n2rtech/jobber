@@ -11,13 +11,13 @@
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
                     <th>{{ __('Status') }}</th>
-                    <th>{{ __('Action') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($invoices as $invoice)
                     <tr>
-                        <td>{{ $invoice->id}}</td>
+                        <td>#{{ $invoice->id}}</td>
                         <td>{{ $invoice->customer->name }}</td>
                         <td>{{ $invoice->invoice_date}}</td>
                         <td>£ {{ $invoice->total }}</td>

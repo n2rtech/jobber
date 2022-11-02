@@ -15,7 +15,7 @@
                     </form>
                     <a href="javascript:void(0)" onclick="confirmDelete({{ $customer->id }})"
                         class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">
+                    <a href="{{ route('customers.index') }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
                     <a href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}" class="btn btn-indigo">

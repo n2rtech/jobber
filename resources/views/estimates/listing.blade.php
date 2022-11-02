@@ -11,19 +11,22 @@
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
                     <th>{{ __('Status') }}</th>
-                    <th>{{ __('Action') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($estimates as $estimate)
                     <tr>
-                        <td>{{ $estimate->id}}</td>
+                        <td>#{{ $estimate->id}}</td>
                         <td>{{ $estimate->customer->name }}</td>
                         <td>{{ $estimate->estimate_date}}</td>
                         <td>£ {{ $estimate->total }}</td>
                         <td>£ {{ $estimate->paid }}</td>
                         <th>£ {{ $estimate->total - $estimate->paid }}</th>
                         <td>
+                            @if ($estimate->status == 'created')
+                                <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
+                            @endif
                             @if ($estimate->status == 'sent')
                                 <span class="badge bg-success">{{ ucfirst($estimate->status) }}</span>
                             @endif

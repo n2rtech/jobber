@@ -11,17 +11,17 @@ class Customer extends Model
 
     public function allnotes()
     {
-        return $this->hasMany(CustomerNote::class);
+        return $this->hasMany(CustomerNote::class)->orderBy('id', 'desc');
     }
 
     public function photos()
     {
-        return $this->hasMany(CustomerPhoto::class);
+        return $this->hasMany(CustomerPhoto::class)->orderBy('id', 'desc');
     }
 
     public function documents()
     {
-        return $this->hasMany(CustomerDocument::class);
+        return $this->hasMany(CustomerDocument::class)->orderBy('id', 'desc');
     }
 
     public function sentEmails()
@@ -31,15 +31,15 @@ class Customer extends Model
 
     public function jobs()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(Job::class)->orderBy('id', 'desc');
     }
     public function invoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class)->orderBy('id', 'desc');
     }
     public function estimates()
     {
-        return $this->hasMany(Estimate::class);
+        return $this->hasMany(Estimate::class)->orderBy('id', 'desc');
     }
 
     public function jobnotes()

@@ -78,6 +78,8 @@ Route::resource('estimates', EstimateController::class);
 # Sales Leads Route
 Route::resource('sales-leads', SalesLeadController::class);
 
+Route::get('sales-leads/convert/lead/{id}', [SalesLeadController::class, 'convertToCustomer'])->name('sales-leads.customer');
+
 # Job Forms Route
 Route::resource('job-forms', JobFormController::class);
 

@@ -18,7 +18,7 @@
                     </form>
                     <a href="javascript:void(0)" onclick="confirmDelete({{ $customer->id }})"
                         class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                        <a href="{{ url()->previous() }}" class="btn btn-dark">
+                        <a href="{{ route('customers.index') }}" class="btn btn-dark">
                             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                         </a>
                         <a href="javascript:void(0)" onclick="confirmAccept({{ $customer->id }})" class="btn btn-success">
@@ -222,10 +222,132 @@
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                           <div class="tab-pane fade active show" id="custom-tabs-one-estimates" role="tabpanel" aria-labelledby="custom-tabs-one-estimates-tab">
+                            @if(count($customer->estimates) > 0)
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('Estimate No.') }}</th>
+                                        <th>{{ __('Estimate Date') }}</th>
+                                        <th>{{ __('Total') }}</th>
+                                        <th>{{ __('Paid') }}</th>
+                                        <th>{{ __('Balance') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th>{{ __('Action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($customer->estimates as $estimate)
+                                        <tr>
+                                            <td>#{{ $estimate->id}}</td>
+                                            <td>{{ $estimate->estimate_date}}</td>
+                                            <td>£ {{ $estimate->total }}</td>
+                                            <td>£ {{ $estimate->paid }}</td>
+                                            <th>£ {{ $estimate->total - $estimate->paid }}</th>
+                                            <td>
+                                                @if ($estimate->status == 'created')
+                                                    <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
+                                                @endif
+                                                @if ($estimate->status == 'sent')
+                                                    <span class="badge bg-success">{{ ucfirst($estimate->status) }}</span>
+                                                @endif
+                                                @if ($estimate->status == 'expired')
+                                                    <span class="badge bg-danger">{{ ucfirst($estimate->status) }}</span>
+                                                @endif
+                                                @if ($estimate->status == 'cancelled')
+                                                    <span class="badge bg-warning">{{ ucfirst($estimate->status) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu" style="">
+                                                      <a class="dropdown-item" href="{{ route('estimates.edit', $estimate->id) }}"> Edit</a>
+                                                      <a class="dropdown-item" href="{{ route('estimates.show', $estimate->id) }}"> View</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)" onclick="confirmEstimateDelete({{ $estimate->id }})"> Delete</a>
+                                                      <form id='delete-estimateform{{ $estimate->id }}'
+                                                        action='{{ route('estimates.destroy', $estimate->id) }}' method='POST'>
+                                                        <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                                                        <input type='hidden' name='_method' value='DELETE'>
+                                                    </form>
+                                                    </div>
+                                                  </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
                              <p class="text-center mt-4"> No Estimate Found</p>
+                             @endif
                           </div>
                           <div class="tab-pane fade" id="custom-tabs-one-invoices" role="tabpanel" aria-labelledby="custom-tabs-one-invoices-tab">
-                            <p class="text-center mt-4"> No Invoice Found</p>
+                            @if(count($customer->invoices) > 0)
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('Invoice No.') }}</th>
+                                        <th>{{ __('Invoice Date') }}</th>
+                                        <th>{{ __('Total') }}</th>
+                                        <th>{{ __('Paid') }}</th>
+                                        <th>{{ __('Balance') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($customer->invoices as $invoice)
+                                        <tr>
+                                            <td>#{{ $invoice->id}}</td>
+                                            <td>{{ $invoice->invoice_date}}</td>
+                                            <td>£ {{ $invoice->total }}</td>
+                                            <td>£ {{ $invoice->paid }}</td>
+                                            <th>£ {{ $invoice->total - $invoice->paid }}</th>
+                                            <td>
+                                                @if ($invoice->status == 'paid')
+                                                    <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
+                                                @endif
+                                                @if ($invoice->status == 'unpaid')
+                                                    <span class="badge bg-danger">{{ ucfirst($invoice->status) }}</span>
+                                                @endif
+                                                @if ($invoice->status == 'cancelled')
+                                                    <span class="badge bg-warning">{{ ucfirst($invoice->status) }}</span>
+                                                @endif
+                                                @if ($invoice->status == 'partial')
+                                                    <span class="badge bg-info">{{ ucfirst($invoice->status) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu" style="">
+                                                      <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
+                                                      <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                                      <a class="dropdown-item" href="javascript:void(0)" onclick="confirmInvoiceDelete({{ $invoice->id }})"> Delete</a>
+                                                      <form id='delete-invoiceform{{ $invoice->id }}'
+                                                        action='{{ route('invoices.destroy', $invoice->id) }}' method='POST'>
+                                                        <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                                                        <input type='hidden' name='_method' value='DELETE'>
+                                                    </form>
+                                                    </div>
+                                                  </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                             <p class="text-center mt-4"> No Invoice Found</p>
+                             @endif
                           </div>
                           <div class="tab-pane fade" id="custom-tabs-one-photos" role="tabpanel" aria-labelledby="custom-tabs-one-photos-tab">
                             <div class="gallery">
@@ -339,6 +461,36 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-form'+no).submit();
+            }
+        })
+    };
+    function confirmEstimateDelete(no){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-estimateform'+no).submit();
+            }
+        })
+    };
+    function confirmInvoiceDelete(no){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-invoiceform'+no).submit();
             }
         })
     };

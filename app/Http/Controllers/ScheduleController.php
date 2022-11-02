@@ -22,8 +22,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $scheduled_jobs     = Job::where('scheduled', 'yes ')->get();
-        $unscheduled_jobs   = Job::where('scheduled', 'no ')->get();
+        $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('id', 'desc')->get();
+        $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users'));
     }

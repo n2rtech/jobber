@@ -8,10 +8,10 @@
                     <h1>{{ __('Add Lead') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">
+                    <a href="{{ route('sales-leads.index') }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
-                    <button type="submit" class="btn btn-danger" form="leadForm" value="lead">
+                    <button type="submit" class="btn btn-success" form="leadForm" value="lead">
                         <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
                     </button>
                 </div>
@@ -122,8 +122,21 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="card pb-3">
+                    <div class="card">
                         <div class="card-body">
+                            <div class="form-group row">
+                                <label for="state" class="col-sm-2 col-form-label">{{ __('Add As') }}</label>
+                                <div class="col-sm-10 mt-1">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="add_as" id="add_as_customer" value="customer">
+                                        <label class="form-check-label" for="add_as_customer">Customer</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="add_as" id="add_as_lead" value="lead" checked>
+                                        <label class="form-check-label" for="add_as_lead">Sales Lead</label>
+                                      </div>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
                                 <div class="col-sm-10">
@@ -157,7 +170,7 @@
                             <div class="form-group row">
                                 <label for="directions" class="col-sm-2 col-form-label">{{ __('Direction') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="4" class="form-control" id="directions" name="directions" placeholder="Enter Directions">{{ old('directions') }}</textarea>
+                                    <textarea rows="3" class="form-control" id="directions" name="directions" placeholder="Enter Directions">{{ old('directions') }}</textarea>
                                     @error('directions')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -166,7 +179,7 @@
                             <div class="form-group row">
                                 <label for="notes" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="4" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
+                                    <textarea rows="3" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
                                     @error('notes')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -179,3 +192,17 @@
         </form>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $("input[name='add_as']").change(function(){
+                if($("#add_as_customer").prop("checked") == true){
+                    $("#leadForm").attr("action", "{{ route('customers.store') }}")
+                }
+                else{
+                    $("#leadForm").attr("action", "{{ route('sales-leads.store') }}")
+                }
+            });
+        });
+    </script>
+@endpush

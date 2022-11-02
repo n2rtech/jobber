@@ -15,75 +15,75 @@ class LeadSeeder extends Seeder
      */
     public function run()
     {
+
         Lead::create([
             'id' => 1,
-            'name' => 'Nurul hasan',
-            'email' => 'nurulhasasn129@gmail.com',
-            'phone' => '9968584843',
+            'name' => 'John Mathews',
+            'email' => 'johnmathew@gmail.com',
+            'phone' => '8700844557',
             'phone_name' => 'Home',
-            'mobile_1' => '9793929109',
+            'mobile_1' => '9793929110',
             'mobile_1_name' => 'Office',
-            'mobile_2' => NULL,
-            'address_1' => 'C-6 Sector 7',
-            'address_2' => 'Noida',
-            'city' => 'Noida',
-            'state' => 'Uttar Pradesh',
-            'country' => 'India',
-            'eir_code' => '201301',
+            'mobile_2' => '7898487857',
+            'address_1' => 'Kilkenny Commercial Centre',
+            'address_2' => 'Sion Road',
+            'city' => 'Kilkenny',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'LOC8',
             'status' => 'pending'
         ]);
 
         Lead::create([
             'id' => 2,
-            'name' => 'Mohd Danish',
-            'email' => 'mohddanish@gmail.com',
-            'phone' => '8700844557',
+            'name' => 'Danny Rotwell',
+            'email' => 'danny@gmail.com',
+            'phone' => '8090895865',
             'phone_name' => 'Home',
-            'mobile_1' => '9793929110',
+            'mobile_1' => '9793929111',
             'mobile_1_name' => 'Office',
-            'mobile_2' => NULL,
-            'address_1' => 'B-12, Udaygiri Appartment',
-            'address_2' => 'Sector 34',
-            'city' => 'Noida',
-            'state' => 'Uttar Pradesh',
-            'country' => 'India',
-            'eir_code' => '201301',
+            'mobile_2' => '7845854796',
+            'address_1' => 'Co.Kilkenny',
+            'address_2' => 'Carlow',
+            'city' => 'Kilkenny',
+            'state' => 'Derry',
+            'country' => 'Ireland',
+            'eir_code' => 'ROI',
             'status' => 'pending'
         ]);
 
         Lead::create([
             'id' => 3,
-            'name' => 'Sohrab Khan',
-            'email' => 'sohrab178@gmail.com',
-            'phone' => '8090895865',
-            'phone_name' => 'Home',
-            'mobile_1' => '9793929111',
-            'mobile_1_name' => 'Office',
-            'mobile_2' => NULL,
-            'address_1' => 'D-18 Sunrise Colony',
-            'address_2' => 'Sector 27',
-            'city' => 'Noida',
-            'state' => 'Uttar Pradesh',
-            'country' => 'India',
-            'eir_code' => '201301',
-            'status' => 'pending'
-        ]);
-
-        Lead::create([
-            'id' => 4,
-            'name' => 'Vidhi Das',
-            'email' => 'vidhidas@gmail.com',
+            'name' => 'Judy Langton',
+            'email' => 'judy_langton@gmail.com',
             'phone' => '8090895475',
             'phone_name' => 'Home',
             'mobile_1' => '9793929551',
             'mobile_1_name' => 'Office',
             'mobile_2' => NULL,
-            'address_1' => 'F-55 Rivera Appartment',
-            'address_2' => 'Sector 07',
-            'city' => 'Noida',
-            'state' => 'Uttar Pradesh',
-            'country' => 'India',
-            'eir_code' => '201301',
+            'address_1' => 'St Annes',
+            'address_2' => 'Waterford Rd.',
+            'city' => 'Kilkenny',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'RV23',
+            'status' => 'pending'
+        ]);
+
+        Lead::create([
+            'id' => 4,
+            'name' => 'Mary Corby',
+            'email' => 'mary@gmail.com',
+            'phone' => '08748514785',
+            'phone_name' => 'Home',
+            'mobile_1' => '0868877936',
+            'mobile_2' => '4585745896',
+            'address_1' => '2 Collaire Court',
+            'address_2' => 'Friary Walk',
+            'city' => 'Callan',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'VR67',
             'status' => 'pending'
         ]);
     }

@@ -198,26 +198,39 @@ class CustomerController extends Controller
     }
 
     public function convertToLead($id){
+
         $customer = Customer::find($id);
 
-        $lead                   = new Lead;
-        $lead->name             = $customer->name;
-        $lead->email            = $customer->email;
-        $lead->phone            = $customer->phone;
-        $lead->phone_name       = $customer->phone_name;
-        $lead->mobile_1         = $customer->mobile_1;
-        $lead->mobile_1_name    = $customer->mobile_1_name;
-        $lead->mobile_2         = $customer->mobile_2;
-        $lead->mobile_2_name    = $customer->mobile_2_name;
-        $lead->address_1        = $customer->address_1;
-        $lead->address_2        = $customer->address_2;
-        $lead->city             = $customer->city;
-        $lead->state            = $customer->state;
-        $lead->country          = $customer->country;
-        $lead->eir_code         = $customer->eir_code;
-        $lead->directions       = $customer->directions;
-        $lead->save();
+        if($customer->status == 'pending'){
 
-        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
+            $customer->status = 'converted';
+            $customer->save();
+
+            $lead                   = new Lead;
+            $lead->name             = $customer->name;
+            $lead->email            = $customer->email;
+            $lead->phone            = $customer->phone;
+            $lead->phone_name       = $customer->phone_name;
+            $lead->mobile_1         = $customer->mobile_1;
+            $lead->mobile_1_name    = $customer->mobile_1_name;
+            $lead->mobile_2         = $customer->mobile_2;
+            $lead->mobile_2_name    = $customer->mobile_2_name;
+            $lead->address_1        = $customer->address_1;
+            $lead->address_2        = $customer->address_2;
+            $lead->city             = $customer->city;
+            $lead->state            = $customer->state;
+            $lead->country          = $customer->country;
+            $lead->eir_code         = $customer->eir_code;
+            $lead->status           = "converted";
+            $lead->directions       = $customer->directions;
+            $lead->save();
+
+            return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
+
+        }else{
+
+            return redirect()->back()->with('warning', 'This Customer is already added as Sales Lead!');
+        }
+
     }
 }

@@ -8,15 +8,17 @@
                     <h1>{{ __('Edit Lead') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url()->previous() }}" class="btn btn-dark">
+                    <form id='delete-form{{ $lead->id }}'
+                        action='{{ route('sales-leads.destroy', $lead) }}' method='POST'>
+                        <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                        <input type='hidden' name='_method' value='DELETE'>
+                    </form>
+                    <a href="javascript:void(0)" onclick="confirmDelete({{ $lead->id }})"
+                        class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                    <a href="{{ route('sales-leads.index') }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
-                    @if($lead->status == 'pending')
-                        <a href="javascript:void(0)" onclick="confirmAccept({{ $lead->id }})" class="btn btn-success">
-                            <i class="btn-icon fas fa-user-plus"></i> {{ __('Add as Customer') }}
-                        </a>
-                    @endif
-                    <button type="submit" class="btn btn-danger" form="leadForm">
+                    <button type="submit" class="btn btn-success" form="leadForm">
                         <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
                     </button>
                 </div>
@@ -178,23 +180,4 @@
 @endsection
 @push('scripts')
 @include('sections.utilities')
-<script type="text/javascript">
-    function confirmAccept(id){
-        url_string = '{{ route("sales-leads.show", ":id") }}';
-        url = url_string.replace(':id', id);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Add as Customer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        })
-    }
-</script>
 @endpush

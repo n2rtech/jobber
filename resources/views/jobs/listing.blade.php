@@ -9,7 +9,7 @@
                     <th>{{ __('Contact') }}</th>
                     <th>{{ __('Scheduled') }}</th>
                     <th>{{ __('Total') }}</th>
-                    <th>{{ __('Action') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

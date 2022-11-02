@@ -9,7 +9,7 @@
                     <th>{{ __('Phone') }}</th>
                     <th>{{ __('Mobile 1') }}</th>
                     <th>{{ __('Mobile 2') }}</th>
-                    <th>{{ __('Action') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

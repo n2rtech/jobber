@@ -32,7 +32,7 @@ class CustomerSeeder extends Seeder
             'country' => 'India',
             'eir_code' => '110009',
             'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
-            'status' => 'completed'
+            'status' => 'pending'
         ]);
 
         Customer::create([
@@ -52,7 +52,7 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'P47',
             'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
-            'status' => 'completed'
+            'status' => 'pending'
         ]);
 
         Customer::create([
@@ -72,7 +72,7 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'R27',
             'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
-            'status' => 'completed'
+            'status' => 'pending'
         ]);
 
         Customer::create([
@@ -92,7 +92,7 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'R95',
             'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
-            'status' => 'completed'
+            'status' => 'pending'
         ]);
 
     }

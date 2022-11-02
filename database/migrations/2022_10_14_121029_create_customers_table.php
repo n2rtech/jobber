@@ -32,7 +32,7 @@ return new class extends Migration
             $table->longText('directions')->nullable();
             $table->longText('notes')->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('status', ['pending', 'completed', 'Booking'])->default('pending');
+            $table->enum('status', ['pending', 'converted'])->default('pending');
             $table->timestamps();
         });
     }

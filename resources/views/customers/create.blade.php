@@ -11,7 +11,7 @@
                     <a href="{{ url()->previous() }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
-                    <button type="submit" class="btn btn-danger" form="customerForm">
+                    <button type="submit" class="btn btn-success" form="customerForm">
                         <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
                     </button>
                 </div>

@@ -7,20 +7,24 @@
                     <th>{{ __('Lead No.') }}</th>
                     <th>{{ __('Date') }}</th>
                     <th>{{ __('Customer') }}</th>
-                    <th>{{ __('Address') }}</th>
+                    <th width="38%">{{ __('Address') }}</th>
                     <th>{{ __('Phone') }}</th>
                     <th>{{ __('Status') }}</th>
-                    <th>{{ __('Action') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($leads as $lead)
                     <tr>
                         <td>#{{ $lead->id }}</td>
-                        <td>{{ \Carbon\Carbon::parse($lead->created_at)->format('Y-m-d') }}</td>
+                        <td><small>{{ \Carbon\Carbon::parse($lead->created_at)->format('Y-m-d') }}</small></td>
                         <td>{{ $lead->name }}</td>
-                        <td>{{ $lead->address_1 }} @isset($lead->address_2) {{ $lead->address_2 }} @endisset</td>
-                        <td>{{ $lead->phone }}</td>
+                        <td>{{ getLeadAddress($lead->id) }}</td>
+                        <td>
+                            @isset($lead->phone) <i class="fa fa-square-phone"></i> {{ $lead->phone }} <br/> @endisset
+                            @isset($lead->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $lead->mobile_1 }} <br/> @endisset
+                            @isset($lead->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $lead->mobile_2 }}</td> @endisset
+                        </td>
                         <td>
                             @if ($lead->status == 'pending')
                                 <span class="badge bg-danger">{{ __('Pending') }}</span>
@@ -30,15 +34,16 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('sales-leads.edit', $lead) }}" class="btn btn-warning"> <i
-                                        class="fas fa-pen"></i> </a>
-                                <button type="button" onclick="confirmDelete({{ $lead->id }})"
-                                    class="btn btn-danger"><i class="fas fa-trash"></i> </button>
-                                <form id='delete-form{{ $lead->id }}'
-                                    action='{{ route('sales-leads.destroy', $lead) }}' method='POST'>
-                                    <input type='hidden' name='_token' value='{{ csrf_token() }}'>
-                                    <input type='hidden' name='_method' value='DELETE'>
-                                </form>
+                                <button type="button" class="btn btn-light dropdown-toggle dropdown-hover"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-vertical"></i>
+                                </button>
+                                <div class="dropdown-menu" role="menu" style="">
+                                    <a class="dropdown-item" href="{{ route('sales-leads.edit', $lead) }}"><i
+                                            class="fas fa-edit"></i> {{ __('Edit') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sales-leads.show', $lead) }}"><i
+                                            class="fas fa-eye"></i> {{ __('View') }}</a>
+                                </div>
                             </div>
                         </td>
                     </tr>
