@@ -154,7 +154,7 @@
                                             <td>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text text-sm">£</span>
+                                                        <span class="input-group-text text-sm">€</span>
                                                     </div>
                                                     <input type="number"
                                                         class="form-control form-control-sm text-align-right"
@@ -165,7 +165,7 @@
                                             <td>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text text-sm">£</span>
+                                                        <span class="input-group-text text-sm">€</span>
                                                     </div>
                                                     <input type="number"
                                                         class="form-control form-control-sm text-align-right totalpriceinput"

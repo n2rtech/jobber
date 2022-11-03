@@ -26,8 +26,8 @@
                         <textarea class="form-control" id="description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="unit_price">Unit Price (£)</label>
-                        <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
+                        <label for="unit_price">Unit Price (€)</label>
+                        <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter Unit Price (€)" min="0" step="any" required>
                     </div>
                     <div class="form-group">
                         <label>Default Tax</label>
@@ -77,8 +77,8 @@
                         <textarea class="form-control" id="edit_description" name="description" placeholder="Enter Product description here" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="edit_unitprice">Unit Price (£)</label>
-                        <input type="number" class="form-control" id="edit_unitprice" name="unit_price" placeholder="Enter Unit Price (£)" min="0" step="any" required>
+                        <label for="edit_unitprice">Unit Price (€)</label>
+                        <input type="number" class="form-control" id="edit_unitprice" name="unit_price" placeholder="Enter Unit Price (€)" min="0" step="any" required>
                     </div>
                     <div class="form-group">
                         <label>Default Tax</label>

@@ -18,11 +18,11 @@
                 @foreach ($invoices as $invoice)
                     <tr>
                         <td>#{{ $invoice->id}}</td>
-                        <td>{{ $invoice->customer->name }}</td>
+                        <td><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
-                        <td>£ {{ $invoice->total }}</td>
-                        <td>£ {{ $invoice->paid }}</td>
-                        <th>£ {{ $invoice->total - $invoice->paid }}</th>
+                        <td>€ {{ $invoice->total }}</td>
+                        <td>€ {{ $invoice->paid }}</td>
+                        <th>€ {{ $invoice->total - $invoice->paid }}</th>
                         <td>
                             @if ($invoice->status == 'paid')
                                 <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
@@ -46,8 +46,8 @@
                                   <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
                                   <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                  <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
-                                  <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                  <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
+                                  <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Print</a>
                                   <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $invoice->id }})"> Delete</a>
                                   <form id='delete-form{{ $invoice->id }}'
                                     action='{{ route('invoices.destroy', $invoice->id) }}' method='POST'>

@@ -15,7 +15,7 @@
             <tbody>
                 @foreach ($jobs as $job)
                     <tr>
-                        <td>{{ $job->customer->name }}</td>
+                        <td><a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a></td>
                         <td>{{ getAddress($job->customer_id) }}</td>
 
                         <td>
@@ -30,7 +30,7 @@
                                 <span class="badge bg-success">{{ __('Yes') }}</span>
                             @endif
                         </td>
-                        <td>£ {{ $job->total }}</td>
+                        <td>€ {{ $job->total }}</td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

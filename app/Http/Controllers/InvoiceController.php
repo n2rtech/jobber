@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyDetail;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\TaxRate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -90,13 +92,15 @@ class InvoiceController extends Controller
             $count      = Invoice::count();
             $invoice_no = $count + 1;
             $tax_rates  = TaxRate::get();
-            return view('invoices.convert', compact('products', 'customer', 'invoice_no','tax_rates'));
+            $setting    = Setting::where('type', 'invoice')->value('value');
+            return view('invoices.convert', compact('products', 'customer', 'invoice_no','tax_rates', 'setting'));
         }else{
             $products   = Product::get();
             $count      = Invoice::count();
             $invoice_no = $count + 1;
             $tax_rates  = TaxRate::get();
-            return view('invoices.create', compact('products', 'invoice_no', 'tax_rates'));
+            $setting    = Setting::where('type', 'invoice')->value('value');
+            return view('invoices.create', compact('products', 'invoice_no', 'tax_rates', 'setting'));
         }
     }
 
@@ -152,7 +156,12 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice    = Invoice::find($id);
+        $tax_rates  = TaxRate::get();
+        $products   = Product::get();
+        $setting    = Setting::where('type', 'invoice')->value('value');
+        $company    = CompanyDetail::first();
+        return view('invoices.view', compact('invoice', 'products', 'tax_rates', 'setting', 'company'));
     }
 
     /**
@@ -165,32 +174,9 @@ class InvoiceController extends Controller
     {
         $invoice    = Invoice::find($id);
         $tax_rates  = TaxRate::get();
-        $invoice->customer->address ='';
-        if(isset($invoice->customer->address_1) && strlen($invoice->customer->address_1) > 0){
-            $invoice->customer->address .= $invoice->customer->address_1;
-        }
-
-        if(isset($invoice->customer->address_2) && strlen($invoice->customer->address_2) > 0){
-            $invoice->customer->address .= ', '.$invoice->customer->address_2;
-        }
-
-        if(isset($invoice->customer->city) && strlen($invoice->customer->city) > 0){
-            $invoice->customer->address .= ', '.$invoice->customer->city;
-        }
-
-        if(isset($invoice->customer->state) && strlen($invoice->customer->state) > 0){
-            $invoice->customer->address .= ', '.$invoice->customer->state;
-        }
-
-        if(isset($invoice->customer->country) && strlen($invoice->customer->country) > 0){
-            $invoice->customer->address .= ', '.$invoice->customer->country;
-        }
-
-        if(isset($invoice->customer->eir_code) && strlen($invoice->customer->eir_code) > 0){
-            $invoice->customer->address .= ', '.$invoice->customer->eir_code;
-        }
         $products   = Product::get();
-        return view('invoices.edit', compact('invoice', 'products', 'tax_rates'));
+        $setting    = Setting::where('type', 'invoice')->value('value');
+        return view('invoices.edit', compact('invoice', 'products', 'tax_rates', 'setting'));
     }
 
     /**

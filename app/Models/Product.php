@@ -19,4 +19,14 @@ class Product extends Model
     {
         return $this->belongsTo(TaxRate::class, 'tax_rate_id');
     }
+
+    public function invoices()
+    {
+        return $this->hasOne(InvoiceProduct::class);
+    }
+
+    public function estimates()
+    {
+        return $this->hasOne(EstimateProduct::class);
+    }
 }

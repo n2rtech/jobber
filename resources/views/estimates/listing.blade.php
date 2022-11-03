@@ -18,11 +18,11 @@
                 @foreach ($estimates as $estimate)
                     <tr>
                         <td>#{{ $estimate->id}}</td>
-                        <td>{{ $estimate->customer->name }}</td>
+                        <td><a href="{{ route('customers.show', $estimate->customer_id) }}">{{ $estimate->customer->name }}</a></td>
                         <td>{{ $estimate->estimate_date}}</td>
-                        <td>£ {{ $estimate->total }}</td>
-                        <td>£ {{ $estimate->paid }}</td>
-                        <th>£ {{ $estimate->total - $estimate->paid }}</th>
+                        <td>€ {{ $estimate->total }}</td>
+                        <td>€ {{ $estimate->paid }}</td>
+                        <th>€ {{ $estimate->total - $estimate->paid }}</th>
                         <td>
                             @if ($estimate->status == 'created')
                                 <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
@@ -47,7 +47,7 @@
                                   <a class="dropdown-item" href="{{ route('estimates.show', $estimate->id) }}"> View</a>
                                   <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
                                   <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
-                                  <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                  <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Print</a>
                                   <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $estimate->id }})"> Delete</a>
                                   <form id='delete-form{{ $estimate->id }}'
                                     action='{{ route('estimates.destroy', $estimate->id) }}' method='POST'>

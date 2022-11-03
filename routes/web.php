@@ -10,6 +10,7 @@ use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceSettingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\JobController;
@@ -100,6 +101,10 @@ Route::resource('tax-rates', TaxRateController::class);
 
 # Company Settings Route
 Route::resource('company-settings', CompanyController::class);
+
+# Invoice Settings Route
+Route::get('invoice-settings', [InvoiceSettingController::class, 'invoiceSettings'])->name('invoice-settings.index');
+Route::post('invoice-settings', [InvoiceSettingController::class, 'storeInvoiceSettings'])->name('invoice-settings.store');
 
 # Upload Photo Form Route
 Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploadForm'])->name('customer.upload-photos');

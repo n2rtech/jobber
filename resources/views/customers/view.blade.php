@@ -18,7 +18,7 @@
                     </form>
                     <a href="javascript:void(0)" onclick="confirmDelete({{ $customer->id }})"
                         class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                        <a href="{{ route('customers.index') }}" class="btn btn-dark">
+                        <a href="{{ url()->previous() }}" class="btn btn-dark">
                             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                         </a>
                         <a href="javascript:void(0)" onclick="confirmAccept({{ $customer->id }})" class="btn btn-success">
@@ -240,9 +240,9 @@
                                         <tr>
                                             <td>#{{ $estimate->id}}</td>
                                             <td>{{ $estimate->estimate_date}}</td>
-                                            <td>£ {{ $estimate->total }}</td>
-                                            <td>£ {{ $estimate->paid }}</td>
-                                            <th>£ {{ $estimate->total - $estimate->paid }}</th>
+                                            <td>€ {{ $estimate->total }}</td>
+                                            <td>€ {{ $estimate->paid }}</td>
+                                            <th>€ {{ $estimate->total - $estimate->paid }}</th>
                                             <td>
                                                 @if ($estimate->status == 'created')
                                                     <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
@@ -266,8 +266,8 @@
                                                       <a class="dropdown-item" href="{{ route('estimates.edit', $estimate->id) }}"> Edit</a>
                                                       <a class="dropdown-item" href="{{ route('estimates.show', $estimate->id) }}"> View</a>
                                                       <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                                      <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
-                                                      <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                                      <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Download PDF</a>
+                                                      <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Print</a>
                                                       <a class="dropdown-item" href="javascript:void(0)" onclick="confirmEstimateDelete({{ $estimate->id }})"> Delete</a>
                                                       <form id='delete-estimateform{{ $estimate->id }}'
                                                         action='{{ route('estimates.destroy', $estimate->id) }}' method='POST'>
@@ -304,9 +304,9 @@
                                         <tr>
                                             <td>#{{ $invoice->id}}</td>
                                             <td>{{ $invoice->invoice_date}}</td>
-                                            <td>£ {{ $invoice->total }}</td>
-                                            <td>£ {{ $invoice->paid }}</td>
-                                            <th>£ {{ $invoice->total - $invoice->paid }}</th>
+                                            <td>€ {{ $invoice->total }}</td>
+                                            <td>€ {{ $invoice->paid }}</td>
+                                            <th>€ {{ $invoice->total - $invoice->paid }}</th>
                                             <td>
                                                 @if ($invoice->status == 'paid')
                                                     <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
@@ -330,8 +330,8 @@
                                                       <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                                       <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
                                                       <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                                      <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
-                                                      <a class="dropdown-item" href="javascript:void(0)"> Print</a>
+                                                      <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
+                                                      <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Print</a>
                                                       <a class="dropdown-item" href="javascript:void(0)" onclick="confirmInvoiceDelete({{ $invoice->id }})"> Delete</a>
                                                       <form id='delete-invoiceform{{ $invoice->id }}'
                                                         action='{{ route('invoices.destroy', $invoice->id) }}' method='POST'>

@@ -132,6 +132,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('invoice-settings.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>Invoice Settings</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('company-settings.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Company Settings</p>

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('company');
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
-            $table->longText('address')->nullable();
+            $table->longText('address_1')->nullable();
+            $table->longText('address_2')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();

@@ -55,11 +55,21 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="address" class="col-sm-3 col-form-label">{{ __('Address') }}</label>
+                                <label for="address_1" class="col-sm-3 col-form-label">{{ __('Line Address 1') }}</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="address" name="address"
-                                        placeholder="Enter Address" value="{{ old('address', $company->address) }}">
-                                    @error('address')
+                                    <input type="text" class="form-control" id="address_1" name="address_1"
+                                        placeholder="Line Address 1" value="{{ old('address_1', $company->address_1) }}">
+                                    @error('address_1')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="address_2" class="col-sm-3 col-form-label">{{ __('Line Address 2') }}</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="address_2" name="address_2"
+                                        placeholder="Line Address 1" value="{{ old('address_2', $company->address_2) }}">
+                                    @error('address_2')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

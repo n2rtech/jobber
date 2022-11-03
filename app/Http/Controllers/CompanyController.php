@@ -78,7 +78,7 @@ class CompanyController extends Controller
             'company'               => 'required',
             'email'                 => ['required', 'string', 'email', 'max:255'],
             'mobile'                => 'required',
-            'address'               => 'required',
+            'address_1'             => 'required',
             'city'                  => 'required',
             'state'                 => 'required',
             'country'               => 'required',
@@ -90,7 +90,7 @@ class CompanyController extends Controller
             'company.required'             => "Please enter Company name.",
             'email.required'               => "Please enter Company email.",
             'mobile.required'              => "Please enter Company Mobile.",
-            'address.required'             => "Please enter Company address.",
+            'address_1.required'           => "Please enter Company address.",
             'city.required'                => "Please enter Company city.",
             'state.required'               => "Please enter Company state.",
             'zipcode.required'             => "Please enter Company zipcode",
@@ -103,7 +103,8 @@ class CompanyController extends Controller
         $company->company          = $request->company;
         $company->email            = $request->email;
         $company->mobile           = $request->mobile;
-        $company->address          = $request->address;
+        $company->address_1        = $request->address_1;
+        $company->address_2        = $request->address_2;
         $company->city             = $request->city;
         $company->state            = $request->state;
         $company->country          = $request->country;

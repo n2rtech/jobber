@@ -81,7 +81,7 @@
                            <option value="">Select Term</option>
                            <option value="30">Net 30</option>
                            <option value="60">Net 60</option>
-                           <option value="0">Due on Receipt</option>
+                           <option value="{{ $setting['due_on_receipt'] }}">Due on Receipt</option>
                         </select>
                         @error('terms')
                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
@@ -164,7 +164,7 @@
                                  <td>
                                     <div class="input-group">
                                        <div class="input-group-prepend">
-                                          <span class="input-group-text text-sm">£</span>
+                                          <span class="input-group-text text-sm">€</span>
                                        </div>
                                        <input type="number"
                                           class="form-control form-control-sm text-align-right"
@@ -186,7 +186,7 @@
                                  <td>
                                     <div class="input-group">
                                        <div class="input-group-prepend">
-                                          <span class="input-group-text text-sm">£</span>
+                                          <span class="input-group-text text-sm">€</span>
                                        </div>
                                        <input type="number"
                                           class="form-control form-control-sm text-align-right totalpriceinput"
@@ -216,7 +216,7 @@
                            <thead>
                               <tr>
                                  <td width="60%" class="text-right">{{ __('Subtotal') }}</td>
-                                 <td class="text-right">{{ __('£ ') }}<span id="subtotal">0.00</span></td>
+                                 <td class="text-right">{{ __('€ ') }}<span id="subtotal">0.00</span></td>
                               </tr>
                            </thead>
                            <tbody>
@@ -226,7 +226,7 @@
                                        <label for="discount" class="col-sm-3"><small>{{ __('Discount') }}</small></label>
                                        <div class="col-sm-5">
                                           <input type="number" class="form-control form-control-sm text-align-right" id="discount" name="discount"
-                                             placeholder="£ 0.00" min="0" step="any" value="0.00">
+                                             placeholder="€ 0.00" min="0" step="any" value="0.00">
                                           @error('discount')
                                           <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                           @enderror
@@ -239,7 +239,7 @@
                                        </div>
                                     </div>
                                  </td>
-                                 <td class="text-right">{{ __('£ ') }}<span id="discount_amount">0.00</span></td>
+                                 <td class="text-right">{{ __('€ ') }}<span id="discount_amount">0.00</span></td>
                               </tr>
                               <tr>
                                  <td width="60%" class="text-right">
@@ -247,7 +247,7 @@
                                        <label for="tax" class="col-sm-3"><small>{{ __('Tax') }}</small></label>
                                        <div class="col-sm-5">
                                           <input type="number" class="form-control form-control-sm text-align-right" id="tax" name="tax"
-                                             placeholder="£ 0.00" min="0" step="any" value="0.00">
+                                             placeholder="€ 0.00" min="0" step="any" value="0.00">
                                           @error('tax')
                                           <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                           @enderror
@@ -260,13 +260,13 @@
                                        </div>
                                     </div>
                                  </td>
-                                 <td class="text-right">{{ __('£ ') }}<span id="tax_amount">0.00</span></td>
+                                 <td class="text-right">{{ __('€ ') }}<span id="tax_amount">0.00</span></td>
                               </tr>
                            </tbody>
                            <tfoot>
                               <tr>
                                  <th width="60%" class="text-right">{{ __('Total') }}</th>
-                                 <th class="text-right">{{ __('£ ') }}<span id="total">0.00</span></th>
+                                 <th class="text-right">{{ __('€ ') }}<span id="total">0.00</span></th>
                                  <input type="hidden" id="estimate_total" name="estimate_total">
                               </tr>
                            </tfoot>
@@ -276,6 +276,7 @@
                </div>
             </div>
          </div>
+         @if($setting['allow_for_note'] == 1)
          <div class="col-lg-6">
             <div class="card">
                <div class="card-body">
@@ -289,12 +290,13 @@
                </div>
             </div>
          </div>
-         <div class="col-lg-6">
+         @endif
+         <div @if($setting['allow_for_note'] == 1) class="col-lg-6" @else class="col-lg-12" @endif>
             <div class="card">
                <div class="card-body">
                   <div class="form-group">
                      <label for="conditions" class="col-form-label">{{ __('Terms & Conditions') }}</label>
-                     <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions') }}</textarea>
+                     <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $setting['conditions']) }}</textarea>
                      @error('conditions')
                      <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                      @enderror
@@ -326,6 +328,41 @@
 
     {{-- Load Select 2 Script --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+    <script>
+    tinymce.init({
+      selector: 'textarea#conditions',
+      height: 200,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar: 'undo redo | formatselect | ' +
+      'bold italic backcolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | help',
+      content_style: 'body { font-family:roboto; font-size:16px }'
+    });
+
+    tinymce.init({
+      selector: 'textarea#notes',
+      height: 200,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar: 'undo redo | formatselect | ' +
+      'bold italic backcolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | help',
+      content_style: 'body { font-family:roboto; font-size:16px }'
+    });
+    </script>
 
     {{-- Define Global variable --}}
     <script>
@@ -419,7 +456,7 @@
                 html +='<td>';
                 html +='<div class="input-group">';
                 html +='<div class="input-group-prepend">';
-                html +='<span class="input-group-text text-sm">£</span>';
+                html +='<span class="input-group-text text-sm">€</span>';
                 html +='</div>';
                 html +='<input type="number" class="form-control form-control-sm text-align-right" id="unit_price'+ item_row +'" name="product['+ item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" oninput="totalUpdate('+ item_row +')" value="0.00" required>';
                 html +='</div>';
@@ -435,7 +472,7 @@
                 html +='<td>';
                 html +='<div class="input-group">';
                 html +='<div class="input-group-prepend">';
-                html +='<span class="input-group-text text-sm">£</span>';
+                html +='<span class="input-group-text text-sm">€</span>';
                 html +='</div>';
                 html +='<input type="number" class="form-control form-control-sm text-align-right totalpriceinput" id="total'+ item_row +'" name="product['+ item_row +'][total]" placeholder="Total" min="0" value="0.00" step="any" required>';
                 html +='</div>';

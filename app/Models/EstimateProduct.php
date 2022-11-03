@@ -19,4 +19,9 @@ class EstimateProduct extends Model
     {
         return $this->belongsTo(Estimate::class);
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

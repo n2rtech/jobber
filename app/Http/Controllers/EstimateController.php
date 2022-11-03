@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyDetail;
 use App\Models\Customer;
 use App\Models\Estimate;
 use App\Models\EstimateProduct;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\TaxRate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,13 +91,15 @@ class EstimateController extends Controller
             $count      = Estimate::count();
             $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
-            return view('estimates.convert', compact('products', 'customer', 'estimate_no', 'tax_rates'));
+            $setting    = Setting::where('type', 'invoice')->value('value');
+            return view('estimates.convert', compact('products', 'customer', 'estimate_no', 'tax_rates', 'setting'));
         }else{
             $products   = Product::get();
             $count      = Estimate::count();
             $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
-            return view('estimates.create', compact('products', 'estimate_no', 'tax_rates'));
+            $setting    = Setting::where('type', 'invoice')->value('value');
+            return view('estimates.create', compact('products', 'estimate_no', 'tax_rates', 'setting'));
         }
     }
 
@@ -151,7 +155,12 @@ class EstimateController extends Controller
      */
     public function show($id)
     {
-        //
+        $estimate   = Estimate::find($id);
+        $products   = Product::get();
+        $tax_rates  = TaxRate::get();
+        $setting    = Setting::where('type', 'invoice')->value('value');
+        $company    = CompanyDetail::first();
+        return view('estimates.view', compact('estimate', 'products', 'tax_rates', 'setting', 'company'));
     }
 
     /**
@@ -163,33 +172,10 @@ class EstimateController extends Controller
     public function edit($id)
     {
         $estimate    = Estimate::find($id);
-        $estimate->customer->address ='';
-        if(isset($estimate->customer->address_1) && strlen($estimate->customer->address_1) > 0){
-            $estimate->customer->address .= $estimate->customer->address_1;
-        }
-
-        if(isset($estimate->customer->address_2) && strlen($estimate->customer->address_2) > 0){
-            $estimate->customer->address .= ', '.$estimate->customer->address_2;
-        }
-
-        if(isset($estimate->customer->city) && strlen($estimate->customer->city) > 0){
-            $estimate->customer->address .= ', '.$estimate->customer->city;
-        }
-
-        if(isset($estimate->customer->state) && strlen($estimate->customer->state) > 0){
-            $estimate->customer->address .= ', '.$estimate->customer->state;
-        }
-
-        if(isset($estimate->customer->country) && strlen($estimate->customer->country) > 0){
-            $estimate->customer->address .= ', '.$estimate->customer->country;
-        }
-
-        if(isset($estimate->customer->eir_code) && strlen($estimate->customer->eir_code) > 0){
-            $estimate->customer->address .= ', '.$estimate->customer->eir_code;
-        }
         $products   = Product::get();
         $tax_rates  = TaxRate::get();
-        return view('estimates.edit', compact('estimate', 'products', 'tax_rates'));
+        $setting    = Setting::where('type', 'invoice')->value('value');
+        return view('estimates.edit', compact('estimate', 'products', 'tax_rates', 'setting'));
     }
 
     /**

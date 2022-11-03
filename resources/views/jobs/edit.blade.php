@@ -173,7 +173,7 @@
                                                             <td>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text text-sm">£</span>
+                                                                        <span class="input-group-text text-sm">€</span>
                                                                     </div>
                                                                     <input type="number"
                                                                         class="form-control form-control-sm text-align-right"
@@ -184,7 +184,7 @@
                                                             <td>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text text-sm">£</span>
+                                                                        <span class="input-group-text text-sm">€</span>
                                                                     </div>
                                                                     <input type="number"
                                                                         class="form-control form-control-sm text-align-right totalpriceinput"
@@ -220,7 +220,7 @@
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Totals') }}</h3>
                                             <div class="card-tools">
-                                                <h6>£ <span id="totals">0</span></h6>
+                                                <h6>€ <span id="totals">0</span></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -336,7 +336,7 @@
                 html +='<td>';
                 html +='<div class="input-group">';
                 html +='<div class="input-group-prepend">';
-                html +='<span class="input-group-text text-sm">£</span>';
+                html +='<span class="input-group-text text-sm">€</span>';
                 html +='</div>';
                 html +='<input type="number" class="form-control form-control-sm text-align-right" id="unit_price'+ item_row +'" name="product['+ item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" oninput="totalUpdate('+ item_row +')" value="0.00" required>';
                 html +='</div>';
@@ -344,7 +344,7 @@
                 html +='<td>';
                 html +='<div class="input-group">';
                 html +='<div class="input-group-prepend">';
-                html +='<span class="input-group-text text-sm">£</span>';
+                html +='<span class="input-group-text text-sm">€</span>';
                 html +='</div>';
                 html +='<input type="number" class="form-control form-control-sm text-align-right totalpriceinput" id="total'+ item_row +'" name="product['+ item_row +'][total]" placeholder="Total" min="0" value="0.00" step="any" required>';
                 html +='</div>';
