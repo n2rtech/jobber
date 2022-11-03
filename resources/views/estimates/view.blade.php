@@ -90,21 +90,17 @@
                                         <tr>
                                             <td style="border-top: none;"></td>
                                             <td style="border-top: none;" class="text-right">
-                                                @if ($estimate->status == 'paid')
-                                                    <button
-                                                        class="mt-3 btn btn-outline-success">{{ ucfirst($estimate->status) }}</button>
+                                                @if ($estimate->status == 'created')
+                                                    <button class="mt-3 btn btn-outline-info">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
-                                                @if ($estimate->status == 'unpaid')
-                                                    <button
-                                                        class="mt-3 btn btn-outline-danger">{{ ucfirst($estimate->status) }}</button>
+                                                @if ($estimate->status == 'sent')
+                                                    <button class="mt-3 btn btn-outline-success">{{ ucfirst($estimate->status) }}</button>
+                                                @endif
+                                                @if ($estimate->status == 'expired')
+                                                    <button class="mt-3 btn btn-outline-danger">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                                 @if ($estimate->status == 'cancelled')
-                                                    <button
-                                                        class="mt-3 btn btn-outline-warning">{{ ucfirst($estimate->status) }}</button>
-                                                @endif
-                                                @if ($estimate->status == 'partial')
-                                                    <button
-                                                        class="mt-3 btn btn-outline-info">{{ ucfirst($estimate->status) }}</button>
+                                                    <button class="mt-3 btn btn-outline-warning">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                             </td>
                                         </tr>
