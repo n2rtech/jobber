@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerDocument;
 use App\Models\CustomerNote;
+use App\Models\CustomerPhoto;
 use App\Models\Job;
 use App\Models\JobNote;
 use App\Models\SentEmail;
@@ -41,6 +43,11 @@ class UtilityController extends Controller{
         return redirect()->route('customer.upload-photos', $request->customer_id)->with('success', 'Photos Uploaded successfully!');
     }
 
+    public function photoDelete($id){
+        CustomerPhoto::find($id)->delete();
+        return redirect()->back()->with('success', 'Photos Deleted successfully!');
+    }
+
     public function documentsUploadForm($id){
         $customer = Customer::find($id);
         foreach($customer->documents as $document){
@@ -63,6 +70,11 @@ class UtilityController extends Controller{
         }
 
         return redirect()->route('customer.upload-documents', $request->customer_id)->with('success', 'Document Uploaded successfully!');
+    }
+
+    public function documentDelete($id){
+        CustomerDocument::find($id)->delete();
+        return redirect()->back()->with('success', 'Document Deleted successfully!');
     }
 
     public function notesUploadForm($id){
@@ -100,7 +112,7 @@ class UtilityController extends Controller{
 
         $note->save();
 
-        return redirect()->route('customer.add-notes', $request->customer_id)->with('success', 'Note Added successfully!');
+        return redirect()->route('customer.show', $request->customer_id)->with('success', 'Note Added successfully!');
     }
 
     public function sendEmailForm($id){

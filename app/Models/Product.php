@@ -29,4 +29,9 @@ class Product extends Model
     {
         return $this->hasOne(EstimateProduct::class);
     }
+
+    public function jobs()
+    {
+        return $this->hasOne(JobProduct::class);
+    }
 }

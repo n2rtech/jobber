@@ -31,7 +31,7 @@ class CustomerSeeder extends Seeder
             'state' => 'Uttar Pradesh',
             'country' => 'India',
             'eir_code' => '110009',
-            'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
+            'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
             'status' => 'pending'
         ]);
 
@@ -51,7 +51,7 @@ class CustomerSeeder extends Seeder
             'state' => 'County Cork',
             'country' => 'Ireland',
             'eir_code' => 'P47',
-            'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
+            'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
             'status' => 'pending'
         ]);
 
@@ -71,7 +71,7 @@ class CustomerSeeder extends Seeder
             'state' => 'Co Kilkenny',
             'country' => 'Ireland',
             'eir_code' => 'R27',
-            'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
+            'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
             'status' => 'pending'
         ]);
 
@@ -91,7 +91,7 @@ class CustomerSeeder extends Seeder
             'state' => 'Leinster',
             'country' => 'Ireland',
             'eir_code' => 'R95',
-            'notes'     => 'Date :2022-11-02 06:24:03 Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/>',
+            'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
             'status' => 'pending'
         ]);
 

@@ -11,7 +11,7 @@
                     <h1>{{ __('Upload Photos') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('customers.show', $customer) }}" class="btn btn-dark">
+                    <a href="{{ route('customers.show', ['customer' => $customer, 'activeTab' => 'customer-photos']) }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
                 </div>
@@ -55,9 +55,15 @@
                         <label for="photos">{{ __('Uploaded Photos') }}</label>
                         <div class="gallery">
                             @forelse($customer->photos as $photo)
-                                <a href="{{ $photo->path }}" class="big"><img src="{{ $photo->path }}"
+                            <div class="image-box">
+                                <a href="{{ $photo->path }}" class="big">
+                                    <img src="{{ $photo->path }}"
                                         alt="{{ $photo->image }}" title="Uploaded On :{{ $photo->created_at }}"
-                                        width="150px" height="150px" /></a>
+                                        width="140px" height="140px" />
+                                    </a>
+
+                                    <a href="{{ route('customer.delete-photo', $photo->id) }}" class="delete-image-btn btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i> Delete</a>
+                            </div>
                             @empty
                                 <p class="text-center mt-3">{{ __('No Photos uploaded') }}</p>
                             @endforelse

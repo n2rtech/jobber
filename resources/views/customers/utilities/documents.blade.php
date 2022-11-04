@@ -8,7 +8,7 @@
                     <h1>{{ __('Upload Documents') }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('customers.show', $customer) }}" class="btn btn-dark">
+                    <a href="{{ route('customers.show', ['customer' => $customer, 'activeTab' => 'customer-documents']) }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
                 </div>
@@ -56,9 +56,11 @@
                                     <ul class="nav flex-column">
                                         @forelse($customer->documents as $document)
                                         <li class="nav-item">
-                                            <a href="{{ $document->path }}" class="nav-link" download="">
+                                            <a href="{{ $document->path }}" class="nav-link text-info" download="">
                                               {{ $document->document }} <span class="float-right badge bg-primary">{{ $document->created_at }}</span>
                                             </a>
+                                            <a class="nav-link text-info" href="{{ route('customer.delete-document', $document->id) }}"><span class="badge bg-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
+
                                           </li>
                                         @empty
                                             <p class="text-center mt-3">{{ __('No Documents uploaded') }}</p>

@@ -112,11 +112,17 @@ Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploa
 # Upload Photo Route
 Route::post('customer/photos/upload', [UtilityController::class, 'photosUpload'])->name('customer.photos-upload');
 
+# Delete Photo Route
+Route::get('customer/delete-photos/{id}', [UtilityController::class, 'photoDelete'])->name('customer.delete-photo');
+
 # Upload Document Form Route
 Route::get('customer/upload-documents/{id}', [UtilityController::class, 'documentsUploadForm'])->name('customer.upload-documents');
 
 # Upload Document Route
 Route::post('customer/documents/upload', [UtilityController::class, 'documentsUpload'])->name('customer.documents-upload');
+
+# Delete Document Route
+Route::get('customer/delete-documents/{id}', [UtilityController::class, 'documentDelete'])->name('customer.delete-document');
 
 # Add Note Form Route
 Route::get('customer/add-notes/{id}', [UtilityController::class, 'notesUploadForm'])->name('customer.add-notes');

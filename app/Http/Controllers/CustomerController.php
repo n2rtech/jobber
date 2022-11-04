@@ -89,7 +89,7 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = 'Date :'. Carbon::now().' Note: '.$request->note;
+        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
 
         // if(isset($request->note)){
@@ -121,7 +121,7 @@ class CustomerController extends Controller
         foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
-        return view('customers.view', compact('customer'));
+        return view('customers.view.index', compact('customer'));
     }
 
     /**
@@ -171,7 +171,7 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = 'Date :'. Carbon::now() .' Note: '. $request->note.'<br/>'.$customer->notes;
+        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>'.$customer->notes : $customer->notes;
         $customer->save();
 
         // if(isset($request->note)){
@@ -182,7 +182,7 @@ class CustomerController extends Controller
         //     $note->save();
         // }
 
-        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
     }
 
     /**

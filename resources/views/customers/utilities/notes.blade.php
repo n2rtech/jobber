@@ -33,7 +33,7 @@
                             <input type="hidden" name="customer_id" value="{{ $customer->id }}">
                             <div class="form-group">
                                 <label for="note">{{ __('Note') }}</label>
-                                <textarea rows="4" class="form-control" id="note" name="note" placeholder="Enter Note">{{ old('note') }}</textarea>
+                                <textarea rows="4" class="form-control" id="note" name="note" placeholder="Type Note" autofocus>{{ old('note') }}</textarea>
                                 @error('note')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="text-center">
-                        <label for="photos">{{ __('Archived Notes') }}</label>
+                        <label for="photos">{{ __('Calls / Notes') }}</label>
                         </div>
                         <div class="card card-widget widget-user-2">
                             <div class="card-body card-comments">
