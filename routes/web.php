@@ -76,6 +76,8 @@ Route::resource('invoices', InvoiceController::class);
 # Estimates Route
 Route::resource('estimates', EstimateController::class);
 
+Route::get('estimates/convert/{id}', [EstimateController::class, 'convertToInvoice'])->name('estimates.convert');
+
 # Sales Leads Route
 Route::resource('sales-leads', SalesLeadController::class);
 

@@ -48,6 +48,16 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="address" class="col-sm-2 col-form-label">{{ __('Address') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Customer Address">
+                                    @error('address')
+                                        <span id="address-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="job_title_id" class="col-sm-2 col-form-label">{{ __('Title') }}</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" id="job_title_id" name="job_title_id" required>
@@ -406,6 +416,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $job->customer->name }}");
             $("#customer_id").val("{{ $job->customer_id }}");
+            $('#address').val("{{ getAddress($job->customer_id) }}");
        });
     </script>
 

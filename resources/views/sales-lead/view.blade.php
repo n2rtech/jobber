@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ __('Lead Details') }}</h1>
+                    <h1>{{ __('Customer Name :') }} <strong>{{ $lead->name }}</strong></h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <form id='delete-form{{ $lead->id }}'
@@ -34,7 +34,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header bg-dark" style="padding: 7px 17px;">
-                <h4 class="card-title mt-3">{{ __('Customer Name :') }} <strong>{{ $lead->name }}</strong></h4>
+                <h4 class="card-title mt-3"><strong>{{ \Carbon\Carbon::today()->format('d, M Y') }} </strong>| <span id="clock"></span></h4>
                 <div class="card-tools text-right">
                     <small>{{ __('Added On') }}</small><br/>
                     <strong>{{ \Carbon\Carbon::parse($lead->created_at)->format('g:i A') }} | {{ \Carbon\Carbon::parse($lead->created_at)->format('d, M Y') }}</strong>
@@ -232,5 +232,33 @@
             }
         })
     }
+</script>
+<script>
+    function currentTime() {
+let date = new Date();
+let hh = date.getHours();
+let mm = date.getMinutes();
+let ss = date.getSeconds();
+let session = "AM";
+
+if(hh === 0){
+  hh = 12;
+}
+if(hh > 12){
+  hh = hh - 12;
+  session = "PM";
+}
+
+hh = (hh < 10) ? "0" + hh : hh;
+mm = (mm < 10) ? "0" + mm : mm;
+ss = (ss < 10) ? "0" + ss : ss;
+
+let time = hh + ":" + mm + ":" + ss + " " + session;
+
+document.getElementById("clock").innerText = time;
+let t = setTimeout(function(){ currentTime() }, 1000);
+}
+
+currentTime();
 </script>
 @endpush

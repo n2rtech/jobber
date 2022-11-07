@@ -6,9 +6,12 @@ use App\Models\CompanyDetail;
 use App\Models\Customer;
 use App\Models\Estimate;
 use App\Models\EstimateProduct;
+use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\TaxRate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -234,5 +237,46 @@ class EstimateController extends Controller
         EstimateProduct::where('estimate_id', $id)->delete();
         Estimate::find($id)->delete();
         return redirect()->route('estimates.index')->with('success', 'Estimate deleted successfully!');
+    }
+
+    public function convertToInvoice($id){
+        $estimate                       =  Estimate::find($id);
+
+        $setting                        =  Setting::where('type', 'invoice')->value('value');
+
+        $invoice                        = new Invoice();
+        $invoice->customer_id           = $estimate->customer_id;
+        $invoice->user_id               = Auth::user()->id;
+        $invoice->shipping_address      = $estimate->shipping_address;
+        $invoice->terms                 = $estimate->terms;
+        $invoice->due_date              = Carbon::today()->addDays($setting['due_on_receipt'])->format('Y-m-d');
+        $invoice->invoice_date          = Carbon::today()->format('Y-m-d');
+        $invoice->discount              = $estimate->discount;
+        $invoice->discount_type         = $estimate->discount_type;
+        $invoice->tax                   = $estimate->tax;
+        $invoice->tax_type              = $estimate->tax_type;
+        $invoice->notes                 = $estimate->notes;
+        $invoice->conditions            = $setting['conditions'];
+        $invoice->total                 = $estimate->total;
+        $invoice->save();
+
+        foreach($estimate->products as $estimate_product){
+            $selected_product       = Product::where('id',  $estimate_product->product_id)->first();
+            $product                = new InvoiceProduct();
+            $product->invoice_id    = $invoice->id;
+            $product->product_id    = $estimate_product->product_id;
+            $product->description   = $estimate_product->description;
+            $product->quantity      = $estimate_product->quantity;
+            $product->unit_price    = $estimate_product->unit_price;
+            $product->tax_rate      = $selected_product->tax->rate;
+            $product->total         = ($estimate_product->total + $estimate_product->total * $selected_product->tax->rate / 100);
+            $product->save();
+        }
+        $estimate->invoice_id       = $invoice->id;
+        $estimate->status           = 'converted';
+        $estimate->save();
+
+        return redirect()->route('invoices.show', $invoice->id)->with('sucess', 'Estimate converted to Invoice Successfully');
+
     }
 }

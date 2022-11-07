@@ -25,13 +25,13 @@ return new class extends Migration
             $table->enum('terms',[30, 60, 0])->default(0);
             $table->date('due_date')->nullable();
             $table->date('invoice_date')->nullable();
-            $table->decimal('discount', 10, 2)->nullable();
+            $table->decimal('discount', 10, 2)->default(0);
             $table->enum('discount_type', ['percentage', 'amount'])->default('percentage');
-            $table->decimal('tax', 10, 2)->nullable();
+            $table->decimal('tax', 10, 2)->default(0);
             $table->enum('tax_type', ['percentage', 'amount'])->default('percentage');
-            $table->decimal('subtotal', 10, 2)->nullable();
-            $table->decimal('total', 10, 2)->nullable();
-            $table->decimal('paid', 10, 2)->default(0);
+            $table->decimal('subtotal', 10, 2)->default(0.00);
+            $table->decimal('total', 10, 2)->default(0.00);
+            $table->decimal('paid', 10, 2)->default(0.00);
             $table->longText('notes')->nullable();
             $table->longText('conditions')->nullable();
             $table->string('file')->nullable();

@@ -8,6 +8,7 @@ use App\Models\InvoiceProduct;
 use App\Models\Job;
 use App\Models\JobTitle;
 use App\Models\Product;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,8 +22,8 @@ class InvoiceSeed extends Seeder
      */
     public function run()
     {
-       $jobs = Job::get();
-
+       $jobs        = Job::get();
+       $setting     = Setting::where('type', 'invoice')->value('value');
        foreach($jobs as $job){
             $invoice                        = new Invoice();
             $invoice->customer_id           = $job->customer_id;
@@ -31,13 +32,8 @@ class InvoiceSeed extends Seeder
             $invoice->shipping_address      = Null;
             $invoice->due_date              = Carbon::parse($job->created_at)->format('Y-m-d');
             $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
-            $invoice->discount              = 0;
-            $invoice->discount_type         = "percentage";
-            $invoice->tax                   = 0;
-            $invoice->tax_type              = "percentage";
             $invoice->notes                 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-            $invoice->conditions            = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            $invoice->total                 = Null;
+            $invoice->conditions            = $setting['conditions'];
             $invoice->save();
 
             foreach($job->products as $job_product){
@@ -54,6 +50,9 @@ class InvoiceSeed extends Seeder
             }
 
             $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+
+            $deduct_discount = 0.00;
+            $added_tax       = 0.00;
 
             if($invoice->discount_type == 'percentage'){
                 $deduct_discount = $subtotal * $job->discount / 100;

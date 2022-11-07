@@ -28,13 +28,13 @@
                         @if ($estimate->status == 'created')
                             <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
                         @endif
-                        @if ($estimate->status == 'sent')
+                        @if ($estimate->status == 'converted')
                             <span class="badge bg-success">{{ ucfirst($estimate->status) }}</span>
                         @endif
                         @if ($estimate->status == 'expired')
                             <span class="badge bg-danger">{{ ucfirst($estimate->status) }}</span>
                         @endif
-                        @if ($estimate->status == 'cancelled')
+                        @if ($estimate->status == 'sent')
                             <span class="badge bg-warning">{{ ucfirst($estimate->status) }}</span>
                         @endif
                     </td>
@@ -46,6 +46,11 @@
                             <div class="dropdown-menu" role="menu" style="">
                               <a class="dropdown-item" href="{{ route('estimates.edit', $estimate->id) }}"> Edit</a>
                               <a class="dropdown-item" href="{{ route('estimates.show', $estimate->id) }}"> View</a>
+                              @if($estimate->status == 'converted')
+                              <a class="dropdown-item" href="{{ route('invoices.show', $estimate->invoice_id) }}"> View Invoice</a>
+                              @else
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="confirmConvert({{ $estimate->id }})"> Convert to Invoice</a>
+                              @endif
                               <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
                               <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
                               <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Print</a>

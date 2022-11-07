@@ -56,5 +56,23 @@
 @push('scripts')
 
 @include('sections.utilities')
-
+<script type="text/javascript">
+    function confirmAccept(id){
+        url_string = '{{ route("estimates.convert", ":id") }}';
+        url = url_string.replace(':id', id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Convert to Invoice!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        })
+    }
+    </script>
 @endpush

@@ -19,6 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         $company = CompanyDetail::first();
+        $company->path =  isset($company->logo)? asset('storage/uploads/logo/' . $company->logo) : asset('dist/img/logo-dark.png');
         return view('settings.company-settings.index', compact('company'));
     }
 
@@ -99,16 +100,29 @@ class CompanyController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $company                   = new CompanyDetail();
+        $company                   = CompanyDetail::find($id);
         $company->company          = $request->company;
         $company->email            = $request->email;
         $company->mobile           = $request->mobile;
+        $company->landline         = $request->landline;
         $company->address_1        = $request->address_1;
         $company->address_2        = $request->address_2;
         $company->city             = $request->city;
         $company->state            = $request->state;
         $company->country          = $request->country;
         $company->zipcode          = $request->zipcode;
+        $company->vat              = $request->vat;
+        $company->website          = $request->website;
+        $company->zipcode          = $request->zipcode;
+
+        if($request->hasfile('logo')) {
+            $logo = $request->file('logo');
+            $name = $logo->getClientOriginalName();
+            $logo->storeAs('uploads/logo', $name, 'public');
+
+            $company->logo         = $name;
+        }
+
         $company->save();
 
         return redirect()->route('company-settings.index')->with('success', 'Company  Details updated successfully!');

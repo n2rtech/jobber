@@ -17,11 +17,28 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::get();
+        $products              = Product::query();
+
+        $filter_name            = $request->filter_name;
+
+        $filter_type           = $request->filter_type;
+
+        $filter_tax          = $request->default_tax;
+
+        isset($filter_name)     ? $products->where('name', 'like', '%'.$filter_name.'%') : $products;
+
+        isset($filter_type)    ? $products->where('type', $filter_type) : $products;
+
+        isset($filter_tax)    ? $products->where('tax_rate_id', $filter_tax) : $products;
+
+        $products              = $products->orderBy('id', 'desc')->paginate(20);
+
         $taxes    = TaxRate::get();
-        return view('settings.products.index', compact('products', 'taxes'));
+
+        return view('settings.products.index', compact('products', 'taxes', 'filter_name', 'filter_type', 'filter_tax'));
+
     }
 
     /**

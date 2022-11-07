@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -106,8 +111,56 @@ class JobController extends Controller
                 $product->save();
             }
         }
+
         $total =JobProduct::where('job_id', $job->id)->sum('total');
         Job::where('id', $job->id)->update(['total' => $total]);
+
+        $setting    = Setting::where('type', 'invoice')->value('value');
+
+        $invoice                        = new Invoice();
+        $invoice->customer_id           = $job->customer_id;
+        $invoice->job_id                = $job->id;
+        $invoice->user_id               = Auth::user()->id;
+        $invoice->shipping_address      = getAddress($job->customer_id);
+        $invoice->due_date              = $job->created_at->addDays($setting['due_on_receipt']);
+        $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
+        $invoice->notes                 = Null;
+        $invoice->conditions            = $setting['conditions'];
+        $invoice->total                 = Null;
+        $invoice->save();
+
+        foreach($job->products as $job_product){
+            $selected_product       = Product::where('id',  $job_product->product_id)->first();
+            $product                = new InvoiceProduct();
+            $product->invoice_id    = $invoice->id;
+            $product->product_id    = $job_product->product_id;
+            $product->description   = $job_product->description;
+            $product->quantity      = $job_product->quantity;
+            $product->unit_price    = $job_product->unit_price;
+            $product->tax_rate      = $selected_product->tax->rate;
+            $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
+            $product->save();
+        }
+
+        $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+
+        if($invoice->discount_type == 'percentage'){
+            $deduct_discount = $subtotal * $job->discount / 100;
+        }
+
+        if($invoice->discount_type == 'amount'){
+            $deduct_discount = $job->discount;
+        }
+
+        if($invoice->tax_type == 'percentage'){
+            $added_tax = $subtotal * $job->tax / 100;
+        }
+
+        if($invoice->tax_type == 'amount'){
+            $added_tax = $subtotal * $job->tax / 100;
+        }
+        $total = ($subtotal + $added_tax - $deduct_discount);
+        Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
 
         return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
@@ -186,6 +239,54 @@ class JobController extends Controller
         }
         $total =JobProduct::where('job_id', $job->id)->sum('total');
         Job::where('id', $job->id)->update(['total' => $total]);
+
+        $setting    = Setting::where('type', 'invoice')->value('value');
+        $invoice_id  = Invoice::where('job_id', $id)->value('id');
+
+        $invoice                        = Invoice::find($invoice_id);
+        $invoice->customer_id           = $job->customer_id;
+        $invoice->job_id                = $job->id;
+        $invoice->user_id               = Auth::user()->id;
+        $invoice->shipping_address      = getAddress($job->customer_id);
+        $invoice->due_date              = $job->created_at->addDays($setting['due_on_receipt']);
+        $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
+        $invoice->conditions            = $setting['conditions'];
+        $invoice->save();
+
+        InvoiceProduct::where('invoice_id', $invoice->id)->delete();
+
+        foreach($job->products as $job_product){
+            $selected_product       = Product::where('id',  $job_product->product_id)->first();
+            $product                = new InvoiceProduct();
+            $product->invoice_id    = $invoice->id;
+            $product->product_id    = $job_product->product_id;
+            $product->description   = $job_product->description;
+            $product->quantity      = $job_product->quantity;
+            $product->unit_price    = $job_product->unit_price;
+            $product->tax_rate      = $selected_product->tax->rate;
+            $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
+            $product->save();
+        }
+
+        $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+
+        if($invoice->discount_type == 'percentage'){
+            $deduct_discount = $subtotal * $job->discount / 100;
+        }
+
+        if($invoice->discount_type == 'amount'){
+            $deduct_discount = $job->discount;
+        }
+
+        if($invoice->tax_type == 'percentage'){
+            $added_tax = $subtotal * $job->tax / 100;
+        }
+
+        if($invoice->tax_type == 'amount'){
+            $added_tax = $subtotal * $job->tax / 100;
+        }
+        $total = ($subtotal + $added_tax - $deduct_discount);
+        Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
         return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
     }

@@ -232,3 +232,15 @@ a.nav-link .active{
     margin-top: 2px;
     margin-bottom: 2px;
 }
+.customer-detail-heading {
+    text-align: center;
+    background-color: #494E53;
+    color: white;
+    height: 27px;
+}
+.customer-detail-box {
+    background-color: #eaeff700;
+    padding: 10px;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}

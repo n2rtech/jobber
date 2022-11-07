@@ -22,6 +22,14 @@
 
                 <div class="col-sm-6 text-right">
 
+                    <button type="submit" form="productSearchForm" class="btn btn-success">
+                        <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
+                    </button>
+
+                    <a href="{{ route('products.index') }}" class="btn btn-indigo">
+                        <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
+                    </a>
+
                     <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#modal-product">
                         <i class="btn-icon fas fa-plus-circle"></i> {{ __('Add New') }}
                     </a>
@@ -34,7 +42,7 @@
     <section class="content">
 
         <div class="container-fluid">
-
+            @include('settings.products.filter')
             @include('settings.products.listing')
 
         </div>

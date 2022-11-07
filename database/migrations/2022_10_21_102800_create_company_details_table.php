@@ -16,14 +16,18 @@ return new class extends Migration
         Schema::create('company_details', function (Blueprint $table) {
             $table->id();
             $table->string('company');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('mobile')->nullable();
+            $table->string('landline')->nullable();
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
+            $table->string('vat')->nullable();
+            $table->string('website')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

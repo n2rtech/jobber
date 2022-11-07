@@ -19,12 +19,16 @@ class CompanyDetailSeeder extends Seeder
             'company'   => 'Dalton TV',
             'email'     => 'info@daltontv.ie',
             'mobile'    => '0872992300',
+            'landline'    => '0567771900',
             'address_1' => 'Until 15 A Hebron Industrial Estate',
             'address_2' => 'Hebron Road',
             'city'      => 'Kilkenny',
             'zipcode'   => 'V93',
             'state'     => 'Leinster',
-            'country'   => 'Ireland'
+            'country'   => 'Ireland',
+            'vat'       => '1234567WA',
+            'website'   => 'https://www.daltontv.ie/',
+            'logo'      => Null,
         ]);
     }
 }

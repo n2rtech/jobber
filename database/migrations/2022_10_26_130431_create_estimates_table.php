@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->unsignedBigInteger('invoice_id')->nullable();
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('shipping_address')->nullable();
@@ -33,7 +35,7 @@ return new class extends Migration
             $table->longText('notes')->nullable();
             $table->longText('conditions')->nullable();
             $table->string('file')->nullable();
-            $table->enum('status', ['sent', 'expired', 'cancelled', 'created'])->default('created');
+            $table->enum('status', ['sent', 'expired', 'converted', 'created'])->default('created');
             $table->timestamps();
         });
     }
