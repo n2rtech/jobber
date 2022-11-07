@@ -23,306 +23,310 @@
    </div>
 </section>
 <section class="content">
-   <form id="estimateForm" method="POST" action="{{ route('estimates.store') }}" enctype="multipart/form-data">
-      @csrf
-      <input type="hidden" name="customer_id" id="customer_id">
-      <div class="row">
-         <div class="col-lg-7">
-            <div class="card">
-               <div class="card-body">
-                  <div class="form-group row">
-                     <label for="name" class="col-sm-3 col-form-label">{{ __('Estimate For') }}</label>
-                     <div class="col-sm-9">
-                        <select class="form-control" id="name" name="name"></select>
-                        @error('name')
-                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-6">
-                        <label for="billing_address" class="col-form-label" style="padding-bottom:0px">{{ __('Billing Address') }}</label>
-                        <p id="billing_address" class="text-muted"><small>Select Customer</small></p>
-                     </div>
-                     <div class="col-sm-6 text-right">
-                        <label for="phone" class="col-form-label" style="padding-bottom:0px">{{ __('Phone') }}</label>
-                        <p id="phone" class="text-muted"><small>Select Customer</small></p>
-                     </div>
-                  </div>
-                  <div class="row" style="border-top: 1px solid rgba(0,0,0,.1);">
-                     <div class="col-sm-6">
-                        <label for="shipping_address" class="col-form-label" style="padding-bottom:0px">{{ __('Shipping Address') }}</label>
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox" id="same_as_billing_address" name="same_as_billing_address" value="1" onchange="shippingAddressOptions();">
-                            <label for="same_as_billing_address" class="custom-control-label"><small>Same as Billing Address</small></label>
-                          </div>
-                     </div>
-                     <div class="col-sm-6 text-right">
-                        <label for="invoice_no" class="col-form-label" style="padding-bottom:0px">{{ __('Estimate No.') }}</label>
-                        <p id="invoice_no" class="text-muted"><small>#{{ $estimate_no }}</small></p>
-                     </div>
-                     <div class="col-sm-12">
-                        <input id="shipping_address_div" class="form-control form-control-sm" name="shipping_address" placeholder="Enter Shipping Address" />
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-5">
-            <div class="card pb-2">
-               <div class="card-body">
-                  <div class="form-group text-center">
-                     <label class="col-form-label">{{ __('Estimate Details') }}</label>
-                  </div>
-                  <div class="form-group row">
-                     <label for="terms" class="col-sm-4 col-form-label">{{ __('Expiry Terms') }}</label>
-                     <div class="col-sm-8">
-                        <select class="form-control" id="terms" name="terms" onchange="setDueDate(this.value);">
-                           <option value="">Select Term</option>
-                           <option value="30">Net 30</option>
-                           <option value="60">Net 60</option>
-                           <option value="{{ $setting['due_on_receipt'] }}">Due on Receipt</option>
-                        </select>
-                        @error('terms')
-                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                        @enderror
-                     </div>
-                  </div>
-
-                  <div class="form-group row">
-                     <label for="estimate_date" class="col-sm-4 col-form-label">{{ __('Estimate Date') }}</label>
-                     <div class="col-sm-8">
-                        <div class="input-group date" id="estimate_date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" name="estimate_date" id="estimate_date_input" data-target="#estimate_date" value="{{ \Carbon\Carbon::today()->format('Y-m-d') }}">
-                            <div class="input-group-append" data-target="#estimate_date" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <div class="row">
+        <div class="col-sm-11 mx-auto">
+            <form id="estimateForm" method="POST" action="{{ route('estimates.store') }}" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="customer_id" id="customer_id">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">{{ __('Estimate For') }}</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="name" name="name"></select>
+                                    @error('name')
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-                            @error('estimate_date')
-                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                            @enderror
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="billing_address" class="col-form-label" style="padding-bottom:0px">{{ __('Billing Address') }}</label>
+                                    <p id="billing_address" class="text-muted"><small>Select Customer</small></p>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <label for="phone" class="col-form-label" style="padding-bottom:0px">{{ __('Phone') }}</label>
+                                    <p id="phone" class="text-muted"><small>Select Customer</small></p>
+                                </div>
+                            </div>
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1);">
+                                <div class="col-sm-6">
+                                    <label for="shipping_address" class="col-form-label" style="padding-bottom:0px">{{ __('Shipping Address') }}</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox" id="same_as_billing_address" name="same_as_billing_address" value="1" onchange="shippingAddressOptions();">
+                                        <label for="same_as_billing_address" class="custom-control-label"><small>Same as Billing Address</small></label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <label for="invoice_no" class="col-form-label" style="padding-bottom:0px">{{ __('Estimate No.') }}</label>
+                                    <p id="invoice_no" class="text-muted"><small>#{{ $estimate_no }}</small></p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input id="shipping_address_div" class="form-control form-control-sm" name="shipping_address" placeholder="Enter Shipping Address" />
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="expiry_date" class="col-sm-4 col-form-label">{{ __('Expiry Date') }}</label>
-                    <div class="col-sm-8">
-                       <div class="input-group date" id="expiry_date" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" name="expiry_date" id="expiry_date_input" data-target="#expiry_date">
-                           <div class="input-group-append" data-target="#expiry_date" data-toggle="datetimepicker">
-                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                           </div>
-                           @error('expiry_date')
-                           <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                           @enderror
-                       </div>
+                        </div>
                     </div>
-                 </div>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-12">
-            <div class="card card-dark">
-               <div class="card-header">
-                  <h3 class="card-title">{{ __('Line Items') }}</h3>
-                  <div class="card-tools">
-                     <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                        title="Collapse">
-                     <i class="fas fa-minus"></i>
-                     </button>
-                  </div>
-               </div>
-               <div class="card-body">
-                  <div class="col-md-12">
-                     <div class="table-responsive">
-                        <table class="table table-sm" id="line_items">
-                           <thead>
-                              <tr>
-                                 <th width="40%">{{ __('Product / Service') }}</th>
-                                 <th class="text-right">{{ __('Quantity') }}</th>
-                                 <th class="text-right">{{ __('Unit Price') }}</th>
-                                 <th class="text-right">{{ __('Tax') }}</th>
-                                 <th class="text-right">{{ __('Total') }}</th>
-                                 <th class="text-right"></th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr id="item-row0">
-                                 <td>
-                                    <select name="product[0][product]" id="product0" class="form-control form-control-sm" onchange="showProductOptions(this, 0)">
-                                       <option value="">Select Product</option>
-                                       @foreach($products as $product)
-                                       <option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate}}">{{ $product->name }}</option>
-                                       @endforeach
+                    <div class="col-lg-5">
+                        <div class="card pb-2">
+                        <div class="card-body">
+                            <div class="form-group text-center">
+                                <label class="col-form-label">{{ __('Estimate Details') }}</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="terms" class="col-sm-4 col-form-label">{{ __('Expiry Terms') }}</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="terms" name="terms" onchange="setDueDate(this.value);">
+                                    <option value="">Select Term</option>
+                                    <option value="30">Net 30</option>
+                                    <option value="60">Net 60</option>
+                                    <option value="{{ $setting['due_on_receipt'] }}">Due on Receipt</option>
                                     </select>
-                                    <textarea name="product[0][description]" id="description0" rows="2" placeholder="Description"
-                                       class="form-control form-control-sm mt-1"></textarea>
-                                 </td>
-                                 <td>
-                                    <input type="number"
-                                       class="form-control form-control-sm text-align-right"
-                                       id="quantity0" name="product[0][quantity]" placeholder="Quantity" oninput="totalUpdate(0)" min="1" value="1">
-                                 </td>
-                                 <td>
-                                    <div class="input-group">
-                                       <div class="input-group-prepend">
-                                          <span class="input-group-text text-sm">€</span>
-                                       </div>
-                                       <input type="number"
-                                          class="form-control form-control-sm text-align-right"
-                                          id="unit_price0" name="product[0][unit_price]"
-                                          placeholder="Unit Price" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                           <span class="input-group-text text-sm">%</span>
+                                    @error('terms')
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="estimate_date" class="col-sm-4 col-form-label">{{ __('Estimate Date') }}</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group date" id="estimate_date" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" name="estimate_date" id="estimate_date_input" data-target="#estimate_date" value="{{ \Carbon\Carbon::today()->format('Y-m-d') }}">
+                                        <div class="input-group-append" data-target="#estimate_date" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
-                                        <input type="number"
-                                           class="form-control form-control-sm text-align-right"
-                                           id="tax_rate0" name="product[0][tax_rate]"
-                                           placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
-                                     </div>
-                                 </td>
-                                 <td>
-                                    <div class="input-group">
-                                       <div class="input-group-prepend">
-                                          <span class="input-group-text text-sm">€</span>
-                                       </div>
-                                       <input type="number"
-                                          class="form-control form-control-sm text-align-right totalpriceinput"
-                                          id="total0" name="product[0][total]"
-                                          placeholder="Total" min="0" step="any" required value="0.00">
+                                        @error('estimate_date')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                 </td>
-                                 <td class="text-right"><button type="button"
-                                    class="btn btn-sm btn-danger" onclick="$('#item-row0').remove();"><i
-                                    class="fa fa-minus"></i></button></td>
-                              </tr>
-                           </tbody>
-                           <tfoot>
-                              <tr>
-                                 <td class="text-right" colspan="6">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
-                                       class="fa fa-plus"></i></button>
-                                 </td>
-                              </tr>
-                           </tfoot>
-                        </table>
-                     </div>
-                  </div>
-                  <div class="col-md-6 float-right">
-                     <div class="table-responsive">
-                        <table class="table table-bordered table-sm">
-                           <thead>
-                              <tr>
-                                 <td width="60%" class="text-right">{{ __('Subtotal') }}</td>
-                                 <td class="text-right">{{ __('€ ') }}<span id="subtotal">0.00</span></td>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td width="60%" class="text-right">
-                                    <div class="form-group row">
-                                       <label for="discount" class="col-sm-3"><small>{{ __('Discount') }}</small></label>
-                                       <div class="col-sm-5">
-                                          <input type="number" class="form-control form-control-sm text-align-right" id="discount" name="discount"
-                                             placeholder="€ 0.00" min="0" step="any" value="0.00">
-                                          @error('discount')
-                                          <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                          @enderror
-                                       </div>
-                                       <div class="col-sm-4">
-                                          <select class="form-control form-control-sm" id="discount_type" name="discount_type">
-                                             <option value="percentage">%</option>
-                                             <option value="amount">Amount</option>
-                                          </select>
-                                       </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="expiry_date" class="col-sm-4 col-form-label">{{ __('Expiry Date') }}</label>
+                                <div class="col-sm-8">
+                                <div class="input-group date" id="expiry_date" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="expiry_date" id="expiry_date_input" data-target="#expiry_date">
+                                    <div class="input-group-append" data-target="#expiry_date" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
-                                 </td>
-                                 <td class="text-right">{{ __('€ ') }}<span id="discount_amount">0.00</span></td>
-                              </tr>
-                              <tr>
-                                 <td width="60%" class="text-right">
-                                    <div class="form-group row">
-                                       <label for="tax" class="col-sm-3"><small>{{ __('Tax') }}</small></label>
-                                       <div class="col-sm-5">
-                                          <input type="number" class="form-control form-control-sm text-align-right" id="tax" name="tax"
-                                             placeholder="€ 0.00" min="0" step="any" value="0.00">
-                                          @error('tax')
-                                          <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                          @enderror
-                                       </div>
-                                       <div class="col-sm-4">
-                                          <select class="form-control form-control-sm" id="tax_type" name="tax_type">
-                                             <option value="percentage">%</option>
-                                             <option value="amount">Amount</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td class="text-right">{{ __('€ ') }}<span id="tax_amount">0.00</span></td>
-                              </tr>
-                           </tbody>
-                           <tfoot>
-                              <tr>
-                                 <th width="60%" class="text-right">{{ __('Total') }}</th>
-                                 <th class="text-right">{{ __('€ ') }}<span id="total">0.00</span></th>
-                                 <input type="hidden" id="estimate_total" name="estimate_total">
-                              </tr>
-                           </tfoot>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         @if($setting['allow_for_note'] == 1)
-         <div class="col-lg-6">
-            <div class="card">
-               <div class="card-body">
-                  <div class="form-group">
-                     <label for="notes" class="col-form-label">{{ __('Internal Notes & Attachents') }}</label>
-                     <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
-                     @error('notes')
-                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                     @enderror
-                  </div>
-               </div>
-            </div>
-         </div>
-         @endif
-         <div @if($setting['allow_for_note'] == 1) class="col-lg-6" @else class="col-lg-12" @endif>
-            <div class="card">
-               <div class="card-body">
-                  <div class="form-group">
-                     <label for="conditions" class="col-form-label">{{ __('Terms & Conditions') }}</label>
-                     <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $setting['conditions']) }}</textarea>
-                     @error('conditions')
-                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                     @enderror
-                  </div>
-               </div>
-            </div>
-         </div>
-         {{-- <div class="col-lg-12 text-center">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file" name="file"
-                            multiple>
-                        <label class="custom-file-label" for="documents">{{ __('Drag your File here') }}</label>
+                                    @error('expiry_date')
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card card-dark">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __('Line Items') }}</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                    title="Collapse">
+                                <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-sm" id="line_items">
+                                    <thead>
+                                        <tr>
+                                            <th width="40%">{{ __('Product / Service') }}</th>
+                                            <th class="text-right">{{ __('Quantity') }}</th>
+                                            <th class="text-right">{{ __('Unit Price') }}</th>
+                                            <th class="text-right">{{ __('Tax') }}</th>
+                                            <th class="text-right">{{ __('Total') }}</th>
+                                            <th class="text-right"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="item-row0">
+                                            <td>
+                                                <select name="product[0][product]" id="product0" class="form-control form-control-sm" onchange="showProductOptions(this, 0)">
+                                                <option value="">Select Product</option>
+                                                @foreach($products as $product)
+                                                <option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate}}">{{ $product->name }}</option>
+                                                @endforeach
+                                                </select>
+                                                <textarea name="product[0][description]" id="description0" rows="2" placeholder="Description"
+                                                class="form-control form-control-sm mt-1"></textarea>
+                                            </td>
+                                            <td>
+                                                <input type="number"
+                                                class="form-control form-control-sm text-align-right"
+                                                id="quantity0" name="product[0][quantity]" placeholder="Quantity" oninput="totalUpdate(0)" min="1" value="1">
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-sm">€</span>
+                                                </div>
+                                                <input type="number"
+                                                    class="form-control form-control-sm text-align-right"
+                                                    id="unit_price0" name="product[0][unit_price]"
+                                                    placeholder="Unit Price" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text text-sm">%</span>
+                                                    </div>
+                                                    <input type="number"
+                                                    class="form-control form-control-sm text-align-right"
+                                                    id="tax_rate0" name="product[0][tax_rate]"
+                                                    placeholder="Tax(%)" min="0" step="any" oninput="totalUpdate(0)" required value="0.00">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-sm">€</span>
+                                                </div>
+                                                <input type="number"
+                                                    class="form-control form-control-sm text-align-right totalpriceinput"
+                                                    id="total0" name="product[0][total]"
+                                                    placeholder="Total" min="0" step="any" required value="0.00">
+                                                </div>
+                                            </td>
+                                            <td class="text-right"><button type="button"
+                                                class="btn btn-sm btn-danger" onclick="$('#item-row0').remove();"><i
+                                                class="fa fa-minus"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="text-right" colspan="6">
+                                                <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
+                                                class="fa fa-plus"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 float-right">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <td width="60%" class="text-right">{{ __('Subtotal') }}</td>
+                                            <td class="text-right">{{ __('€ ') }}<span id="subtotal">0.00</span></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td width="60%" class="text-right">
+                                                <div class="form-group row">
+                                                <label for="discount" class="col-sm-3"><small>{{ __('Discount') }}</small></label>
+                                                <div class="col-sm-5">
+                                                    <input type="number" class="form-control form-control-sm text-align-right" id="discount" name="discount"
+                                                        placeholder="€ 0.00" min="0" step="any" value="0.00">
+                                                    @error('discount')
+                                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control form-control-sm" id="discount_type" name="discount_type">
+                                                        <option value="percentage">%</option>
+                                                        <option value="amount">Amount</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">{{ __('€ ') }}<span id="discount_amount">0.00</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="60%" class="text-right">
+                                                <div class="form-group row">
+                                                <label for="tax" class="col-sm-3"><small>{{ __('Tax') }}</small></label>
+                                                <div class="col-sm-5">
+                                                    <input type="number" class="form-control form-control-sm text-align-right" id="tax" name="tax"
+                                                        placeholder="€ 0.00" min="0" step="any" value="0.00">
+                                                    @error('tax')
+                                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control form-control-sm" id="tax_type" name="tax_type">
+                                                        <option value="percentage">%</option>
+                                                        <option value="amount">Amount</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">{{ __('€ ') }}<span id="tax_amount">0.00</span></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th width="60%" class="text-right">{{ __('Total') }}</th>
+                                            <th class="text-right">{{ __('€ ') }}<span id="total">0.00</span></th>
+                                            <input type="hidden" id="estimate_total" name="estimate_total">
+                                        </tr>
+                                    </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    @if($setting['allow_for_note'] == 1)
+                    <div class="col-lg-6">
+                        <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="notes" class="col-form-label">{{ __('Internal Notes & Attachents') }}</label>
+                                <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
+                                @error('notes')
+                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    @endif
+                    <div @if($setting['allow_for_note'] == 1) class="col-lg-6" @else class="col-lg-12" @endif>
+                        <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="conditions" class="col-form-label">{{ __('Terms & Conditions') }}</label>
+                                <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $setting['conditions']) }}</textarea>
+                                @error('conditions')
+                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-lg-12 text-center">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" name="file"
+                                        multiple>
+                                    <label class="custom-file-label" for="documents">{{ __('Drag your File here') }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="col-lg-12 text-right mb-5">
+                        <button type="submit" class="btn btn-danger" form="estimateForm">
+                        <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
+                        </button>
                     </div>
                 </div>
-            </div>
-         </div> --}}
-         <div class="col-lg-12 text-right mb-5">
-            <button type="submit" class="btn btn-danger" form="estimateForm">
-            <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
-            </button>
-         </div>
-      </div>
-   </form>
+            </form>
+        </div>
+    </div>
 </section>
 @endsection
 @push('scripts')
