@@ -11,9 +11,9 @@
 
             <div class="col-sm-6 text-right">
 
-                <button type="submit" form="teamForm" class="btn btn-success">
+                <a href="javascript:void(0)" id="filter" class="btn btn-success">
                     <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
-                </button>
+                </a>
 
                 <a href="{{ route('manage-team.index') }}" class="btn btn-indigo">
                     <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
@@ -31,7 +31,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" id="filterBox">
                 <form id="teamForm" action="{{ route('manage-team.index') }}">
                     <div class="form-row">
                         <div class="col-xl-3 col-md-12">
@@ -55,7 +55,7 @@
                                     placeholder="Mobile No" name="mobile" value="{{ $filter_mobile }}">
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-12">
+                        <div class="col-xl-2 col-md-12">
                             <div class="form-group">
                                 <label for="role">{{ __('Role') }}</label>
                                 <select class="form-control form-control-sm" name="role" id="role">
@@ -63,6 +63,12 @@
                                     <option value="administrator" @if($filter_role == 'administrator') selected @endif>{{ __('Administrator') }}</option>
                                     <option value="worker" @if($filter_role == 'worker') selected @endif>{{ __('Worker') }}</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-md-12 mt-4">
+                            <div class="form-group" style="margin-top: 8px">
+                                <button type="submit" class="btn btn-success btn-sm" form="teamForm"><i class="fas fa-search"></i></button>
+                                <a href={{ route('manage-team.index') }} class="btn btn-sm btn-indigo"><i class="fas fa-refresh"></i></a>
                             </div>
                         </div>
                     </div>
@@ -125,4 +131,19 @@
 @endsection
 @push('scripts')
 @include('sections.utilities')
+<!-- Filter Box Scripts Start -->
+<script>
+    $(document).ready(function(){
+        var filterBox = '{{ $filter_box }}';
+        if(filterBox === 'show'){
+            $("#filterBox").css('display', 'block');
+        }
+
+        $("#filter").click(function(){
+            $("#filterBox").slideToggle();
+        });
+
+    });
+</script>
+<!-- Filter Box Scripts End -->
 @endpush

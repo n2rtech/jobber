@@ -6,8 +6,14 @@
 @section('content')
     @include('customers.view.sections.content-header')
     <section class="content">
-        @include('customers.view.sections.details')
-        @include('customers.view.sections.action-buttons')
+        <div class="row">
+            <div class="col-md-6">
+                @include('customers.view.sections.details')
+            </div>
+            <div class="col-md-6">
+                @include('customers.view.sections.action-buttons')
+            </div>
+        </div>
         @include('customers.view.sections.tabs')
     </section>
 @endsection

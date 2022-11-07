@@ -244,3 +244,10 @@ a.nav-link .active{
     border-radius: 0.25rem;
     border: 1px solid #ced4da;
 }
+.btn-customer-action {
+    width: 96px;
+    margin-bottom: 11px;
+}
+#filterBox{
+    display:none;
+}

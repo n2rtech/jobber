@@ -8,7 +8,7 @@
                     <a href="{{ $document->path }}" class="nav-link text-info" download="">
                       {{ $document->document }} <span class="float-right badge bg-primary">{{ $document->created_at }}</span>
                     </a>
-                    <a class="nav-link text-info" href="{{ route('customer.delete-document', $document->id) }}"><span class="badge bg-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
+                    <a class="nav-link text-info" href="javascript:void(0)" onclick="confirmDocumentDelete({{ $document->id }})"><span class="badge bg-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
 
                   </li>
                 @empty

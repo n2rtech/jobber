@@ -116,6 +116,42 @@
         })
     }
     </script>
+    <script type="text/javascript">
+        function confirmPhotoDelete(id){
+            url_string = '{{ route("customer.delete-photo", ":id") }}';
+            url = url_string.replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete Photo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            })
+        }
+         function confirmDocumentDelete(id){
+            url_string = '{{ route("customer.delete-document", ":id") }}';
+            url = url_string.replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete Document!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            })
+        }
+        </script>
     <script>
         function currentTime() {
   let date = new Date();

@@ -38,9 +38,11 @@ class UtilityController extends Controller{
                     'image' => $name
                 ]);
             }
+        }else{
+            return redirect()->back()->with('warning', 'Please select Image to upload');
         }
 
-        return redirect()->route('customer.upload-photos', $request->customer_id)->with('success', 'Photos Uploaded successfully!');
+        return redirect()->route('customers.show', ['customer' => $request->customer_id, 'activeTab' => 'customer-photos'])->with('success', 'Photos Uploaded successfully!');
     }
 
     public function photoDelete($id){
@@ -67,9 +69,11 @@ class UtilityController extends Controller{
                     'document' => $name
                 ]);
             }
+        }else{
+            return redirect()->back()->with('warning', 'Please select Documents to upload');
         }
 
-        return redirect()->route('customer.upload-documents', $request->customer_id)->with('success', 'Document Uploaded successfully!');
+        return redirect()->route('customers.show', ['customer' => $request->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Document Uploaded successfully!');
     }
 
     public function documentDelete($id){
@@ -112,7 +116,7 @@ class UtilityController extends Controller{
 
         $note->save();
 
-        return redirect()->route('customer.show', $request->customer_id)->with('success', 'Note Added successfully!');
+        return redirect()->route('customers.show', $request->customer_id)->with('success', 'Note Added successfully!');
     }
 
     public function sendEmailForm($id){

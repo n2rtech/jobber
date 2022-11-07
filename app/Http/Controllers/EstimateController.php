@@ -30,6 +30,8 @@ class EstimateController extends Controller
     {
         $estimates                   = Estimate::query();
 
+        $filter_box                 = 'hide';
+
         $filter_name                = $request->name;
 
         $filter_email               = $request->email;
@@ -39,6 +41,10 @@ class EstimateController extends Controller
         $filter_status              = $request->status;
 
         $filter_date                = $request->date;
+
+        if(isset($filter_name) || isset($filter_email) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
+            $filter_box = 'show';
+        }
 
 
         isset($filter_name)         ? $estimates->where('name', 'like', '%'.$filter_name.'%') : $estimates;
@@ -54,7 +60,7 @@ class EstimateController extends Controller
 
         $estimates                   = $estimates->orderBy('id', 'desc')->get();
 
-        return view('estimates.index', compact('estimates', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date'));
+        return view('estimates.index', compact('estimates', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box'));
     }
 
     /**

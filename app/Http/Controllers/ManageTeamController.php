@@ -21,6 +21,8 @@ class ManageTeamController extends Controller
     {
         $users = User::query();
 
+        $filter_box     = 'hide';
+
         $filter_name    = $request->name;
 
         $filter_email   = $request->email;
@@ -28,6 +30,10 @@ class ManageTeamController extends Controller
         $filter_mobile   = $request->mobile;
 
         $filter_role  = $request->role;
+
+        if(isset($filter_name) || isset($filter_email) || isset($filter_mobile) || isset($filter_status) || isset($filter_role)){
+            $filter_box = 'show';
+        }
 
         isset($filter_name) ? $users->where('name', 'like', '%'.$filter_name.'%') : $users;
 
@@ -39,7 +45,7 @@ class ManageTeamController extends Controller
 
         $users = $users->orderBy('id', 'desc')->get();
 
-        return view('settings.manage-team.list', compact('users', 'filter_name', 'filter_email', 'filter_mobile', 'filter_role'));
+        return view('settings.manage-team.list', compact('users', 'filter_name', 'filter_email', 'filter_mobile', 'filter_role', 'filter_box'));
     }
 
     /**

@@ -10,7 +10,7 @@
                             value="{{ $filter_name }}">
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-12">
+                <div class="col-xl-2 col-md-12">
                     <div class="form-group">
                         <label for="email">{{ __('Email') }}</label>
                         <input type="email" name="email" class="form-control form-control-sm" placeholder="Email"
@@ -40,6 +40,12 @@
                     <div class="form-group">
                         <label for="date">{{ __('Estimate Date') }}</label>
                         <input type="date" class="form-control form-control-sm" name="date" id="date" value="{{ $filter_date }}">
+                    </div>
+                </div>
+                <div class="col-xl-1 col-md-12 mt-4">
+                    <div class="form-group" style="margin-top: 8px">
+                        <button type="submit" class="btn btn-success btn-sm" form="estimateSearchForm"><i class="fas fa-search"></i></button>
+                        <a href={{ route('estimates.index') }} class="btn btn-sm btn-indigo"><i class="fas fa-refresh"></i></a>
                     </div>
                 </div>
             </div>

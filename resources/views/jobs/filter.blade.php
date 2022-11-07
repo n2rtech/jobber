@@ -50,6 +50,19 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-xl-11 col-md-12">
+                    <div class="form-group">
+                        <label for="address">{{ __('Address') }}</label>
+                        <input type="text" name="address" class="form-control form-control-sm" placeholder="Address"
+                            value="{{ $filter_address }}">
+                    </div>
+                </div>
+                <div class="col-xl-1 col-md-12 mt-4">
+                    <div class="form-group" style="margin-top: 8px">
+                        <button type="submit" class="btn btn-success btn-sm" form="jobSearchForm"><i class="fas fa-search"></i></button>
+                        <a href={{ route('jobs.index') }} class="btn btn-sm btn-indigo"><i class="fas fa-refresh"></i></a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

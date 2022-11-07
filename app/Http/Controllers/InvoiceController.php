@@ -28,6 +28,8 @@ class InvoiceController extends Controller
     {
         $invoices                   = Invoice::query();
 
+        $filter_box                 = 'hide';
+
         $filter_name                = $request->name;
 
         $filter_email               = $request->email;
@@ -37,6 +39,10 @@ class InvoiceController extends Controller
         $filter_status              = $request->status;
 
         $filter_date                = $request->date;
+
+        if(isset($filter_name) || isset($filter_email) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
+            $filter_box = 'show';
+        }
 
 
         isset($filter_name)         ? $invoices->where('name', 'like', '%'.$filter_name.'%') : $invoices;
@@ -52,7 +58,7 @@ class InvoiceController extends Controller
 
         $invoices                   = $invoices->orderBy('id', 'desc')->get();
 
-        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date'));
+        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box'));
     }
 
     /**

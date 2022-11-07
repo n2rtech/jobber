@@ -20,7 +20,7 @@
                     </select>
                     </div>
                 </div>
-                <div class="col-xl-4 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="phone">{{ __('Default Tax') }}</label>
                         <select class="form-control form-control-sm" name="default_tax" id="default_tax">
@@ -29,6 +29,12 @@
                                 <option value="{{ $tax->id }}" @if($filter_tax == $tax->id) selected @endif>{{ $tax->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <div class="col-xl-1 col-md-12 mt-4">
+                    <div class="form-group" style="margin-top: 8px">
+                        <button type="submit" class="btn btn-success btn-sm" form="productSearchForm"><i class="fas fa-search"></i></button>
+                        <a href={{ route('products.index') }} class="btn btn-sm btn-indigo"><i class="fas fa-refresh"></i></a>
                     </div>
                 </div>
             </div>

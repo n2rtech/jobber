@@ -22,12 +22,8 @@
 
                 <div class="col-sm-6 text-right">
 
-                    <button type="submit" form="customerSearchForm" class="btn btn-success">
+                    <a href="javascript:void(0)" id="filter" class="btn btn-success">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
-                    </button>
-
-                    <a href="{{ route('customers.index') }}" class="btn btn-indigo">
-                        <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
                     </a>
 
                     <a href="{{ route('customers.create') }}" class="btn btn-danger">
@@ -56,5 +52,19 @@
 @push('scripts')
 
 @include('sections.utilities')
+<!-- Filter Box Scripts Start -->
+<script>
+    $(document).ready(function(){
+        var filterBox = '{{ $filter_box }}';
+        if(filterBox === 'show'){
+            $("#filterBox").css('display', 'block');
+        }
 
+        $("#filter").click(function(){
+            $("#filterBox").slideToggle();
+        });
+
+    });
+</script>
+<!-- Filter Box Scripts End -->
 @endpush

@@ -21,11 +21,17 @@ class ProductController extends Controller
     {
         $products              = Product::query();
 
+        $filter_box             = 'hide';
+
         $filter_name            = $request->filter_name;
 
         $filter_type           = $request->filter_type;
 
         $filter_tax          = $request->default_tax;
+
+        if(isset($filter_name) || isset($filter_type) || isset($filter_tax)){
+            $filter_box = 'show';
+        }
 
         isset($filter_name)     ? $products->where('name', 'like', '%'.$filter_name.'%') : $products;
 
@@ -37,7 +43,7 @@ class ProductController extends Controller
 
         $taxes    = TaxRate::get();
 
-        return view('settings.products.index', compact('products', 'taxes', 'filter_name', 'filter_type', 'filter_tax'));
+        return view('settings.products.index', compact('products', 'taxes', 'filter_name', 'filter_type', 'filter_tax', 'filter_box'));
 
     }
 

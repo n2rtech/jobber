@@ -7,12 +7,11 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <h1>{{ __('Upload Photos') }}</h1>
                 </div>
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('customers.show', ['customer' => $customer, 'activeTab' => 'customer-photos']) }}"
-                        class="btn btn-dark">
+                <div class="col-sm-6 text-right">
+                    <a href="{{ route('customers.show', ['customer' => $customer, 'activeTab' => 'customer-photos']) }}" class="btn btn-dark">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                     </a>
                 </div>
@@ -20,18 +19,18 @@
         </div>
     </section>
     <section class="content">
-        <div class="row">
-            <div class="col-md-7 mx-auto">
-                <div class="card">
-                    <div class="card-header bg-dark" style="padding: 7px 17px;">
-                        <h4 class="card-title mt-3">{{ __('Customer Name :') }} <strong>{{ $customer->name }}</strong></h4>
-                        <div class="card-tools text-right">
-                            <small>{{ __('Added On') }}</small><br />
-                            <strong>{{ \Carbon\Carbon::parse($customer->created_at)->format('g:i A') }} |
-                                {{ \Carbon\Carbon::parse($customer->created_at)->format('d, M Y') }}</strong>
-                        </div>
-                    </div>
-                    <div class="card-body">
+        <div class="card">
+            <div class="card-header bg-dark" style="padding: 7px 17px;">
+                <h4 class="card-title mt-3">{{ __('Customer Name :') }} <strong>{{ $customer->name }}</strong></h4>
+                <div class="card-tools text-right">
+                    <small>{{ __('Added On') }}</small><br />
+                    <strong>{{ \Carbon\Carbon::parse($customer->created_at)->format('g:i A') }} |
+                        {{ \Carbon\Carbon::parse($customer->created_at)->format('d, M Y') }}</strong>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
                         <form id="photoUploadForm" method="POST" action="{{ route('customer.photos-upload') }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -44,22 +43,36 @@
                                             multiple onchange="preview_image();">
                                         <label class="custom-file-label" for="images">{{ __('Choose Photos') }}</label>
                                     </div>
-                                    @error('images')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group text-right">
-                                <button type="submit" class="btn btn-success"
-                                    form="photoUploadForm">{{ __('Upload') }}</button>
+                                <button type="submit" class="btn btn-success" form="photoUploadForm">{{ __('Upload') }}</button>
                             </div>
                         </form>
-                        <div class="form-group" id="preview">
-                            <p><small>Preview Image</small></p>
+                        <div class="form-group" id="preview"></div>
+                    </div>
+                    <div class="col-sm-7  text-center">
+                        <label for="photos">{{ __('Uploaded Photos') }}</label>
+                        <div class="gallery">
+                            @forelse($customer->photos as $photo)
+                            <div class="image-box">
+                                <a href="{{ $photo->path }}" class="big">
+                                    <img src="{{ $photo->path }}"
+                                        alt="{{ $photo->image }}" title="Uploaded On :{{ $photo->created_at }}"
+                                        width="140px" height="140px" />
+                                    </a>
+
+                                    <a href="{{ route('customer.delete-photo', $photo->id) }}" class="delete-image-btn btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i> Delete</a>
+                            </div>
+                            @empty
+                                <p class="text-center mt-3">{{ __('No Photos uploaded') }}</p>
+                            @endforelse
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 @endsection

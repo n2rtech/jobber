@@ -13,7 +13,7 @@
                 // create an Event Object (https://fullcalendar.io/docs/event-object)
                 // it doesn't need to have a start or end
                 var eventObject = {
-                    title: $.trim($(this).text()), // use the element's text as the event title
+                    title: $.trim($(this).data('title')), // use the element's text as the event title
                     customer: $.trim($(this).attr(
                     "data-customer")), // use the element's text as the event customer
                     jobid: $.trim($(this).attr(
@@ -60,7 +60,7 @@
             eventData: function(eventEl) {
                 // console.log();
                 return {
-                    title: eventEl.innerText,
+                    title: $(eventEl).data('title'),
                     backgroundColor: '#000000',
                     borderColor: 'rgb(255 0 0)',
                     textColor: 'rgb(255 255 255)',
@@ -174,7 +174,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        location.reload();
+                        // location.reload();
                     },
                     error: function(data) {
                         console.log(data);
@@ -206,7 +206,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        location.reload();
+                        // location.reload();
                     },
                     error: function(data) {
                         console.log(data);
@@ -237,7 +237,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        location.reload();
+                        // location.reload();
                     },
                     error: function(data) {
                         console.log(data);

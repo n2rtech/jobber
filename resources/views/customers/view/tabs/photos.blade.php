@@ -9,7 +9,7 @@
                     width="140px" height="140px" />
                 </a>
 
-                <a href="{{ route('customer.delete-photo', $photo->id) }}" class="delete-image-btn btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i> Delete</a>
+                <a href="javascript:void(0)" onclick="confirmPhotoDelete({{ $photo->id }})" class="delete-image-btn btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i> Delete</a>
         </div>
         @empty
             <p class="text-center mt-3">{{ __('No Photos uploaded') }}</p>

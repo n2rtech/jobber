@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header bg-dark" style="padding: 7px 17px;">
+    <div class="card-header bg-dark" style="padding: 0px 14px;">
         <h4 class="card-title mt-3"><strong>{{ \Carbon\Carbon::today()->format('d, M Y') }} </strong>| <span id="clock"></span></h4>
         <div class="card-tools text-right">
             <small>{{ __('Added On') }}</small><br/>
@@ -14,7 +14,7 @@
                     <table class="table table-sm">
                         <tbody>
                             <tr>
-                                <th style="border-top: none;" width="20%">Address</th>
+                                <th style="border-top: none;" width="40%">Address</th>
                                 <td class="text-right" style="border-top: none;">{{  getAddress($customer->id) }}</td>
                             </tr>
                             <tr>

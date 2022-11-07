@@ -22,9 +22,9 @@
 
                 <div class="col-sm-6 text-right">
 
-                    <button type="submit" form="productSearchForm" class="btn btn-success">
+                    <a href="javascript:void(0)" id="filter" class="btn btn-success">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
-                    </button>
+                    </a>
 
                     <a href="{{ route('products.index') }}" class="btn btn-indigo">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
@@ -72,4 +72,19 @@
             $('#edit_tax'+tax).prop('checked', true);
         });
     </script>
+    <!-- Filter Box Scripts Start -->
+<script>
+    $(document).ready(function(){
+        var filterBox = '{{ $filter_box }}';
+        if(filterBox === 'show'){
+            $("#filterBox").css('display', 'block');
+        }
+
+        $("#filter").click(function(){
+            $("#filterBox").slideToggle();
+        });
+
+    });
+</script>
+<!-- Filter Box Scripts End -->
 @endpush

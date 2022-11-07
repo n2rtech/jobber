@@ -55,7 +55,8 @@
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
-                            data-show="{{ route('schedules.show', $unscheduled_job->id) }}">{{ $unscheduled_job->jobTitle->title }}</div>
+                            data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
+                            data-title="{{ $unscheduled_job->jobTitle->title }}"><small>Name&nbsp;: {{ $unscheduled_job->customer->name }}</small><br><small>City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $unscheduled_job->customer->city }}</small><br>{{ $unscheduled_job->jobTitle->title }}</div>
                         @endforeach
                         <div class="checkbox" style="display: none">
                         <label for="drop-remove">

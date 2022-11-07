@@ -24,25 +24,35 @@ class CustomerController extends Controller
     {
         $customers              = Customer::query();
 
+        $filter_box             = 'hide';
+
         $filter_name            = $request->name;
 
         $filter_email           = $request->email;
 
         $filter_phone           = $request->phone;
 
+        $filter_address         = $request->address;
+
         $filter_status          = $request->status;
+
+        if(isset($filter_name) || isset($filter_email) || isset($filter_phone) || isset($filter_status) || isset($filter_address)){
+            $filter_box = 'show';
+        }
 
         isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
 
         isset($filter_email)    ? $customers->where('email', $filter_email) : $customers;
 
-        isset($filter_phone)    ? $customers->where('phone', $filter_phone) : $customers;
+        isset($filter_phone)    ? $customers->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $customers;
+
+        isset($filter_address)    ? $customers->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $customers;
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
         $customers              = $customers->orderBy('id', 'desc')->paginate(20);
 
-        return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status'));
+        return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box'));
     }
 
     /**
