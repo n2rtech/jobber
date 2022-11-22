@@ -13,9 +13,9 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('34.243.179.4')
-    ->set('remote_user', 'ubuntu')
-    ->set('deploy_path', '/var/www/html');
+host('216.158.229.197')
+    ->set('remote_user', 'root')
+    ->set('deploy_path', '/var/www/daltontvcrm');
 
 // Hooks
 

@@ -34,7 +34,6 @@ deploy_production:
     - ~/.composer/vendor/bin/dep deploy
   environment:
     name: production
-    url: http://34.243.179.4
-  when: manual
+    url: http://216.158.229.197
   only:
     - main
