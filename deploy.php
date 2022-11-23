@@ -35,7 +35,7 @@ task('deploy', [
 
 task('npm:run:prod', function () {
     cd('{{release_or_current_path}}');
-    run('npm run prod');
+    run('npm run build');
 });
 
 // Hooks
