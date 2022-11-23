@@ -33,6 +33,7 @@ task('deploy', [
 
 task('npm:run:prod', function () {
     cd('{{release_or_current_path}}');
+    run('composer install');
     run('npm run build');
 });
 
