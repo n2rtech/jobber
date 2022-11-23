@@ -2,7 +2,6 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
-require 'contrib/php-fpm.php';
 require 'contrib/npm.php';
 
 // Config
@@ -30,7 +29,6 @@ task('deploy', [
     'npm:install',
     'npm:run:prod',
     'deploy:publish',
-    'php-fpm:reload',
 ]);
 
 task('npm:run:prod', function () {
