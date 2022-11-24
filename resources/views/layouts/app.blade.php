@@ -51,7 +51,7 @@
         @include('sections.control')
     </div>
 
-
+    @include('sections.advanced-search')
     @include('sections.scripts')
 </body>
 

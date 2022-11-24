@@ -6,13 +6,36 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <button class="btn btn-dark"> Welcome {{ Auth::user()->name }}</button>
+            <button class="btn btn-sm btn-dark" style="margin-top: 5px;"> Welcome {{ Auth::user()->name }}</button>
         </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
+        <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block @isset($filter_search) navbar-search-open @endisset">
+              <form class="form-inline" action="{{ route('customers.index') }}">
+                <div class="input-group input-group-sm">
+                  <input class="form-control form-control-navbar" type="search" name="search" placeholder="Search Customer" aria-label="Search" @isset($filter_box_customer) @if($filter_box_customer == 'show') value="{{ $filter_search }}" @endif  @endisset>
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i> Search
+                    </button>
+                    <button class="btn btn-navbar" type="button" data-toggle="modal" data-target="#modal-advanced-search">
+                        <i class="fas fa-sliders"></i> Advanced Search
+                      </button>
+                    <a @isset($filter_box_customer)  @isset($filter_search) href="{{ route('customers.index') }}" @else data-widget="navbar-search" @endisset @else  href="{{ route('home') }}" @endif class="btn btn-navbar">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>

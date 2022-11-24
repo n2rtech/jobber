@@ -99,6 +99,10 @@ class HomeController extends Controller
         $total_invoices          = Invoice::count();
         $total_customers         = Customer::count();
         $total_estimates         = Estimate::count();
-        return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range'));
+        $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->orderBy('id', 'desc')->take(10)->get();
+        $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->orderBy('id', 'desc')->take(10)->get();
+        $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->orderBy('id', 'desc')->take(10)->get();
+
+        return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
     }
 }

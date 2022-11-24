@@ -55,7 +55,7 @@
 <!-- Filter Box Scripts Start -->
 <script>
     $(document).ready(function(){
-        var filterBox = '{{ $filter_box }}';
+        var filterBox = '{{ $filter_box_customer }}';
         if(filterBox === 'show'){
             $("#filterBox").css('display', 'block');
         }

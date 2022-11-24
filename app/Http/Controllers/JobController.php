@@ -45,7 +45,9 @@ class JobController extends Controller
 
         $filter_job_title           = $request->job_title;
 
-        $filter_address                = $request->address;
+        $filter_address             = $request->address;
+
+        $filter_completed           = $request->status;
 
         if(isset($filter_name) || isset($filter_email) || isset($filter_address) || isset($filter_phone) || isset($filter_scheduled) || isset($filter_date) || isset($filter_job_title)){
             $filter_box = 'show';
@@ -61,11 +63,13 @@ class JobController extends Controller
 
         isset($filter_date)         ? $jobs->where('start', $filter_date) : $jobs;
 
-        isset($filter_phone)    ? $jobs->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $jobs;
+        isset($filter_phone)        ? $jobs->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $jobs;
 
-        isset($filter_address)    ? $jobs->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $jobs;
+        isset($filter_address)      ? $jobs->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $jobs;
 
         isset($filter_job_title)    ? $jobs->where('job_title', $filter_job_title) : $jobs;
+
+        isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
         $jobs                       = $jobs->orderBy('id', 'desc')->get();
 
