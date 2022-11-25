@@ -142,7 +142,7 @@ class JobController extends Controller
         $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
         $invoice->notes                 = Null;
         $invoice->conditions            = $setting['conditions'];
-        $invoice->total                 = Null;
+        $invoice->total                 = 0;
         $invoice->save();
 
         foreach($job->products as $job_product){
@@ -159,6 +159,9 @@ class JobController extends Controller
         }
 
         $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+
+        $deduct_discount = 0.00;
+        $added_tax       = 0.00;
 
         if($invoice->discount_type == 'percentage'){
             $deduct_discount = $subtotal * $job->discount / 100;
@@ -178,7 +181,9 @@ class JobController extends Controller
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
-
+        if($request->has('redirect')){
+            return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
+        }
         return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
 
     }

@@ -27,6 +27,7 @@
         <form id="jobForm" method="POST" action="{{ route('jobs.store') }}">
             @csrf
             <input type="hidden" name="customer_id" id="customer_id" value="{{ Request::get('customer_id') }}">
+            <input type="hidden" name="redirect" id="redirect" value="schedules">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -45,7 +46,7 @@
                             <div class="form-group row">
                                 <label for="address" class="col-sm-2 col-form-label">{{ __('Address') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Customer Address">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Customer Address" value="">
                                     @error('address')
                                         <span id="address-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -401,6 +402,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $customer->name }}");
             $("#customer_id").val("{{ $customer->id }}");
+            $("#address").val('{{ getAddress(Request::get('customer_id')) }}');
        });
     </script>
 
