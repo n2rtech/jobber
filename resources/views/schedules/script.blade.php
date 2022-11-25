@@ -22,6 +22,7 @@
                     "data-jobid")), // use the element's text as the event location
                 }
 
+
                 // store the Event Object in the DOM element so we can get to it later
                 $(this).data('eventObject', eventObject)
 
@@ -58,7 +59,7 @@
         new Draggable(containerEl, {
             itemSelector: '.external-event',
             eventData: function(eventEl) {
-                // console.log();
+
                 return {
                     title: $(eventEl).data('title'),
                     backgroundColor: '#000000',
@@ -83,9 +84,10 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            initialView: 'timeGridWeek',
+            initialView: '{{ Request::get("view") ?? "timeGridWeek"}}',
             themeSystem: 'bootstrap',
             scrollTime: '00:00:00',
+
             // Scheduled Job Events
             events: [
                 @foreach ($scheduled_jobs as $job)
@@ -132,15 +134,17 @@
                 var event = arg.event;
 
                 var eventHtml = '<div class="row">';
-                eventHtml += '<div class="col-sm-7">';
-                eventHtml += '<span class="ml-1" style="font-weight:700;">' + event.extendedProps
+                eventHtml += '<div class="col-sm-12">';
+                eventHtml += '<span style="font-weight:700;">' + event.extendedProps
                     .customer + '</span>';
                 eventHtml += '</div>';
-                eventHtml += '<div class="col-sm-5 text-right">';
-                eventHtml += '<span class="mr-1">' + event.extendedProps.timePeriod + '</span>';
+                eventHtml += '<div class="col-sm-12">';
+                    if(event.end){
+                        eventHtml += '<span id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
+                    }
                 eventHtml += '</div>';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span class="ml-1">' + event.title + '</span>';
+                eventHtml += '<span>' + event.title + '</span>';
                 eventHtml += '</div>';
                 eventHtml += '</div>';
 
@@ -213,11 +217,15 @@
                     }
                 });
             },
+
             eventReceive: function(info) {
-                console.log(info);
+                console.log(info.draggedEl);
+                $(info.draggedEl).css('color', 'blue');
                 var start = formatDate(info.event.start);
+                var endtime   = new Date(info.event.start.getTime() + 1 * 60 * 60 * 1000);
+                // console.log(endtime.toLocaleTimeString());
                 if(info.event.end){
-                    var end = formatDate(info.event.end);
+                    var end = formatDate(endtime);
                 }else{
                     var end = 'addHour';
                 }
@@ -237,7 +245,12 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        // location.reload();
+                        var currentUrl = '{{ Request::url() }}';
+                        var url = new URL(currentUrl);
+                        url.searchParams.set("view", calendar.view.type); // setting your param
+                        var newUrl = url.href;
+                        window.location.href = newUrl;
+
                     },
                     error: function(data) {
                         console.log(data);
@@ -251,6 +264,7 @@
                 }
             }
         });
+
 
         calendar.render();
         // $('#calendar').fullCalendar()
@@ -299,6 +313,12 @@
         var datestring = (d.getFullYear()) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
             ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-
                 2) + ":" + ("0" + d.getSeconds()).slice(-2);
+        return datestring;
+    }
+
+    function formatTime(d) {
+        var datestring =  ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-
+                2);
         return datestring;
     }
 

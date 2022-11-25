@@ -5,9 +5,20 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+        @if(Request::route()->getName() == 'home')
         <li class="nav-item d-none d-sm-inline-block">
             <button class="btn btn-sm btn-dark" style="margin-top: 5px;"> Welcome {{ Auth::user()->name }}</button>
         </li>
+        @else
+        <li class="nav-item d-sm-inline-block">
+            <a href="javascript:void(0)" class="btn btn-sm btn-dark" style="margin-top: 5px;">
+                <i class="fas fa-calendar"></i> <span class="date"></span>
+            </a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-dark" style="margin-top: 5px;">
+                <i class="fas fa-clock"></i> <span class="hms"></span><span class="ampm"></span>
+            </a>
+        </li>
+        @endif
     </ul>
 
     <!-- Right navbar links -->

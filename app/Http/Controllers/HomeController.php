@@ -32,6 +32,8 @@ class HomeController extends Controller
         $filter_date_range           = $request->filter;
         $filter_date                 = $request->date;
 
+        // Custom Date Dashboard Stats
+
         if ($request->date) {
             $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->whereDate('created_at', $request->date)->count();
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereDate('created_at', $request->date)->count();
@@ -42,8 +44,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', $request->date)->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', $request->date)->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereDate('created_at', $request->date)->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // Today Dashboard Stats
 
         if ($request->filter == 'today') {
             $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->whereDate('created_at', Carbon::today())->count();
@@ -55,8 +60,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // Yesterday Dashboard Stats
 
         if ($request->filter == 'yesterday') {
             $yesterday               = date("Y-m-d", strtotime( '-1 days' ) );
@@ -69,8 +77,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', $yesterday)->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', $yesterday)->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereDate('created_at', $yesterday)->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // Week Dashboard Stats
 
         if ($request->filter == 'week') {
             $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
@@ -82,8 +93,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // Monthly Dashboard Stats
 
         if ($request->filter == 'month') {
             $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
@@ -95,8 +109,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // Yearly Dashboard Stats
 
         if ($request->filter == 'year') {
             $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
@@ -108,8 +125,11 @@ class HomeController extends Controller
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->orderBy('id', 'desc')->take(10)->get();
             $unscheduled_jobs        = Job::where('status', 'pending')->where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->orderBy('id', 'desc')->take(10)->get();
+
             return view('home', compact('total_scheduled_jobs', 'total_unscheduled_jobs', 'total_leads', 'total_invoices', 'total_customers', 'total_estimates', 'filter_date', 'filter_date_range', 'completed_jobs', 'scheduled_jobs', 'unscheduled_jobs'));
         }
+
+        // All Time Dashboard Stats
 
         $total_scheduled_jobs    = Job::where('scheduled', 'yes ')->count();
         $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->count();
