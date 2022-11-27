@@ -366,6 +366,9 @@
                     $('#mark_complete').css('color', 'red');
                     $('#mark_complete').text(data.danger);
                 }
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 1000);
             },
             error: function(data) {
                 console.log(data);
@@ -397,6 +400,9 @@
                     $('#assign_message').css('color', 'red');
                     $('#assign_message').text(data.danger);
                 }
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 1000);
             },
             error: function(data) {
                 console.log(data);
