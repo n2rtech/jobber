@@ -61,7 +61,7 @@ class ScheduleController extends Controller
                 break;
         }
 
-        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
         return response()->json(['success' => 'success']);
     }
 

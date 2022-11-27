@@ -6,12 +6,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <p class="text-dark"> <strong><span class="customer_name"></span> - <span class="job_title"></span></strong>
+                <p class="text-dark"> <strong><span class="customer_name"></span> - <span
+                            class="job_title"></span></strong>
                 </p>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="complete_job" value="" onchange="markJobComplete(this.value)">
-                    <label class="form-check-label" for="complete_job">Completed</label>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                        Send Confirmation
+                    </button>
+                    <div class="dropdown-menu confirmation">
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="sendConfirmation('email')">Send Email</a>
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="sendConfirmation('text')">Send Text</a>
+                    </div>
                 </div>
+                <div class="text-right">
+                    <small id="confirmation_message"></small>
+                </div>
+
+                <hr>
+                <span class="text-dark"> <strong>Booking Status</strong></span>
+                    <div class="mt-2">
+                        <select name="booking_status" id="booking_status" class="form-control" onchange="assignStatus(this.value);">
+                            <option value="pending">Pending</option>
+                            <option value="provisional">Provisional</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <small id="mark_complete"></small>
+                    </div>
+
                 <small id="mark_complete"></small>
                 <hr>
                 <span class="text-dark"> <strong>Details</strong></span>
@@ -21,7 +44,7 @@
                 <div class="mt-2">
                     <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);">
                         <option value="">Choose Team Member</option>
-                        @foreach($users as $user)
+                        @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>

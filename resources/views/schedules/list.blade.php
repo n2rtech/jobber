@@ -24,7 +24,7 @@
     <div class="container-fluid">
       <div class="row">
 
-        <div class="col-md-10">
+        <div class="col-md-9">
           <div class="card card-primary">
             <div class="card-body p-0">
               <div id="calendar"></div>
@@ -32,7 +32,7 @@
           </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="sticky-top mb-3">
               <div class="card">
                 <div class="card-header">
@@ -42,7 +42,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body unscheduled-card">
 
                   <!-- the events -->
                   <div id="external-events">
@@ -56,7 +56,19 @@
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
-                            data-title="{{ $unscheduled_job->jobTitle->title }}"><small>Name&nbsp;: {{ $unscheduled_job->customer->name }}</small><br><small>City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $unscheduled_job->customer->city }}</small><br>{{ $unscheduled_job->jobTitle->title }}</div>
+                            data-title="{{ $unscheduled_job->jobTitle->title }}">
+                            <div class="direct-chat-infos">
+                                <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
+                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
+                                <span class="clearfix"></span>
+                                <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
+                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
+                                <span class="clearfix"></span>
+                                <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
+                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
+                                <span class="clearfix"></span>
+                              </div>
+                           </div>
                         @endforeach
                         <div class="checkbox" style="display: none">
                         <label for="drop-remove">

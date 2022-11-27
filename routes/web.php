@@ -58,8 +58,11 @@ Route::resource('schedules', ScheduleController::class);
 # Jobs Route
 Route::resource('jobs', JobController::class);
 
+# Send Job Confirmation Route
+Route::post('jobs/send-confirmation', [JobController::class, 'confirmation'])->name('jobs.confirmation');
+
 # Mark Job Complete Route
-Route::post('jobs/mark-complete', [JobController::class, 'markAsComplete'])->name('jobs.complete');
+Route::post('jobs/change-status', [JobController::class, 'changeStatus'])->name('jobs.change-status');
 
 # Assign Team Route
 Route::post('jobs/assign-team', [JobController::class, 'assignTeam'])->name('jobs.assign');

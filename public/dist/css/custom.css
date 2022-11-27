@@ -196,7 +196,7 @@
 .fc-event{
     border-width: 3px;
 }
-select#team {
+select#team , select#booking_status{
     background: #ced4da54;
     width: 196px;
 }
@@ -255,4 +255,12 @@ a.nav-link .active{
     background-color: black !important;
     color: white !important;
     padding: 2px;
+}
+.unscheduled-card {
+    padding: 10px 6px 0px 6px;
+    overflow-y: auto;
+    height: 638.27px;
+}
+.confirmation.show {
+    left: 20px !important;
 }

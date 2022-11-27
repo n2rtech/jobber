@@ -97,7 +97,7 @@
                         end: '{{ $job->end }}',
                         allDay: false,
                         backgroundColor: '#000000',
-                        borderColor: '{{ $job->status == 'pending' ? '#ff0000' : '#00ff00' }}',
+                        borderColor: '@if($job->status == "pending") red @elseif($job->status == "provisional") #fc9003 @elseif($job->status == "confirmed") #01FF70 @elseif($job->status == "completed") #007BFF @endif',
                         customer: '{{ $job->customer->name }}',
                         timePeriod: '{{ \Carbon\Carbon::parse($job->start)->format('h:i') }}' +
                             ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
@@ -115,8 +115,8 @@
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
-                if (info.event.extendedProps.jobstatus == 'completed') {
-                    $("#successModal .modal-body #complete_job").prop("checked", true);
+                if (info.event.extendedProps.jobstatus !== undefined) {
+                    $("#successModal .modal-body #booking_status").val(info.event.extendedProps.jobstatus);
                 }
                 if (info.event.extendedProps.team !== undefined) {
                     $("#successModal .modal-body #team").val(info.event.extendedProps.team);
@@ -133,10 +133,9 @@
 
                 var event = arg.event;
 
-                var eventHtml = '<div class="row">';
+                var eventHtml = '<div class="row" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span style="font-weight:700;">' + event.extendedProps
-                    .customer + '</span>';
+                eventHtml += '<span style="font-weight:700;">' + event.extendedProps.customer + '</span>';
                 eventHtml += '</div>';
                 eventHtml += '<div class="col-sm-12">';
                     if(event.end){
@@ -210,7 +209,8 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        // location.reload();
+                        var event = document.getElementById("job_event_"+formData.id).parentElement.parentElement;
+                        $(event).css('border-color', 'red');
                     },
                     error: function(data) {
                         console.log(data);
@@ -322,9 +322,28 @@
         return datestring;
     }
 
-    function markJobComplete(value) {
+    function assignStatus(value) {
         var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
+            status: value,
+        };
+        var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+        switch (formData.status) {
+            case 'pending':
+                $(event).css('border-color', 'red');
+                break;
+            case 'provisional':
+                $(event).css('border-color', '#fc9003');
+                    break;
+            case 'confirmed':
+                $(event).css('border-color', '#01FF70');
+                break;
+            case 'completed':
+                $(event).css('border-color', '#007BFF');
+                break;
+            default:
+                $(event).css('border-color', 'red');
+                break;
         };
         $.ajaxSetup({
             headers: {
@@ -333,7 +352,7 @@
         });
         $.ajax({
             type: 'POST',
-            url: '{{ route('jobs.complete') }}',
+            url: '{{ route('jobs.change-status') }}',
             data: formData,
             dataType: 'json',
             success: function(data) {
@@ -368,11 +387,45 @@
             dataType: 'json',
             success: function(data) {
                 if(data.success){
+
                     $('#assign_message').css('color', 'green');
                     $('#assign_message').text(data.success);
                 }else{
                     $('#assign_message').css('color', 'red');
                     $('#assign_message').text(data.danger);
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function sendConfirmation(value) {
+       var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+            medium: value,
+        };
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('jobs.confirmation') }}',
+            data: formData,
+            dataType: 'json',
+            success: function(data) {
+                if(data.success){
+                    var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+                    $(event).css('border-color', '#fc9003');
+                    $("#successModal .modal-body #booking_status").val('provisional');
+                    $('#confirmation_message').css('color', 'green');
+                    $('#confirmation_message').text(data.success);
+                }else{
+                    $('#confirmation_message').css('color', 'red');
+                    $('#confirmation_message').text(data.danger);
                 }
             },
             error: function(data) {

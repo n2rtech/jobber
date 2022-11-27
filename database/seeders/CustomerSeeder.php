@@ -37,9 +37,9 @@ class CustomerSeeder extends Seeder
 
         Customer::create([
             'id' => 2,
-            'name' => 'Tim Miler',
-            'email' => 'tim@example.com',
-            'phone' => '+353522692100',
+            'name' => 'Prashant Chauhan',
+            'email' => 'rc21292@gmail.com',
+            'phone' => '9999577620',
             'phone_name' => 'Home',
             'mobile_1' => '+353867872603',
             'mobile_1_name' => 'Mobile',

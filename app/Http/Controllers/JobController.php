@@ -325,15 +325,10 @@ class JobController extends Controller
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
     }
 
-    public function markAsComplete(Request $request){
+    public function changeStatus(Request $request){
         $job = Job::where('id', $request->job_id)->first();
-        if($job->status == 'completed'){
-            Job::where('id', $request->job_id)->update(['status' => 'pending']);
-            return response()->json(['danger' => 'Job marked Incompleted successfully!']);
-        }else{
-            Job::where('id', $request->job_id)->update(['status' => 'completed']);
-            return response()->json(['success' => 'Job marked Completed successfully!']);
-        }
+        Job::where('id', $request->job_id)->update(['status' => $request->status]);
+        return response()->json(['success' => 'Job marked '.ucfirst($request->status).' successfully!']);
     }
 
     public function assignTeam(Request $request){
@@ -346,5 +341,10 @@ class JobController extends Controller
             return response()->json(['danger' => 'Job has been unassigned successfully!']);
         }
 
+    }
+
+    public function confirmation(Request $request){
+        Job::where('id', $request->job_id)->update(['status' => 'provisional']);
+        return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
     }
 }
