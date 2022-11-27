@@ -53,19 +53,42 @@ class JobController extends Controller
             $filter_box = 'show';
         }
 
-        isset($filter_name)         ? $jobs->where('name', 'like', '%'.$filter_name.'%') : $jobs;
+        if (isset($filter_name)) {
+            $jobs->whereHas('customer', function ($q) use ($filter_name) {
+                $q->where(function ($q) use ($filter_name) {
+                    $q->where('name', 'like', '%'.$filter_name.'%');
+                });
+            });
+        }
 
-        isset($filter_email)        ? $jobs->where('email', $filter_email) : $jobs;
 
-        isset($filter_phone)        ? $jobs->where('phone', $filter_phone) : $jobs;
+        if (isset($filter_email)) {
+            $jobs->whereHas('customer', function ($q) use ($filter_email) {
+                $q->where(function ($q) use ($filter_email) {
+                    $q->where('email', 'like', '%'.$filter_email.'%');
+                });
+            });
+        }
 
         isset($filter_scheduled)    ? $jobs->where('scheduled', $filter_scheduled) : $jobs;
 
         isset($filter_date)         ? $jobs->where('start', $filter_date) : $jobs;
 
-        isset($filter_phone)        ? $jobs->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $jobs;
+        if (isset($filter_phone)) {
+            $jobs->whereHas('customer', function ($q) use ($filter_phone) {
+                $q->where(function ($q) use ($filter_phone) {
+                    $q->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%');
+                });
+            });
+        }
 
-        isset($filter_address)      ? $jobs->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $jobs;
+        if (isset($filter_address)) {
+            $jobs->whereHas('customer', function ($q) use ($filter_address) {
+                $q->where(function ($q) use ($filter_address) {
+                    $q->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%');
+                });
+            });
+        }
 
         isset($filter_job_title)    ? $jobs->where('job_title', $filter_job_title) : $jobs;
 

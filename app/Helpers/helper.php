@@ -28,9 +28,9 @@ if (!function_exists('getAddress')) {
             $customer->address .= ', '.$customer->state;
         }
 
-        if(isset($customer->country) && strlen($customer->country) > 0){
-            $customer->address .= ', '.$customer->country;
-        }
+        // if(isset($customer->country) && strlen($customer->country) > 0){
+        //     $customer->address .= ', '.$customer->country;
+        // }
 
         if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
             $customer->address .= ', '.$customer->eir_code;

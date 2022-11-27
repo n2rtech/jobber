@@ -5,8 +5,8 @@
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
-                    <th>{{ __('Address') }}</th>
                     <th>{{ __('Contact') }}</th>
+                    <th>{{ __('Job Type') }}</th>
                     <th>{{ __('Scheduled') }}</th>
                     <th>{{ __('Total') }}</th>
                     <th></th>
@@ -15,13 +15,18 @@
             <tbody>
                 @foreach ($jobs as $job)
                     <tr>
-                        <td><a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a></td>
-                        <td>{{ getAddress($job->customer_id) }}</td>
-
+                        <td>
+                            <a href="{{ route('customers.show', $job->customer_id) }}"><i class="fas fa-user"></i>&nbsp;{{ $job->customer->name }}</a>
+                            <br/>
+                            <i class="fas fa-map-marker-alt"></i>&nbsp;{{ getAddress($job->customer_id) }}
+                        </td>
                         <td>
                             @isset($job->customer->phone) <i class="fa fa-square-phone"></i> {{ $job->customer->phone }} <br/> @endisset
                             @isset($job->customer->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $job->customer->mobile_1 }} <br/> @endisset
                             @isset($job->customer->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $job->customer->mobile_2 }}</td> @endisset
+                        </td>
+                        <td>
+                            {{ $job->jobTitle->title }}
                         </td>
                         <td>
                             @if ($job->scheduled == 'no')

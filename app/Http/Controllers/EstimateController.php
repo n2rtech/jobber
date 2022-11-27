@@ -47,11 +47,38 @@ class EstimateController extends Controller
         }
 
 
-        isset($filter_name)         ? $estimates->where('name', 'like', '%'.$filter_name.'%') : $estimates;
+        if (isset($filter_name)) {
+            $estimates->whereHas('customer', function ($q) use ($filter_name) {
+                $q->where(function ($q) use ($filter_name) {
+                    $q->where('name', 'like', '%'.$filter_name.'%');
+                });
+            });
+        }
 
-        isset($filter_email)        ? $estimates->where('email', $filter_email) : $estimates;
 
-        isset($filter_phone)        ? $estimates->where('phone', $filter_phone) : $estimates;
+        if (isset($filter_email)) {
+            $estimates->whereHas('customer', function ($q) use ($filter_email) {
+                $q->where(function ($q) use ($filter_email) {
+                    $q->where('email', 'like', '%'.$filter_email.'%');
+                });
+            });
+        }
+
+        if (isset($filter_phone)) {
+            $estimates->whereHas('customer', function ($q) use ($filter_phone) {
+                $q->where(function ($q) use ($filter_phone) {
+                    $q->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%');
+                });
+            });
+        }
+
+        if (isset($filter_address)) {
+            $estimates->whereHas('customer', function ($q) use ($filter_address) {
+                $q->where(function ($q) use ($filter_address) {
+                    $q->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%');
+                });
+            });
+        }
 
         isset($filter_status)       ? $estimates->where('status', $filter_status) : $estimates;
 
