@@ -211,6 +211,7 @@
                     success: function(data) {
                         var event = document.getElementById("job_event_"+formData.id).parentElement.parentElement;
                         $(event).css('border-color', 'red');
+                        $("#successModal .modal-body #booking_status").val('pending');
                     },
                     error: function(data) {
                         console.log(data);
