@@ -92,6 +92,7 @@
             events: [
                 @foreach ($scheduled_jobs as $job)
                     {
+                        id: '{{ $job->id }}',
                         title: '{{ $job->jobTitle->title }}',
                         start: '{{ $job->start }}',
                         end: '{{ $job->end }}',
@@ -111,7 +112,7 @@
                 @endforeach
             ],
             eventClick: function(info) {
-                $("#successModal").modal("show");
+
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
@@ -128,6 +129,7 @@
                 $("#successModal .modal-body .ends").text(info.event.end);
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
+                $("#successModal").modal("show");
             },
             eventContent: function(arg) {
 
@@ -185,6 +187,7 @@
                 });
             },
             eventDrop:function(eventDropInfo ) {
+                var eve = calendar.getEvents()
                 var start = formatDate(eventDropInfo.event.start);
 
                 if(eventDropInfo.event.end){
@@ -209,9 +212,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        var event = document.getElementById("job_event_"+formData.id).parentElement.parentElement;
-                        $(event).css('border-color', 'red');
-                        $("#successModal .modal-body #booking_status").val('pending');
+                        location.reload();
                     },
                     error: function(data) {
                         console.log(data);
@@ -328,6 +329,7 @@
             job_id: $("#successModal .modal-body .job_id").text(),
             status: value,
         };
+
         var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
         switch (formData.status) {
             case 'pending':
@@ -403,6 +405,7 @@
     }
 
     function sendConfirmation(value) {
+
        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             medium: value,
