@@ -29,4 +29,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 }

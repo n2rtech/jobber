@@ -264,3 +264,6 @@ a.nav-link .active{
 .confirmation.show {
     left: 20px !important;
 }
+.confirmation-menu.show{
+    left: -1px !important;
+}

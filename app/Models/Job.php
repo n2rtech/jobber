@@ -40,11 +40,11 @@ class Job extends Model
     }
     public function invoice()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasOne(Invoice::class, 'job_id');
     }
 
     public function jobnotes()
     {
-        return $this->hasMany(JobNote::class);
+        return $this->hasMany(JobNote::class)->orderBy('id', 'desc')->take(2);
     }
 }

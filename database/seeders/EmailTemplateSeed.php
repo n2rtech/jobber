@@ -18,17 +18,19 @@ class EmailTemplateSeed extends Seeder
         EmailTemplate::create([
             'type' => 'jobs',
             'mode' => 'confirmation',
-            'subject' => 'Subject',
-            'message' => 'Message',
-            'default' => 'Default Message',
+            'subject' => 'You\'ve been booked in with {{COMPANY_NAME}}',
+            'message' => 'Hi {{CUSTOMER_NAME}},<br>Thank you for booking with us.<br>Your work has been booked on {{JOB_DATE_AND_TIME}} at {{JOB_LOCATION}}.<br>Sincerely,<br>{{COMPANY_NAME}}',
+            'default_subject' => 'You\'ve been booked in with {{COMPANY_NAME}}',
+            'default_message' => 'Hi {{CUSTOMER_NAME}},<br>Thank you for booking with us.<br>Your work has been booked on {{JOB_DATE_AND_TIME}} at {{JOB_LOCATION}}.<br>Sincerely,<br>{{COMPANY_NAME}}',
         ]);
 
         EmailTemplate::create([
             'type' => 'estimates',
             'mode' => 'confirmation',
-            'subject' => 'Subject',
-            'message' => 'Message',
-            'default' => 'Default Message',
+            'subject' => 'Work Estimate from {{COMPANY_NAME}}',
+            'message' => 'Hi {{CUSTOMER_NAME}},<br>Thank you for sharing your interest in our services.<br>An Estimate has been generated acording to your query successfully.<br>Please find estimate in attachment of this email.<br>Sincerely,<br>{{COMPANY_NAME}}',
+            'default_subject' => 'You\'ve been booked in with {{COMPANY_NAME}}',
+            'default_message' => 'Hi {{CUSTOMER_NAME}},<br>Thank you for sharing your interest in our services.<br>An Estimate has been generated acording to your query successfully.<br>Please find estimate in attachment of this email.<br>Sincerely,<br>{{COMPANY_NAME}}',
         ]);
 
         EmailTemplate::create([
@@ -36,7 +38,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'confirmation',
             'subject' => 'Subject',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -44,7 +46,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'follow-up',
             'subject' => 'Subject',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -52,7 +54,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'standard',
             'subject' => 'Standard Template 1',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -60,7 +62,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'standard',
             'subject' => 'Standard Template 2',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -68,7 +70,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'standard',
             'subject' => 'Standard Template 3',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -76,7 +78,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'standard',
             'subject' => 'Standard Template 4',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
 
         EmailTemplate::create([
@@ -84,7 +86,7 @@ class EmailTemplateSeed extends Seeder
             'mode' => 'standard',
             'subject' => 'Standard Template 5',
             'message' => 'Message',
-            'default' => 'Default Message',
+            'default_message' => 'Default Message',
         ]);
     }
 }

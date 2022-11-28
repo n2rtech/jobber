@@ -31,16 +31,14 @@
                 <input type="hidden" name="customer_id" id="customer_id">
                 <div class="row">
                     <div class="col-lg-7">
-                        <div class="card">
+                        <div class="card pb-2">
                         <div class="card-body">
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">{{ __('Invoice For') }}</label>
-                                <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">{{ __('Invoice For') }}</label>
                                     <select class="form-control" id="name" name="name"></select>
                                     @error('name')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -74,58 +72,51 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <div class="card pb-2">
-                        <div class="card-body">
-                            <div class="form-group text-center">
-                                <label class="col-form-label">{{ __('Invoice Details') }}</label>
-                            </div>
-                            <div class="form-group row">
-                                <label for="terms" class="col-sm-3 col-form-label">{{ __('Terms') }}</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="terms" name="terms" onchange="setDueDate(this.value);">
-                                    <option value="">Select Term</option>
-                                    <option value="30" @if($invoice->terms == 30) selected @endif>Net 30</option>
-                                    <option value="60" @if($invoice->terms == 60) selected @endif>Net 60</option>
-                                    <option value="{{ $setting['due_on_receipt'] }}" @if($invoice->terms == $setting['due_on_receipt']) selected @endif>Due on Receipt</option>
-                                    </select>
-                                    @error('terms')
-                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="due_date" class="col-sm-3 col-form-label">{{ __('Due Date') }}</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group date" id="due_date" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" name="due_date" id="due_date_input" data-target="#due_date" value="{{ $invoice->due_date }}">
-                                        <div class="input-group-append" data-target="#due_date" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        @error('due_date')
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="terms" class="col-form-label">{{ __('Terms') }}</label>
+                                        <select class="form-control" id="terms" name="terms" onchange="setDueDate(this.value);">
+                                        <option value="">Select Term</option>
+                                        <option value="30" @if($invoice->terms == 30) selected @endif>Net 30</option>
+                                        <option value="60" @if($invoice->terms == 60) selected @endif>Net 60</option>
+                                        <option value="{{ $setting['due_on_receipt'] }}" @if($invoice->terms == $setting['due_on_receipt']) selected @endif>Due on Receipt</option>
+                                        </select>
+                                        @error('terms')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="invoice_date" class="col-sm-3 col-form-label">{{ __('Invoice Date') }}</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group date" id="invoice_date" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" name="invoice_date" id="invoice_date_input" data-target="#invoice_date" value="{{ $invoice->invoice_date }}">
-                                        <div class="input-group-append" data-target="#invoice_date" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                <div class="form-group">
+                                    <label for="due_date" class="col-form-label">{{ __('Due Date') }}</label>
+                                        <div class="input-group date" id="due_date" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" name="due_date" id="due_date_input" data-target="#due_date" value="{{ $invoice->due_date }}">
+                                            <div class="input-group-append" data-target="#due_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                            @error('due_date')
+                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        @error('invoice_date')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="invoice_date" class="col-form-label">{{ __('Invoice Date') }}</label>
+
+                                        <div class="input-group date" id="invoice_date" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" name="invoice_date" id="invoice_date_input" data-target="#invoice_date" value="{{ $invoice->invoice_date }}">
+                                            <div class="input-group-append" data-target="#invoice_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                            @error('invoice_date')
+                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <div class="card card-dark">
+                        <div class="card card-dark collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">{{ __('Line Items') }}</h3>
                             <div class="card-tools">
@@ -285,10 +276,18 @@
                     </div>
                     @if($setting['allow_for_note'] == 1)
                     <div class="col-lg-6">
-                        <div class="card">
+                        <div class="card card-dark collapsed-card">
+                            <div class="card-header">
+                               <h3 class="card-title">{{ __('Internal Notes & Attachments') }}</h3>
+                               <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                     title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                  </button>
+                               </div>
+                            </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="notes" class="col-form-label">{{ __('Internal Notes & Attachents') }}</label>
                                 <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes', $invoice->notes) }}</textarea>
                                 @error('notes')
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
@@ -299,10 +298,18 @@
                     </div>
                     @endif
                     <div @if($setting['allow_for_note'] == 1) class="col-lg-6" @else class="col-lg-12" @endif>
-                        <div class="card">
-                        <div class="card-body">
+                        <div class="card card-dark collapsed-card">
+                            <div class="card-header">
+                               <h3 class="card-title">{{ __('Terms & Conditions') }}</h3>
+                               <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                     title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                  </button>
+                               </div>
+                            </div>
+                            <div class="card-body">
                             <div class="form-group">
-                                <label for="conditions" class="col-form-label">{{ __('Terms & Conditions') }}</label>
                                 <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $invoice->conditions) }}</textarea>
                                 @error('conditions')
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>

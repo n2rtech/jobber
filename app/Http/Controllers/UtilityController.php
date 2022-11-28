@@ -195,6 +195,6 @@ class UtilityController extends Controller{
 
         $note->save();
 
-        return redirect()->route('jobs.show', $request->job_id)->with('success', 'Note Added successfully!');
+        return redirect()->route('jobs.show', ['job' => $request->job_id, 'activeTab' => 'view-information'])->with('success', 'Note Added successfully!');
     }
 }

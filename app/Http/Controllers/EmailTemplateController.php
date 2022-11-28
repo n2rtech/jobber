@@ -29,7 +29,7 @@ class EmailTemplateController extends Controller
      */
     public function create()
     {
-        //
+        return view('settings.email-template.create');
     }
 
     /**
@@ -62,7 +62,8 @@ class EmailTemplateController extends Controller
      */
     public function edit($id)
     {
-        //
+        $template = EmailTemplate::find($id);
+        return view('settings.email-template.edit', compact('template'));
     }
 
     /**
@@ -74,7 +75,17 @@ class EmailTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+
+        $template = EmailTemplate::find($id);
+        $template->subject = $request->subject;
+        $template->message = $request->message;
+        $template->save();
+
+        return redirect()->route('email-templates.index')->with('success', 'Email Template Updated Successfully!');
     }
 
     /**

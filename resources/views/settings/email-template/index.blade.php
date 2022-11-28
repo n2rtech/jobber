@@ -38,15 +38,4 @@
 
 @push('scripts')
     @include('sections.utilities')
-
-    <script>
-        $(".edit-product").click(function() {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var description = $(this).data('description');
-            $('#edit_name').val(name);
-            $('#edit_description').val(description);
-            $('#product_id').val(id);
-        });
-    </script>
 @endpush

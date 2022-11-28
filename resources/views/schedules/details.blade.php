@@ -6,13 +6,13 @@
 @section('content')
     <section class="content">
         <div class="row">
-            <div class="col-sm-7 mx-auto">
+            <div class="col-sm-12">
                 <div class="card mt-5">
                     <div class="card-header">
-                        <h3 class="visit-card-title">VISIT</h3>
+                        <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('schedules.index') }}" class="btn btn-tool">
-                                <i class="fas fa-close"></i>
+                            <a href="{{ route('schedules.index') }}" class="btn btn-dark">
+                                <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
                     </div>
@@ -64,28 +64,23 @@
                         </div>
                     </div>
                     <div class="card-header bg-dark p-0 pt-1" style="border-radius: 0px;">
-                        <ul class="nav nav-tabs" style="border-bottom: none;" id="custom-tabs-one-tab" role="tablist">
+                        <ul class="nav nav-tabs nav-fill" style="border-bottom: none;" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item" style="width: 33.33%">
-                                <a class="nav-link active" id="custom-tabs-one-info-tab" data-toggle="pill"
-                                    href="#custom-tabs-one-info" role="tab" aria-controls="custom-tabs-one-info"
+                                <a class="nav-link active" id="view-information-tab" data-toggle="pill"
+                                    href="#view-information" role="tab" aria-controls="view-information"
                                     aria-selected="true">Info</a>
                             </li>
                             <li class="nav-item" style="width: 33.33%">
-                                <a class="nav-link" id="custom-tabs-one-notes-tab" data-toggle="pill"
-                                    href="#custom-tabs-one-notes" role="tab" aria-controls="custom-tabs-one-notes"
-                                    aria-selected="false">Notes</a>
-                            </li>
-                            <li class="nav-item" style="width: 33.33%">
-                                <a class="nav-link" id="custom-tabs-one-jobforms-tab" data-toggle="pill"
-                                    href="#custom-tabs-one-jobforms" role="tab" aria-controls="custom-tabs-one-jobforms"
+                                <a class="nav-link" id="view-jobform-tab" data-toggle="pill"
+                                    href="#view-jobform" role="tab" aria-controls="view-jobform"
                                     aria-selected="false">Job Forms</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
-                            <div class="tab-pane fade active show" id="custom-tabs-one-info" role="tabpanel"
-                                aria-labelledby="custom-tabs-one-info-tab">
+                            <div class="tab-pane fade active show" id="view-information" role="tabpanel"
+                                aria-labelledby="view-information-tab">
                                 <span class="text-dark"> <strong>Instructions</strong></span>
                                 <p class="text-dark">{{ $job->instructions }}</p>
                                 <table class="table table-sm">
@@ -123,66 +118,21 @@
                                     </tbody>
                                 </table>
                                 <hr>
-                                <span class="text-dark"> <strong>Items Line</strong></span>
-                                <table class="table table-sm mt-3" id="line_items">
-                                    <thead>
-                                        <tr>
-                                            <th width="40%">{{ __('Product / Service') }}</th>
-                                            <th class="text-right">{{ __('Quantity') }}</th>
-                                            <th class="text-right">{{ __('Unit Price') }}</th>
-                                            <th class="text-right">{{ __('Total') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($job->products as $key => $product)
-                                        <tr id="item-row{{ $key }}">
-                                            <td>
-                                                <select name="product[{{ $key }}][product]" id="product{{ $key }}" class="form-control form-control-sm" readonly>
-                                                    <option value="">Select Product</option>
-                                                        @foreach($products as $row_product)
-                                                            <option value="{{ $row_product->id }}" @if($row_product->id == $product->product_id) selected @endif data-unitprice="{{ $row_product->unit_price }}" data-description="{{ $row_product->description }}">{{ $row_product->name }}</option>
-                                                        @endforeach
-                                                </select>
-                                                {{-- <textarea name="product[{{ $key }}][description]" id="description{{ $key }}" rows="2" placeholder="Description"
-                                                    class="form-control form-control-sm mt-1" readonly>{{ $product->description }}</textarea> --}}
-                                            </td>
-                                            <td>
-                                                <input type="number"
-                                                    class="form-control form-control-sm text-align-right"
-                                                    id="quantity{{ $key }}" name="product[{{ $key }}][quantity]" placeholder="Quantity" readonly min="1" value="{{ $product->quantity }}">
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text text-sm">€</span>
-                                                    </div>
-                                                    <input type="number"
-                                                        class="form-control form-control-sm text-align-right"
-                                                        id="unit_price{{ $key }}" name="product[{{ $key }}][unit_price]"
-                                                        placeholder="Unit Price" readonly value="{{ $product->unit_price }}" min="0" step="any" required>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text text-sm">€</span>
-                                                    </div>
-                                                    <input type="number"
-                                                        class="form-control form-control-sm text-align-right totalpriceinput"
-                                                        id="total{{ $key }}" name="product[{{ $key }}][total]"
-                                                        placeholder="Total" value="{{ $product->total }}" min="0" step="any" readonly>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-one-notes" role="tabpanel"
-                                aria-labelledby="custom-tabs-one-notes-tab">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <form id="documentUploadForm" method="POST" action="{{ route('job.notes-add') }}"
+                                <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
+                                <span class="clearfix"></span>
+                                <hr>
+                                <div class="card card-widget widget-user-2">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Achived Notes</h3>
+                                        <div class="card-tools">
+                                            <a href="javascript:void(0)" id="filter" class="btn btn-success">
+                                                Add Note
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card" id="filterBox">
+                                        <div class="card-body">
+                                            <form id="documentUploadForm" method="POST" action="{{ route('job.notes-add') }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="customer_id" value="{{ $job->customer_id }}">
@@ -204,42 +154,38 @@
                                                 </div>
                                             </div>
                                             <div class="form-group text-right">
-                                                <button type="submit" class="btn btn-success" form="documentUploadForm">{{ __('Add Note') }}</button>
+                                                <button type="submit" class="btn btn-success" form="documentUploadForm">{{ __('Save') }}</button>
                                             </div>
                                         </form>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="text-center">
-                                        <label for="photos">{{ __('Archived Notes') }}</label>
-                                        </div>
-                                        <div class="card card-widget widget-user-2">
-                                            <div class="card-body card-comments">
-                                                @forelse($job->jobnotes as $note)
-                                                <div class="card-comment">
 
-                                                    <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
 
-                                                    <div class="comment-text">
-                                                        <span class="username">
-                                                            {{  $note->user->name }}
-                                                            <span class="text-muted float-right">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
-                                                        </span>
-                                                        {{ $note->note }}
-                                                    </div>
+                                    <div class="card-body card-comments">
+                                        @forelse($job->jobnotes as $note)
+                                        <div class="card-comment">
 
-                                                </div>
-                                                @empty
-                                                <div class="card-comment">
-                                                    <p class="text-center mt-4">No Notes Added.</p>
-                                                </div>
-                                                @endforelse
+                                            <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
+
+                                            <div class="comment-text">
+                                                <span class="username">
+                                                    {{  $note->user->name }}
+                                                    <span class="text-muted float-right">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
+                                                </span>
+                                                {{ $note->note }}
                                             </div>
+
                                         </div>
+                                        @empty
+                                        <div class="card-comment">
+                                            <p class="text-center mt-4">No Notes Added.</p>
+                                        </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-one-jobforms" role="tabpanel"
-                                aria-labelledby="custom-tabs-one-jobforms-tab">
+                            <div class="tab-pane fade" id="view-jobform" role="tabpanel"
+                                aria-labelledby="view-jobform-tab">
                                 <div class="gallery">
                                     @forelse($job->forms as $form)
                                     <div class="card">
@@ -303,10 +249,6 @@
 @endsection
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $('.content-wrapper').css('background-color', '#000000a3')
-        });
-
         function assignTeam(value) {
             var formData = {
                 job_id: '{{ $job->id }}',
@@ -337,4 +279,26 @@
             });
         }
     </script>
+    <script>
+        @if(Request::get('activeTab'))
+            var activeTab = "#{{ Request::get('activeTab') }}";
+            if (activeTab) {
+                $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+            }
+        @endif
+    </script>
+    <!-- Filter Box Scripts Start -->
+<script>
+    $(document).ready(function(){
+       @error('note')
+            $("#filterBox").css('display', 'block');
+        @enderror
+
+        $("#filter").click(function(){
+            $("#filterBox").slideToggle();
+        });
+
+    });
+</script>
+<!-- Filter Box Scripts End -->
 @endpush

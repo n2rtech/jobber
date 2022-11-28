@@ -31,16 +31,16 @@
                 <input type="hidden" name="customer_id" id="customer_id">
                 <div class="row">
                     <div class="col-lg-7">
-                        <div class="card">
+                        <div class="card pb-2">
                         <div class="card-body">
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-3 col-form-label">{{ __('Estimate For') }}</label>
-                                <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">{{ __('Estimate For') }}</label>
+
                                     <select class="form-control" id="name" name="name"></select>
                                     @error('name')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -74,14 +74,12 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <div class="card pb-2">
+                        <div class="card">
                         <div class="card-body">
-                            <div class="form-group text-center">
-                                <label class="col-form-label">{{ __('Estimate Details') }}</label>
-                            </div>
-                            <div class="form-group row">
-                                <label for="terms" class="col-sm-4 col-form-label">{{ __('Estimate Terms') }}</label>
-                                <div class="col-sm-8">
+
+                            <div class="form-group">
+                                <label for="terms" class="col-form-label">{{ __('Estimate Terms') }}</label>
+
                                     <select class="form-control" id="terms" name="terms" onchange="setDueDate(this.value);">
                                     <option value="">Select Term</option>
                                     <option value="30" @if($estimate->terms == 30) selected @endif>Net 30</option>
@@ -91,11 +89,11 @@
                                     @error('terms')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
+
                             </div>
-                            <div class="form-group row">
-                                <label for="estimate_date" class="col-sm-4 col-form-label">{{ __('Estimate Date') }}</label>
-                                <div class="col-sm-8">
+                            <div class="form-group">
+                                <label for="estimate_date" class="col-form-label">{{ __('Estimate Date') }}</label>
+
                                     <div class="input-group date" id="estimate_date" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" name="estimate_date" id="estimate_date_input" data-target="#estimate_date" value="{{ $estimate->estimate_date }}">
                                         <div class="input-group-append" data-target="#estimate_date" data-toggle="datetimepicker">
@@ -105,11 +103,11 @@
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div>
+
                             </div>
-                            <div class="form-group row">
-                                <label for="expiry_date" class="col-sm-4 col-form-label">{{ __('Expiry Date') }}</label>
-                                <div class="col-sm-8">
+                            <div class="form-group">
+                                <label for="expiry_date" class="col-form-label">{{ __('Expiry Date') }}</label>
+
                                     <div class="input-group date" id="expiry_date" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" name="expiry_date" id="expiry_date_input" data-target="#expiry_date" value="{{ $estimate->expiry_date }}">
                                         <div class="input-group-append" data-target="#expiry_date" data-toggle="datetimepicker">
@@ -119,13 +117,13 @@
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <div class="card card-dark">
+                        <div class="card card-dark collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">{{ __('Line Items') }}</h3>
                             <div class="card-tools">
@@ -285,10 +283,18 @@
                     </div>
                     @if($setting['allow_for_note'] == 1)
                     <div class="col-lg-6">
-                        <div class="card">
+                        <div class="card card-dark collapsed-card">
+                            <div class="card-header">
+                               <h3 class="card-title">{{ __('Internal Notes & Attachments') }}</h3>
+                               <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                     title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                  </button>
+                               </div>
+                            </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="notes" class="col-form-label">{{ __('Internal Notes & Attachents') }}</label>
                                 <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes', $estimate->notes) }}</textarea>
                                 @error('notes')
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
@@ -299,10 +305,18 @@
                     </div>
                     @endif
                     <div @if($setting['allow_for_note'] == 1) class="col-lg-6" @else class="col-lg-12" @endif>
-                        <div class="card">
+                        <div class="card card-dark collapsed-card">
+                            <div class="card-header">
+                               <h3 class="card-title">{{ __('Terms & Conditions') }}</h3>
+                               <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                     title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                  </button>
+                               </div>
+                            </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="conditions" class="col-form-label">{{ __('Terms & Conditions') }}</label>
                                 <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $estimate->conditions) }}</textarea>
                                 @error('conditions')
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>

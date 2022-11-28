@@ -139,7 +139,7 @@
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <div class="card card-dark">
+                                    <div class="card card-dark collapsed-card">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Line Items') }}</h3>
 

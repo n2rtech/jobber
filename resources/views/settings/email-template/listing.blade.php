@@ -25,8 +25,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="float-right">
-                                    <a href="javascript:void(0)" class="btn btn-tool edit-product" data-toggle="modal"
-                                        data-target="#modal-edit-product">
+                                    <a href="{{ route('email-templates.edit', 1) }}" class="btn btn-tool edit-product">
                                         <i class="fas fa-edit text-danger"></i>
                                     </a>
                                 </div>
@@ -60,8 +59,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="float-right">
-                                    <a href="javascript:void(0)" class="btn btn-tool edit-product" data-toggle="modal"
-                                        data-target="#modal-edit-product">
+                                    <a href="{{ route('email-templates.edit', 2) }}" class="btn btn-tool edit-product">
                                         <i class="fas fa-edit text-danger"></i>
                                     </a>
                                 </div>
@@ -95,8 +93,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="float-right">
-                                    <a href="javascript:void(0)" class="btn btn-tool edit-product" data-toggle="modal"
-                                        data-target="#modal-edit-product">
+                                    <a href="{{ route('email-templates.edit', 3) }}" class="btn btn-tool edit-product">
                                         <i class="fas fa-edit text-danger"></i>
                                     </a>
                                 </div>
@@ -118,8 +115,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="float-right">
-                                    <a href="javascript:void(0)" class="btn btn-tool edit-product" data-toggle="modal"
-                                        data-target="#modal-edit-product">
+                                    <a href="{{ route('email-templates.edit', 4) }}" class="btn btn-tool edit-product">
                                         <i class="fas fa-edit text-danger"></i>
                                     </a>
                                 </div>
