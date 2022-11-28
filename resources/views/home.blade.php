@@ -56,14 +56,19 @@
 
                         <div class="col-lg-2 col-6">
                             <!-- small box -->
+
                             <div class="small-box bg-info">
+
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('jobs.index', ['scheduled' => 'no']) }}">
                                     <h3>{{ $total_unscheduled_jobs }}</h3>
 
                                     <p>Unscheduled Jobs</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('jobs.index', ['scheduled' => 'no']) }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
+
                             </div>
                         </div>
 
@@ -71,9 +76,11 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('jobs.index', ['scheduled' => 'yes']) }}">
                                     <h3>{{ $total_scheduled_jobs }}</h3>
 
                                     <p>Scheduled Jobs</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('jobs.index', ['scheduled' => 'yes']) }}" class="small-box-footer">View
                                     All <i class="fas fa-arrow-circle-right"></i></a>
@@ -84,9 +91,11 @@
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('sales-leads.index') }}">
                                     <h3>{{ $total_leads }}</h3>
 
                                     <p>Sales Leads</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('sales-leads.index') }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
@@ -97,9 +106,11 @@
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('invoices.index') }}">
                                     <h3>{{ $total_invoices }}</h3>
 
                                     <p>Invoices</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('invoices.index') }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
@@ -110,9 +121,11 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('customers.index') }}">
                                     <h3>{{ $total_customers }}</h3>
 
                                     <p>Customers</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('customers.index') }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
@@ -123,9 +136,11 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
+                                    <a class="text-white" href="{{ route('estimates.index') }}">
                                     <h3>{{ $total_estimates }}</h3>
 
                                     <p>Estimates</p>
+                                    </a>
                                 </div>
                                 <a href="{{ route('estimates.index') }}" class="small-box-footer">View All <i
                                         class="fas fa-arrow-circle-right"></i></a>
