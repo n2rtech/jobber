@@ -49,18 +49,18 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $start = Carbon::createFromFormat('Y-m-d h:i:s', $request->start);
+        $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start);
         switch ($request->end) {
             case 'addHour':
-                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->start)->addHour();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->addHour();
                 break;
 
             case 'allDay':
-                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->start)->endOfDay();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->endOfDay();
                 break;
 
             default:
-                $end   = Carbon::createFromFormat('Y-m-d h:i:s', $request->end);
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->end);
                 break;
         }
 
