@@ -95,6 +95,8 @@ Route::resource('manage-team', ManageTeamController::class);
 # Email Template Route
 Route::resource('email-templates', EmailTemplateController::class);
 
+Route::post('email-template/default', [EmailTemplateController::class, 'autocomplete'])->name('email-templates.default');
+
 # Job-titles Route
 Route::resource('job-titles', JobTitleController::class);
 
