@@ -1,4 +1,37 @@
 <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+<script>jQuery('#starts').datetimepicker({
+    allowTimes:[
+  '00:00', '00:30', '01:00', '01:30','02:00', '02:30','03:00', '03:30','04:00', '04:30','05:00', '05:30','06:00', '06:30',
+  '07:00', '07:30', '08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+ ],
+ format:'Y-m-d h:m:s'
+});</script>
+<script>jQuery('#ends').datetimepicker({
+    allowTimes:[
+  '00:00', '00:30', '01:00', '01:30','02:00', '02:30','03:00', '03:30','04:00', '04:30','05:00', '05:30','06:00', '06:30',
+  '07:00', '07:30', '08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+ ],
+ format:'Y-m-d h:m:s'
+});</script>
+<script>
+tinymce.init({
+  selector: 'textarea#email_message',
+  height: 500,
+  menubar: false,
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:roboto; font-size:16px }'
+});
+</script>
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="../dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
@@ -125,8 +158,8 @@
                 $("#successModal .modal-body .customer_name").text(info.event.extendedProps
                     .customer);
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
-                $("#successModal .modal-body .starts").text(info.event.start);
-                $("#successModal .modal-body .ends").text(info.event.end);
+                $("#successModal .modal-body #starts").val(formatDateTime(info.event.start));
+                $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
 
@@ -145,7 +178,8 @@
                     dataType: 'json',
                     success: function(data) {
                         $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        $("#modal-email-template .modal-body #email_message").html(data.message);
+                        tinyMCE.get('email_message').setContent(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
                     },
                     error: function(data) {
                         console.log(data);
@@ -346,6 +380,13 @@
         return datestring;
     }
 
+    function formatDateTime(d) {
+        var datestring = (d.getFullYear()) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-
+                2) + ":" + ("0" + d.getSeconds()).slice(-2);
+        return datestring;
+    }
+
     function assignStatus(value) {
         var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
@@ -432,12 +473,14 @@
         });
     }
 
-    function sendEmailConfirmation() {
+    function sendConfirmation(value) {
 
        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             subject: $("#modal-email-template .modal-body #email_subject").val(),
             message: $("#modal-email-template .modal-body #email_message").html(),
+            text_message: $("#modal-email-template .modal-body #text_message").val(),
+            medium: value,
         };
         $.ajaxSetup({
             headers: {
@@ -452,6 +495,7 @@
             success: function(data) {
                 if(data.success){
                     $("#modal-email-template .close").click();
+                    $("#modal-text-template .close").click();
                     var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
                     $(event).css('border-color', '#fc9003');
                     $("#successModal .modal-body #booking_status").val('provisional');
@@ -466,5 +510,84 @@
                 console.log(data);
             }
         });
+    }
+
+    function markUnscheduled() {
+        var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+        };
+        $.confirm({
+                    title: 'Confirm!',
+                    content: 'Are you sure! You want to Unschedule the Job!.',
+                    buttons: {
+                        confirm: function() {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ route('jobs.mark-unscheduled') }}',
+                                data: formData,
+                                dataType: 'json',
+                                success: function(data) {
+                                    if(data.success){
+
+                                        $('#confirmation_message').css('color', 'green');
+                                        $('#confirmation_message').text(data.success);
+                                    }else{
+                                        $('#confirmation_message').css('color', 'red');
+                                        $('#confirmation_message').text(data.danger);
+                                    }
+                                    setTimeout(function(){
+                                        window.location.reload(1);
+                                    }, 1000);
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                }
+                            });
+                        },
+                        cancel: function() {
+
+                        },
+                    }
+                });
+    }
+    function changeTimings(){
+        var formData = {
+                    id: $("#successModal .modal-body .job_id").text(),
+                    start: $('#starts').val(),
+                    end: $('#ends').val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.store') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success){
+
+                            $('#change_timing_message').css('color', 'green');
+                            $('#change_timing_message').text(data.success);
+                        }else{
+                            $('#change_timing_message').css('color', 'red');
+                            $('#change_timing_message').text(data.danger);
+                        }
+                        setTimeout(function(){
+                        window.location.reload(1);
+                        }, 1000);
+
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
     }
 </script>

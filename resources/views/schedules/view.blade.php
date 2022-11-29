@@ -10,16 +10,19 @@
                             class="job_title"></span></strong>
                 </p>
 
-                <div class="text-right">
+                <div class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="markUnscheduled();">
+                        Unschedule Job
+                    </button>
                     <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
                         Send Confirmation
                     </button>
                     <div class="dropdown-menu confirmation">
                         <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-email-template">Send Email</a>
-                        <a class="dropdown-item" href="javascript:void(0);" onclick="sendConfirmation('text')">Send Text</a>
+                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-text-template">Send Text</a>
                     </div>
                 </div>
-                <div class="text-right">
+                <div class="text-center">
                     <small id="confirmation_message"></small>
                 </div>
 
@@ -55,13 +58,14 @@
                 <p class="text-dark"> <span class="location"></span></p>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <span class="text-dark"> <strong>Starts</strong></span>
-                        <p class="text-dark"> <span class="starts"></span></p>
+                        <input id="starts" type="text" class="form-control" onchange="changeTimings();">
                     </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-12">
                         <span class="text-dark"> <strong>Ends</strong></span>
-                        <p class="text-dark"> <span class="ends"></span></p>
+                        <input id="ends" type="text" class="form-control" onchange="changeTimings();">
+                        <small id="change_timing_message"></small>
                     </div>
                 </div>
                 <hr>

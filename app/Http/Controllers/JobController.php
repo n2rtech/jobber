@@ -371,7 +371,17 @@ class JobController extends Controller
     public function confirmation(Request $request){
         Job::where('id', $request->job_id)->update(['status' => 'provisional']);
         $job = Job::where('id', $request->job_id)->first();
-        Mail::to($job->customer->email)->send(new JobBookingConfirmation($job, $request->message, $request->subject));
+        if($request->medium == 'email'){
+            Mail::to($job->customer->email)->send(new JobBookingConfirmation($job, $request->message, $request->subject));
+        }else{
+
+        }
+
         return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
+    }
+
+    public function unschedule(Request $request){
+        Job::where('id', $request->job_id)->update(['scheduled' => 'no', 'status' => 'pending', 'start' => Null, 'end' => Null]);
+        return response()->json(['success' => 'Job has been unscheduled!']);
     }
 }

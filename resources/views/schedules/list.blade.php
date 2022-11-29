@@ -2,6 +2,9 @@
 @section('title', 'Schedules')
 @section('head')
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @endsection
 @section('content')
 <div class="content-header">
@@ -96,6 +99,7 @@
   </section>
   @include('schedules.view')
   @include('schedules.email-template')
+  @include('schedules.text-template')
 @endsection
 @push('scripts')
 @include('schedules.script')
