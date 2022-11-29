@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobBookingConfirmation;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
@@ -15,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -368,6 +370,8 @@ class JobController extends Controller
 
     public function confirmation(Request $request){
         Job::where('id', $request->job_id)->update(['status' => 'provisional']);
+        $job = Job::where('id', $request->job_id)->first();
+        Mail::to($job->customer->email)->send(new JobBookingConfirmation($job));
         return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
     }
 }

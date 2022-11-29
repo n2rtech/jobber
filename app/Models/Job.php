@@ -47,4 +47,18 @@ class Job extends Model
     {
         return $this->hasMany(JobNote::class)->orderBy('id', 'desc')->take(2);
     }
+
+    public function subject($job_id)
+    {
+        $template = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->value('subject');
+        $subject  = getSubject($template, $job_id);
+        return $subject;
+    }
+
+    public function message($job_id)
+    {
+        $template = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->value('message');
+        $message  = getMessage($template, $job_id);
+        return $message;
+    }
 }

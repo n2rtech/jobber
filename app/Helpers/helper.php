@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\CompanyDetail;
 use App\Models\Customer;
 use App\Models\EstimateProduct;
 use App\Models\InvoiceProduct;
+use App\Models\Job;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 
@@ -39,6 +41,38 @@ if (!function_exists('getAddress')) {
     }
 }
 
+if (!function_exists('getCompanyAddress')) {
+    function getCompanyAddress($id)
+    {
+        $company = CompanyDetail::find($id);
+        $company->address  = '';
+
+        if(isset($company->address_1) && strlen($company->address_1) > 0){
+            $company->address .= $company->address_1;
+        }
+
+        if(isset($company->address_2) && strlen($company->address_2) > 0){
+            $company->address .= ', '.$company->address_2;
+        }
+
+        if(isset($company->city) && strlen($company->city) > 0){
+            $company->address .= ', '.$company->city;
+        }
+
+        if(isset($company->state) && strlen($company->state) > 0){
+            $company->address .= ', '.$company->state;
+        }
+
+        if(isset($company->country) && strlen($company->country) > 0){
+            $company->address .= ', '.$company->country;
+        }
+
+        if(isset($company->zipcode) && strlen($company->zipcode) > 0){
+            $company->address .= ', '.$company->zipcode;
+        }
+        return $company->address;
+    }
+}
 
 if (!function_exists('getLeadAddress')) {
     function getLeadAddress($id)
@@ -120,5 +154,78 @@ if (!function_exists('getLeadAddress')) {
             return $tax;
         }
 
+    }
+
+    if (!function_exists('getSubject')) {
+        function getSubject($subject, $job_id)
+        {
+           $job         = Job::where('id', $job_id)->first();
+           $company     = CompanyDetail::first();
+
+           $subject     = str_replace('{{COMPANY_NAME}}', $company->company , $subject);
+           $subject     = str_replace('{{COMPANY_EMAIL}}', $company->email , $subject);
+           $subject     = str_replace('{{COMPANY_MOBILE}}', $company->mobile , $subject);
+           $subject     = str_replace('{{COMPANY_LANDLINE}}', $company->landline , $subject);
+           $subject     = str_replace('{{COMPANY_ADDRESS}}', getCompanyAddress($company->id) , $subject);
+           $subject     = str_replace('{{COMPANY_VAT}}', $company->vat , $subject);
+           $subject     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $subject);
+
+           $subject     = str_replace('{{CUSTOMER_NAME}}', $job->customer->name , $subject);
+           $subject     = str_replace('{{CUSTOMER_EMAIL}}',$job->customer->email , $subject);
+           $subject     = str_replace('{{CUSTOMER_PHONE}}', $job->customer->phone , $subject);
+           $subject     = str_replace('{{CUSTOMER_MOBILE_1}}', $job->customer->mobile_1 , $subject);
+           $subject     = str_replace('{{CUSTOMER_MOBILE_2}}', $job->customer->mobile_2 , $subject);
+           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($job->customer_id) , $subject);
+
+           $subject     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $subject);
+           $subject     = str_replace('{{JOB_DATE_AND_TIME}}',$job->customer->start , $subject);
+           $subject     = str_replace('{{JOB_LOCATION}}', getAddress($job->customer_id) , $subject);
+
+           return $subject;
+        }
+    }
+
+    // <optgroup label="Customer"></optgroup>
+    // <option value="@{{CUSTOMER_NAME}}">@{{CUSTOMER_NAME}}</option>
+    // <option value="@{{CUSTOMER_EMAIL}}">@{{CUSTOMER_EMAIL}}</option>
+    // <option value="@{{CUSTOMER_PHONE}}">@{{CUSTOMER_PHONE}}</option>
+    // <option value="@{{CUSTOMER_MOBILE_1}}">@{{CUSTOMER_MOBILE_1}}</option>
+    // <option value="@{{CUSTOMER_MOBILE_2}}">@{{CUSTOMER_MOBILE_2}}</option>
+    // <option value="@{{CUSTOMER_ADDRESS}}">@{{CUSTOMER_ADDRESS}}</option>
+
+    // <optgroup label="Job"></optgroup>
+    // <option value="@{{JOB_TITLE}}">@{{JOB_TITLE}}</option>
+    // <option value="@{{JOB_DATE_AND_TIME}}">@{{JOB_DATE_AND_TIME}}</option>
+    // <option value="@{{JOB_LOCATION}}">@{{JOB_LOCATION}}</option>
+
+
+
+    if (!function_exists('getMessage')) {
+        function getMessage($message, $job_id)
+        {
+           $job         = Job::where('id', $job_id)->first();
+           $company     = CompanyDetail::first();
+
+           $message     = str_replace('{{COMPANY_NAME}}', $company->company , $message);
+           $message     = str_replace('{{COMPANY_EMAIL}}', $company->email , $message);
+           $message     = str_replace('{{COMPANY_MOBILE}}', $company->mobile , $message);
+           $message     = str_replace('{{COMPANY_LANDLINE}}', $company->landline , $message);
+           $message     = str_replace('{{COMPANY_ADDRESS}}', getCompanyAddress($company->id) , $message);
+           $message     = str_replace('{{COMPANY_VAT}}', $company->vat , $message);
+           $message     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $message);
+
+           $message     = str_replace('{{CUSTOMER_NAME}}', $job->customer->name , $message);
+           $message     = str_replace('{{CUSTOMER_EMAIL}}',$job->customer->email , $message);
+           $message     = str_replace('{{CUSTOMER_PHONE}}', $job->customer->phone , $message);
+           $message     = str_replace('{{CUSTOMER_MOBILE_1}}', $job->customer->mobile_1 , $message);
+           $message     = str_replace('{{CUSTOMER_MOBILE_2}}', $job->customer->mobile_2 , $message);
+           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($job->customer_id) , $message);
+
+           $message     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $message);
+           $message     = str_replace('{{JOB_DATE_AND_TIME}}',$job->customer->start , $message);
+           $message     = str_replace('{{JOB_LOCATION}}', getAddress($job->customer_id) , $message);
+
+           return $message;
+        }
     }
 }
