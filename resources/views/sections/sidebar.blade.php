@@ -138,6 +138,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('calendar-settings.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>Calendar Settings</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('company-settings.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Company Settings</p>

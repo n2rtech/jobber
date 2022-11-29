@@ -6,6 +6,7 @@ use App\Models\EmailTemplate;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class ScheduleController extends Controller
         $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('id', 'desc')->get();
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users'));
+        $setting            = Setting::where('type', 'calendar')->value('value');
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting'));
     }
 
     /**

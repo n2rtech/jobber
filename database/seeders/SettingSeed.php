@@ -19,5 +19,9 @@ class SettingSeed extends Seeder
             'type' => 'invoice',
             'value' => ["due_on_receipt" => "0", "conditions" => "Terms and Conditions can be edited in Settings > Invoice Settings.", "allow_for_note" => true],
         ]);
+        Setting::create([
+            'type' => 'calendar',
+            'value' => ["timing_starts" => "09:00:00", "no_of_days" => 4],
+        ]);
     }
 }
