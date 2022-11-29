@@ -124,10 +124,11 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-12">
-                 @include('settings.email-template.standard-listing')
-            </div>
+            @if(count($standard_templates) > 0)
+                <div class="col-sm-12">
+                    @include('settings.email-template.standard-listing')
+                </div>
+            @endif
         </div>
     </div>
 </div>

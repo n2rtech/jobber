@@ -98,4 +98,11 @@ class EmailTemplateController extends Controller
     {
         //
     }
+
+    public function autocomplete(Request $request)
+    {
+        $template = EmailTemplate::find($request->id);
+
+        return response()->json(['subject' => $template->default_subject, 'message' => $template->default_message]);
+    }
 }

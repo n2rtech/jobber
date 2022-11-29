@@ -50,13 +50,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="title">Message</label>
-                                <textarea class="form-control" id="message" name="message" placeholder="Enter Message here" rows="6">{!! nl2br(e($template->message))!!}</textarea>
+                                <textarea class="form-control" id="message" name="message" placeholder="Enter Message here" rows="6">{!! $template->message!!}</textarea>
                                 @error('message')
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="setDefaultTemplate();">DEFAULT</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="setDefaultTemplate({{ $template->id }});">DEFAULT</button>
                                 <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-variable">INSERT VARIABLE</button>
                                 <button type="submit" class="btn btn-danger float-right" form="templateForm">
                                     <i class="btn-icon fas fa-save"></i> {{ __('Save') }}

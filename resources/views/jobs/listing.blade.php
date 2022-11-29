@@ -1,10 +1,10 @@
 <!-- Listing Box Starts Here -->
 <div class="card">
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <table id="dataTable" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>{{ __('Customer') }}</th>
+                    <th style="width: 40%">{{ __('Customer') }}</th>
                     <th>{{ __('Contact') }}</th>
                     <th>{{ __('Job Type') }}</th>
                     <th>{{ __('Scheduled') }}</th>
@@ -35,6 +35,8 @@
                             <span class="badge bg-success"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
                             <br/>
                             <span class="badge bg-info"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('h:i:s') }}</span>
+                            <br/>
+                                <span class="badge bg-yellow"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
                             @endif
                         </td>
                         <td>€ {{ $job->total }}</td>
