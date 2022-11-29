@@ -267,10 +267,26 @@ a.nav-link .active{
 .confirmation-menu.show{
     left: -1px !important;
 }
-.content-header h1 {
-  font-size: 24px;
-  margin-bottom: 8px !important;
+.modify-container form{
+    max-width: 770px;
+    margin: 0 auto;
 }
+.maxWidthControl{
+    max-width: 770px;
+}
+.content-header h1{
+    font-size: 26px;
+}
+.maxWidthControl .col-sm-6 h1{
+    position: relative;
+    top: 5px;
+}
+.modify-container form .select2-selection__rendered{
+    font-size: 15px;
+}
+.modify-container form select, .modify-container form input{
+    font-size: 15px;
+}     
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
@@ -286,5 +302,9 @@ a.nav-link .active{
 .header-mobile div.nav-item{
     position: absolute;
     top: 0;
+}
+.content-header h1 {
+  font-size: 24px;
+  margin-bottom: 8px !important;
 }
 }

@@ -39,7 +39,7 @@
 
         <div class="container-fluid">
 
-            @include('customers.filter')
+            
 
             @include('customers.listing')
 
