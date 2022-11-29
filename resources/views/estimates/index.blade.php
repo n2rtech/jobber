@@ -38,9 +38,6 @@
     <section class="content">
 
         <div class="container-fluid">
-
-            @include('estimates.filter')
-
             @include('estimates.listing')
 
         </div>

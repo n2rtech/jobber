@@ -39,8 +39,6 @@
 
         <div class="container-fluid">
 
-            @include('invoices.filter')
-
             @include('invoices.listing')
 
         </div>

@@ -1,6 +1,7 @@
 <!-- Listing Box Starts Here -->
 <div class="card">
     <div class="card-body">
+        @include('estimates.filter')
         <table id="dataTable" class="table table-bordered table-striped">
             <thead>
                 <tr>

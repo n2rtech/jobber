@@ -1,6 +1,5 @@
 <!-- Filter Box Starts Here -->
-<div class="card" id="filterBox">
-    <div class="card-body">
+<div id="filterBox">
         <form id="invoiceSearchForm" action="{{ route('invoices.index') }}">
             <div class="form-row">
                 <div class="col-xl-3 col-md-12">
@@ -50,6 +49,5 @@
                 </div>
             </div>
         </form>
-    </div>
 </div>
 <!-- Filter Box Ends Here -->
