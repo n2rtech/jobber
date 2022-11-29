@@ -60,12 +60,15 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <span class="text-dark"> <strong>Starts</strong></span>
-                        <input id="starts" type="text" class="form-control" onchange="changeTimings();">
+                        <input id="starts" type="text" class="form-control">
                     </div>
                     <div class="col-sm-12">
                         <span class="text-dark"> <strong>Ends</strong></span>
-                        <input id="ends" type="text" class="form-control" onchange="changeTimings();">
+                        <input id="ends" type="text" class="form-control">
                         <small id="change_timing_message"></small>
+                    </div>
+                    <div class="col-sm-12 mt-2 text-right">
+                        <button class="btn btn-sm btn-success" onclick="changeTimings();">Update Timings</button>
                     </div>
                 </div>
                 <hr>

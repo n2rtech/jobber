@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('head')
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+@endsection
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
@@ -174,7 +178,7 @@
                         <div class="tab-pane active" id="completed-fill" role="tabpanel" aria-labelledby="completed-tab-fill">
                             <div class="table-responsive">
                                 @if(count($completed_jobs) > 0)
-                                <table id="dataTable" class="table table-bordered table-striped">
+                                <table id="completedDataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>{{ __('Customer') }}</th>
@@ -244,7 +248,7 @@
                         <div class="tab-pane" id="scheduled-fill" role="tabpanel" aria-labelledby="scheduled-tab-fill">
                             <div class="table-responsive">
                                 @if(count($scheduled_jobs) > 0)
-                                <table id="dataTable" class="table table-bordered table-striped">
+                                <table id="scheduledDataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>{{ __('Customer') }}</th>
@@ -314,7 +318,7 @@
                         <div class="tab-pane" id="unscheduled-fill" role="tabpanel" aria-labelledby="unscheduled-tab-fill">
                             <div class="table-responsive">
                                 @if(count($unscheduled_jobs) > 0)
-                                <table id="dataTable" class="table table-bordered table-striped">
+                                <table id="unscheduledDataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>{{ __('Customer') }}</th>
@@ -389,6 +393,7 @@
 
 @endsection
 @push('scripts')
+@include('sections.utilities')
     <script>
 
         function showDateInput() {

@@ -17,7 +17,14 @@
             <div class="row mb-2">
 
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Jobs') }}</h1>
+                    @if($filter_scheduled == 'yes')
+                        <h1 class="m-0">{{ __('Scheduled Jobs') }}</h1>
+                    @elseif($filter_scheduled == 'no')
+                        <h1 class="m-0">{{ __('Unscheduled Jobs') }}</h1>
+                    @else
+                        <h1 class="m-0">{{ __('All Jobs') }}</h1>
+                    @endif
+
                 </div>
 
                 <div class="col-sm-6 text-right">

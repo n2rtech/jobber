@@ -9,7 +9,7 @@
   '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
   '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
  ],
- format:'Y-m-d h:m:s'
+ format:'Y-m-d h:i:s'
 });</script>
 <script>jQuery('#ends').datetimepicker({
     allowTimes:[
@@ -18,7 +18,7 @@
   '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
   '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
  ],
- format:'Y-m-d h:m:s'
+ format:'Y-m-d h:i:s'
 });</script>
 <script>
 tinymce.init({
@@ -575,10 +575,10 @@ tinymce.init({
                         if(data.success){
 
                             $('#change_timing_message').css('color', 'green');
-                            $('#change_timing_message').text(data.success);
+                            $('#change_timing_message').text('Job Timings has been changed!');
                         }else{
                             $('#change_timing_message').css('color', 'red');
-                            $('#change_timing_message').text(data.danger);
+                            $('#change_timing_message').text('Found some error!');
                         }
                         setTimeout(function(){
                         window.location.reload(1);
