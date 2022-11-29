@@ -95,6 +95,7 @@
     </div><!-- /.container-fluid -->
   </section>
   @include('schedules.view')
+  @include('schedules.email-template')
 @endsection
 @push('scripts')
 @include('schedules.script')

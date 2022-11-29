@@ -15,7 +15,7 @@
                         Send Confirmation
                     </button>
                     <div class="dropdown-menu confirmation">
-                        <a class="dropdown-item" href="javascript:void(0);" onclick="sendConfirmation('email')">Send Email</a>
+                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-email-template">Send Email</a>
                         <a class="dropdown-item" href="javascript:void(0);" onclick="sendConfirmation('text')">Send Text</a>
                     </div>
                 </div>

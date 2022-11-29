@@ -129,6 +129,28 @@
                 $("#successModal .modal-body .ends").text(info.event.end);
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
+
+                var formData = {
+                    id: info.event.extendedProps.jobid,
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        $("#modal-email-template .modal-body #email_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
                 $("#successModal").modal("show");
             },
             eventContent: function(arg) {
@@ -410,11 +432,12 @@
         });
     }
 
-    function sendConfirmation(value) {
+    function sendEmailConfirmation() {
 
        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
-            medium: value,
+            subject: $("#modal-email-template .modal-body #email_subject").val(),
+            message: $("#modal-email-template .modal-body #email_message").html(),
         };
         $.ajaxSetup({
             headers: {
@@ -428,6 +451,7 @@
             dataType: 'json',
             success: function(data) {
                 if(data.success){
+                    $("#modal-email-template .close").click();
                     var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
                     $(event).css('border-color', '#fc9003');
                     $("#successModal .modal-body #booking_status").val('provisional');

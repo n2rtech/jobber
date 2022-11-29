@@ -14,19 +14,22 @@ class JobBookingConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $job;
+    public $job;
 
-    protected $message;
+    public $email_message;
+
+    public $subject;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Job $job, $message)
+    public function __construct(Job $job, $email_message, $subject)
     {
-        $this->job = $job;
-        $this->message = $message;
+        $this->job     = $job;
+        $this->email_message = $email_message;
+        $this->subject = $subject;
     }
 
     /**
@@ -37,7 +40,7 @@ class JobBookingConfirmation extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Job Booking Confirmation',
+            subject: $this->subject,
         );
     }
 
@@ -48,7 +51,6 @@ class JobBookingConfirmation extends Mailable
      */
     public function content()
     {
-        dd($this->job);
         return new Content(
             view: 'emails.booking-confirmation',
         );
@@ -64,10 +66,5 @@ class JobBookingConfirmation extends Mailable
         return [];
     }
 
-    public function handle()
-    {
-        return new Envelope(
-            subject: 'Job Booking Confirmation',
-        );
-    }
+
 }

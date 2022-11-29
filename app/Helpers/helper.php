@@ -222,7 +222,7 @@ if (!function_exists('getLeadAddress')) {
            $message     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($job->customer_id) , $message);
 
            $message     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $message);
-           $message     = str_replace('{{JOB_DATE_AND_TIME}}',$job->customer->start , $message);
+           $message     = str_replace('{{JOB_DATE_AND_TIME}}',$job->start , $message);
            $message     = str_replace('{{JOB_LOCATION}}', getAddress($job->customer_id) , $message);
 
            return $message;
