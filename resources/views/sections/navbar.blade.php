@@ -1,25 +1,25 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="@if(Request::route()->getName() != 'home')header-mobile @endif main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        @if(Request::route()->getName() == 'home')
-        <li class="nav-item d-none d-sm-inline-block">
+    </ul>
+    @if(Request::route()->getName() == 'home')
+        <div class="nav-item d-none d-sm-inline-block">
             <button class="btn btn-sm btn-dark" style="margin-top: 5px;"> Welcome {{ Auth::user()->name }}</button>
-        </li>
+        </div>
         @else
-        <li class="nav-item d-sm-inline-block">
+        <div class="nav-item d-sm-inline-block">
             <a href="javascript:void(0)" class="btn btn-sm btn-dark" style="margin-top: 5px;">
                 <i class="fas fa-calendar"></i> <span class="date"></span>
             </a>
             <a href="javascript:void(0)" class="btn btn-sm btn-dark" style="margin-top: 5px;">
                 <i class="fas fa-clock"></i> <span class="hms"></span><span class="ampm"></span>
             </a>
-        </li>
+        </div>
         @endif
-    </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -32,12 +32,12 @@
               <form class="form-inline" action="{{ route('customers.index') }}">
                 <div class="input-group input-group-sm">
                   <input class="form-control form-control-navbar" type="search" name="search" placeholder="Search Customer" aria-label="Search" @isset($filter_box_customer) @if($filter_box_customer == 'show') value="{{ $filter_search }}" @endif  @endisset>
-                  <div class="input-group-append">
+                  <div class="input-group-append forDesktop">
                     <button class="btn btn-navbar" type="submit">
-                      <i class="fas fa-search"></i> Search
+                      <i class="fas fa-search"></i> <span class="d-none d-sm-block changeBlock">Search</span>
                     </button>
                     <button class="btn btn-navbar" type="button" data-toggle="modal" data-target="#modal-advanced-search">
-                        <i class="fas fa-sliders"></i> Advanced Search
+                        <i class="fas fa-sliders"></i> <span class="d-none d-sm-block changeBlock">Advanced Search</span> 
                       </button>
                     <a @isset($filter_box_customer)  @isset($filter_search) href="{{ route('customers.index') }}" @else data-widget="navbar-search" @endisset @else  href="{{ route('home') }}" @endif class="btn btn-navbar">
                       <i class="fas fa-times"></i>
