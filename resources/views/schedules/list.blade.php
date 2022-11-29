@@ -74,8 +74,15 @@
                                     <span class="clearfix"></span>
                                 </div>
                            </div>
-                           <div class="hidden-sm schedule-xs">
-                               <button class="direct-chat-infos btn-block" data-toggle="modal" data-target="#schedule-modal">
+                           <div data-customer="{{ $unscheduled_job->customer->name }}"
+                            data-location="{{ getAddress($unscheduled_job->customer_id) }}"
+                            data-jobid="{{ $unscheduled_job->id }}"
+                            data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
+                            data-jobstatus="{{ $unscheduled_job->status }}"
+                            data-team="{{ $unscheduled_job->user_id }}"
+                            data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
+                            data-title="{{ $unscheduled_job->jobTitle->title }}" class="hidden-sm schedule-xs">
+                               <button class="direct-chat-infos btn-block" data-toggle="modal" data-target="#schedule-modal" onclick="$('#job_id').val($(this).parent().attr('data-jobid'))">
                                     <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
                                     <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
                                     <span class="clearfix"></span>
@@ -121,19 +128,19 @@
             </button>
           </div>
           <div class="modal-body">
+
             <div class="col-sm-12">
-                <span class="text-dark"> <strong>Starts</strong></span>
-                <input id="starts" type="text" class="form-control">
+                <span class="text-dark"> <strong>Scheduled Date & Time</strong></span>
+                <input id="mobile_start" type="text" class="form-control">
+                <input type="hidden" id="job_id" value="">
+                <input type="hidden" id="mobile_end" value="addHour">
+                <span id="mobile_schedule_message"></span>
             </div>
-            <div class="col-sm-12">
-                <span class="text-dark"> <strong>Ends</strong></span>
-                <input id="ends" type="text" class="form-control">
-                <small id="change_timing_message"></small>
-            </div>
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button class="btn btn-success" onclick="changeTimings();">Update Timings</button>
+            <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+            <button class="btn btn-success" onclick="scheduleMobile();">Update Timings</button>
           </div>
         </div>
       </div>

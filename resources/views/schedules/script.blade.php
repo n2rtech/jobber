@@ -4,8 +4,15 @@
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
 <script>jQuery('#starts').datetimepicker({
     allowTimes:[
-  '00:00', '00:30', '01:00', '01:30','02:00', '02:30','03:00', '03:30','04:00', '04:30','05:00', '05:30','06:00', '06:30',
-  '07:00', '07:30', '08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+ ],
+ format:'Y-m-d h:i:s'
+});</script>
+<script>jQuery('#mobile_start').datetimepicker({
+    allowTimes:[
+   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
   '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
   '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
  ],
@@ -13,8 +20,7 @@
 });</script>
 <script>jQuery('#ends').datetimepicker({
     allowTimes:[
-  '00:00', '00:30', '01:00', '01:30','02:00', '02:30','03:00', '03:30','04:00', '04:30','05:00', '05:30','06:00', '06:30',
-  '07:00', '07:30', '08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
   '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
   '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
  ],
@@ -579,6 +585,43 @@ tinymce.init({
                         }else{
                             $('#change_timing_message').css('color', 'red');
                             $('#change_timing_message').text('Found some error!');
+                        }
+                        setTimeout(function(){
+                        window.location.reload(1);
+                        }, 1000);
+
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
+<script>
+    function scheduleMobile(){
+        var formData = {
+                    id: $("#schedule-modal .modal-body #job_id").val(),
+                    start: $('#mobile_start').val(),
+                    end: $('#mobile_end').val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.store') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success){
+
+                            $('#mobile_schedule_message').css('color', 'green');
+                            $('#mobile_schedule_message').text('Job has been Scheduled!');
+                        }else{
+                            $('#mobile_schedule_message').css('color', 'red');
+                            $('#mobile_schedule_message').text('Found some error!');
                         }
                         setTimeout(function(){
                         window.location.reload(1);
