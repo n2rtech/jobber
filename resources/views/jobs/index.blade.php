@@ -50,8 +50,6 @@
 
         <div class="container-fluid">
 
-            @include('jobs.filter')
-
             @include('jobs.listing')
 
         </div>

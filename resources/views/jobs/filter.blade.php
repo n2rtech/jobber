@@ -1,30 +1,29 @@
 <!-- Filter Box Starts Here -->
-<div class="card" id="filterBox">
-    <div class="card-body">
+<div id="filterBox">
         <form id="jobSearchForm" action="{{ route('jobs.index') }}">
             <div class="form-row">
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="name">{{ __('Customer Name') }}</label>
                         <input type="name" name="name" class="form-control form-control-sm" placeholder="Customer Name"
                             value="{{ $filter_name }}">
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="email">{{ __('Email') }}</label>
                         <input type="email" name="email" class="form-control form-control-sm" placeholder="Email"
                             value="{{ $filter_email }}">
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="phone">{{ __('Contact No') }}</label>
                         <input type="text" class="form-control form-control-sm" id="phone"
                             placeholder="Contact No" name="phone" value="{{ $filter_phone }}">
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="scheduled">{{ __('Scheduled') }}</label>
                         <select class="form-control form-control-sm" name="scheduled" id="scheduled">
@@ -34,13 +33,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="date">{{ __('Date Scheduled') }}</label>
                         <input type="date" class="form-control form-control-sm" name="date" id="date" value="{{ $filter_date }}">
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-12">
+                <div class="col-xl-3 col-md-12">
                     <div class="form-group">
                         <label for="job_title">{{ __('Job Title') }}</label>
                         <select class="form-control form-control-sm" name="job_title" id="job_title">
@@ -50,7 +49,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-xl-11 col-md-12">
+                <div class="col-xl-5 col-md-12">
                     <div class="form-group">
                         <label for="address">{{ __('Address') }}</label>
                         <input type="text" name="address" class="form-control form-control-sm" placeholder="Address"
@@ -65,6 +64,6 @@
                 </div>
             </div>
         </form>
-    </div>
 </div>
+<hr>
 <!-- Filter Box Ends Here -->
