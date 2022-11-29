@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->enum('type', ['invoice'])->default('invoice');
+            $table->enum('type', ['invoice', 'calendar'])->default('invoice');
             $table->longText('value')->nullable();
         });
     }

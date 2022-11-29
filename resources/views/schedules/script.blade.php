@@ -119,8 +119,8 @@ tinymce.init({
             },
             initialView: '{{ Request::get("view") ?? "timeGridWeek"}}',
             themeSystem: 'bootstrap',
-            scrollTime: '00:00:00',
-
+            slotMinTime: '{{ $setting["timing_starts"] }}',
+            dayCount: '{{ $setting["no_of_days"] }}',
             // Scheduled Job Events
             events: [
                 @foreach ($scheduled_jobs as $job)

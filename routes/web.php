@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AutocompleteController;
+use App\Http\Controllers\CalendarSettingController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailTemplateController;
@@ -116,6 +117,9 @@ Route::resource('company-settings', CompanyController::class);
 # Invoice Settings Route
 Route::get('invoice-settings', [InvoiceSettingController::class, 'invoiceSettings'])->name('invoice-settings.index');
 Route::post('invoice-settings', [InvoiceSettingController::class, 'storeInvoiceSettings'])->name('invoice-settings.store');
+
+Route::get('calendar-settings', [CalendarSettingController::class, 'calendarSettings'])->name('calendar-settings.index');
+Route::post('calendar-settings', [CalendarSettingController::class, 'storeCalendarSettings'])->name('calendar-settings.store');
 
 # Upload Photo Form Route
 Route::get('customer/upload-photos/{id}', [UtilityController::class, 'photoUploadForm'])->name('customer.upload-photos');
