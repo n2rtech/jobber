@@ -14,7 +14,7 @@
             $('#subject').val(subject + ' ' + variable);
         }
 
-        $("#modal-variable .close").click()
+        $("#modal-variable .close").click();
     }
 
     function setDefaultTemplate(id) {

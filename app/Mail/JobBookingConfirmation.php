@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Job;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,14 +14,22 @@ class JobBookingConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $job;
+
+    public $email_message;
+
+    public $subject;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Job $job, $email_message, $subject)
     {
-        //
+        $this->job     = $job;
+        $this->email_message = $email_message;
+        $this->subject = $subject;
     }
 
     /**
@@ -31,7 +40,7 @@ class JobBookingConfirmation extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Job Booking Confirmation',
+            subject: $this->subject,
         );
     }
 
@@ -43,7 +52,7 @@ class JobBookingConfirmation extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.booking-confirmation',
         );
     }
 
@@ -56,4 +65,6 @@ class JobBookingConfirmation extends Mailable
     {
         return [];
     }
+
+
 }

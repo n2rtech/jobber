@@ -55,14 +55,18 @@ Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomple
 # Schedules Route
 Route::resource('schedules', ScheduleController::class);
 
+Route::post('schedule/email-template', [ScheduleController::class, 'emailTemplate'])->name('schedules.email-template');
+Route::post('schedule/text-template', [ScheduleController::class, 'textTemplate'])->name('schedules.text-template');
 # Jobs Route
 Route::resource('jobs', JobController::class);
 
 # Send Job Confirmation Route
 Route::post('jobs/send-confirmation', [JobController::class, 'confirmation'])->name('jobs.confirmation');
 
-# Mark Job Complete Route
+# Change Status Complete Route
 Route::post('jobs/change-status', [JobController::class, 'changeStatus'])->name('jobs.change-status');
+
+Route::post('jobs/mark-unscheduled', [JobController::class, 'unschedule'])->name('jobs.mark-unscheduled');
 
 # Assign Team Route
 Route::post('jobs/assign-team', [JobController::class, 'assignTeam'])->name('jobs.assign');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Product;
@@ -119,5 +120,14 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function emailTemplate(Request $request)
+    {
+        $template = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        $subject  = getSubject($template->subject, $request->id);
+        $message  = getMessage($template->message, $request->id);
+
+        return response()->json(['subject' => $subject, 'message' => $message]);
     }
 }

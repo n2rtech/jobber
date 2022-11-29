@@ -3435,9 +3435,9 @@ var TempusDominusBootstrap4 = function ($) {
       return;
     }
 
-    if (config._options.allowInputToggle && $originalTarget.is('input[data-toggle="datetimepicker"]')) {
-      return;
-    }
+    // if (config._options.allowInputToggle && $originalTarget.is('input[data-toggle="datetimepicker"]')) {
+    //   return;
+    // }
 
     TempusDominusBootstrap4._jQueryInterface.call($target, 'toggle');
   }).on(DateTimePicker.Event.CHANGE, "." + DateTimePicker.ClassName.INPUT, function (event) {
@@ -3485,9 +3485,9 @@ var TempusDominusBootstrap4 = function ($) {
       return;
     }
 
-    if (!config._options.allowInputToggle) {
-      return;
-    }
+    // if (!config._options.allowInputToggle) {
+    //   return;
+    // }
 
     TempusDominusBootstrap4._jQueryInterface.call($target, 'show', event);
   });

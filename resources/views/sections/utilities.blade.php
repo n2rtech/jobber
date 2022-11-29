@@ -31,10 +31,22 @@
 </script>
 <script>
     $(function () {
-      $("#customerDataTable").DataTable({
+      $("#completedDatatable").DataTable({
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
-      }).buttons().container().appendTo('#customerDataTable_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#completedDatatable_wrapper .col-md-6:eq(0)');
+    });
+    $(function () {
+      $("#scheduledDataTable").DataTable({
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
+      }).buttons().container().appendTo('#scheduledDataTable_wrapper .col-md-6:eq(0)');
+    });
+    $(function () {
+      $("#unscheduledDataTable").DataTable({
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
+      }).buttons().container().appendTo('#unscheduledDataTable_wrapper .col-md-6:eq(0)');
     });
 
 
