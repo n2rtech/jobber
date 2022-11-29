@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
 
 @endsection
 @section('content')
@@ -51,7 +53,7 @@
                   <div id="external-events">
                     @if(count($unscheduled_jobs) > 0)
                         @foreach($unscheduled_jobs as $unscheduled_job)
-                            <div class="external-event bg-light"
+                            <div class="external-event bg-light hidden-xs"
                             data-customer="{{ $unscheduled_job->customer->name }}"
                             data-location="{{ getAddress($unscheduled_job->customer_id) }}"
                             data-jobid="{{ $unscheduled_job->id }}"
@@ -60,17 +62,30 @@
                             data-team="{{ $unscheduled_job->user_id }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}">
-                            <div class="direct-chat-infos">
-                                <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
-                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
-                                <span class="clearfix"></span>
-                                <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
-                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
-                                <span class="clearfix"></span>
-                                <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
-                                <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
-                                <span class="clearfix"></span>
-                              </div>
+                                <div class="direct-chat-infos">
+                                    <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
+                                    <span class="clearfix"></span>
+                                    <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
+                                    <span class="clearfix"></span>
+                                    <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
+                                    <span class="clearfix"></span>
+                                </div>
+                           </div>
+                           <div class="hidden-sm schedule-xs">
+                               <button class="direct-chat-infos btn-block" data-toggle="modal" data-target="#schedule-modal">
+                                    <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
+                                    <span class="clearfix"></span>
+                                    <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
+                                    <span class="clearfix"></span>
+                                    <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
+                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
+                                    <span class="clearfix"></span>
+                                </button>
                            </div>
                         @endforeach
                         <div class="checkbox" style="display: none">
@@ -96,6 +111,33 @@
       </div>
       <!-- /.row -->
     </div><!-- /.container-fluid -->
+    <div class="modal fade" id="schedule-modal" tabindex="-1" role="dialog" aria-labelledby="schedule-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="schedule-modalLabel">Schedule date</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col-sm-12">
+                <span class="text-dark"> <strong>Starts</strong></span>
+                <input id="starts" type="text" class="form-control">
+            </div>
+            <div class="col-sm-12">
+                <span class="text-dark"> <strong>Ends</strong></span>
+                <input id="ends" type="text" class="form-control">
+                <small id="change_timing_message"></small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-success" onclick="changeTimings();">Update Timings</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   @include('schedules.view')
   @include('schedules.email-template')
