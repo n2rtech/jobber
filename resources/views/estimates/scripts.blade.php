@@ -238,6 +238,8 @@
             $('#text-total'+row).text(total);
 
             $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
+
+            productFocusOut(row);
         }
     </script>
 
