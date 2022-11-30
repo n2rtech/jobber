@@ -372,6 +372,20 @@ a.nav-link .active{
     background: #000 !important;
     color: #fff !important;
 }
+.cardforResponsive{
+    padding: 10px;
+}
+.cardforResponsive .noteDate{
+    font-size: 14px;
+} 
+.cardforResponsive .noteUser{
+    font-size: 14px;
+    margin-top: 5px;
+} 
+.cardforResponsive .noteUser img{
+    position: relative;
+    top: -5px;
+} 
 }
 .label-small{
     padding-bottom: 0px;
