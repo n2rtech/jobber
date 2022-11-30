@@ -64,7 +64,7 @@
 <!-- Filter Box Scripts Start -->
 <script>
     $(document).ready(function(){
-        var filterBox = '{{ $filter_box }}';
+        var filterBox = 'hide';
         if(filterBox === 'show'){
             $("#filterBox").css('display', 'block');
         }
