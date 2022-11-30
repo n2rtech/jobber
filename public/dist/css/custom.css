@@ -1,3 +1,19 @@
+.view-job-page h3{
+    margin-top: 10px;
+    font-weight: bold;
+}
+.view-job-page .nav-tabs .nav-item.show .nav-link, .view-job-page .nav-tabs .nav-link.active{
+    color: #fff;
+    background-color: darkblue;
+    border-color: unset;
+    border: none;
+    margin: unset;
+    min-height: 41px;
+}
+.view-job-page .nav-tabs .nav-link{
+    background: #eaeaea;
+    color: #000;
+}   
 .login-page, .register-page {
     background-color: #ff5927 !important;
 }

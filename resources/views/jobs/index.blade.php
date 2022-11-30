@@ -29,11 +29,11 @@
 
                 <div class="col-sm-6 text-right">
 
-                    <a href="javascript:void(0)" id="filter" class="btn btn-success">
+                    <a href="javascript:void(0)" id="filter" class="btn btn-success d-none">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
                     </a>
 
-                    <a href="{{ route('jobs.index') }}" class="btn btn-indigo">
+                    <a href="{{ route('jobs.index') }}" class="btn btn-indigo d-none">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
                     </a>
 

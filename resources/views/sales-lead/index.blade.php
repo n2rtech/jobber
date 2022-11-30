@@ -22,11 +22,11 @@
 
                 <div class="col-sm-6 text-right">
 
-                    <button type="submit" form="leadSearchForm" class="btn btn-success">
+                    <button type="submit" form="leadSearchForm" class="btn btn-success d-none">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
                     </button>
 
-                    <a href="{{ route('sales-leads.index') }}" class="btn btn-indigo">
+                    <a href="{{ route('sales-leads.index') }}" class="btn btn-indigo d-none">
                         <i class="btn-icon fas fa-undo"></i> {{ __('Reset') }}
                     </a>
 
