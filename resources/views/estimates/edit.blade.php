@@ -52,7 +52,7 @@
                                     <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox" id="same_as_billing_address" name="same_as_billing_address" value="1" onchange="shippingAddressOptions();" @if(!isset($estimate->shipping_address)) checked @endif>
                                     <label for="same_as_billing_address" class="custom-control-label"><small>Same as Billing Address</small></label>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-sm-12">
                                 @isset($estimate->shipping_address)
                                 <input id="shipping_address_div" class="form-control form-control-sm" name="shipping_address" placeholder="Enter Shipping Address" />
@@ -68,7 +68,7 @@
                                 <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-lg-3">
                          <div class="form-group">
                             <label for="terms" class="col-form-label">{{ __('Estimate Terms') }}</label>
@@ -84,7 +84,7 @@
                             @enderror
 
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-lg-3">
                      <div class="form-group">
                         <label for="estimate_date" class="col-form-label">{{ __('Estimate Date') }}</label>
@@ -99,7 +99,7 @@
                             @enderror
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="col-lg-3">
                  <div class="form-group">
                     <label for="expiry_date" class="col-form-label">{{ __('Expiry Date') }}</label>
@@ -113,7 +113,7 @@
                         @enderror
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -339,7 +339,7 @@
 </div>
 </div>
 </div>
-</div> 
+</div>
 </form>
 </div>
 </div>
@@ -664,7 +664,7 @@
 
        // Editable inputs
 
-       
+
    });
     $('#editable').on('click',function(){
         var fieldid = $(this).attr('data-id');
