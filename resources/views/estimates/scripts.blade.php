@@ -187,6 +187,7 @@
                 html += '<td>';
                 html += '<p class="text-small text-right" id="text-total' + item_row +'" onclick="editTotal(' + item_row +')">0.00</p>';
                 html += '<input type="number" class="form-control form-control-sm text-align-right totalpriceinput" id="total' + item_row +'" name="product[' + item_row +'][total]" placeholder="Total" min="0" step="any" onfocusout="totalFocusOut(' + item_row +')" value="0.00" style="display: none">';
+                html += '<input type="hidden" id="tax_rate' + item_row +'" name="product[' + item_row + '][tax_rate]" value="0"><input type="hidden" class="tax_amount" id="tax_amount' + item_row +'" value="0">';
                 html += '</td>';
                 html +='<td class="text-right"><button type="button" class="btn btn-sm btn-danger" onclick="$(\'#item-row' + item_row +'\').remove();"><i class="fa fa-minus"></i></button></td>';
                 html += '</tr>';
@@ -209,13 +210,13 @@
 
             var description  = $(element).find(':selected').data('description');
 
-            // var tax          = $(element).find(':selected').data('tax');
+            var tax          = $(element).find(':selected').data('tax');
+
+            $("#tax_rate" + row).val(tax);
 
             $("#unit_price"  + row).val(unitprice);
 
             $("#description" + row).val(description);
-
-            // $("#tax_rate" + row).val(tax);
 
             $('#text-product'+row).text(product);
 
@@ -233,9 +234,11 @@
 
             var total        = subtotal
 
-            // var total     = (subtotal + subtotal * tax / 100)
+            var tax_amount   = (subtotal * tax / 100)
 
             $('#text-total'+row).text(total);
+
+            $('#tax_amount'+row).val(tax_amount);
 
             $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
 
@@ -247,11 +250,95 @@
     <script>
         function totalUpdate(row){
             var quantity    = $("#quantity"+row).val();
+            $('#text-quantity'+row).text(quantity);
             var unitprice   = $("#unit_price"+row).val();
+            $('#text-unit'+row).text(unitprice);
             var tax         = $("#tax_rate"+row).val();
             var subtotal    = (Math.round(quantity * 100) / 100).toFixed(2) * (Math.round(unitprice * 100) / 100).toFixed(2);
             var total       = subtotal;
-            // var total    = (subtotal + subtotal * tax / 100)
+            var tax_amount   = (subtotal * tax / 100);
+            $('#tax_amount'+row).val(tax_amount);
             $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
+            $('#text-total'+row).text(total);
         }
     </script>
+
+    {{-- Update Subtotal of Products --}}
+    <script>
+        setInterval(function(){
+            var sum              = 0;
+            var total_amount_payable = 0;
+            var tax_amount       = 0;
+            var deduct_discount  = 0;
+            var tax_round        = 0;
+            var total_after_tax  = 0;
+            var perentage        = 0;
+            var percentage_round = 0;
+            var sum_round        = 0;
+            var discount_type    = $('#discount_type').val();
+            var discount         = $('#discount').val();
+
+
+
+            $('.totalpriceinput').each(function() {
+                sum += parseFloat($(this).val());
+            });
+
+            $('.tax_amount').each(function() {
+                tax_amount += parseFloat($(this).val());
+            });
+
+            var sum_round        = (Math.round(sum * 100) / 100).toFixed(2);
+            var tax_round        = (Math.round(tax_amount * 100) / 100).toFixed(2);
+            var total_after_tax  = (parseFloat(sum_round) + parseFloat(tax_round));
+            var perentage        = (tax_round * 100) / sum_round;
+            var percentage_round =  (Math.round(perentage * 100) / 100).toFixed(1);
+
+            $('#tax_type').val('percentage');
+            $('#tax').val(percentage_round);
+            $('#tax_amount').text(tax_round);
+
+            $('#subtotal').text(sum_round);
+
+            switch (discount_type) {
+                case 'percentage':
+                    var deduct_discount = sum_round * parseFloat(discount) / 100;
+                        $('#discount_amount').text(sum_round * parseFloat(discount) / 100);
+                    break;
+
+                case 'amount':
+                    var deduct_discount = parseFloat(discount);
+                        $('#discount_amount').text((Math.round(discount * 100) / 100).toFixed(2));
+                    break;
+
+                default:
+                    var deduct_discount = sum_round * parseFloat(discount) / 100;
+                    $('#discount_amount').text(sum_round * parseFloat(discount) / 100);
+                    break;
+            }
+
+            var total_amount_payable = (sum + tax_amount - deduct_discount)
+            $('#total').text((Math.round(total_amount_payable * 100) / 100).toFixed(2));
+            $('#estimate_total').val((Math.round(total_amount_payable * 100) / 100).toFixed(2));
+
+        }, 500);
+    </script>
+    @isset($customer)
+    {{-- Set Default Customer --}}
+        <script>
+            $(document).ready(function () {
+                $("#select2-name-container").text("{{ $customer->name }}");
+                $("#customer_id").val("{{ $customer->id }}");
+            });
+        </script>
+     @endisset
+
+     @isset($estimate)
+    {{-- Set Default Customer --}}
+        <script>
+            $(document).ready(function () {
+                $("#select2-name-container").text("{{ $estimate->customer->name }}");
+                $("#customer_id").val("{{ $estimate->customer_id }}");
+            });
+        </script>
+     @endisset

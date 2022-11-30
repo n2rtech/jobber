@@ -21,6 +21,7 @@
                         <div class="card-body">
                             <form id="estimateForm" method="POST" action="{{ route('estimates.store') }}"
                                 enctype="multipart/form-data">
+                                <input type="hidden" name="customer_id" id="customer_id">
                                 @csrf
 
                                 <!-- Estimate Details Box Starts Here -->

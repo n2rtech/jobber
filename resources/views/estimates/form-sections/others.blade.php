@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
+                        <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">@isset($estimate) {{ old('notes', $estimate->notes) }} @else {{ old('notes') }} @endif</textarea>
                         @error('notes')
                             <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">{{ old('conditions', $setting['conditions']) }}</textarea>
+                    <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">@isset($estimate) {{ old('notes', $estimate->conditions) }} @else {{ old('conditions') }} @endif</textarea>
                     @error('conditions')
                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                     @enderror

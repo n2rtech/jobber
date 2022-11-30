@@ -48,11 +48,14 @@ class EstimateSeed extends Seeder
                 $product->quantity      = $job_product->quantity;
                 $product->unit_price    = $job_product->unit_price;
                 $product->tax_rate      = $selected_product->tax->rate;
+                $product->tax_amount    = ($job_product->total * $selected_product->tax->rate / 100);
                 $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
                 $product->save();
             }
 
             $subtotal = EstimateProduct::where('estimate_id', $estimate->id)->sum('total');
+
+            $added_tax = EstimateProduct::where('estimate_id', $estimate->id)->sum('tax_amount');
 
             if($estimate->discount_type == 'percentage'){
                 $deduct_discount = $subtotal * $job->discount / 100;
@@ -62,13 +65,6 @@ class EstimateSeed extends Seeder
                 $deduct_discount = $job->discount;
             }
 
-            if($estimate->tax_type == 'percentage'){
-                $added_tax = $subtotal * $job->tax / 100;
-            }
-
-            if($estimate->tax_type == 'amount'){
-                $added_tax = $subtotal * $job->tax / 100;
-            }
             $total = ($subtotal + $added_tax - $deduct_discount);
             Estimate::where('id', $estimate->id)->update(['subtotal' => $subtotal, 'total' => $total]);
        }

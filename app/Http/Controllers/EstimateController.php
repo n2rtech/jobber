@@ -100,30 +100,7 @@ class EstimateController extends Controller
         if(isset($request->customer_id)){
             $products   = Product::get();
             $customer   = Customer::find($request->customer_id);
-            $customer->address ='';
-            if(isset($customer->address_1) && strlen($customer->address_1) > 0){
-                $customer->address .= $customer->address_1;
-            }
-
-            if(isset($customer->address_2) && strlen($customer->address_2) > 0){
-                $customer->address .= ', '.$customer->address_2;
-            }
-
-            if(isset($customer->city) && strlen($customer->city) > 0){
-                $customer->address .= ', '.$customer->city;
-            }
-
-            if(isset($customer->state) && strlen($customer->state) > 0){
-                $customer->address .= ', '.$customer->state;
-            }
-
-            if(isset($customer->country) && strlen($customer->country) > 0){
-                $customer->address .= ', '.$customer->country;
-            }
-
-            if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
-                $customer->address .= ', '.$customer->eir_code;
-            }
+            $customer->address = getAddress($customer->id);
             $count      = Estimate::count();
             $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
@@ -173,6 +150,7 @@ class EstimateController extends Controller
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
                 $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -223,6 +201,7 @@ class EstimateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request->all();
         $estimate                        = Estimate::find($id);
         $estimate->customer_id           = $request->customer_id;
         $estimate->user_id               = Auth::user()->id;
@@ -249,6 +228,7 @@ class EstimateController extends Controller
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
                 $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -302,6 +282,7 @@ class EstimateController extends Controller
             $product->quantity      = $estimate_product->quantity;
             $product->unit_price    = $estimate_product->unit_price;
             $product->tax_rate      = $selected_product->tax->rate;
+            $product->tax_amount    = ($estimate_product->total * $selected_product->tax->rate / 100);
             $product->total         = ($estimate_product->total + $estimate_product->total * $selected_product->tax->rate / 100);
             $product->save();
         }
