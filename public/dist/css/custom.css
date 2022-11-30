@@ -302,11 +302,11 @@ a.nav-link .active{
 }
 .modify-container form select, .modify-container form input{
     font-size: 15px;
-}     
+}
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
-} 
+}
 .hidden-sm{
     display: none;
 }
@@ -346,12 +346,16 @@ a.nav-link .active{
 #schedule-modal{
     top: 100px;
 }
+}
+.label-small{
+    padding-bottom: 0px;
+    font-size: 90%;
+}
+.text-small{
+    font-size: 80%;
+    font-weight: 400 !important;
+}
 
-
-
-
-
-
-
-
+.ctrl-label::before, .ctrl-label::after{
+    top: 0px !important;
 }
