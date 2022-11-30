@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 @section('title', 'View Job Details')
 @section('head')
     <link rel="stylesheet" href="{{ asset('plugins/simple-lightbox/simple-lightbox.css') }}" />
 @endsection
 @section('content')
-    <section class="content">
+    <section class="content view-job-page">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card mt-5">
+                <div class="card mt-4 maxWidthControl" style="margin: 0 auto">
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('schedules.index') }}" class="btn btn-dark">
+                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -23,47 +23,46 @@
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
                                 <small>{{ getAddress($job->customer_id) }}</small>
-                                <button class="btn btn-sm btn-block btn-dark mt-2">Mark Complete</button>
                             </div>
-                            <div class="col-sm-6" style="position: relative">
-                                @isset($job->start)
-                                <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
-                                        {{ \Carbon\Carbon::parse($job->start)->format('M d, Y : h:i') }}
-                                        @isset($job->end)
-                                            - {{ \Carbon\Carbon::parse($job->end)->format('h:i') }}
-                                        @endisset
+                            <div class="col-sm-6">
+                                <div class="float-right">
+                                    @isset($job->start)
+                                    <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
+                                            {{ \Carbon\Carbon::parse($job->start)->format('M d, Y : h:i') }}
+                                            @isset($job->end)
+                                                - {{ \Carbon\Carbon::parse($job->end)->format('h:i') }}
+                                            @endisset
+                                        </strong> </small>
+                                    @else
+                                    <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
+                                    Unscheduled
                                     </strong> </small>
-                                @else
-                                <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
-                                   Unscheduled
-                                </strong> </small>
-                                @endisset
-                                @isset($job->customer->phone)
-                                    <br />
-                                    <small class="text-dark"><i class="fas fa-square-phone"></i>&nbsp;&nbsp;&nbsp;
-                                        {{ $job->customer->phone }}</small>
-                                @endisset
-                                @isset($job->customer->mobile_1)
-                                    <br />
-                                    <small class="text-dark"><i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;
-                                        {{ $job->customer->mobile_1 }}</small>
-                                @endisset
-                                @isset($job->customer->mobile_2)
-                                    <br />
-                                    <small class="text-dark"><i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;
-                                        {{ $job->customer->mobile_2 }}</small>
-                                @endisset
-                                @isset($job->customer->directions)
-                                    <br />
-                                    <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
-                                        {{ $job->customer->directions }}</small>
-                                @endisset
-                                <button style="position: absolute;bottom: 0;left: 0;"
-                                    class="btn btn-sm btn-block btn-outline-dark mt-4">More Actions</button>
+                                    @endisset
+                                    @isset($job->customer->phone)
+                                        <br />
+                                        <small class="text-dark"><i class="fas fa-square-phone"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->phone }}</small>
+                                    @endisset
+                                    @isset($job->customer->mobile_1)
+                                        <br />
+                                        <small class="text-dark"><i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->mobile_1 }}</small>
+                                    @endisset
+                                    @isset($job->customer->mobile_2)
+                                        <br />
+                                        <small class="text-dark"><i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->mobile_2 }}</small>
+                                    @endisset
+                                    @isset($job->customer->directions)
+                                        <br />
+                                        <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->directions }}</small>
+                                    @endisset
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card-header bg-dark p-0 pt-1" style="border-radius: 0px;">
+                    <div class="card-header p-0 pt-1" style="border-radius: 0px;">
                         <ul class="nav nav-tabs nav-fill" style="border-bottom: none;" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item" style="width: 33.33%">
                                 <a class="nav-link active" id="view-information-tab" data-toggle="pill"
@@ -83,44 +82,45 @@
                                 aria-labelledby="view-information-tab">
                                 <span class="text-dark"> <strong>Instructions</strong></span>
                                 <p class="text-dark">{{ $job->instructions }}</p>
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left" width="33.33%">Job</th>
-                                            <th width="33.33%">Team</th>
-                                            <th class="text-right">Reminder</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-left">
-                                                <small> Job Title&nbsp;: {{ $job->jobTitle->title }}</small>
-                                                <br />
-                                                <small> Job ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                    #{{ $job->id }}</small>
-                                            </td>
-                                            <td>
-                                                <select name="team" id="team" class="form-control form-control-sm"
-                                                    onchange="assignTeam(this.value);">
-                                                    <option value="">Choose Team Member</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}"
-                                                            @if ($job->user_id == $user->id) selected @endif>
-                                                            {{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <small id="assign_message"></small>
-                                            </td>
-                                            <td class="text-right">
-                                                <small id="assign_message"><cite>No Reminder Scheduled</cite></small>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="bg-dark">Job</th>
+                                                <th class="bg-dark text-center">Team</th>
+                                                <th class="bg-dark text-right">Reminder</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <small> Job Title&nbsp;: {{ $job->jobTitle->title }}</small>
+                                                    <br />
+                                                    <small> Job ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                        #{{ $job->id }}</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select style="margin: 0 auto" name="team" id="team" class="form-control form-control-sm text-center"
+                                                        onchange="assignTeam(this.value);">
+                                                        <option value="">Choose Team Member</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                @if ($job->user_id == $user->id) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="assign_message"></small>
+                                                </td>
+                                                <td class="text-right">
+                                                    <small id="assign_message"><cite>No Reminder Scheduled</cite></small>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
                                 <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <hr>
                                 <div class="card card-widget widget-user-2">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
@@ -161,20 +161,23 @@
                                     </div>
 
 
-                                    <div class="card-body card-comments">
+                                    <div class="card-body card-comments cardforResponsive">
                                         @forelse($job->jobnotes as $note)
                                         <div class="card-comment">
-
-                                            <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
-
-                                            <div class="comment-text">
-                                                <span class="username">
-                                                    {{  $note->user->name }}
-                                                    <span class="text-muted float-right">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
-                                                </span>
-                                                {{ $note->note }}
+                                            <div class="row">
+                                                <div class="col-sm-7 col-6">
+                                                    <span class="noteDate" style="font-weight: 600">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
+                                                </div>
+                                                <div class="col-sm-5 col-6">
+                                                    <div class="float-right noteUser">
+                                                        <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
+                                                        &nbsp; {{  $note->user->name }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    {{ $note->note }}
+                                                </div>
                                             </div>
-
                                         </div>
                                         @empty
                                         <div class="card-comment">

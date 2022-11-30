@@ -289,6 +289,7 @@ a.nav-link .active{
 }
 .maxWidthControl{
     max-width: 770px;
+    margin-bottom: 30px !important;
 }
 .content-header h1{
     font-size: 26px;
