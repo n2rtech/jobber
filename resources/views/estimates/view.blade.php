@@ -120,7 +120,6 @@
                                             <th width="35%">Product / Service</th>
                                             <th class="text-right">Quantity</th>
                                             <th class="text-right">Unit Price</th>
-                                            <th class="text-right">Amount(€)</th>
                                             <th class="text-right">Total(€)</th>
                                         </tr>
                                     </thead>
@@ -130,7 +129,6 @@
                                             <td>{{ $product->product->name }}</td>
                                             <td class="text-right">{{ $product->quantity }}</td>
                                             <td class="text-right">€ {{ $product->unit_price }}</td>
-                                            <td class="text-right">€ {{ number_format($product->quantity * $product->unit_price, 2, '.', ',') }}</td>
                                             <td class="text-right">€ {{ $product->total }}</td>
                                         </tr>
                                         @endforeach
