@@ -2,7 +2,8 @@
 
 <div class="tab-pane" id="customer-jobs" role="tabpanel" aria-labelledby="customer-jobs-tab">
     @if(count($customer->jobs) > 0)
-        <table id="dataTable" class="table table-sm">
+    <div class="table-responsive">
+        <table id="dataTable" class="table table-sm table-bordered">
             <thead>
                 <tr>
                     <th>{{ __('Date Added') }}</th>
@@ -59,6 +60,7 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
     @else
         <p class="text-center mt-4">{{ __('No Jobs Added') }}</p>
     @endif

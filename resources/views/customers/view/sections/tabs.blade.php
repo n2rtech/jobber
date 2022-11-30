@@ -1,5 +1,5 @@
-<div class="card">
-    <div class="card-body">
+<div class="card customer-tabs">
+    <div class="card-body" style="padding: 0">
         <div class="col-sm-12">
             <div class="card card-dark card-tabs">
                 <div class="card-header p-0 pt-1">
