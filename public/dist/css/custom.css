@@ -407,6 +407,8 @@ a.nav-link .active{
 }
 .buttonBlocks .btn:hover{
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    background: #000;
+    color: #fff;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
