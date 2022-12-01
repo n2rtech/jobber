@@ -25,9 +25,9 @@
                                 {{ getAddress($job->customer_id) }}
                             </td>
                             <td>
-                                @isset($job->customer->phone) <i class="fa fa-square-phone"></i> {{ $job->customer->phone }} <br/> @endisset
-                                @isset($job->customer->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $job->customer->mobile_1 }} <br/> @endisset
-                                @isset($job->customer->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $job->customer->mobile_2 }}</td> @endisset
+                                @isset($job->customer->phone) {{ $job->customer->phone }} <br/> @endisset
+                                @isset($job->customer->mobile_1) {{ $job->customer->mobile_1 }} <br/> @endisset
+                                @isset($job->customer->mobile_2) {{ $job->customer->mobile_2 }}</td> @endisset
                             </td>
                             <td>
                                 {{ $job->jobTitle->title }}
