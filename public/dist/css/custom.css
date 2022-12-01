@@ -398,6 +398,18 @@ a.nav-link .active{
     color: #fff;
     font-weight: normal;
 }
+.buttonBlocks .btn{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 28px 0;
+    border-radius: 10px;
+}
+.buttonBlocks .btn:hover{
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    background: #000;
+    color: #fff;
+}
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
