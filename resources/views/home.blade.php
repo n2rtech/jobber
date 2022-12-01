@@ -250,4 +250,5 @@
             location.href = url;
         }
     </script>
+
 @endpush

@@ -59,6 +59,34 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box_customer', 'filter_search'));
     }
 
+    public function customerSearch(Request $request){
+      
+        if(!is_null($request->inp)){
+
+          $result = Customer::where('name','like','%'.$request->inp.'%')
+                    ->orWhere('phone','like','%'.$request->inp.'%')
+                    ->orWhere('mobile_1','like','%'.$request->inp.'%')
+                    ->orWhere('mobile_2','like','%'.$request->inp.'%')
+                    ->get()->toArray();
+          
+                    if(!empty($result)){
+                      
+                        return response([
+                            'data'    => $result
+                        ], 200);
+            
+                    } else {
+            
+                        return response([
+                            'data'    => 404,
+                        ], 200);
+                    }
+             }
+
+        
+
+        }
+
     /**
      * Show the form for creating a new resource.
      *
