@@ -1,5 +1,4 @@
-<div class="card customer-tabs">
-    <div class="card-body" style="padding: 0">
+<div class="customer-tabs">
         <div class="col-sm-12">
             <div class="card card-dark card-tabs">
                 <div class="card-header p-0 pt-1">
@@ -81,5 +80,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

@@ -1,6 +1,6 @@
 {{-- Estimates Tab Start --}}
 
-<div class="tab-pane" id="customer-estimates" role="tabpanel" aria-labelledby="customer-estimates-tab">
+<div class="tab-pane customer-jobs-tabs" id="customer-estimates" role="tabpanel" aria-labelledby="customer-estimates-tab">
     @if (count($customer->estimates) > 0)
     <div class="table-responsive">
         <table id="dataTable" class="table table-sm table-bordered">

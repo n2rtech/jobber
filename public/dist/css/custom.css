@@ -385,12 +385,56 @@ a.nav-link .active{
     background: darkblue;
     border: 1px solid darkblue;
 }
+#customer-archived-notes .bg-warning{
+    background: unset !important;
+    font-size: 16px;
+}
+.customer-jobs-tabs table tr th, .customer-jobs-tabs table tr td{
+    font-size: 14px;
+    padding: 8px 12px;
+}
+.customer-jobs-tabs table thead th{
+    background: darkblue;
+    color: #fff;
+    font-weight: normal;
+}
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
 }
 .hidden-sm{
     display: none;
+}
+.customer-tabs .card-header{
+    background: #fff;
+}
+.customer-tabs .card-header{
+    background: #fff;
+    padding-top: 4px !important;
+}
+.customer-tabs .card-dark:not(.card-outline)>.card-header{
+    background: #fff !important;
+    padding-top: 0 !important;;
+}
+.customer-tabs .nav-tabs .nav-item{
+    margin-right: 3px;
+}
+.customer-tabs .nav-tabs .nav-item:first-child{
+    border-left: 1px solid #000;
+}
+.customer-tabs .nav-tabs .nav-item:last-child{
+    margin-right: 0;
+}
+.customer-tabs .nav-tabs .nav-link{
+    background: #fff !important;
+    border-radius: 0;
+    color: #000 !important;
+    border: 1px solid #000;
+    font-size: 14px;
+}
+.customer-tabs .nav-tabs .nav-link.active{
+    background: #000 !important;
+    color: #fff !important;
 }
 }
 @media (max-width: 767px){

@@ -1,12 +1,12 @@
 {{-- Jobs Tab Start --}}
 
-<div class="tab-pane" id="customer-jobs" role="tabpanel" aria-labelledby="customer-jobs-tab">
+<div class="tab-pane customer-jobs-tabs" id="customer-jobs" role="tabpanel" aria-labelledby="customer-jobs-tab">
     @if(count($customer->jobs) > 0)
     <div class="table-responsive">
         <table id="dataTable" class="table table-sm table-bordered">
             <thead>
                 <tr>
-                    <th>{{ __('Date Added') }}</th>
+                    <th class="bg-darkblue">{{ __('Date Added') }}</th>
                     <th>{{ __('Job Type') }}</th>
                     <th>{{ __('Products / Services') }}</th>
                     <th>{{ __('Scheduled') }}</th>

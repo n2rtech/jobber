@@ -1,6 +1,6 @@
 {{-- Invoices Tab Start --}}
 
-<div class="tab-pane" id="customer-invoices" role="tabpanel" aria-labelledby="customer-invoices-tab">
+<div class="tab-pane customer-jobs-tabs" id="customer-invoices" role="tabpanel" aria-labelledby="customer-invoices-tab">
     @if (count($customer->invoices) > 0)
     <div class="table-responsive">
         <table id="dataTable" class="table table-sm table-bordered">
