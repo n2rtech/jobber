@@ -158,3 +158,6 @@ Route::get('refresh-database', function () {
     dd("Hello ! Database has been refreshed and sample data has been inserted!");
 
 });
+
+//search customer
+Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');

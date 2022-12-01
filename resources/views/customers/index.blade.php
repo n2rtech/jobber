@@ -63,8 +63,70 @@
         $("#filter").click(function(){
             $("#filterBox").slideToggle();
         });
+        
+     $(function () {
+      $("#customerDataTable").DataTable({
+        "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
+      });
+
+      function filterGlobal(inp){
+        $.ajax({
+        url : "{{ route('customer-search') }}",
+        dataType: 'json',
+        data: {
+            inp: inp,
+            "_token": "{{ csrf_token() }}",
+        },
+        type: "POST",
+        success: function(res) {
+        console.log(res.data.length);
+        var htm = '';
+    
+        if(res.data != 404){
+           $('#customerDataTable tbody tr').remove();
+            for(var i = 0; i< res.data.length; i++){
+                
+                var d = res.data[i];
+                (i%2 == 0) ? cls = 'even' : cls = 'odd'; 
+            
+               htm =  '<tr class="'+cls+'">';
+               htm += '<td class="dtr-control" tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
+               htm += '<td> '+d.address_1+", "+d.address_2+", "+d.city+", "+d.country+", "+d.eir_code+'</td>';
+               htm += '<td> '+d.phone+' </td>';
+               htm += '<td> '+d.mobile_1+' </td>';
+               htm += '<td> '+d.mobile_2+' </td>';
+               htm += '<td>';
+               htm +=   '<div class="btn-group">';
+               htm +=     '<button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">';
+               htm +=      '<i class="fa fa-ellipsis-vertical"></i>';
+               htm += '         </button>';
+               htm += '         <div class="dropdown-menu" role="menu" style="">';
+               htm += '             <a class="dropdown-item" href="/customers/'+d.id+'/edit"><i class="fas fa-edit"></i> Edit</a>';
+               htm += '             <a class="dropdown-item" href="/customers/'+d.id+'"><i class="fas fa-eye"></i> View</a>';
+               htm += '         </div>';
+               htm += '     </div>';
+               htm += ' </td>';
+               htm += ' </tr>';
+          
+                $('#customerDataTable tbody').prepend(htm);
+               
+            }
+       
+        }
+         
+    }
+
+ });
+   
+}
+
+    $('input[type="search"]').on('keyup click', function () {
+        filterGlobal($(this).val());
+    });
 
     });
+
+ });
 </script>
 <!-- Filter Box Scripts End -->
 @endpush
