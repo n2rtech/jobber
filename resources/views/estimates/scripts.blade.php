@@ -392,6 +392,7 @@
         html+= '</div>';
 
             $("#shipping_address_div").html(html);
+            $("#modal-shipping-address .close").click();
             $('#shipping_address_1').val('');
             $('#shipping_address_2').val('');
             $('#shipping_city').val('');

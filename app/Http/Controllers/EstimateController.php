@@ -141,7 +141,7 @@ class EstimateController extends Controller
         $estimate->discount                 = $request->discount;
         $estimate->discount_type            = $request->discount_type;
         $estimate->tax                      = $request->tax;
-        $estimate->tax_type                 = $request->tax_type;
+        $estimate->tax_type                 = 'amount';
         $estimate->notes                    = $request->notes;
         $estimate->conditions               = $request->conditions;
         $estimate->total                    = $request->estimate_total;
@@ -224,7 +224,7 @@ class EstimateController extends Controller
         $estimate->discount                 = $request->discount;
         $estimate->discount_type            = $request->discount_type;
         $estimate->tax                      = $request->tax;
-        $estimate->tax_type                 = $request->tax_type;
+        $estimate->tax_type                 = 'amount';
         $estimate->notes                    = $request->notes;
         $estimate->conditions               = $request->conditions;
         $estimate->total                    = $request->estimate_total;

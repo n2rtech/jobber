@@ -111,6 +111,7 @@ tinymce.init({
                     team: $(eventEl).data('team'),
                     href: $(eventEl).data('href'),
                     show: $(eventEl).data('show'),
+                    viewcustomer: $(eventEl).data('viewcustomer'),
                     timePeriod: '',
                     allDay: false,
                 };
@@ -147,6 +148,7 @@ tinymce.init({
                         location: '{{ getAddress($job->customer_id) }}',
                         href: '{{ route('jobs.edit', $job->id) }}',
                         show: '{{ route('schedules.show', $job->id) }}',
+                        viewcustomer: '{{ route('customers.show', $job->customer_id) }}',
                     },
                 @endforeach
             ],
@@ -168,6 +170,7 @@ tinymce.init({
                 $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
+                $("#successModal .modal-body #show_customer").attr("href", info.event.extendedProps.viewcustomer);
 
                 var formData = {
                     id: info.event.extendedProps.jobid,

@@ -61,6 +61,7 @@
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
+                            data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}">
                                 <div class="direct-chat-infos">
                                     <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
@@ -81,6 +82,7 @@
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
+                            data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}" class="hidden-sm schedule-xs">
                                <button class="direct-chat-infos btn-block" data-toggle="modal" data-target="#schedule-modal" onclick="$('#job_id').val($(this).parent().attr('data-jobid'))">
                                     <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
