@@ -64,7 +64,6 @@
             $("#filterBox").slideToggle();
         });
         
-     $(function () {
       $("#customerDataTable").DataTable({
         "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
       });
@@ -79,17 +78,17 @@
         },
         type: "POST",
         success: function(res) {
-        console.log(res.data.length);
+        
         var htm = '';
-    
-        if(res.data != 404){
+       
+        if(res.data != 404 && res.data != ''){
            $('#customerDataTable tbody tr').remove();
             for(var i = 0; i< res.data.length; i++){
                 
                 var d = res.data[i];
                 (i%2 == 0) ? cls = 'even' : cls = 'odd'; 
             
-               htm =  '<tr class="'+cls+'">';
+               htm =  '<tr class="'+cls+' search">';
                htm += '<td class="dtr-control" tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
                htm += '<td> '+d.address_1+", "+d.address_2+", "+d.city+", "+d.country+", "+d.eir_code+'</td>';
                htm += '<td> '+d.phone+' </td>';
@@ -120,13 +119,14 @@
    
 }
 
-    $('input[type="search"]').on('keyup click', function () {
+    $('input[type="search"]').on('input',function () {
         filterGlobal($(this).val());
+        if($(this).val() == ''){
+            location.reload();
+       }
     });
 
-    });
-
- });
+});
 </script>
 <!-- Filter Box Scripts End -->
 @endpush
