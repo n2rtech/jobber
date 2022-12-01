@@ -22,6 +22,7 @@ class SettingSeed extends Seeder
         Setting::create([
             'type' => 'calendar',
             'value' => ["timing_starts" => "09:00:00", "timing_ends" => "19:59:00", "no_of_days" => 5],
+            "days" => [0, 1, 2, 3, 4, 5, 6],
         ]);
     }
 }

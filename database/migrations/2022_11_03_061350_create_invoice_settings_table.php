@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->enum('type', ['invoice', 'calendar'])->default('invoice');
             $table->longText('value')->nullable();
+            $table->longText('days')->nullable();
         });
     }
 
