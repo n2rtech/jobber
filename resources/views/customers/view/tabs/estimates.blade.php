@@ -19,7 +19,7 @@
             <tbody>
                 @foreach ($customer->estimates as $estimate)
                     <tr>
-                        <td>#{{ $estimate->id}}</td>
+                        <td><a href="{{ route('estimates.edit', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td>{{ $estimate->estimate_date}}</td>
                         <td>{{ $estimate->expiry_date}}</td>
                         <td>€ {{ $estimate->total }}</td>

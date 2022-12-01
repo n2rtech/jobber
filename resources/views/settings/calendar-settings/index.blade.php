@@ -25,17 +25,25 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="no_of_days">No of Week Days</label>
+                                <label for="no_of_days">No of Days</label>
                                 <input type="number" class="form-control" id="no_of_days" name="no_of_days"
-                                    placeholder="Enter Number of Week Days" value="{{ $setting['no_of_days'] }}">
+                                    placeholder="Enter Number of Days" value="{{ $setting['no_of_days'] }}">
                                 @error('no_of_days')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="timing_starts">Timing Starts at</label>
-                                <input type="text" class="form-control" id="timing_starts" name="timing_starts"
+                                <input type="time" step="1" class="form-control" id="timing_starts" name="timing_starts"
                                     placeholder="Enter Start Timing" value="{{ $setting['timing_starts'] }}">
+                                @error('timing_starts')
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="timing_starts">Timing Ends at</label>
+                                <input type="time" step="1" class="form-control" id="timing_starts" name="timing_starts"
+                                    placeholder="Enter Start Timing" value="{{ $setting['timing_ends'] }}">
                                 @error('timing_starts')
                                     <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                 @enderror

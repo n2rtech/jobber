@@ -6,6 +6,7 @@
         <table id="dataTable" class="table table-sm table-bordered">
             <thead>
                 <tr>
+                    <th class="bg-darkblue">{{ __('Job N.o') }}</th>
                     <th class="bg-darkblue">{{ __('Date Added') }}</th>
                     <th>{{ __('Job Type') }}</th>
                     <th>{{ __('Products / Services') }}</th>
@@ -17,6 +18,7 @@
             <tbody>
                 @foreach ($customer->jobs as $job)
                     <tr>
+                        <td><a href="{{ route('jobs.show', $job->id) }}">#{{ $job->id }}</a></td>
                         <td>{{ \Carbon\Carbon::parse($job->created_at)->format('Y-m-d') }}</td>
                         <td>{{ $job->jobTitle->title }}</td>
 

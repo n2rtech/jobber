@@ -3,24 +3,26 @@
     <div class="card-body">
         @include('jobs.filter')
         <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped">
+            <table id="dataTable" class="table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
-                        <th style="width: 40%">{{ __('Customer') }}</th>
-                        <th>{{ __('Contact') }}</th>
-                        <th>{{ __('Job Type') }}</th>
-                        <th>{{ __('Scheduled') }}</th>
-                        <th>{{ __('Total') }}</th>
-                        <th></th>
+                        <th style="width: 15%">{{ __('Customer') }}</th>
+                        <th  style="width: 30%">{{ __('Address') }}</th>
+                        <th  style="width: 15%">{{ __('Contact') }}</th>
+                        <th  style="width: 15%">{{ __('Job Type') }}</th>
+                        <th  style="width: 10%">{{ __('Scheduled') }}</th>
+                        <th  style="width: 10%">{{ __('Total') }}</th>
+                        <th  style="width: 5%"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
                         <tr>
                             <td>
-                                <a href="{{ route('customers.show', $job->customer_id) }}"><i class="fas fa-user"></i>&nbsp;{{ $job->customer->name }}</a>
-                                <br/>
-                                <i class="fas fa-map-marker-alt"></i>&nbsp;{{ getAddress($job->customer_id) }}
+                                <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
+                            </td>
+                            <td>
+                                {{ getAddress($job->customer_id) }}
                             </td>
                             <td>
                                 @isset($job->customer->phone) <i class="fa fa-square-phone"></i> {{ $job->customer->phone }} <br/> @endisset

@@ -128,6 +128,10 @@ tinymce.init({
             themeSystem: 'bootstrap',
             slotMinTime: '{{ $setting["timing_starts"] }}',
             dayCount: '{{ $setting["no_of_days"] }}',
+            slotMaxTime: '{{ $setting["timing_ends"] }}',
+            expandRows: true,
+            hiddenDays: [0,6],
+            firstDay: 1,
             // Scheduled Job Events
             events: [
                 @foreach ($scheduled_jobs as $job)

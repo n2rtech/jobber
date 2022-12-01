@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('estimates.filter')
-        <table id="dataTable" class="table table-bordered table-striped">
+        <table id="dataTable" class="table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
                     <th>{{ __('Estimate No.') }}</th>
@@ -18,7 +18,7 @@
             <tbody>
                 @foreach ($estimates as $estimate)
                     <tr>
-                        <td>#{{ $estimate->id}}</td>
+                        <td><a href="{{ route('estimates.edit', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td><a href="{{ route('customers.show', $estimate->customer_id) }}">{{ $estimate->customer->name }}</a></td>
                         <td>{{ $estimate->estimate_date}}</td>
                         <td>€ {{ $estimate->total }}</td>
