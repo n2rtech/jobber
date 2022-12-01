@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">@isset($estimate) {{ old('notes', $estimate->notes) }} @else {{ old('notes') }} @endif</textarea>
+                        <textarea rows="5" class="form-control" id="notes" name="notes" placeholder="Enter Notes">@isset($estimate) {{ old('notes', $estimate->notes) }} @else {{ old('notes', $setting['notes']) }} @endif</textarea>
                         @error('notes')
                             <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">@isset($estimate) {{ old('notes', $estimate->conditions) }} @else {{ old('conditions') }} @endif</textarea>
+                    <textarea rows="5" class="form-control" id="conditions" name="conditions" placeholder="Enter Terms & Conditions">@isset($estimate) {{ old('notes', $estimate->conditions) }} @else {{ old('conditions', $setting['conditions'] ) }} @endif</textarea>
                     @error('conditions')
                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                     @enderror
@@ -41,4 +41,10 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="shipping_address_1" id="shipping_address_1" value="@isset($estimate) {{ $estimate->shipping_address_1 }} @endisset">
+    <input type="hidden" name="shipping_address_2" id="shipping_address_2" value="@isset($estimate) {{ $estimate->shipping_address_2 }} @endisset">
+    <input type="hidden" name="shipping_city" id="shipping_city" value="@isset($estimate) {{ $estimate->shipping_city }} @endisset">
+    <input type="hidden" name="shipping_state" id="shipping_state" value="@isset($estimate) {{ $estimate->shipping_state }} @endisset">
+    <input type="hidden" name="shipping_country" id="shipping_country" value="@isset($estimate) {{ $estimate->shipping_country }} @endisset">
+    <input type="hidden" name="shipping_eir_code" id="shipping_eir_code" value="@isset($estimate) {{ $estimate->shipping_eir_code }} @endisset">
 </div>

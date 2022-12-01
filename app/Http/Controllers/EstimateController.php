@@ -125,20 +125,26 @@ class EstimateController extends Controller
     public function store(Request $request)
     {
 
-        $estimate                        = new Estimate();
-        $estimate->customer_id           = $request->customer_id;
-        $estimate->user_id               = Auth::user()->id;
-        $estimate->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
-        $estimate->terms                 = $request->terms;
-        $estimate->expiry_date           = $request->expiry_date;
-        $estimate->estimate_date         = $request->estimate_date;
-        $estimate->discount              = $request->discount;
-        $estimate->discount_type         = $request->discount_type;
-        $estimate->tax                   = $request->tax;
-        $estimate->tax_type              = $request->tax_type;
-        $estimate->notes                 = $request->notes;
-        $estimate->conditions            = $request->conditions;
-        $estimate->total                 = $request->estimate_total;
+        $estimate                           = new Estimate();
+        $estimate->customer_id              = $request->customer_id;
+        $estimate->user_id                  = Auth::user()->id;
+        $estimate->same_as_billing_address  = $request->has('same_as_billing_address') ? true : false;
+        $estimate->shipping_address_1       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $estimate->shipping_address_2       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $estimate->shipping_city            = isset($request->shipping_city) ? $request->shipping_city : null;
+        $estimate->shipping_state           = isset($request->shipping_state) ? $request->shipping_state : null;
+        $estimate->shipping_country         = isset($request->shipping_country) ? $request->shipping_country : null;
+        $estimate->shipping_eir_code        = isset($request->shipping_eir_code) ? $request->shipping_eir_code : null;
+        $estimate->terms                    = $request->terms;
+        $estimate->expiry_date              = $request->expiry_date;
+        $estimate->estimate_date            = $request->estimate_date;
+        $estimate->discount                 = $request->discount;
+        $estimate->discount_type            = $request->discount_type;
+        $estimate->tax                      = $request->tax;
+        $estimate->tax_type                 = $request->tax_type;
+        $estimate->notes                    = $request->notes;
+        $estimate->conditions               = $request->conditions;
+        $estimate->total                    = $request->estimate_total;
         $estimate->save();
 
         if(!empty($request->product) && is_array($request->product)){
@@ -202,20 +208,26 @@ class EstimateController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->all();
-        $estimate                        = Estimate::find($id);
-        $estimate->customer_id           = $request->customer_id;
-        $estimate->user_id               = Auth::user()->id;
-        $estimate->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
-        $estimate->terms                 = $request->terms;
-        $estimate->expiry_date           = $request->expiry_date;
-        $estimate->estimate_date         = $request->estimate_date;
-        $estimate->discount              = $request->discount;
-        $estimate->discount_type         = $request->discount_type;
-        $estimate->tax                   = $request->tax;
-        $estimate->tax_type              = $request->tax_type;
-        $estimate->notes                 = $request->notes;
-        $estimate->conditions            = $request->conditions;
-        $estimate->total                 = $request->estimate_total;
+        $estimate                           = Estimate::find($id);
+        $estimate->customer_id              = $request->customer_id;
+        $estimate->user_id                  = Auth::user()->id;
+        $estimate->same_as_billing_address  = $request->has('same_as_billing_address') ? true : false;
+        $estimate->shipping_address_1       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $estimate->shipping_address_2       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $estimate->shipping_city            = isset($request->shipping_city) ? $request->shipping_city : null;
+        $estimate->shipping_state           = isset($request->shipping_state) ? $request->shipping_state : null;
+        $estimate->shipping_country         = isset($request->shipping_country) ? $request->shipping_country : null;
+        $estimate->shipping_eir_code        = isset($request->shipping_eir_code) ? $request->shipping_eir_code : null;
+        $estimate->terms                    = $request->terms;
+        $estimate->expiry_date              = $request->expiry_date;
+        $estimate->estimate_date            = $request->estimate_date;
+        $estimate->discount                 = $request->discount;
+        $estimate->discount_type            = $request->discount_type;
+        $estimate->tax                      = $request->tax;
+        $estimate->tax_type                 = $request->tax_type;
+        $estimate->notes                    = $request->notes;
+        $estimate->conditions               = $request->conditions;
+        $estimate->total                    = $request->estimate_total;
         $estimate->save();
 
         EstimateProduct::where('estimate_id', $id)->delete();

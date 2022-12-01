@@ -1,18 +1,27 @@
     {{-- Page Load Scripts --}}
     <script>
         $(document).ready(function () {
-            shippingAddressOptions();
+            setDueDate();
             $("#name").focus();
         });
     </script>
 
     {{-- Define Global variable --}}
-    <script>
-        var item_row = 1;
-    </script>
+    @isset($estimate)
+        <script>
+            var item_row = {{ count($estimate->products) }};
+        </script>
+    @else
+        <script>
+            var item_row = 1;
+        </script>
+    @endisset
+
 
     {{-- Load Select 2 Script --}}
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     {{-- Load Tiny MCE Script --}}
     <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
@@ -44,9 +53,9 @@
     <script>
         function shippingAddressOptions(){
             if($("#same_as_billing_address").is(':checked')){
-                $('#shipping_address_div').css('display', 'none');
+                return false;
             }else{
-                $('#shipping_address_div').css('display', 'block');
+                $('#modal-shipping-address').modal();
             }
         }
     </script>
@@ -63,7 +72,8 @@
 
     {{-- Set Due Date --}}
     <script>
-        function setDueDate(value){
+        function setDueDate(){
+            var value           = $('#terms').val();
             var date            = new Date();
             date.setDate(date.getDate() + parseInt(value));
             var dateformatted = format(date);
@@ -167,7 +177,7 @@
                 html = '<tr id="item-row' + item_row + '">';
                 html += '<td>';
                 html += '<p class="text-small" id="text-product' + item_row +'" onclick="editProduct(' + item_row +')">Select Product</p>';
-                html += '<select name="product[' + item_row +'][product]" id="product' + item_row +'" class="form-control form-control-sm" onfocusout="productFocusOut(' + item_row +')" onchange="showProductOptions(this, ' + item_row +')" style="display: none">';
+                html += '<select name="product[' + item_row +'][product]" id="product' + item_row +'" class="form-control form-control-sm select2" onfocusout="productFocusOut(' + item_row +')" onchange="showProductOptions(this, ' + item_row +')" style="display: none">';
                 html += '<option value="">Select Product</option>';
                 html += '@foreach ($products as $product)';
                 html += '<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate }}">{{ $product->name }}</option>';
@@ -185,9 +195,18 @@
                 html += '<input type="number" class="form-control form-control-sm text-align-right" id="unit_price' + item_row +'" name="product[' + item_row +'][unit_price]" placeholder="Unit Price" min="0" step="any" onfocusout="unitFocusOut(' + item_row +')" oninput="totalUpdate(' + item_row +')" value="0.00" style="display: none">';
                 html += '</td>';
                 html += '<td>';
+                html += '<p class="text-small text-right" id="text-tax' + item_row + '" onclick="editTax(' + item_row + ')">Tax</p>';
+                html += '<select name="product[' + item_row + '][tax_rate]" id="tax_rate' + item_row + '" class="form-control form-control-sm product" onfocusout="taxFocusOut(' + item_row + ')" onchange="totalUpdate(' + item_row + ')" style="display: none">';
+                html += '<option value="">Select Tax</option>';
+                html += '@foreach ($tax_rates as $rate)';
+                html += '<option value="{{ $rate->rate }}">{{ $rate->name }}</option>';
+                html += '@endforeach';
+                html += '</select>';
+                html += '</td>';
+                html += '<td>';
                 html += '<p class="text-small text-right" id="text-total' + item_row +'" onclick="editTotal(' + item_row +')">0.00</p>';
                 html += '<input type="number" class="form-control form-control-sm text-align-right totalpriceinput" id="total' + item_row +'" name="product[' + item_row +'][total]" placeholder="Total" min="0" step="any" onfocusout="totalFocusOut(' + item_row +')" value="0.00" style="display: none">';
-                html += '<input type="hidden" id="tax_rate' + item_row +'" name="product[' + item_row + '][tax_rate]" value="0"><input type="hidden" class="tax_amount" id="tax_amount' + item_row +'" value="0">';
+                html += '<input type="hidden" class="tax_amount" id="tax_amount' + item_row +'" value="0">';
                 html += '</td>';
                 html +='<td class="text-right"><button type="button" class="btn btn-sm btn-danger" onclick="$(\'#item-row' + item_row +'\').remove();"><i class="fa fa-minus"></i></button></td>';
                 html += '</tr>';
@@ -224,15 +243,15 @@
 
             $('#text-quantity'+row).text(quantity);
 
-            $('#text-quantity'+row).text(quantity);
+            $('#text-tax'+row).text(tax+'%');
 
             $('#text-unit'+row).text(unitprice);
 
             var quantity     = $("#quantity" + row).val();
 
-            var subtotal     = (Math.round(quantity * 100) / 100).toFixed(2) * (Math.round(unitprice * 100) / 100).toFixed(2);
+            var subtotal     = parseInt(quantity) * parseFloat(unitprice);
 
-            var total        = subtotal
+            var total        = parseFloat(subtotal).toFixed(2);
 
             var tax_amount   = (subtotal * tax / 100)
 
@@ -240,7 +259,7 @@
 
             $('#tax_amount'+row).val(tax_amount);
 
-            $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
+            $('#total'      + row).val(total);
 
             productFocusOut(row);
         }
@@ -254,11 +273,12 @@
             var unitprice   = $("#unit_price"+row).val();
             $('#text-unit'+row).text(unitprice);
             var tax         = $("#tax_rate"+row).val();
-            var subtotal    = (Math.round(quantity * 100) / 100).toFixed(2) * (Math.round(unitprice * 100) / 100).toFixed(2);
-            var total       = subtotal;
+            $('#text-tax'+row).text(tax+'%');
+            var subtotal     = parseInt(quantity) * parseFloat(unitprice);
+            var total        = parseFloat(subtotal).toFixed(2);
             var tax_amount   = (subtotal * tax / 100);
             $('#tax_amount'+row).val(tax_amount);
-            $('#total'      + row).val((Math.round(total * 100) / 100).toFixed(2));
+            $('#total'      + row).val(total);
             $('#text-total'+row).text(total);
         }
     </script>
@@ -342,3 +362,41 @@
             });
         </script>
      @endisset
+
+     <script>
+        function setShippingAddress(){
+            var address = $('#address_1').val() + ' ' + $('#address_2').val() + ' ' + $('#city').val() + ' ' +  $('#state').val() + ' ' + $('#country').val() + ' ' + $('#eir_code').val();
+            $('#shipping_address_1').val($('#address_1').val());
+            $('#shipping_address_2').val($('#address_2').val());
+            $('#shipping_city').val($('#city').val());
+            $('#shipping_state').val($('#state').val());
+            $('#shipping_country').val($('#country').val());
+            $('#shipping_eir_code').val($('#eir_code').val());
+            $("#modal-shipping-address .close").click();
+            $("#shipping_address_div").html('<p id="shipping_address" class="text-small text-muted" onclick="showAddressModal();">'+address+'</p>');
+        }
+     </script>
+
+<script>
+    function showAddressModal(){
+        $('#modal-shipping-address').modal();
+    }
+</script>
+
+<script>
+    function sameAsBillingAddress(){
+
+        html = '<div class="custom-control custom-checkbox">';
+        html+= '<input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox" id="same_as_billing_address" name="same_as_billing_address" value="1" @isset($estimate) @if(!isset($estimate->shipping_address)) checked @endif @else checked @endisset onchange="shippingAddressOptions();">';
+        html+= '<label for="same_as_billing_address" class="custom-control-label ctrl-label text-small">Same as Billing Address</label>';
+        html+= '</div>';
+
+            $("#shipping_address_div").html(html);
+            $('#shipping_address_1').val('');
+            $('#shipping_address_2').val('');
+            $('#shipping_city').val('');
+            $('#shipping_state').val('');
+            $('#shipping_country').val('');
+            $('#shipping_eir_code').val('');
+    }
+</script>

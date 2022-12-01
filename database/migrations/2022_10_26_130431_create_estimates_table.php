@@ -21,7 +21,13 @@ return new class extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->longText('shipping_address')->nullable();
+            $table->boolean('same_as_billing_address')->default(true);
+            $table->longText('shipping_address_1')->nullable();
+            $table->longText('shipping_address_2')->nullable();
+            $table->longText('shipping_city')->nullable();
+            $table->longText('shipping_state')->nullable();
+            $table->longText('shipping_country')->nullable();
+            $table->longText('shipping_eir_code')->nullable();
             $table->enum('terms',[30, 60, 0])->default(0);
             $table->date('expiry_date')->nullable();
             $table->date('estimate_date')->nullable();

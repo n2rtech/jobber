@@ -33,6 +33,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="conditions">Notes</label>
+                                <textarea class="form-control" id="notes" name="notes" placeholder="Enter Terms and notes">{{ $setting['notes'] }}</textarea>
+                                @error('notes')
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="conditions">Terms and Conditions</label>
                                 <textarea class="form-control" id="conditions" name="conditions" placeholder="Enter Terms and Conditions">{{ $setting['conditions'] }}</textarea>
                                 @error('conditions')
@@ -64,11 +71,17 @@ tinymce.init({
   selector: 'textarea#conditions',
   height: 200,
   menubar: false,
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table paste code help wordcount'
-  ],
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:roboto; font-size:16px }'
+});
+
+tinymce.init({
+  selector: 'textarea#notes',
+  height: 200,
+  menubar: false,
   toolbar: 'undo redo | formatselect | ' +
   'bold italic backcolor | alignleft aligncenter ' +
   'alignright alignjustify | bullist numlist outdent indent | ' +

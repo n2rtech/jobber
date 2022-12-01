@@ -45,6 +45,17 @@
         $('#text-unit'+row).css('display', 'block');
     }
 
+     function editTax(row){
+        $('#text-tax'+row).css('display', 'none');
+        $('#tax_rate'+row).css('display', 'block');
+        $('#tax_rate'+row).focus();
+    }
+
+    function taxFocusOut(row){
+        $('#text-tax'+row).css('display', 'block');
+        $('#tax_rate'+row).css('display', 'none');
+    }
+
     function editTotal(row){
         $('#text-total'+row).css('display', 'none');
         $('#total'+row).css('display', 'block');

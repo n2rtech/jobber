@@ -10,9 +10,9 @@
 
     <div class="col-md-6">
         <label for="terms" class="label-small">{{ __('Expiry Terms') }}</label>
-        <select class="custom-select" id="terms" name="terms" onchange="setDueDate(this.value);">
+        <select class="custom-select" id="terms" name="terms" onchange="setDueDate();">
             <option value="">Select Term</option>
-            <option value="30" @isset($estimate) @if($estimate->terms == 30) selected @endif @endisset>Net 30</option>
+            <option value="30" @isset($estimate) @if($estimate->terms == 30) selected @endif @else selected @endisset>Net 30</option>
             <option value="60" @isset($estimate) @if($estimate->terms == 60) selected @endif @endisset>Net 60</option>
             <option value="{{ $setting['due_on_receipt'] }}" @isset($estimate) @if($estimate->terms == $setting['due_on_receipt']) selected @endif @endisset>Due on Receipt</option>
         </select>
@@ -42,20 +42,29 @@
 
     <div class="col-md-3">
         <label for="shipping_address" class="label-small">{{ __('Shipping Address') }}</label>
-        <div class="custom-control custom-checkbox">
-            <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox"
-                id="same_as_billing_address" name="same_as_billing_address" value="1" @isset($estimate) @if(!isset($estimate->shipping_address)) checked @endif @endisset
-                onchange="shippingAddressOptions();">
-            <label for="same_as_billing_address"
-                class="custom-control-label ctrl-label text-small">{{ __('Same as Billing
-                                Address') }}</label>
+        <div id="shipping_address_div">
+            @isset($estimate)
+                @if($estimate->same_as_billing_address)
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox"
+                            id="same_as_billing_address" name="same_as_billing_address" value="1" checked onchange="shippingAddressOptions();">
+                        <label for="same_as_billing_address"
+                            class="custom-control-label ctrl-label text-small">{{ __('Same as Billing
+                                            Address') }}</label>
+                    </div>
+                @else
+                <p id="shipping_address" class="text-small text-muted" data-toggle="#modal" onclick="showAddressModal();">{{ $estimate->shipping_address_1 }} {{ $estimate->shipping_address_2 }} {{ $estimate->shipping_city }} {{ $estimate->shipping_state }} {{ $estimate->shipping_country }} {{ $estimate->shipping_eir_code }}</p>
+                @endif
+            @else
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="checkbox"
+                        id="same_as_billing_address" name="same_as_billing_address" value="1" checked onchange="shippingAddressOptions();">
+                    <label for="same_as_billing_address"
+                        class="custom-control-label ctrl-label text-small">{{ __('Same as Billing
+                                        Address') }}</label>
+                </div>
+            @endisset
         </div>
-    </div>
-</div>
-
-<div class="row mb-2" id="shipping_address_div">
-    <div class="col-md-12">
-        <input class="form-control form-control-sm" name="shipping_address" placeholder="Enter Shipping Address" @isset($estimate) value="{{ $estimate->shipping_address }}" @endisset/>
     </div>
 </div>
 

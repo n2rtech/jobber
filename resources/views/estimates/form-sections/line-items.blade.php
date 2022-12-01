@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-dark collapsed-card">
+        {{-- <div class="card card-dark collapsed-card"> --}}
+            <div class="card card-dark">
             <div class="card-header">
                 <h3 class="card-title">{{ __('Line Items') }}</h3>
                 <div class="card-tools">
@@ -18,9 +19,10 @@
                                 <thead>
                                     <tr>
                                         <th class="label-small" width="30%">{{ __('Product / Service') }}</th>
-                                        <th class="label-small text-right" width="20%">{{ __('Qty') }}</th>
-                                        <th class="label-small text-right" width="20%">{{ __('Unit Price') }}</th>
-                                        <th class="label-small text-right" width="20%">{{ __('Total') }}</th>
+                                        <th class="label-small text-right" width="12%">{{ __('Qty') }}</th>
+                                        <th class="label-small text-right" width="15%">{{ __('Unit Price') }}</th>
+                                        <th class="label-small text-right" width="18%">{{ __('Tax') }}</th>
+                                        <th class="label-small text-right" width="15%">{{ __('Total') }}</th>
                                         <th class="label-small text-right" width="10%"></th>
                                     </tr>
                                 </thead>
@@ -32,7 +34,7 @@
                                             <td>
                                                 <p class="text-small" id="text-product{{ $key }}" onclick="editProduct({{ $key }})">{{ $product->product->name }}</p>
                                                 <select name="product[{{ $key }}][product]" id="product{{ $key }}"
-                                                    class="form-control form-control-sm" onfocusout="productFocusOut({{ $key }})"
+                                                    class="form-control form-control-sm product" onfocusout="productFocusOut({{ $key }})"
                                                     onchange="showProductOptions(this, {{ $key }})" style="display: none">
                                                     <option value="">Select Product</option>
                                                     @foreach ($products as $row)
@@ -61,13 +63,23 @@
                                                     oninput="totalUpdate({{ $key }})"  value="{{  $product->unit_price }}" style="display: none">
                                             </td>
                                             <td>
+                                                <p class="text-small text-right" id="text-tax{{ $key }}" onclick="editTax({{ $key }})">{{ $product->tax_rate }}%</p>
+                                                <select name="product[{{ $key }}][tax_rate]" id="tax_rate{{ $key }}"
+                                                    class="form-control form-control-sm product" onfocusout="taxFocusOut({{ $key }})"
+                                                    onchange="totalUpdate({{ $key }})" style="display: none">
+                                                    <option value="">Select Tax</option>
+                                                    @foreach ($tax_rates as $rate)
+                                                        <option value="{{ $rate->rate }}" @if($rate->rate == $product->tax_rate) @endif>{{ $rate->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
                                                 <p class="text-small text-right" id="text-total{{ $key }}" onclick="editTotal({{ $key }})">{{ $product->total }}</p>
                                                 <input type="number"
                                                     class="form-control form-control-sm text-align-right totalpriceinput"
                                                     id="total{{ $key }}" name="product[{{ $key }}][total]" placeholder="Total" min="0"
                                                     step="any" onfocusout="totalFocusOut({{ $key }})" value="{{ $product->total }}"
                                                     style="display: none">
-                                                    <input type="hidden" id="tax_rate{{ $key }}" name="product[{{ $key }}][tax_rate]" value="{{ $product->tax_rate }}">
                                                     <input type="hidden" class="tax_amount" id="tax_amount{{ $key }}" value="{{ $product->tax_amount }}">
                                             </td>
                                             <td class="text-right"><button type="button" class="btn btn-sm btn-danger"
@@ -79,7 +91,7 @@
                                             <td>
                                                 <p class="text-small" id="text-product0" onclick="editProduct(0)">Select Product</p>
                                                 <select name="product[0][product]" id="product0"
-                                                    class="form-control form-control-sm" onfocusout="productFocusOut(0)"
+                                                    class="form-control form-control-sm product" onfocusout="productFocusOut(0)"
                                                     onchange="showProductOptions(this, 0)" style="display: none">
                                                     <option value="">Select Product</option>
                                                     @foreach ($products as $product)
@@ -109,13 +121,23 @@
                                                     oninput="totalUpdate(0)" value="0.00" style="display: none">
                                             </td>
                                             <td>
+                                                <p class="text-small text-right" id="text-tax0" onclick="editTax(0)">Tax</p>
+                                                <select name="product[0][tax_rate]" id="tax_rate0"
+                                                    class="form-control form-control-sm product" onfocusout="taxFocusOut(0)"
+                                                    onchange="totalUpdate(0)" style="display: none">
+                                                    <option value="">Select Tax</option>
+                                                    @foreach ($tax_rates as $rate)
+                                                        <option value="{{ $rate->rate }}">{{ $rate->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
                                                 <p class="text-small text-right" id="text-total0" onclick="editTotal(0)">0.00</p>
                                                 <input type="number"
                                                     class="form-control form-control-sm text-align-right totalpriceinput"
                                                     id="total0" name="product[0][total]" placeholder="Total" min="0"
                                                     step="any" onfocusout="totalFocusOut(0)" value="0.00"
                                                     style="display: none">
-                                                    <input type="hidden" id="tax_rate0" name="product[0][tax_rate]" value="0">
                                                     <input type="hidden" class="tax_amount" id="tax_amount0"  value="0">
                                             </td>
                                             <td class="text-right"><button type="button" class="btn btn-sm btn-danger"
@@ -126,7 +148,7 @@
 
                                 <tfoot>
                                     <tr>
-                                        <td class="text-right" colspan="5">
+                                        <td class="text-right" colspan="6">
                                             <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
                                                     class="fa fa-plus"></i></button>
                                         </td>
@@ -171,19 +193,7 @@
                                 <tr>
                                     <td width="65%" class="text-right">
                                         <div class="form-group row">
-                                        <label for="tax" class="col-sm-3"><small>{{ __('Tax') }}</small></label>
-                                        <div class="col-sm-5">
-                                            <input type="number" class="form-control form-control-sm text-align-right" id="tax" name="tax"
-                                                placeholder="€ 0.00" min="0" step="any" value="0.00">
-                                            @error('tax')
-                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <select class="form-control form-control-sm" id="tax_type" name="tax_type">
-                                                <option value="percentage"@isset($estimate) @if($estimate->tax_type == 'percentage') selected @endif @endisset>%</option>
-                                            </select>
-                                        </div>
+                                        <label for="tax" class="col-sm-12"><small>{{ __('Tax Total') }}</small></label>
                                         </div>
                                     </td>
                                     <td class="text-right">{{ __('€ ') }}<span id="tax_amount">0.00</span></td>

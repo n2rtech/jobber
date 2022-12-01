@@ -24,19 +24,25 @@ class EstimateSeed extends Seeder
        $jobs = Job::get();
 
        foreach($jobs as $job){
-            $estimate                        = new Estimate();
-            $estimate->customer_id           = $job->customer_id;
-            $estimate->user_id               = 1;
-            $estimate->shipping_address      = Null;
+            $estimate                           = new Estimate();
+            $estimate->customer_id              = $job->customer_id;
+            $estimate->user_id                  = 1;
+            $estimate->same_as_billing_address  = false;
+            $estimate->shipping_address_1       = $job->customer->address_1;
+            $estimate->shipping_address_2       = $job->customer->address_2;
+            $estimate->shipping_city            = $job->customer->city;
+            $estimate->shipping_state           = $job->customer->state;
+            $estimate->shipping_country         = $job->customer->country;
+            $estimate->shipping_eir_code        = $job->customer->eir_code;
             $estimate->expiry_date              = Carbon::parse($job->created_at)->format('Y-m-d');
-            $estimate->estimate_date          = Carbon::parse($job->created_at)->format('Y-m-d');
-            $estimate->discount              = 0;
-            $estimate->discount_type         = "percentage";
-            $estimate->tax                   = 0;
-            $estimate->tax_type              = "percentage";
-            $estimate->notes                 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-            $estimate->conditions            = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            $estimate->total                 = Null;
+            $estimate->estimate_date            = Carbon::parse($job->created_at)->format('Y-m-d');
+            $estimate->discount                 = 0;
+            $estimate->discount_type            = "percentage";
+            $estimate->tax                      = 0;
+            $estimate->tax_type                 = "percentage";
+            $estimate->notes                    = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+            $estimate->conditions               = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            $estimate->total                    = Null;
             $estimate->save();
 
             foreach($job->products as $job_product){

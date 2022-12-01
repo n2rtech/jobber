@@ -54,7 +54,7 @@
      <!-- Content Box Ends Here -->
 
 
-
+     @include('estimates.form-sections.shipping-address')
 @endsection
 @push('scripts')
     @include('estimates.scripts')
