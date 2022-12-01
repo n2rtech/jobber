@@ -2,16 +2,18 @@
 @section('title', 'View Job Details')
 @section('head')
     <link rel="stylesheet" href="{{ asset('plugins/simple-lightbox/simple-lightbox.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 @section('content')
     <section class="content view-job-page">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card mt-4 maxWidthControl" style="margin: 0 auto">
+                <div class="card mt-4" style="margin: 0 auto;max-width: 700px">
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ url()->previous() }}" class="btn btn-dark">
+                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -80,48 +82,82 @@
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade active show" id="view-information" role="tabpanel"
                                 aria-labelledby="view-information-tab">
-                                <span class="text-dark"> <strong>Instructions</strong></span>
-                                <p class="text-dark">{{ $job->instructions }}</p>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th class="bg-dark">Job</th>
-                                                <th class="bg-dark text-center">Team</th>
-                                                <th class="bg-dark text-right">Reminder</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <small> Job Title&nbsp;: {{ $job->jobTitle->title }}</small>
-                                                    <br />
-                                                    <small> Job ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                        #{{ $job->id }}</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <select style="margin: 0 auto" name="team" id="team" class="form-control form-control-sm text-center"
-                                                        onchange="assignTeam(this.value);">
+
+                                <div class="jobviewPop">
+                                    <div class="text-center scButtons">
+                                        <button type="button" onclick="markUnscheduled();">
+                                            Unschedule Job
+                                        </button>
+                                        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                            Send Confirmation
+                                        </button>
+                                        <div class="dropdown-menu confirmation">
+                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-email-template">Send Email</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-text-template">Send Text</a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <small id="confirmation_message"></small>
+                                    </div>
+                                    <div class="bookingStatus">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Booking Status</label>
+                                                    <select name="booking_status" id="booking_status" class="form-control" onchange="assignStatus(this.value);" style="width: 100%">
+                                                        <option value="pending">Pending</option>
+                                                        <option value="provisional">Provisional</option>
+                                                        <option value="confirmed">Confirmed</option>
+                                                        <option value="completed">Completed</option>
+                                                    </select>
+                                                    <small id="mark_complete"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Team</label>
+                                                    <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);" style="width: 100%">
                                                         <option value="">Choose Team Member</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}"
-                                                                @if ($job->user_id == $user->id) selected @endif>
-                                                                {{ $user->name }}</option>
+                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <small id="assign_message"></small>
-                                                </td>
-                                                <td class="text-right">
-                                                    <small id="assign_message"><cite>No Reminder Scheduled</cite></small>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bookingTime">
+                                        <h5><strong>Edit job booking time and date</strong></h5>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Start</label>
+                                                    <input id="starts" type="text" class="form-control" value="{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d h:i:s') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">End</label>
+                                                    <input id="ends" type="text" class="form-control" value="{{ \Carbon\Carbon::parse($job->end)->format('Y-m-d h:i:s') }}">
+                                                    <small id="change_timing_message"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="control-label">&nbsp;</label>
+                                                <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center vcButtons">
+                                        <a href="{{ route('jobs.edit', $job->id) }}" id="edit_job" class="btn btn-dark">Edit Job</a>
+                                        <a href="{{ route('customers.show', $job->customer_id) }}" id="show_customer" class="btn btn-outline-dark">View Customer</a>
+                                    </div>
                                 </div>
 
                                 <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <div class="card card-widget widget-user-2">
+                                <div class="card card-widget widget-user-2 mt-4">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
                                         <div class="card-tools">
@@ -249,8 +285,100 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="modal-email-template" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h4 class="modal-title">Email Template</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input class="form-control" name="email_subject" id="email_subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" name="email_message" id="email_message" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="sendConfirmation('email')">Send</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-text-template" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h4 class="modal-title">Text Template</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" name="text_message" id="text_message" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="sendConfirmation('text')">Send</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 @endsection
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea#email_message',
+        height: 500,
+        menubar: false,
+        toolbar: 'undo redo | formatselect | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help',
+        content_style: 'body { font-family:roboto; font-size:16px }'
+      });
+      </script> --}}
+    <script>jQuery('#starts').datetimepicker({
+        allowTimes:[
+    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+    ],
+    format:'Y-m-d h:i:s'
+    });</script>
+    <script>jQuery('#mobile_start').datetimepicker({
+        allowTimes:[
+    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+    ],
+    format:'Y-m-d h:i:s'
+    });</script>
+    <script>jQuery('#ends').datetimepicker({
+        allowTimes:[
+    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
+    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
+    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
+    ],
+    format:'Y-m-d h:i:s'
+    });</script>
     <script>
         function assignTeam(value) {
             var formData = {
@@ -293,7 +421,7 @@
     <!-- Filter Box Scripts Start -->
 <script>
     $(document).ready(function(){
-       @error('note')
+        @error('note')
             $("#filterBox").css('display', 'block');
         @enderror
 
@@ -301,7 +429,187 @@
             $("#filterBox").slideToggle();
         });
 
+        gettemplate();
+
     });
 </script>
+<script>
+    function gettemplate(){
+        var formData = {
+                    id: '{{ $job->id }}',
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data.message);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
 <!-- Filter Box Scripts End -->
+<script>
+    function markUnscheduled() {
+        var formData = {
+            job_id: '{{ $job->id }}',
+        };
+        $.confirm({
+                    title: 'Confirm!',
+                    content: 'Are you sure! You want to Unschedule the Job!.',
+                    buttons: {
+                        confirm: function() {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ route('jobs.mark-unscheduled') }}',
+                                data: formData,
+                                dataType: 'json',
+                                success: function(data) {
+                                    if(data.success){
+
+                                        $('#confirmation_message').css('color', 'green');
+                                        $('#confirmation_message').text(data.success);
+                                    }else{
+                                        $('#confirmation_message').css('color', 'red');
+                                        $('#confirmation_message').text(data.danger);
+                                    }
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                }
+                            });
+                        },
+                        cancel: function() {
+
+                        },
+                    }
+                });
+    }
+</script>
+<script>
+    function sendConfirmation(value) {
+
+var formData = {
+     job_id: '{{ $job->id }}',
+     subject: $("#modal-email-template .modal-body #email_subject").val(),
+     message: $("#modal-email-template .modal-body #email_message").val(),
+     text_message: $("#modal-email-template .modal-body #text_message").val(),
+     medium: value,
+ };
+ $.ajaxSetup({
+     headers: {
+         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+     }
+ });
+ $.ajax({
+     type: 'POST',
+     url: '{{ route('jobs.confirmation') }}',
+     data: formData,
+     dataType: 'json',
+     success: function(data) {
+         if(data.success){
+             $("#modal-email-template .close").click();
+             $("#modal-text-template .close").click();
+             assignStatus('provisional');
+             $("#successModal .modal-body #booking_status").val('provisional');
+             $('#confirmation_message').css('color', 'green');
+             $('#confirmation_message').text(data.success);
+         }else{
+             $('#confirmation_message').css('color', 'red');
+             $('#confirmation_message').text(data.danger);
+         }
+     },
+     error: function(data) {
+         console.log(data);
+     }
+ });
+}
+</script>
+
+<script>
+    function assignStatus(value) {
+        var formData = {
+            job_id: '{{ $job->id }}',
+            status: value,
+        };
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('jobs.change-status') }}',
+            data: formData,
+            dataType: 'json',
+            success: function(data) {
+                if(data.success){
+                    $('#mark_complete').css('color', 'green');
+                    $('#mark_complete').text(data.success);
+                }else{
+                    $('#mark_complete').css('color', 'red');
+                    $('#mark_complete').text(data.danger);
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
+</script>
+<script>
+    function changeTimings(){
+        var formData = {
+                    id: '{{ $job->id }}',
+                    start: $('#starts').val(),
+                    end: $('#ends').val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.store') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success){
+
+                            $('#change_timing_message').css('color', 'green');
+                            $('#change_timing_message').text('Job Timings has been changed!');
+                        }else{
+                            $('#change_timing_message').css('color', 'red');
+                            $('#change_timing_message').text('Found some error!');
+                        }
+                        setTimeout(function(){
+                        window.location.reload(1);
+                        }, 1000);
+
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
 @endpush
