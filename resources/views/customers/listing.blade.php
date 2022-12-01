@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('customers.filter')
-        <table id="customerDataTable" class="table table-bordered table-striped">
+        <table id="customerDataTable" class="table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>

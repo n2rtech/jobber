@@ -8,15 +8,6 @@
 
             <div class="col-sm-6 text-right">
 
-                <form id='delete-form{{ $customer->id }}' action='{{ route('customers.destroy', $customer) }}'
-                    method='POST'>
-                    <input type='hidden' name='_token' value='{{ csrf_token() }}'>
-                    <input type='hidden' name='_method' value='DELETE'>
-                </form>
-
-                <a href="javascript:void(0)" onclick="confirmDelete({{ $customer->id }})" class="btn btn-sm btn-danger"><i
-                        class="fas fa-trash"></i> Delete</a>
-
                 <a href="{{ url()->previous() }}" class="btn btn-sm btn-dark">
                     <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                 </a>

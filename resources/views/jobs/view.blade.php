@@ -11,7 +11,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
+                            <a href="{{ url()->previous() }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -118,7 +118,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                                 <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
                                 <div class="card card-widget widget-user-2">

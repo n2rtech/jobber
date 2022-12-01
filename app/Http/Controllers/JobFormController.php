@@ -114,10 +114,6 @@ class JobFormController extends Controller
         $jobform->title = $request->title;
         $jobform->save();
 
-        $jobform        = new JobForm;
-        $jobform->title = $request->title;
-        $jobform->save();
-
         JobFormQuestion::where('job_form_id', $id)->delete();
         JobFormQuestionOption::where('job_form_id', $id)->delete();
         if(!empty($request->question && is_array($request->question))){

@@ -28,7 +28,12 @@ class ScheduleController extends Controller
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         $setting            = Setting::where('type', 'calendar')->value('value');
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting'));
+        $days               = Setting::where('type', 'calendar')->value('days');
+        $all_days           = ["0", "1", "2", "3", "4", "5", "6"];
+        $result        = array_diff($all_days, $days);
+         $hidden_days = array_values($result);
+
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days'));
     }
 
     /**
