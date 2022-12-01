@@ -304,6 +304,87 @@ a.nav-link .active{
 .modify-container form select, .modify-container form input{
     font-size: 15px;
 }
+.jobviewPop .modal-body{
+    padding: 0;
+}
+.jobviewPop h4.main-title{
+    background: darkred;
+    color: #fff !important;
+    padding: 15px;
+    font-size: 21px;
+}
+.jobviewPop h5{
+    font-size: 18px;
+}
+.jobviewPop button.close{
+    color: #fff;
+    opacity: 1;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+.jobviewPop .scButtons{
+    padding: 0 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.jobviewPop .scButtons button{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    padding: 6px 12px;
+    color: #222 !important;
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    width: 48%;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+.jobviewPop .scButtons button:hover{
+    box-shadow: 0px 4px 3px rgb(10 35 139);
+    color: #fff !important;
+    transform: translateY(-3px);
+    border: 1px solid #0a238b;
+    background-color: #0a238b;
+}
+.jobviewPop .scButtons button:first-child{
+    margin-right: 15px;
+}
+.jobviewPop .job-details, .jobviewPop .bookingStatus, .jobviewPop .bookingTime, .jobviewPop .bookLocation{
+    padding: 0 20px;
+    margin-top: 20px;
+}
+.jobviewPop .bookingStatus label{
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+.jobviewPop .bookingStatus select{
+    border: 1px solid #f4f4f4;
+    border-radius: 6px;
+    background: #e8f4ff !important;
+    border: 1px solid #b4ddff;
+}
+.jobviewPop .bookingTime label{
+    margin-bottom: 4px;
+    margin-top: 5px;
+    color: darkred;
+}
+.jobviewPop .bookingTime input{
+    background: #e8f4ff;
+    border: 1px solid #b4ddff;
+}
+.jobviewPop .vcButtons{
+    padding: 0px 13px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.jobviewPop .vcButtons a{
+    width: 31%;
+    margin-right: 5px;
+}
+.jobviewPop .vcButtons a.btn-dark, .jobviewPop .vcButtons a:hover{
+    background: darkblue;
+    border: 1px solid darkblue;
+}
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
@@ -386,7 +467,50 @@ a.nav-link .active{
 .cardforResponsive .noteUser img{
     position: relative;
     top: -5px;
-} 
+}
+.jobviewPop h4.main-title{
+    font-size: 18px;
+}
+.jobviewPop .scButtons button{
+    font-size: 15px;
+    width: 46%;
+}
+.jobviewPop h5 {
+    font-size: 16px;
+}
+.jobviewPop p{
+    font-size: 14px;
+}
+.jobviewPop .job-details, .jobviewPop .bookingStatus, .jobviewPop .bookingTime, .jobviewPop .bookLocation{
+    margin-top: 10px;
+}
+.jobviewPop .bookingStatus label{
+    font-size: 15px;
+}
+.jobviewPop .bookingStatus select{
+    width: 100% !important;
+    font-size: 14px;
+    height: 33px;
+}
+.jobviewPop .bookingTime label{
+    font-size: 14px;
+    margin-top: 0;
+}
+.jobviewPop .bookingTime input{
+    font-size: 14px;
+    height: 33px;
+}
+.jobviewPop .bookingTime .btn-success{
+    font-size: 14px;
+}
+.jobviewPop .vcButtons {
+    padding: 0px 10px;
+}
+.jobviewPop .vcButtons a {
+    width: 31%;
+    margin-right: 2px;
+    font-size: 11px;
+}
 }
 .label-small{
     padding-bottom: 0px;
