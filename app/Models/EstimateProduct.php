@@ -11,7 +11,7 @@ class EstimateProduct extends Model
 
     protected $table        = 'estimate_products';
 
-    protected $fillable     = ['estimate_id', 'product_id', 'description','quantity', 'unit_price', 'tax_rate', 'total'];
+    protected $fillable     = ['estimate_id', 'product_id', 'description','quantity', 'unit_price', 'tax_rate', 'tax_amount', 'total'];
 
     public $timestamps      = true;
 
