@@ -65,5 +65,4 @@
             </div>
         </form>
 </div>
-<hr>
 <!-- Filter Box Ends Here -->

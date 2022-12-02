@@ -468,6 +468,9 @@ a.nav-link .active{
     background: #e8f4fe;
     padding: 5px;
 }
+#dataTable_wrapper .dt-buttons.btn-group.flex-wrap{
+    display: none;
+}
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
   display: unset !important;
@@ -659,6 +662,12 @@ a.nav-link .active{
 #schedule-modal #mobileStarts, #schedule-modal #mobileEnds, #schedule-modal #mobileStartTime, #schedule-modal #mobileEndTime{
     background: #e5f2ff;
     border: 1px solid #c0defd;
+}
+.linePaddingItems{
+    padding: 10px;
+}
+.estimFonts table tr td, .estimFonts table tr th{
+    font-size: 13px;
 }
 }
 .label-small{

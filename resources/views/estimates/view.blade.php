@@ -22,8 +22,8 @@
             </div>
         </div>
     </section>
-    <section class="content">
-        <div class="container-fluid">
+    <section class="content maxWidthControl" style="margin: 0 auto">
+        <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="invoice p-3 mb-3">
@@ -120,11 +120,11 @@
 
 
                         <div class="row">
-                            <div class="col-12 table-responsive">
+                            <div class="col-12 table-responsive estimFonts">
                                 <table class="table table-striped">
                                     <thead class="bg-dark">
                                         <tr>
-                                            <th width="35%">Product / Service</th>
+                                            <th>Product / Service</th>
                                             <th class="text-right">Quantity</th>
                                             <th class="text-right">Unit Price</th>
                                             <th class="text-right">Total(€)</th>
@@ -152,8 +152,8 @@
 
                             </div>
                             <!-- /.col -->
-                            <div class="col-6">
-                                <div class="table-responsive">
+                            <div class="col-6 col-12">
+                                <div class="table-responsive estimFonts">
                                     <table class="table table-bordered table-sm">
                                         <tbody>
                                             <tr>

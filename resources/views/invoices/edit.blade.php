@@ -27,15 +27,6 @@
                                 <!-- Invoice Details Box Starts Here -->
                                     @include('invoices.form-sections.invoice-details')
                                 <!-- Invoice Details Ends Here -->
-
-                                <!-- Line Items Box Starts Here -->
-                                    @include('invoices.form-sections.line-items')
-                                <!-- Line Items Ends Here -->
-
-                                <!-- Notes and Terms Box Starts Here -->
-                                    @include('invoices.form-sections.others')
-                                <!-- Notes and Terms Box Ends Here -->
-
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-sm btn-danger float-right" form="invoiceForm">
@@ -43,10 +34,16 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
+                    <!-- Line Items Box Starts Here -->
+                    @include('invoices.form-sections.line-items')
+                    <!-- Line Items Ends Here -->
+
+                    <!-- Notes and Terms Box Starts Here -->
+                        @include('invoices.form-sections.others')
+                    <!-- Notes and Terms Box Ends Here -->
                 </div>
             </div>
         </div>

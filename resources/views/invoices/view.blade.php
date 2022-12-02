@@ -23,8 +23,8 @@
 
         </div>
     </section>
-    <section class="content">
-        <div class="container-fluid">
+    <section class="content maxWidthControl" style="margin: 0 auto">
+        <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="invoice p-3 mb-3">
@@ -125,15 +125,14 @@
 
 
                         <div class="row">
-                            <div class="col-12 table-responsive">
+                            <div class="col-12 table-responsive estimFonts">
                                 <table class="table table-striped">
                                     <thead class="bg-dark">
                                         <tr>
-                                            <th width="35%">Product / Service</th>
+                                            <th>Product / Service</th>
                                             <th class="text-right">Quantity</th>
                                             <th class="text-right">Unit Price</th>
                                             {{-- <th class="text-right">Tax Rate(%)</th> --}}
-                                            <th class="text-right">Amount(€)</th>
                                             <th class="text-right">Total(€)</th>
                                         </tr>
                                     </thead>
@@ -144,7 +143,6 @@
                                             <td class="text-right">{{ $product->quantity }}</td>
                                             <td class="text-right">€ {{ $product->unit_price }}</td>
                                             {{-- <td class="text-right">{{ $product->tax_rate }}%</td> --}}
-                                            <td class="text-right">€ {{ number_format($product->quantity * $product->unit_price, 2, '.', ',') }}</td>
                                             <td class="text-right">€ {{ $product->total }}</td>
                                         </tr>
                                         @endforeach
@@ -161,8 +159,8 @@
 
                             </div>
                             <!-- /.col -->
-                            <div class="col-6">
-                                <div class="table-responsive">
+                            <div class="col-6 col-12">
+                                <div class="table-responsive estimFonts">
                                     <table class="table table-bordered table-sm">
                                         <tbody>
                                             <tr>
