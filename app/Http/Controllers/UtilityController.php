@@ -7,7 +7,6 @@ use App\Models\CustomerDocument;
 use App\Models\CustomerNote;
 use App\Models\CustomerPhoto;
 use App\Models\Job;
-use App\Models\JobNote;
 use App\Models\SentEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -168,7 +167,7 @@ class UtilityController extends Controller{
     }
 
     public function jobNotesUpload(Request $request){
-        $rules = [
+         $rules = [
             'note'                  => 'required',
         ];
 
@@ -178,9 +177,8 @@ class UtilityController extends Controller{
 
         $this->validate($request, $rules, $messages);
         $customer           = Customer::find($request->customer_id);
-        $note               = new JobNote();
+        $note               = new CustomerNote();
         $note->customer_id  = $customer->id;
-        $note->job_id       = $request->job_id;
         $note->user_id      = Auth::user()->id;
         $note->note         = $request->note;
 
@@ -188,7 +186,7 @@ class UtilityController extends Controller{
         if($request->hasfile('file')) {
             $note_file = $request->file('file');
             $name = $note_file->getClientOriginalName();
-            $note_file->storeAs('uploads/jobs/' . $request->job_id . '/notes', $name, 'public');
+            $note_file->storeAs('uploads/customers/' . $customer->id . '/notes', $name, 'public');
 
             $note->file         = $name;
         }

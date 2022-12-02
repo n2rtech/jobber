@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Job;
-use App\Models\JobNote;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
@@ -64,14 +63,6 @@ class JobSeed extends Seeder
                 $total = JobProduct::where('job_id', $job->id)->sum('total');
                 Job::where('id', $job->id)->update(['total' => $total]);
 
-                for ($y = 0; $y <= 4; $y++) {
-                    $note               = new JobNote();
-                    $note->customer_id  = $customer->id;
-                    $note->job_id       = $job->id;
-                    $note->user_id      = 1;
-                    $note->note         = 'Job Note '.$y++.': Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-                    $note->save();
-                }
             }
         }
     }

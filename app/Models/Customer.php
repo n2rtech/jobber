@@ -47,4 +47,5 @@ class Customer extends Model
         return $this->hasMany(JobNote::class)->orderBy('id', 'desc');
     }
 
+
 }

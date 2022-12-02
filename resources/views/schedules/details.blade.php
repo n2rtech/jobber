@@ -197,7 +197,7 @@
 
 
                                     <div class="card-body card-comments cardforResponsive">
-                                        @forelse($job->jobnotes as $note)
+                                        @forelse($job->customer->allnotes as $note)
                                         <div class="card-comment">
                                             <div class="row">
                                                 <div class="col-sm-7 col-6">
@@ -214,6 +214,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @if($loop->iteration == 2)
+                                            @break
+                                        @endif
                                         @empty
                                         <div class="card-comment">
                                             <p class="text-center mt-4">No Notes Added.</p>

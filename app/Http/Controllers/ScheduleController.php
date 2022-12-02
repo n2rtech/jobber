@@ -91,8 +91,8 @@ class ScheduleController extends Controller
         }else{
             $job->forms     = [];
         }
-        foreach($job->jobnotes as $note){
-            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        foreach($job->customer->allnotes as $note){
+            $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('schedules.details', compact('job', 'users', 'products'));
     }

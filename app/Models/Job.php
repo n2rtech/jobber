@@ -43,11 +43,6 @@ class Job extends Model
         return $this->hasOne(Invoice::class, 'job_id');
     }
 
-    public function jobnotes()
-    {
-        return $this->hasMany(JobNote::class)->orderBy('id', 'desc')->take(2);
-    }
-
     public function subject($job_id)
     {
         $template = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->value('subject');
