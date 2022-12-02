@@ -67,13 +67,13 @@
                         <div class="col-sm-3 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Date</label>
-                                <input id="starts" type="text" class="form-control">
+                                <input id="starts" class="form-control readonlyjm">
                             </div>
                         </div>
                         <div class="col-sm-3 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Date</label>
-                                <input id="ends" type="text" class="form-control">
+                                <input id="ends" class="form-control readonlyjm">
                                 <small id="change_timing_message"></small>
                             </div>
                         </div>
@@ -103,3 +103,10 @@
         </div>
     </div>
 </div>
+<script>
+$( document ).ready(function() {
+    $('.readonlyjm').on('focus',function(){
+        $(this).trigger('blur');
+    });
+});
+</script>
