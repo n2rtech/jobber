@@ -192,19 +192,15 @@ tinymce.init({
 
                 var eventHtml = '<div class="row" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span style="font-weight:700;">' + event.extendedProps.customer + '</span>';
-                eventHtml += '</div>';
-                eventHtml += '<div class="col-sm-12">';
-                    if(event.end){
+                eventHtml += '<span style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
+                eventHtml += '<span>'+event.extendedProps.city+'</span><br>';
+                eventHtml += '<span>' + event.title + '</span><br>';
+                if(event.end){
                         eventHtml += '<span id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
                 eventHtml += '</div>';
-                eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span>'+event.extendedProps.city+'</span><br>';
-                eventHtml += '<span>' + event.title + '</span>';
                 eventHtml += '</div>';
-                eventHtml += '</div>';
-                console.log(event);
+
                 return {
                     html: eventHtml
                 }

@@ -15,7 +15,7 @@
                     <h1>Estimate #{{ $estimate->id }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-            <a href="{{ url()->previous() }}" class="btn btn-dark">
+            <a href="{{ route('estimates.index') }}" class="btn btn-dark">
             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
             </a>
            </div>
@@ -37,19 +37,9 @@
                         </div>
                         <div class="row invoice-info mt-4">
 
-                            <div class="col-sm-5 invoice-col">
-                                <p class="mt-2"><strong>{{ $company->company }}</strong></p>
-                                <address class="text-muted">
-                                    Address: {{ $company->address_1 }}<br />
-                                    {{ $company->address_2 }}<br>
-                                    {{ $company->city }}, {{ $company->state }}<br>
-                                    {{ $company->country }}, {{ $company->zipcode }}<br>
-                                    Mobile: {{ $company->mobile }}<br>
-                                    Email: {{ $company->email }}
-                                </address>
-                            </div>
 
-                            <div class="col-sm-4 invoice-col">
+
+                            <div class="col-sm-5 invoice-col">
                                 <p class="mt-2"><strong>Billed To</strong></p>
                                 <address class="text-muted">
                                     {{ $estimate->customer->name }}<br />
@@ -72,6 +62,18 @@
                                     @endisset
                                     <br>
                                     Email: {{ $estimate->customer->email ?? '-' }}
+                                </address>
+                            </div>
+
+                            <div class="col-sm-4 invoice-col">
+                                <p class="mt-2"><strong>{{ $company->company }}</strong></p>
+                                <address class="text-muted">
+                                    Address: {{ $company->address_1 }}<br />
+                                    {{ $company->address_2 }}<br>
+                                    {{ $company->city }}, {{ $company->state }}<br>
+                                    {{ $company->country }}, {{ $company->zipcode }}<br>
+                                    Mobile: {{ $company->mobile }}<br>
+                                    Email: {{ $company->email }}
                                 </address>
                             </div>
 
