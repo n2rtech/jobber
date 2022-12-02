@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 @endsection
 @section('content')
 <div class="content-header">
@@ -133,30 +134,24 @@
             </button>
           </div>
           <div class="modal-body">
+            <input type="hidden" id="job_id">
             <div class="row">
-              <div class="col-sm-3 col-6">
+              <div class="col-sm-3 col-12">
                   <div class="form-group">
                       <label class="control-label">Start Date</label>
-                      <input id="mobileStarts" readonly class="form-control" placeholder="Pick start date">
+                      <input id="mobile_starts" class="form-control" placeholder="Pick start date">
                   </div>
               </div>
-              <div class="col-sm-3 col-6">
-                  <div class="form-group">
-                      <label class="control-label">End Date</label>
-                      <input id="mobileEnds" readonly class="form-control" placeholder="Pick end date">
-                      <small id="change_timing_message"></small>
-                  </div>
-              </div>
-              <div class="col-sm-3 col-6">
+              <div class="col-sm-3 col-12">
                   <div class="form-group">
                       <label class="control-label">Start Time</label>
-                      <input id="mobileStartTime" type="time" class="form-control">
+                      <input id="mobile_start_time" type="time" class="form-control" onchange="updateTimeInput(this)">
                   </div>
               </div>
-              <div class="col-sm-3 col-6">
+              <div class="col-sm-3 col-12">
                   <div class="form-group">
                       <label class="control-label">End Time</label>
-                      <input id="mobileEndTime" type="time" class="form-control">
+                      <input id="mobile_end_time" type="time" class="form-control" onchange="updateTimeInput(this)">
                   </div>
               </div>
             </div>

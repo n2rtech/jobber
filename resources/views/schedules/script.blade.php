@@ -1,14 +1,12 @@
 <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
+{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script> --}}
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
 <script>
-    jQuery('#starts').datepicker({});
-    jQuery('#ends').datepicker({});
-    jQuery('#mobileStarts').datepicker({});
-    jQuery('#mobileEnds').datepicker({});
+    jQuery('#starts').datepicker();
+    jQuery('#mobile_starts').datepicker();
 </script>
 <script>
 tinymce.init({
@@ -156,7 +154,9 @@ tinymce.init({
                 $("#successModal .modal-body .customer_name").text(info.event.extendedProps
                     .customer);
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
-                $("#successModal .modal-body #starts").val(formatDateTime(info.event.start));
+                $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
+                $("#successModal .modal-body #start_time").val(formatSetTime(info.event.start));
+                $("#successModal .modal-body #end_time").val(formatSetTime(info.event.end));
                 $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
@@ -186,6 +186,7 @@ tinymce.init({
                 });
                 $("#successModal").modal("show");
             },
+
             eventContent: function(arg) {
 
                 var event = arg.event;
@@ -207,6 +208,7 @@ tinymce.init({
             },
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
+
             eventResize:function(eventResizeInfo  ) {
                 var start = formatDate(eventResizeInfo .event.start);
                 if(eventResizeInfo.event.end){
@@ -231,13 +233,14 @@ tinymce.init({
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        // location.reload();
+                        location.reload();
                     },
                     error: function(data) {
                         console.log(data);
                     }
                 });
             },
+
             eventDrop:function(eventDropInfo ) {
                 var eve = calendar.getEvents()
                 var start = formatDate(eventDropInfo.event.start);
@@ -381,6 +384,15 @@ tinymce.init({
             ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-
                 2) + ":" + ("0" + d.getSeconds()).slice(-2);
         return datestring;
+    }
+    function formatSetDate(d) {
+        var datestring = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2)  + "/" +(d.getFullYear());
+        return datestring;
+    }
+
+    function formatSetTime(d){
+        var timestring = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + "00";
+        return timestring;
     }
 
     function assignStatus(value) {
@@ -554,8 +566,8 @@ tinymce.init({
     function changeTimings(){
         var formData = {
                     id: $("#successModal .modal-body .job_id").text(),
-                    start: $('#starts').val(),
-                    end: $('#ends').val(),
+                    start: $('#starts').val()+' '+$('#start_time').val(),
+                    end: $('#starts').val()+' '+$('#end_time').val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -564,7 +576,7 @@ tinymce.init({
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.store') }}',
+                    url: '{{ route('schedules.update-timing') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -591,8 +603,8 @@ tinymce.init({
     function scheduleMobile(){
         var formData = {
                     id: $("#schedule-modal .modal-body #job_id").val(),
-                    start: $('#mobile_start').val(),
-                    end: $('#mobile_end').val(),
+                    start: $('#mobile_starts').val()+' '+$('#mobile_start_time').val(),
+                    end: $('#mobile_starts').val()+' '+$('#mobile_end_time').val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -601,7 +613,7 @@ tinymce.init({
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.store') }}',
+                    url: '{{ route('schedules.update-timing') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -622,5 +634,18 @@ tinymce.init({
                         console.log(data);
                     }
                 });
+    }
+</script>
+<script>
+    function addHours(numOfHours, date) {
+  date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
+
+  return date;
+}
+</script>
+<script>
+    function updateTimeInput(element){
+        var previoustim = $(element).val();
+        $(element).val(previoustim+':00');
     }
 </script>

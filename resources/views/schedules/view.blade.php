@@ -67,24 +67,27 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label">Start Date</label>
-                                <input id="starts" class="form-control" readonly>
+                                <input id="starts" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Time</label>
-                                <input id="startTime" type="time" class="form-control">
+                                <input id="start_time" type="time" class="form-control" onchange="updateTimeInput(this)">
                             </div>
                         </div>
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Time</label>
-                                <input id="EndTime" type="time" class="form-control">
+                                <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)">
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">
                             <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
                         </div>
+                    </div>
+                    <div class="text-center">
+                        <small id="change_timing_message"></small>
                     </div>
                 </div>
                 <div class="text-center vcButtons">

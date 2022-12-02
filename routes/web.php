@@ -55,6 +55,7 @@ Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomple
 
 # Schedules Route
 Route::resource('schedules', ScheduleController::class);
+Route::post('schedule/update-timing', [ScheduleController::class, 'updateTiming'])->name('schedules.update-timing');
 
 Route::post('schedule/email-template', [ScheduleController::class, 'emailTemplate'])->name('schedules.email-template');
 Route::post('schedule/text-template', [ScheduleController::class, 'textTemplate'])->name('schedules.text-template');
