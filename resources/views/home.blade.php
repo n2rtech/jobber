@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endsection
+@section('title', 'Dashboard')
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
