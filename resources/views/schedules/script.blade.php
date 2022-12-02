@@ -93,6 +93,7 @@ tinymce.init({
                     jobstatus: $(eventEl).data('jobstatus'),
                     location: $(eventEl).data('location'),
                     team: $(eventEl).data('team'),
+                    city: $(eventEl).data('city'),
                     href: $(eventEl).data('href'),
                     show: $(eventEl).data('show'),
                     viewcustomer: $(eventEl).data('viewcustomer'),
@@ -124,6 +125,7 @@ tinymce.init({
                         title: '{{ $job->jobTitle->title }}',
                         start: '{{ $job->start }}',
                         end: '{{ $job->end }}',
+                        city:'{{ $job->customer->city}}',
                         allDay: false,
                         backgroundColor: '#000000',
                         borderColor: '@if($job->status == "pending") red @elseif($job->status == "provisional") #fc9003 @elseif($job->status == "confirmed") #01FF70 @elseif($job->status == "completed") #007BFF @endif',
@@ -198,10 +200,11 @@ tinymce.init({
                     }
                 eventHtml += '</div>';
                 eventHtml += '<div class="col-sm-12">';
+                eventHtml += '<span>'+event.extendedProps.city+'</span><br>';
                 eventHtml += '<span>' + event.title + '</span>';
                 eventHtml += '</div>';
                 eventHtml += '</div>';
-
+                console.log(event);
                 return {
                     html: eventHtml
                 }

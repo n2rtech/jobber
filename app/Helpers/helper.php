@@ -5,7 +5,6 @@ use App\Models\Customer;
 use App\Models\EstimateProduct;
 use App\Models\InvoiceProduct;
 use App\Models\Job;
-use App\Models\Lead;
 use Illuminate\Http\Request;
 
 if (!function_exists('getAddress')) {
@@ -74,37 +73,7 @@ if (!function_exists('getCompanyAddress')) {
     }
 }
 
-if (!function_exists('getLeadAddress')) {
-    function getLeadAddress($id)
-    {
-        $customer = Lead::find($id);
-        $customer->address  = '';
 
-        if(isset($customer->address_1) && strlen($customer->address_1) > 0){
-            $customer->address .= $customer->address_1;
-        }
-
-        if(isset($customer->address_2) && strlen($customer->address_2) > 0){
-            $customer->address .= ', '.$customer->address_2;
-        }
-
-        if(isset($customer->city) && strlen($customer->city) > 0){
-            $customer->address .= ', '.$customer->city;
-        }
-
-        if(isset($customer->state) && strlen($customer->state) > 0){
-            $customer->address .= ', '.$customer->state;
-        }
-
-        if(isset($customer->country) && strlen($customer->country) > 0){
-            $customer->address .= ', '.$customer->country;
-        }
-
-        if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
-            $customer->address .= ', '.$customer->eir_code;
-        }
-        return $customer->address;
-    }
 
     if (!function_exists('getInvoiceSubtotal')) {
         function getInvoiceSubtotal($id){
@@ -185,20 +154,6 @@ if (!function_exists('getLeadAddress')) {
         }
     }
 
-    // <optgroup label="Customer"></optgroup>
-    // <option value="@{{CUSTOMER_NAME}}">@{{CUSTOMER_NAME}}</option>
-    // <option value="@{{CUSTOMER_EMAIL}}">@{{CUSTOMER_EMAIL}}</option>
-    // <option value="@{{CUSTOMER_PHONE}}">@{{CUSTOMER_PHONE}}</option>
-    // <option value="@{{CUSTOMER_MOBILE_1}}">@{{CUSTOMER_MOBILE_1}}</option>
-    // <option value="@{{CUSTOMER_MOBILE_2}}">@{{CUSTOMER_MOBILE_2}}</option>
-    // <option value="@{{CUSTOMER_ADDRESS}}">@{{CUSTOMER_ADDRESS}}</option>
-
-    // <optgroup label="Job"></optgroup>
-    // <option value="@{{JOB_TITLE}}">@{{JOB_TITLE}}</option>
-    // <option value="@{{JOB_DATE_AND_TIME}}">@{{JOB_DATE_AND_TIME}}</option>
-    // <option value="@{{JOB_LOCATION}}">@{{JOB_LOCATION}}</option>
-
-
 
     if (!function_exists('getMessage')) {
         function getMessage($message, $job_id)
@@ -228,4 +183,4 @@ if (!function_exists('getLeadAddress')) {
            return $message;
         }
     }
-}
+

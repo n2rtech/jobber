@@ -134,6 +134,19 @@
                     <div class="card pb-3">
                         <div class="card-body">
                             <div class="form-group row">
+                                <label for="type" class="col-sm-2 col-form-label">{{ __('Type') }}</label>
+                                <div class="col-sm-10 mt-1">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="customer_type" value="customer" {{ $customer->type == 'customer' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="customer_type">Customer</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="lead_type" value="sales-lead" {{ $customer->type == 'sales-lead' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="lead_type">Sales Lead</label>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="state" name="state"
@@ -166,7 +179,7 @@
                             <div class="form-group row">
                                 <label for="directions" class="col-sm-2 col-form-label">{{ __('Direction') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="5" class="form-control" id="directions" name="directions" placeholder="Enter Directions">{{ old('directions', $customer->directions) }}</textarea>
+                                    <textarea rows="3" class="form-control" id="directions" name="directions" placeholder="Enter Directions">{{ old('directions', $customer->directions) }}</textarea>
                                     @error('directions')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -175,7 +188,7 @@
                             <div class="form-group row">
                                 <label for="note" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="5" class="form-control" id="note" name="note" placeholder="Enter Note">{{ old('note') }}</textarea>
+                                    <textarea rows="3" class="form-control" id="note" name="note" placeholder="Enter Note">{{ old('note') }}</textarea>
                                     @error('note')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror

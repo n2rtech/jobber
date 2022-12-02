@@ -2,6 +2,7 @@
 @section('title', 'Show Lead')
 @section('head')
     <link rel="stylesheet" href="{{ asset('plugins/simple-lightbox/simple-lightbox.css') }}" />
+    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @endsection
 @section('content')
     <section class="content-header">
@@ -17,16 +18,15 @@
                         <input type='hidden' name='_method' value='DELETE'>
                     </form>
                     <a href="javascript:void(0)" onclick="confirmDelete({{ $lead->id }})"
-                        class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                        <a href="{{ route('sales-leads.index') }}" class="btn btn-dark">
+                        class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                        <a href="{{ route('sales-leads.index') }}" class="btn btn-sm btn-dark">
                             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                         </a>
-                        <a href="javascript:void(0)" onclick="confirmAccept({{ $lead->id }})" class="btn btn-success">
+                        {{-- <a href="javascript:void(0)" onclick="confirmAccept({{ $lead->id }})" class="btn btn-success">
                             <i class="btn-icon fas fa-user-plus"></i> {{ __('Add as Customer') }}
-                        </a>
-                    <a href="{{ route('sales-leads.edit', $lead->id) }}" class="btn btn-pink">
-                        <i class="btn-icon fas fa-pen"></i> {{ __('Edit Lead') }}
-                    </a>
+                        </a> --}}
+                        <input type="checkbox" id="type" name="type" value="{{ $lead->id }}" data-bootstrap-switch onchange="confirmAccept(this.value)">
+
                 </div>
             </div>
         </div>
@@ -215,22 +215,27 @@
     };
 </script>
 <script type="text/javascript">
-    function confirmAccept(id){
-        url_string = '{{ route("sales-leads.customer", ":id") }}';
-        url = url_string.replace(':id', id);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Add as Customer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        })
+    function confirmAccept(id) {
+        var type = $('#type').is(':checked');
+        if(type){
+            url_string = '{{ route("sales-leads.customer", ":id") }}';
+            url = url_string.replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Convert to Customer!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            })
+        }else{
+            return false;
+        }
     }
 </script>
 <script>
@@ -260,5 +265,11 @@ let t = setTimeout(function(){ currentTime() }, 1000);
 }
 
 currentTime();
+</script>
+<script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+<script>
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch();
+    })
 </script>
 @endpush

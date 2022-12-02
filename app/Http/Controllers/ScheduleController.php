@@ -25,7 +25,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('id', 'desc')->get();
-        $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
+        $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('created_at', 'asc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         $setting            = Setting::where('type', 'calendar')->value('value');
         $days               = Setting::where('type', 'calendar')->value('days');
@@ -91,8 +91,8 @@ class ScheduleController extends Controller
         }else{
             $job->forms     = [];
         }
-        foreach($job->jobnotes as $note){
-            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        foreach($job->customer->allnotes as $note){
+            $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('schedules.details', compact('job', 'users', 'products'));
     }

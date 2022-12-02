@@ -96,7 +96,7 @@ class JobController extends Controller
 
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
-        $jobs                       = $jobs->orderBy('id', 'desc')->get();
+        $jobs                       = $jobs->orderBy('start', 'asc')->get();
 
         return view('jobs.index', compact('jobs', 'filter_box', 'filter_name', 'filter_email', 'filter_phone', 'filter_scheduled', 'filter_date', 'filter_job_title', 'filter_address'));
     }
@@ -231,8 +231,8 @@ class JobController extends Controller
             $job->forms     = [];
         }
 
-        foreach($job->jobnotes as $note){
-            $note->path = asset('storage/uploads/jobs/' . $id . '/notes' .'/'. $note->file);
+        foreach($job->customer->allnotes as $note){
+            $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('jobs.view', compact('job', 'users', 'products'));
     }

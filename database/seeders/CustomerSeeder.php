@@ -31,7 +31,8 @@ class CustomerSeeder extends Seeder
             'state' => 'Uttar Pradesh',
             'country' => 'India',
             'eir_code' => '110009',
-            'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
+            'notes' => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
+            'type' => 'customer',
             'status' => 'pending'
         ]);
 
@@ -52,6 +53,7 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'P47',
             'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
+            'type' => 'customer',
             'status' => 'pending'
         ]);
 
@@ -72,6 +74,7 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'R27',
             'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
+            'type' => 'customer',
             'status' => 'pending'
         ]);
 
@@ -92,6 +95,82 @@ class CustomerSeeder extends Seeder
             'country' => 'Ireland',
             'eir_code' => 'R95',
             'notes'     => '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:03:11</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy</td><tr/></tbody></table><hr><table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">2022-11-04 08:02:53</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy</td><tr/></tbody></table><hr>',
+            'type' => 'customer',
+            'status' => 'pending'
+        ]);
+
+        Customer::create([
+            'id' => 5,
+            'name' => 'John Mathews',
+            'email' => 'johnmathew@gmail.com',
+            'phone' => '8700844557',
+            'phone_name' => 'Home',
+            'mobile_1' => '9793929110',
+            'mobile_1_name' => 'Office',
+            'mobile_2' => '7898487857',
+            'address_1' => 'Kilkenny Commercial Centre',
+            'address_2' => 'Sion Road',
+            'city' => 'Kilkenny',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'LOC8',
+            'type' => 'sales-lead',
+            'status' => 'pending'
+        ]);
+
+        Customer::create([
+            'id' => 6,
+            'name' => 'Danny Rotwell',
+            'email' => 'danny@gmail.com',
+            'phone' => '8090895865',
+            'phone_name' => 'Home',
+            'mobile_1' => '9793929111',
+            'mobile_1_name' => 'Office',
+            'mobile_2' => '7845854796',
+            'address_1' => 'Co.Kilkenny',
+            'address_2' => 'Carlow',
+            'city' => 'Kilkenny',
+            'state' => 'Derry',
+            'country' => 'Ireland',
+            'eir_code' => 'ROI',
+            'type' => 'sales-lead',
+            'status' => 'pending'
+        ]);
+
+        Customer::create([
+            'id' => 7,
+            'name' => 'Judy Langton',
+            'email' => 'judy_langton@gmail.com',
+            'phone' => '8090895475',
+            'phone_name' => 'Home',
+            'mobile_1' => '9793929551',
+            'mobile_1_name' => 'Office',
+            'mobile_2' => NULL,
+            'address_1' => 'St Annes',
+            'address_2' => 'Waterford Rd.',
+            'city' => 'Kilkenny',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'RV23',
+            'type' => 'sales-lead',
+            'status' => 'pending'
+        ]);
+
+        Customer::create([
+            'id' => 8,
+            'name' => 'Mary Corby',
+            'email' => 'mary@gmail.com',
+            'phone' => '08748514785',
+            'phone_name' => 'Home',
+            'mobile_1' => '0868877936',
+            'mobile_2' => '4585745896',
+            'address_1' => '2 Collaire Court',
+            'address_2' => 'Friary Walk',
+            'city' => 'Callan',
+            'state' => 'Kilkenny',
+            'country' => 'Ireland',
+            'eir_code' => 'VR67',
+            'type' => 'sales-lead',
             'status' => 'pending'
         ]);
 

@@ -21,7 +21,11 @@
         </div>
     </div>
 </div>
-
+<style>
+  .fc-event-main{
+    font-size:9px!important;
+  }
+</style>
 <section class="content" id="schedule_page">
     <div class="container-fluid">
       <div class="row">
@@ -54,6 +58,7 @@
                             data-customer="{{ $unscheduled_job->customer->name }}"
                             data-location="{{ getAddress($unscheduled_job->customer_id) }}"
                             data-jobid="{{ $unscheduled_job->id }}"
+                            data-city="{{ $unscheduled_job->customer->city }}"
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
@@ -77,6 +82,7 @@
                             data-jobid="{{ $unscheduled_job->id }}"
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
                             data-jobstatus="{{ $unscheduled_job->status }}"
+                            data-city="{{ $unscheduled_job->customer->city }}"
                             data-team="{{ $unscheduled_job->user_id }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
                             data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"

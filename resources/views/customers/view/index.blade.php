@@ -2,6 +2,7 @@
 @section('title', 'Show Customer')
 @section('head')
     <link rel="stylesheet" href="{{ asset('plugins/simple-lightbox/simple-lightbox.css') }}" />
+    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @endsection
 @section('content')
     @include('customers.view.sections.content-header')
