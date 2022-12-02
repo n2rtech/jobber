@@ -137,13 +137,13 @@
               <div class="col-sm-3 col-6">
                   <div class="form-group">
                       <label class="control-label">Start Date</label>
-                      <input id="mobileStarts" type="text" class="form-control" placeholder="Pick start date">
+                      <input id="mobileStarts" readonly class="form-control" placeholder="Pick start date">
                   </div>
               </div>
               <div class="col-sm-3 col-6">
                   <div class="form-group">
                       <label class="control-label">End Date</label>
-                      <input id="mobileEnds" type="text" class="form-control" placeholder="Pick end date">
+                      <input id="mobileEnds" readonly class="form-control" placeholder="Pick end date">
                       <small id="change_timing_message"></small>
                   </div>
               </div>
