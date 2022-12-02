@@ -399,6 +399,12 @@ a.nav-link .active{
     color: #fff;
     font-weight: normal;
 }
+.min252{
+    min-height: 252px;
+}
+.buttonBlocks{
+    min-height: 255px;
+}
 .buttonBlocks .btn{
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     background: #f9f9f9;
@@ -668,6 +674,13 @@ a.nav-link .active{
 }
 .estimFonts table tr td, .estimFonts table tr th{
     font-size: 13px;
+}
+.min252{
+    min-height: 252px;
+}
+.buttonBlocks{
+    min-height: 255px;
+    padding-bottom: 0;
 }
 }
 .label-small{

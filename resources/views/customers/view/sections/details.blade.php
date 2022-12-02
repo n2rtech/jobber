@@ -6,7 +6,7 @@
             <strong>{{ \Carbon\Carbon::parse($customer->created_at)->format('g:i A') }} | {{ \Carbon\Carbon::parse($customer->created_at)->format('d, M Y') }}</strong>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body min252">
         <div class="row">
             <div class="col-sm-12">
 
