@@ -362,6 +362,7 @@ a.nav-link .active{
     border-radius: 6px;
     background: #e8f4ff !important;
     border: 1px solid #b4ddff;
+    width: 98% !important;
 }
 .jobviewPop .bookingTime label{
     margin-bottom: 4px;
@@ -409,6 +410,63 @@ a.nav-link .active{
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
     background: #000;
     color: #fff;
+}
+#ui-datepicker-div{
+    width: 528px;
+    background: #fff;
+    box-shadow: 0 1px 6px 0 rgb(0 0 0 / 20%);
+}
+#ui-datepicker-div .ui-datepicker-calendar{
+    width: 100%;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr th{
+    border: 1px solid #ddd;
+    text-align: center;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td{
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td.ui-datepicker-current-day{
+    background: #e5f2ff;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td a{
+    color: #222;
+}
+.ui-datepicker-header{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.ui-datepicker-header .ui-datepicker-prev, .ui-datepicker-header .ui-datepicker-next{
+    padding: 4px 16px;
+    background: crimson;
+    color: #fff;
+    border-radius: 4px;
+    margin: 3px 0 5px 5px;
+    width: 13%;
+    font-size: 15px;
+}
+.ui-datepicker-header .ui-datepicker-title{
+    text-align: right;
+    width: 74%;
+    padding-right: 10px;
+    font-size: 21px;
+    margin-top: 6px;
+}
+.jobviewPop .modal-dialog {
+    max-width: 570px;
+}
+.afterIcon{
+    color: #666;
+    position: absolute;
+    right: 0;
+    margin-top: -32px;
+    margin-right: 14px;
+    background: #e8f4fe;
+    padding: 5px;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
@@ -566,6 +624,41 @@ a.nav-link .active{
     width: 31%;
     margin-right: 2px;
     font-size: 11px;
+}
+#ui-datepicker-div{
+    width: 84%;
+}
+.ui-datepicker-header .ui-datepicker-prev, .ui-datepicker-header .ui-datepicker-next{
+    width: 19%;
+}
+.ui-datepicker-header .ui-datepicker-title{
+    width: 62%;
+    font-size: 18px;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td{
+    font-size: 13px;
+    padding: 5px;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr th{
+    font-size: 13px;
+}
+.afterIcon{
+    padding: 5px 2px 5px 34px;
+    margin-top: -30px;
+    margin-right: 20px;
+}
+.cutclose{
+    font-size: 16px;
+    background: red !important;
+    opacity: 1;
+    padding: 10px 24px !important;
+    color: #fff;
+    text-shadow: none;
+    font-weight: normal;
+}
+#schedule-modal #mobileStarts, #schedule-modal #mobileEnds, #schedule-modal #mobileStartTime, #schedule-modal #mobileEndTime{
+    background: #e5f2ff;
+    border: 1px solid #c0defd;
 }
 }
 .label-small{

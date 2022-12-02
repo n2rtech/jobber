@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header bg-dark" style="padding: 0px 14px;">
-        <h4 class="card-title mt-3"><strong>{{ \Carbon\Carbon::today()->format('d, M Y') }} </strong>| <span id="clock"></span></h4>
+        <h4 class="card-title mt-3 hidden-xs"><strong>{{ \Carbon\Carbon::today()->format('d, M Y') }} </strong>| <span id="clock"></span></h4>
         <div class="card-tools text-right">
             <small>{{ __('Added On') }}</small><br/>
             <strong>{{ \Carbon\Carbon::parse($customer->created_at)->format('g:i A') }} | {{ \Carbon\Carbon::parse($customer->created_at)->format('d, M Y') }}</strong>

@@ -1,31 +1,15 @@
 <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
-<script>jQuery('#starts').datetimepicker({
-    allowTimes:[
-   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
- ],
- format:'Y-m-d h:i:s'
-});</script>
-<script>jQuery('#mobile_start').datetimepicker({
-    allowTimes:[
-   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
- ],
- format:'Y-m-d h:i:s'
-});</script>
-<script>jQuery('#ends').datetimepicker({
-    allowTimes:[
-   '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-  '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-  '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
- ],
- format:'Y-m-d h:i:s'
-});</script>
+<script>
+    jQuery('#starts').datepicker({});
+    jQuery('#ends').datepicker({});
+    jQuery('#mobileStarts').datepicker({});
+    jQuery('#mobileEnds').datepicker({});
+</script>
 <script>
 tinymce.init({
   selector: 'textarea#email_message',
@@ -126,9 +110,9 @@ tinymce.init({
             },
             initialView: '{{ Request::get("view") ?? "timeGridWeek"}}',
             themeSystem: 'bootstrap',
-            slotMinTime: '{{ $setting["timing_starts"] }}',
+            // slotMinTime: '{{ $setting["timing_starts"] }}',
             dayCount: 7,
-            slotMaxTime: '{{ $setting["timing_ends"] }}',
+            // slotMaxTime: '{{ $setting["timing_ends"] }}',
             expandRows: true,
             hiddenDays:  '{{ json_encode($hidden_days) }}',
             firstDay: 1,

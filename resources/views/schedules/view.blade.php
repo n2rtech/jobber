@@ -64,17 +64,29 @@
                 <div class="bookingTime">
                     <h5><strong>Edit job booking time and date</strong></h5>
                     <div class="row">
-                        <div class="col-sm-6 col-6">
+                        <div class="col-sm-3 col-6">
                             <div class="form-group">
-                                <label class="control-label">Start</label>
+                                <label class="control-label">Start Date</label>
                                 <input id="starts" type="text" class="form-control">
                             </div>
                         </div>
-                        <div class="col-sm-6 col-6">
+                        <div class="col-sm-3 col-6">
                             <div class="form-group">
-                                <label class="control-label">End</label>
+                                <label class="control-label">End Date</label>
                                 <input id="ends" type="text" class="form-control">
                                 <small id="change_timing_message"></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="form-group">
+                                <label class="control-label">Start Time</label>
+                                <input id="startTime" type="time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="form-group">
+                                <label class="control-label">End Time</label>
+                                <input id="EndTime" type="time" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">

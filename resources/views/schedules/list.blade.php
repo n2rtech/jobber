@@ -127,18 +127,44 @@
             </button>
           </div>
           <div class="modal-body">
-
-            <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-3 col-6">
+                  <div class="form-group">
+                      <label class="control-label">Start Date</label>
+                      <input id="mobileStarts" type="text" class="form-control" placeholder="Pick start date">
+                  </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                  <div class="form-group">
+                      <label class="control-label">End Date</label>
+                      <input id="mobileEnds" type="text" class="form-control" placeholder="Pick end date">
+                      <small id="change_timing_message"></small>
+                  </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                  <div class="form-group">
+                      <label class="control-label">Start Time</label>
+                      <input id="mobileStartTime" type="time" class="form-control">
+                  </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                  <div class="form-group">
+                      <label class="control-label">End Time</label>
+                      <input id="mobileEndTime" type="time" class="form-control">
+                  </div>
+              </div>
+            </div>
+            <!-- <div class="col-sm-12">
                 <span class="text-dark"> <strong>Scheduled Date & Time</strong></span>
                 <input id="mobile_start" type="text" class="form-control">
                 <input type="hidden" id="job_id" value="">
                 <input type="hidden" id="mobile_end" value="addHour">
                 <span id="mobile_schedule_message"></span>
-            </div>
+            </div> -->
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+            <button type="button" class="cutclose btn btn-secondary close" data-dismiss="modal">Close</button>
             <button class="btn btn-success" onclick="scheduleMobile();">Update Timings</button>
           </div>
         </div>
