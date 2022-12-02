@@ -9,7 +9,7 @@
     <section class="content view-job-page">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card mt-4" style="margin: 0 auto;max-width: 700px">
+                <div class="card mt-4 maxWidthControl" style="margin: 0 auto">
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
@@ -132,32 +132,39 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label class="control-label">Start</label>
-                                                    <input id="starts" type="text" class="form-control" value="{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d h:i:s') }}">
+                                                    <label class="control-label">Start Date</label>
+                                                    <input id="starts" class="form-control" value="{{ \Carbon\Carbon::parse($job->start)->format('m/d/Y') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4 col-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">End</label>
-                                                    <input id="ends" type="text" class="form-control" value="{{ \Carbon\Carbon::parse($job->end)->format('Y-m-d h:i:s') }}">
-                                                    <small id="change_timing_message"></small>
+                                                    <label class="control-label">Start Time</label>
+                                                    <input id="start_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label class="control-label">&nbsp;</label>
+                                            <div class="col-sm-4 col-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">End Time</label>
+                                                    <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mt-2 mb-2">
                                                 <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
                                             </div>
                                         </div>
+                                        <div class="text-center">
+                                            <small id="change_timing_message"></small>
+                                        </div>
                                     </div>
                                     <div class="text-center vcButtons">
-                                        <a href="{{ route('jobs.edit', $job->id) }}" id="edit_job" class="btn btn-dark">Edit Job</a>
+                                        <a href="{{ route('jobs.edit', $job->id) }}" id="edit_job" class="btn btn-outline-dark">Edit Job</a>
                                         <a href="{{ route('customers.show', $job->customer_id) }}" id="show_customer" class="btn btn-outline-dark">View Customer</a>
                                     </div>
                                 </div>
 
                                 <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <div class="card card-widget widget-user-2 mt-4">
+                                <div class="card card-widget widget-user-2">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
                                         <div class="card-tools">
@@ -344,7 +351,6 @@
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
     <script>
     tinymce.init({
@@ -358,30 +364,9 @@
         content_style: 'body { font-family:roboto; font-size:16px }'
       });
       </script> --}}
-    <script>jQuery('#starts').datetimepicker({
-        allowTimes:[
-    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
-    ],
-    format:'Y-m-d h:i:s'
-    });</script>
-    <script>jQuery('#mobile_start').datetimepicker({
-        allowTimes:[
-    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
-    ],
-    format:'Y-m-d h:i:s'
-    });</script>
-    <script>jQuery('#ends').datetimepicker({
-        allowTimes:[
-    '09:00', '09:30','10:00', '10:30','11:00', '11:30','12:00', '12:30','13:00', '13:30',
-    '14:00', '14:30', '15:00', '15:30','16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30','20:00', '20:30',
-    '21:00', '21:30', '22:00', '22:30','23:00', '23:30','23:59'
-    ],
-    format:'Y-m-d h:i:s'
-    });</script>
+    <script>
+        jQuery('#starts').datepicker();
+    </script>
     <script>
         function assignTeam(value) {
             var formData = {
@@ -582,8 +567,8 @@ var formData = {
     function changeTimings(){
         var formData = {
                     id: '{{ $job->id }}',
-                    start: $('#starts').val(),
-                    end: $('#ends').val(),
+                    start: $('#starts').val()+' '+$('#start_time').val(),
+                    end: $('#starts').val()+' '+$('#end_time').val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -592,7 +577,7 @@ var formData = {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.store') }}',
+                    url: '{{ route('schedules.update-timing') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -613,6 +598,13 @@ var formData = {
                         console.log(data);
                     }
                 });
+    }
+</script>
+
+<script>
+    function updateTimeInput(element){
+        var previoustim = $(element).val();
+        $(element).val(previoustim+':00');
     }
 </script>
 @endpush
