@@ -64,17 +64,29 @@
                 <div class="bookingTime">
                     <h5><strong>Edit job booking time and date</strong></h5>
                     <div class="row">
-                        <div class="col-sm-6 col-6">
+                        <div class="col-sm-3 col-6">
                             <div class="form-group">
-                                <label class="control-label">Start</label>
-                                <input id="starts" type="text" class="form-control">
+                                <label class="control-label">Start Date</label>
+                                <input id="starts" class="form-control readonlyjm">
                             </div>
                         </div>
-                        <div class="col-sm-6 col-6">
+                        <div class="col-sm-3 col-6">
                             <div class="form-group">
-                                <label class="control-label">End</label>
-                                <input id="ends" type="text" class="form-control">
+                                <label class="control-label">End Date</label>
+                                <input id="ends" class="form-control readonlyjm">
                                 <small id="change_timing_message"></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="form-group">
+                                <label class="control-label">Start Time</label>
+                                <input id="startTime" type="time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="form-group">
+                                <label class="control-label">End Time</label>
+                                <input id="EndTime" type="time" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">
@@ -91,3 +103,10 @@
         </div>
     </div>
 </div>
+<script>
+$( document ).ready(function() {
+    $('.readonlyjm').on('focus',function(){
+        $(this).trigger('blur');
+    });
+});
+</script>
