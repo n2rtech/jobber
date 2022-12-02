@@ -34,7 +34,7 @@ return new class extends Migration
             $table->decimal('discount', 10, 2)->nullable();
             $table->enum('discount_type', ['percentage', 'amount'])->default('percentage');
             $table->decimal('tax', 10, 2)->nullable();
-            $table->enum('tax_type', ['percentage', 'amount'])->default('percentage');
+            $table->enum('tax_type', ['percentage', 'amount'])->default('amount');
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
             $table->decimal('paid', 10, 2)->default(0);

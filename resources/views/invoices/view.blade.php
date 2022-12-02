@@ -130,7 +130,7 @@
                                             <th width="35%">Product / Service</th>
                                             <th class="text-right">Quantity</th>
                                             <th class="text-right">Unit Price</th>
-                                            <th class="text-right">Tax Rate(%)</th>
+                                            {{-- <th class="text-right">Tax Rate(%)</th> --}}
                                             <th class="text-right">Amount(€)</th>
                                             <th class="text-right">Total(€)</th>
                                         </tr>
@@ -141,7 +141,7 @@
                                             <td>{{ $product->product->name }}</td>
                                             <td class="text-right">{{ $product->quantity }}</td>
                                             <td class="text-right">€ {{ $product->unit_price }}</td>
-                                            <td class="text-right">{{ $product->tax_rate }}%</td>
+                                            {{-- <td class="text-right">{{ $product->tax_rate }}%</td> --}}
                                             <td class="text-right">€ {{ number_format($product->quantity * $product->unit_price, 2, '.', ',') }}</td>
                                             <td class="text-right">€ {{ $product->total }}</td>
                                         </tr>
@@ -165,7 +165,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
-                                                <td class="text-right">€ {{ getInvoiceSubtotal($invoice->id)  }}</td>
+                                                <td class="text-right">€ {{ $invoice->subtotal  }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-right">Discount {{ $invoice->discount_type == 'percentage' ? '('.$invoice->discount."%".')' : '' }}</td>
@@ -173,11 +173,11 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-right">Tax</td>
-                                                <td class="text-right">€ {{ number_format(getInvoiceTotalTax($invoice->id), 2, '.', ',') }}</td>
+                                                <td class="text-right">€ {{ $invoice->products->sum('tax_amount')  }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="text-right">Total</th>
-                                                <td class="text-right">€ {{ $invoice->products->sum('total')  }}</td>
+                                                <td class="text-right">€ {{ $invoice->total  }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

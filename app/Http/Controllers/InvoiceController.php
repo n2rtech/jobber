@@ -146,20 +146,26 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
 
-        $invoice                        = new Invoice();
-        $invoice->customer_id           = $request->customer_id;
-        $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
-        $invoice->terms                 = $request->terms;
-        $invoice->due_date              = $request->due_date;
-        $invoice->invoice_date          = $request->invoice_date;
-        $invoice->discount              = $request->discount;
-        $invoice->discount_type         = $request->discount_type;
-        $invoice->tax                   = $request->tax;
-        $invoice->tax_type              = $request->tax_type;
-        $invoice->notes                 = $request->notes;
-        $invoice->conditions            = $request->conditions;
-        $invoice->total                 = $request->invoice_total;
+        $invoice                           = new Invoice();
+        $invoice->customer_id              = $request->customer_id;
+        $invoice->user_id                  = Auth::user()->id;
+        $invoice->same_as_billing_address  = $request->has('same_as_billing_address') ? true : false;
+        $invoice->shipping_address_1       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $invoice->shipping_address_2       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $invoice->shipping_city            = isset($request->shipping_city) ? $request->shipping_city : null;
+        $invoice->shipping_state           = isset($request->shipping_state) ? $request->shipping_state : null;
+        $invoice->shipping_country         = isset($request->shipping_country) ? $request->shipping_country : null;
+        $invoice->shipping_eir_code        = isset($request->shipping_eir_code) ? $request->shipping_eir_code : null;
+        $invoice->terms                    = $request->terms;
+        $invoice->due_date                 = $request->due_date;
+        $invoice->invoice_date             = $request->invoice_date;
+        $invoice->discount                 = $request->discount;
+        $invoice->discount_type            = $request->discount_type;
+        $invoice->tax                      = $request->tax;
+        $invoice->tax_type                 = 'amount';
+        $invoice->notes                    = $request->notes;
+        $invoice->conditions               = $request->conditions;
+        $invoice->total                    = $request->invoice_total;
         $invoice->save();
 
         if(!empty($request->product) && is_array($request->product)){
@@ -171,6 +177,7 @@ class InvoiceController extends Controller
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
                 $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -221,20 +228,26 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $invoice                        = Invoice::find($id);
-        $invoice->customer_id           = $request->customer_id;
-        $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = $request->has('same_as_billing_address') ? null : $request->shipping_address;;
-        $invoice->terms                 = $request->terms;
-        $invoice->due_date              = $request->due_date;
-        $invoice->invoice_date          = $request->invoice_date;
-        $invoice->discount              = $request->discount;
-        $invoice->discount_type         = $request->discount_type;
-        $invoice->tax                   = $request->tax;
-        $invoice->tax_type              = $request->tax_type;
-        $invoice->notes                 = $request->notes;
-        $invoice->conditions            = $request->conditions;
-        $invoice->total                 = $request->invoice_total;
+        $invoice                           = Invoice::find($id);
+        $invoice->customer_id              = $request->customer_id;
+        $invoice->user_id                  = Auth::user()->id;
+        $invoice->same_as_billing_address  = $request->has('same_as_billing_address') ? true : false;
+        $invoice->shipping_address_1       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $invoice->shipping_address_2       = isset($request->shipping_address_1) ? $request->shipping_address_1 : null;
+        $invoice->shipping_city            = isset($request->shipping_city) ? $request->shipping_city : null;
+        $invoice->shipping_state           = isset($request->shipping_state) ? $request->shipping_state : null;
+        $invoice->shipping_country         = isset($request->shipping_country) ? $request->shipping_country : null;
+        $invoice->shipping_eir_code        = isset($request->shipping_eir_code) ? $request->shipping_eir_code : null;
+        $invoice->terms                    = $request->terms;
+        $invoice->due_date                 = $request->due_date;
+        $invoice->invoice_date             = $request->invoice_date;
+        $invoice->discount                 = $request->discount;
+        $invoice->discount_type            = $request->discount_type;
+        $invoice->tax                      = $request->tax;
+        $invoice->tax_type                 = 'amount';
+        $invoice->notes                    = $request->notes;
+        $invoice->conditions               = $request->conditions;
+        $invoice->total                    = $request->invoice_total;
         $invoice->save();
 
         InvoiceProduct::where('invoice_id', $id)->delete();
@@ -247,6 +260,7 @@ class InvoiceController extends Controller
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
                 $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }

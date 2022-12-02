@@ -11,7 +11,7 @@ class Invoice extends Model
 
     protected $table        = 'invoices';
 
-    protected $fillable     = ['customer_id', 'job_id', 'user_id', 'shipping_address', 'terms', 'due_date', 'invoice_date', 'discount', 'discount_type', 'tax', 'tax_type', 'total', 'notes', 'conditions', 'file'];
+    protected $fillable     = ['customer_id', 'job_id', 'user_id', 'same_as_billing_address', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_eir_code', 'terms', 'due_date', 'invoice_date', 'discount', 'discount_type', 'tax', 'tax_type', 'total', 'notes', 'conditions', 'file'];
 
     public $timestamps      = true;
 

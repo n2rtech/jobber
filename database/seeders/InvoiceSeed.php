@@ -24,16 +24,24 @@ class InvoiceSeed extends Seeder
     {
        $jobs        = Job::get();
        $setting     = Setting::where('type', 'invoice')->value('value');
+
        foreach($jobs as $job){
-            $invoice                        = new Invoice();
-            $invoice->customer_id           = $job->customer_id;
-            $invoice->job_id                = $job->id;
-            $invoice->user_id               = 1;
-            $invoice->shipping_address      = Null;
-            $invoice->due_date              = Carbon::parse($job->created_at)->format('Y-m-d');
-            $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
-            $invoice->notes                 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-            $invoice->conditions            = $setting['conditions'];
+
+            $invoice                           = new Invoice();
+            $invoice->customer_id              = $job->customer_id;
+            $invoice->job_id                   = $job->id;
+            $invoice->user_id                  = 1;
+            $invoice->same_as_billing_address  = false;
+            $invoice->shipping_address_1       = $job->customer->address_1;
+            $invoice->shipping_address_2       = $job->customer->address_2;
+            $invoice->shipping_city            = $job->customer->city;
+            $invoice->shipping_state           = $job->customer->state;
+            $invoice->shipping_country         = $job->customer->country;
+            $invoice->shipping_eir_code        = $job->customer->eir_code;
+            $invoice->due_date                 = Carbon::parse($job->created_at)->format('Y-m-d');
+            $invoice->invoice_date             = Carbon::parse($job->created_at)->format('Y-m-d');
+            $invoice->notes                    = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+            $invoice->conditions               = $setting['conditions'];
             $invoice->save();
 
             foreach($job->products as $job_product){
@@ -45,6 +53,7 @@ class InvoiceSeed extends Seeder
                 $product->quantity      = $job_product->quantity;
                 $product->unit_price    = $job_product->unit_price;
                 $product->tax_rate      = $selected_product->tax->rate;
+                $product->tax_amount    = ($job_product->total * $selected_product->tax->rate / 100);
                 $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
                 $product->save();
             }
@@ -52,7 +61,7 @@ class InvoiceSeed extends Seeder
             $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
 
             $deduct_discount = 0.00;
-            $added_tax       = 0.00;
+            $added_tax = InvoiceProduct::where('invoice_id', $invoice->id)->sum('tax_amount');
 
             if($invoice->discount_type == 'percentage'){
                 $deduct_discount = $subtotal * $job->discount / 100;
@@ -62,13 +71,6 @@ class InvoiceSeed extends Seeder
                 $deduct_discount = $job->discount;
             }
 
-            if($invoice->tax_type == 'percentage'){
-                $added_tax = $subtotal * $job->tax / 100;
-            }
-
-            if($invoice->tax_type == 'amount'){
-                $added_tax = $subtotal * $job->tax / 100;
-            }
             $total = ($subtotal + $added_tax - $deduct_discount);
             Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
        }

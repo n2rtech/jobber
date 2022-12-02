@@ -272,7 +272,13 @@ class EstimateController extends Controller
         $invoice                        = new Invoice();
         $invoice->customer_id           = $estimate->customer_id;
         $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = $estimate->shipping_address;
+        $invoice->same_as_billing_address  = $estimate->same_as_billing_address;
+        $invoice->shipping_address_1    = isset($estimate->shipping_address_1) ? $estimate->shipping_address_1 : null;
+        $invoice->shipping_address_2    = isset($estimate->shipping_address_1) ? $estimate->shipping_address_1 : null;
+        $invoice->shipping_city         = isset($estimate->shipping_city) ? $estimate->shipping_city : null;
+        $invoice->shipping_state        = isset($estimate->shipping_state) ? $estimate->shipping_state : null;
+        $invoice->shipping_country      = isset($estimate->shipping_country) ? $estimate->shipping_country : null;
+        $invoice->shipping_eir_code     = isset($estimate->shipping_eir_code) ? $estimate->shipping_eir_code : null;
         $invoice->terms                 = $estimate->terms;
         $invoice->due_date              = Carbon::today()->addDays($setting['due_on_receipt'])->format('Y-m-d');
         $invoice->invoice_date          = Carbon::today()->format('Y-m-d');
