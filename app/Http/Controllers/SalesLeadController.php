@@ -37,7 +37,7 @@ class SalesLeadController extends Controller
 
         isset($filter_date)     ? $leads->whereDate('created_at', $filter_date) : $leads;
 
-        $leads                  = $leads->where('type', 'sales-lead')->orderBy('id', 'desc')->get();
+        $leads                  = $leads->where('type', 'sales-lead')->orderBy('id', 'desc')->paginate(20);
 
         return view('sales-lead.index', compact('leads', 'filter_name', 'filter_email', 'filter_phone', 'filter_date'));
     }
