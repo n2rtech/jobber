@@ -96,7 +96,12 @@ class JobController extends Controller
 
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
-        $jobs                       = $jobs->orderBy('start', 'asc')->get();
+        if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
+            $jobs                       = $jobs->orderBy('start', 'desc')->get();
+        }else{
+            $jobs                       = $jobs->orderBy('id', 'desc')->get();
+        }
+
 
         return view('jobs.index', compact('jobs', 'filter_box', 'filter_name', 'filter_email', 'filter_phone', 'filter_scheduled', 'filter_date', 'filter_job_title', 'filter_address'));
     }
@@ -162,7 +167,7 @@ class JobController extends Controller
         $invoice->customer_id           = $job->customer_id;
         $invoice->job_id                = $job->id;
         $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = getAddress($job->customer_id);
+        $invoice->same_as_billing_address      = true;
         $invoice->due_date              = $job->created_at->addDays($setting['due_on_receipt']);
         $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
         $invoice->notes                 = Null;
@@ -179,6 +184,7 @@ class JobController extends Controller
             $product->quantity      = $job_product->quantity;
             $product->unit_price    = $job_product->unit_price;
             $product->tax_rate      = $selected_product->tax->rate;
+            $product->tax_amount    = $job_product->total * $selected_product->tax->rate / 100;
             $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
             $product->save();
         }
@@ -186,7 +192,7 @@ class JobController extends Controller
         $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
 
         $deduct_discount = 0.00;
-        $added_tax       = 0.00;
+        $added_tax       = InvoiceProduct::where('invoice_id', $invoice->id)->sum('tax_amount');
 
         if($invoice->discount_type == 'percentage'){
             $deduct_discount = $subtotal * $job->discount / 100;
@@ -196,13 +202,6 @@ class JobController extends Controller
             $deduct_discount = $job->discount;
         }
 
-        if($invoice->tax_type == 'percentage'){
-            $added_tax = $subtotal * $job->tax / 100;
-        }
-
-        if($invoice->tax_type == 'amount'){
-            $added_tax = $subtotal * $job->tax / 100;
-        }
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
@@ -293,7 +292,7 @@ class JobController extends Controller
         $invoice->customer_id           = $job->customer_id;
         $invoice->job_id                = $job->id;
         $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = getAddress($job->customer_id);
+        $invoice->same_as_billing_address      = true;
         $invoice->due_date              = $job->created_at->addDays($setting['due_on_receipt']);
         $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
         $invoice->conditions            = $setting['conditions'];
@@ -310,11 +309,13 @@ class JobController extends Controller
             $product->quantity      = $job_product->quantity;
             $product->unit_price    = $job_product->unit_price;
             $product->tax_rate      = $selected_product->tax->rate;
+            $product->tax_amount    = $job_product->total * $selected_product->tax->rate / 100;
             $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
             $product->save();
         }
 
         $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+        $added_tax       = InvoiceProduct::where('invoice_id', $invoice->id)->sum('tax_amount');
 
         if($invoice->discount_type == 'percentage'){
             $deduct_discount = $subtotal * $job->discount / 100;
@@ -324,13 +325,6 @@ class JobController extends Controller
             $deduct_discount = $job->discount;
         }
 
-        if($invoice->tax_type == 'percentage'){
-            $added_tax = $subtotal * $job->tax / 100;
-        }
-
-        if($invoice->tax_type == 'amount'){
-            $added_tax = $subtotal * $job->tax / 100;
-        }
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 

@@ -45,7 +45,7 @@
                                     <span class="badge bg-yellow"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
                                 @endif
                             </td>
-                            <td>€ {{ $job->total }}</td>
+                            <td>€ {{ $job->invoice->total }}</td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

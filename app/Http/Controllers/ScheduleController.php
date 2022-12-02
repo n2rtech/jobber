@@ -24,8 +24,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('id', 'desc')->get();
-        $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('created_at', 'asc')->get();
+        $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('start', 'asc')->get();
+        $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         $setting            = Setting::where('type', 'calendar')->value('value');
         $days               = Setting::where('type', 'calendar')->value('days');
