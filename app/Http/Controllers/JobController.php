@@ -292,7 +292,7 @@ class JobController extends Controller
         $invoice->customer_id           = $job->customer_id;
         $invoice->job_id                = $job->id;
         $invoice->user_id               = Auth::user()->id;
-        $invoice->shipping_address      = getAddress($job->customer_id);
+        $invoice->same_as_billing_address      = true;
         $invoice->due_date              = $job->created_at->addDays($setting['due_on_receipt']);
         $invoice->invoice_date          = Carbon::parse($job->created_at)->format('Y-m-d');
         $invoice->conditions            = $setting['conditions'];
