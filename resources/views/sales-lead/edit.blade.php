@@ -133,6 +133,19 @@
                     <div class="card pb-3">
                         <div class="card-body">
                             <div class="form-group row">
+                                <label for="type" class="col-sm-2 col-form-label">{{ __('Type') }}</label>
+                                <div class="col-sm-10 mt-1">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="customer_type" value="customer" {{ $lead->type == 'customer' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="customer_type">Customer</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="lead_type" value="sales-lead" {{ $lead->type == 'sales-lead' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="lead_type">Sales Lead</label>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="state" name="state"

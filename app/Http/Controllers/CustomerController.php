@@ -54,13 +54,13 @@ class CustomerController extends Controller
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
-        $customers              = $customers->orderBy('id', 'desc')->paginate(20);
+        $customers              = $customers->where('type', 'customer')->orderBy('id', 'desc')->paginate(20);
 
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box_customer', 'filter_search'));
     }
 
     public function customerSearch(Request $request){
-      
+
         if(!is_null($request->inp)){
 
           $result = Customer::where('name','like','%'.$request->inp.'%')
@@ -68,22 +68,22 @@ class CustomerController extends Controller
                     ->orWhere('mobile_1','like','%'.$request->inp.'%')
                     ->orWhere('mobile_2','like','%'.$request->inp.'%')
                     ->get()->toArray();
-          
+
                     if(!empty($result)){
-                      
+
                         return response([
                             'data'    => $result
                         ], 200);
-            
+
                     } else {
-            
+
                         return response([
                             'data'    => 404,
                         ], 200);
                     }
              }
 
-        
+
 
         }
 
@@ -127,20 +127,13 @@ class CustomerController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
+        $customer->type             = $request->type;
         $customer->state            = $request->state;
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
-
-        // if(isset($request->note)){
-        //     $note                   = new CustomerNote();
-        //     $note->customer_id      = $customer->id;
-        //     $note->user_id          = Auth::user()->id;
-        //     $note->note             = $request->note;
-        //     $note->save();
-        // }
 
         return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
@@ -209,6 +202,7 @@ class CustomerController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
+        $customer->type             = $request->type;
         $customer->state            = $request->state;
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
@@ -243,35 +237,15 @@ class CustomerController extends Controller
 
         $customer = Customer::find($id);
 
-        if($customer->status == 'pending'){
-
-            $customer->status = 'converted';
+        if($customer->type == 'customer'){
+            $customer->type = 'sales-lead';
             $customer->save();
-
-            $lead                   = new Lead;
-            $lead->name             = $customer->name;
-            $lead->email            = $customer->email;
-            $lead->phone            = $customer->phone;
-            $lead->phone_name       = $customer->phone_name;
-            $lead->mobile_1         = $customer->mobile_1;
-            $lead->mobile_1_name    = $customer->mobile_1_name;
-            $lead->mobile_2         = $customer->mobile_2;
-            $lead->mobile_2_name    = $customer->mobile_2_name;
-            $lead->address_1        = $customer->address_1;
-            $lead->address_2        = $customer->address_2;
-            $lead->city             = $customer->city;
-            $lead->state            = $customer->state;
-            $lead->country          = $customer->country;
-            $lead->eir_code         = $customer->eir_code;
-            $lead->status           = "converted";
-            $lead->directions       = $customer->directions;
-            $lead->save();
-
-            return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
+            return redirect()->route('sales-leads.index')->with('success', 'Customer converted to Sales Lead added successfully!');
 
         }else{
-
-            return redirect()->back()->with('warning', 'This Customer is already added as Sales Lead!');
+            $customer->type = 'customer';
+            $customer->save();
+            return redirect()->route('sales-leads.index')->with('success', 'Sales Lead converted to successfully!');
         }
 
     }

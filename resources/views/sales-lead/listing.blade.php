@@ -19,7 +19,7 @@
                         <td>#{{ $lead->id }}</td>
                         <td><small>{{ \Carbon\Carbon::parse($lead->created_at)->format('Y-m-d') }}</small></td>
                         <td>{{ $lead->name }}</td>
-                        <td>{{ getLeadAddress($lead->id) }}</td>
+                        <td>{{ getAddress($lead->id) }}</td>
                         <td>
                             @isset($lead->phone) <i class="fa fa-square-phone"></i> {{ $lead->phone }} <br/> @endisset
                             @isset($lead->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $lead->mobile_1 }} <br/> @endisset

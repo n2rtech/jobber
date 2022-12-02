@@ -72,21 +72,26 @@
 </script>
 <script type="text/javascript">
     function confirmAccept(id) {
-        url_string = '{{ route('customers.lead', ':id') }}';
-        url = url_string.replace(':id', id);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Add as Sales Lead!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        })
+        var type = $('#type').is(':checked');
+        if(type){
+           return false;
+        }else{
+            url_string = '{{ route('customers.lead', ':id') }}';
+            url = url_string.replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Convert to Sales Lead!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            })
+        }
     }
 </script>
 <script>
@@ -180,3 +185,9 @@
 
 currentTime();
     </script>
+    <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+<script>
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch();
+    })
+</script>
