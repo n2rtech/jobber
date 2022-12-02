@@ -189,6 +189,43 @@
                 </div>
             </div>
         </form>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-widget bg-warning">
+                    <div class="card-header">
+                        <div class="user-block">
+                            <span class="text-dark">{{ __('Archive Notes') }}</span>
+                        </div>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body card-comments">
+                        @isset($lead->notes)
+                        <div class="card-comment">
+
+                            <div class="comment-text">
+                                {!! $lead->notes !!}
+                            </div>
+
+                        </div>
+                        @else
+                        <div class="card-comment">
+                            <p class="text-center mt-4">No Notes Found.</p>
+                        </div>
+                        @endisset
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 @push('scripts')

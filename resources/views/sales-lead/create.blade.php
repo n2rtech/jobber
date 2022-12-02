@@ -179,8 +179,8 @@
                             <div class="form-group row">
                                 <label for="notes" class="col-sm-2 col-form-label">{{ __('Notes') }}</label>
                                 <div class="col-sm-10">
-                                    <textarea rows="3" class="form-control" id="notes" name="notes" placeholder="Enter Notes">{{ old('notes') }}</textarea>
-                                    @error('notes')
+                                    <textarea rows="3" class="form-control" id="note" name="note" placeholder="Enter Notes">{{ old('note') }}</textarea>
+                                    @error('note')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
