@@ -38,7 +38,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereDate('created_at', $request->date)->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereDate('created_at', $request->date)->count();
             $total_invoices          = Invoice::whereDate('created_at', $request->date)->count();
-            $total_customers         = Customer::where('type', 'customer')->whereDate('created_at', $request->date)->count();
+            $total_customers         = Customer::whereDate('created_at', $request->date)->count();
             $total_estimates         = Estimate::whereDate('created_at', $request->date)->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', $request->date)->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', $request->date)->orderBy('id', 'desc')->take(10)->get();
@@ -54,7 +54,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereDate('created_at', Carbon::today())->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereDate('created_at', Carbon::today())->count();
             $total_invoices          = Invoice::whereDate('created_at', Carbon::today())->count();
-            $total_customers         = Customer::where('type', 'customer')->whereDate('created_at', Carbon::today())->count();
+            $total_customers         = Customer::whereDate('created_at', Carbon::today())->count();
             $total_estimates         = Estimate::whereDate('created_at', Carbon::today())->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->take(10)->get();
@@ -71,7 +71,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereDate('created_at', $yesterday)->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereDate('created_at', $yesterday)->count();
             $total_invoices          = Invoice::whereDate('created_at', $yesterday)->count();
-            $total_customers         = Customer::where('type', 'customer')->whereDate('created_at', $yesterday)->count();
+            $total_customers         = Customer::whereDate('created_at', $yesterday)->count();
             $total_estimates         = Estimate::whereDate('created_at', $yesterday)->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereDate('created_at', $yesterday)->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereDate('created_at', $yesterday)->orderBy('id', 'desc')->take(10)->get();
@@ -87,7 +87,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
             $total_invoices          = Invoice::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-            $total_customers         = Customer::where('type', 'customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+            $total_customers         = Customer::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
             $total_estimates         = Estimate::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->take(10)->get();
@@ -103,7 +103,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
             $total_invoices          = Invoice::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-            $total_customers         = Customer::where('type', 'customer')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+            $total_customers         = Customer::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
             $total_estimates         = Estimate::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->orderBy('id', 'desc')->take(10)->get();
@@ -119,7 +119,7 @@ class HomeController extends Controller
             $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
             $total_leads             = Customer::where('type', 'sales-lead')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
             $total_invoices          = Invoice::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
-            $total_customers         = Customer::where('type', 'customer')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
+            $total_customers         = Customer::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
             $total_estimates         = Estimate::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
             $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->orderBy('id', 'desc')->take(10)->get();
             $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->orderBy('id', 'desc')->take(10)->get();
@@ -134,7 +134,7 @@ class HomeController extends Controller
         $total_unscheduled_jobs  = Job::where('scheduled', 'no ')->count();
         $total_leads             = Customer::where('type', 'sales-lead')->count();
         $total_invoices          = Invoice::count();
-        $total_customers         = Customer::where('type', 'customer')->count();
+        $total_customers         = Customer::count();
         $total_estimates         = Estimate::count();
         $completed_jobs          = Job::where('scheduled', 'yes ')->where('status', 'completed')->orderBy('id', 'desc')->take(10)->get();
         $scheduled_jobs          = Job::where('status', 'pending')->where('scheduled', 'yes ')->orderBy('id', 'desc')->take(10)->get();

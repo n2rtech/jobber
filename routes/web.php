@@ -72,11 +72,16 @@ Route::post('jobs/mark-unscheduled', [JobController::class, 'unschedule'])->name
 # Assign Team Route
 Route::post('jobs/assign-team', [JobController::class, 'assignTeam'])->name('jobs.assign');
 
+# Save Job Form
+Route::put('job/save/job-form/{id}', [JobController::class, 'saveJobForm'])->name('job.notes-add');
+
 # Add Note Form Route
 Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'])->name('job.add-notes');
 
 # Add Note Route
 Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name('job.notes-add');
+
+
 
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);

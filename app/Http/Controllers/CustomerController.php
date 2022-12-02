@@ -54,7 +54,7 @@ class CustomerController extends Controller
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
-        $customers              = $customers->where('type', 'customer')->orderBy('id', 'desc')->paginate(20);
+        $customers              = $customers->orderBy('id', 'desc')->paginate(20);
 
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box_customer', 'filter_search'));
     }
@@ -240,12 +240,12 @@ class CustomerController extends Controller
         if($customer->type == 'customer'){
             $customer->type = 'sales-lead';
             $customer->save();
-            return redirect()->route('sales-leads.index')->with('success', 'Customer converted to Sales Lead added successfully!');
+            return redirect()->back()->with('warning', 'Customer added to Sales Lead successfully!');
 
         }else{
             $customer->type = 'customer';
             $customer->save();
-            return redirect()->route('sales-leads.index')->with('success', 'Sales Lead converted to successfully!');
+            return redirect()->back()->with('warning', 'Customer removed from Sales Lead successfully!');
         }
 
     }
