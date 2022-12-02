@@ -25,7 +25,7 @@
                         {{-- <a href="javascript:void(0)" onclick="confirmAccept({{ $lead->id }})" class="btn btn-success">
                             <i class="btn-icon fas fa-user-plus"></i> {{ __('Add as Customer') }}
                         </a> --}}
-                        <input type="checkbox" id="type" name="type" value="{{ $lead->id }}" data-bootstrap-switch onchange="confirmAccept(this.value)">
+                        {{-- <input type="checkbox" id="type" name="type" value="{{ $lead->id }}" data-bootstrap-switch onchange="confirmAccept(this.value)"> --}}
 
                 </div>
             </div>
@@ -214,7 +214,7 @@
         })
     };
 </script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     function confirmAccept(id) {
         var type = $('#type').is(':checked');
         if(type){
@@ -237,7 +237,7 @@
             return false;
         }
     }
-</script>
+</script> --}}
 <script>
     function currentTime() {
 let date = new Date();

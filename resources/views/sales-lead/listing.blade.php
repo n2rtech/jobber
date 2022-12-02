@@ -9,7 +9,7 @@
                     <th>{{ __('Customer') }}</th>
                     <th width="38%">{{ __('Address') }}</th>
                     <th>{{ __('Phone') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
@@ -25,13 +25,13 @@
                             @isset($lead->mobile_1) <i class="fa fa-mobile-alt"></i> {{ $lead->mobile_1 }} <br/> @endisset
                             @isset($lead->mobile_2) <i class="fa fa-mobile-alt"></i> {{ $lead->mobile_2 }}</td> @endisset
                         </td>
-                        <td>
+                        {{-- <td>
                             @if ($lead->status == 'pending')
                                 <span class="badge bg-danger">{{ __('Pending') }}</span>
                             @else
                                 <span class="badge bg-success">{{ __('Converted') }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover"

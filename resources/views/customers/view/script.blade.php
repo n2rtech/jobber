@@ -73,11 +73,10 @@
 <script type="text/javascript">
     function confirmAccept(id) {
         var type = $('#type').is(':checked');
+        url_string = '{{ route('customers.lead', ':id') }}';
+        url = url_string.replace(':id', id);
         if(type){
-           return false;
-        }else{
-            url_string = '{{ route('customers.lead', ':id') }}';
-            url = url_string.replace(':id', id);
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -85,12 +84,29 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Convert to Sales Lead!'
+                confirmButtonText: 'Add to Sales Lead!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = url;
                 }
             })
+
+        }else{
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Remove from Sales Lead!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            })
+
         }
     }
 </script>
