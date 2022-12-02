@@ -70,13 +70,13 @@
                                 <input id="starts" class="form-control" readonly>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Time</label>
                                 <input id="startTime" type="time" class="form-control">
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Time</label>
                                 <input id="EndTime" type="time" class="form-control">
