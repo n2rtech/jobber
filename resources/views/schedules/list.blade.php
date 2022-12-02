@@ -21,7 +21,11 @@
         </div>
     </div>
 </div>
-
+<style>
+  .fc-event-main{
+    font-size:9px!important;
+  }
+</style>
 <section class="content" id="schedule_page">
     <div class="container-fluid">
       <div class="row">

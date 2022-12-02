@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
+                            <a href="/schedules" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
