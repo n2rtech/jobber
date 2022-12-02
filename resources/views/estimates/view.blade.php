@@ -35,7 +35,7 @@
                                 </h4>
                             </div>
                         </div>
-                        <div class="row invoice-info mt-4">
+                        <div class="row invoice-info mt-4 text-small">
 
 
 
@@ -68,7 +68,7 @@
                             <div class="col-sm-4 invoice-col">
                                 <p class="mt-2"><strong>{{ $company->company }}</strong></p>
                                 <address class="text-muted">
-                                    Address: {{ $company->address_1 }}<br />
+                                    Address: {{ $company->address_1 }}
                                     {{ $company->address_2 }}<br>
                                     {{ $company->city }}, {{ $company->state }}<br>
                                     {{ $company->country }}, {{ $company->zipcode }}<br>
@@ -81,7 +81,7 @@
                                 <table class="table table-sm">
                                     <tbody>
                                         <tr>
-                                            <td style="border-top: none;"><b>Estimate Number</b></td>
+                                            <td style="border-top: none;"><b>Estimate No.</b></td>
                                             <td style="border-top: none;" class="text-right"># {{ $estimate->id }}</td>
                                         </tr>
                                         <tr>
@@ -98,16 +98,16 @@
                                             <td style="border-top: none;"></td>
                                             <td style="border-top: none;" class="text-right">
                                                 @if ($estimate->status == 'created')
-                                                    <button class="mt-3 btn btn-outline-info">{{ ucfirst($estimate->status) }}</button>
+                                                    <button class="mt-3 btn btn-sm btn-outline-info">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                                 @if ($estimate->status == 'sent')
-                                                    <button class="mt-3 btn btn-outline-success">{{ ucfirst($estimate->status) }}</button>
+                                                    <button class="mt-3 btn btn-sm btn-outline-success">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                                 @if ($estimate->status == 'expired')
-                                                    <button class="mt-3 btn btn-outline-danger">{{ ucfirst($estimate->status) }}</button>
+                                                    <button class="mt-3 btn btn-sm btn-outline-danger">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                                 @if ($estimate->status == 'cancelled')
-                                                    <button class="mt-3 btn btn-outline-warning">{{ ucfirst($estimate->status) }}</button>
+                                                    <button class="mt-3 btn btn-sm btn-outline-warning">{{ ucfirst($estimate->status) }}</button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -121,7 +121,7 @@
 
                         <div class="row">
                             <div class="col-12 table-responsive estimFonts">
-                                <table class="table table-striped">
+                                <table class="table table-striped text-small">
                                     <thead class="bg-dark">
                                         <tr>
                                             <th>Product / Service</th>
@@ -154,7 +154,7 @@
                             <!-- /.col -->
                             <div class="col-6 col-12">
                                 <div class="table-responsive estimFonts">
-                                    <table class="table table-bordered table-sm">
+                                    <table class="table table-bordered table-sm text-small">
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
@@ -184,7 +184,7 @@
                         <div class="row no-print">
                             <div class="col-12 text-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
+                                    <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
                                         Action
                                     </button>
                                     <div class="dropdown-menu" role="menu" style="">

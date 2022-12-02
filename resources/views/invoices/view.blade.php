@@ -36,7 +36,7 @@
                                 </h4>
                             </div>
                         </div>
-                        <div class="row invoice-info mt-4">
+                        <div class="row invoice-info mt-4 text-small">
 
 
 
@@ -69,7 +69,7 @@
                             <div class="col-sm-4 invoice-col">
                                 <p class="mt-2"><strong>{{ $company->company }}</strong></p>
                                 <address class="text-muted">
-                                    Address: {{ $company->address_1 }}<br />
+                                    Address: {{ $company->address_1 }}
                                     {{ $company->address_2 }}<br>
                                     {{ $company->city }}, {{ $company->state }}<br>
                                     {{ $company->country }}, {{ $company->zipcode }}<br>
@@ -82,7 +82,7 @@
                                 <table class="table table-sm">
                                     <tbody>
                                         <tr>
-                                            <td style="border-top: none;"><b>Invoice Number</b></td>
+                                            <td style="border-top: none;"><b>Invoice No.</b></td>
                                             <td style="border-top: none;" class="text-right"># {{ $invoice->id }}</td>
                                         </tr>
                                         <tr>
@@ -100,15 +100,15 @@
                                             <td style="border-top: none;" class="text-right">
                                                 @if ($invoice->status == 'paid')
                                                     <button
-                                                        class="mt-3 btn btn-outline-success">{{ ucfirst($invoice->status) }}</button>
+                                                        class="mt-3 btn-sm btn btn-outline-success">{{ ucfirst($invoice->status) }}</button>
                                                 @endif
                                                 @if ($invoice->status == 'unpaid')
                                                     <button
-                                                        class="mt-3 btn btn-outline-danger">{{ ucfirst($invoice->status) }}</button>
+                                                        class="mt-3 btn-sm btn btn-outline-danger">{{ ucfirst($invoice->status) }}</button>
                                                 @endif
                                                 @if ($invoice->status == 'cancelled')
                                                     <button
-                                                        class="mt-3 btn btn-outline-warning">{{ ucfirst($invoice->status) }}</button>
+                                                        class="mt-3 btn-sm btn btn-outline-warning">{{ ucfirst($invoice->status) }}</button>
                                                 @endif
                                                 @if ($invoice->status == 'partial')
                                                     <button
@@ -126,7 +126,7 @@
 
                         <div class="row">
                             <div class="col-12 table-responsive estimFonts">
-                                <table class="table table-striped">
+                                <table class="table table-striped text-small">
                                     <thead class="bg-dark">
                                         <tr>
                                             <th>Product / Service</th>
@@ -161,7 +161,7 @@
                             <!-- /.col -->
                             <div class="col-6 col-12">
                                 <div class="table-responsive estimFonts">
-                                    <table class="table table-bordered table-sm">
+                                    <table class="table table-bordered table-sm text-small">
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
@@ -191,7 +191,7 @@
                         <div class="row no-print">
                             <div class="col-12 text-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
+                                    <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
                                         Action
                                     </button>
                                     <div class="dropdown-menu" role="menu" style="">
