@@ -76,7 +76,10 @@ Route::post('jobs/mark-unscheduled', [JobController::class, 'unschedule'])->name
 Route::post('jobs/assign-team', [JobController::class, 'assignTeam'])->name('jobs.assign');
 
 # Save Job Form
-Route::put('job/save/job-form/{id}', [JobController::class, 'saveJobForm'])->name('job.notes-add');
+Route::put('jobs/save/job-form/{id}', [JobController::class, 'saveJobForm'])->name('jobs.save.job-form');
+
+# Download Job Form
+Route::get('jobs/download/{jobid}/job-form/{formid}', [JobController::class, 'downloadJobForm'])->name('jobs.download.job-form');
 
 # Add Note Form Route
 Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'])->name('job.add-notes');

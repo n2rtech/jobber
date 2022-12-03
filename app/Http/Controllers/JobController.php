@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Job;
 use App\Models\JobForm;
+use App\Models\JobFormAnswer;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JobController extends Controller
 {
@@ -234,6 +236,46 @@ class JobController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         return view('jobs.view', compact('job', 'users', 'products'));
+    }
+
+    public function saveJobForm(Request $request, $id){
+        JobFormAnswer::where('job_form_id', $request->job_form_id)->delete();
+        if(!empty($request->question) && is_array($request->question)){
+            foreach($request->question as $key => $value){
+                $answer                             = new JobFormAnswer();
+                $answer->job_id                     = $id;
+                $answer->job_form_id                = $request->job_form_id;
+                $answer->job_form_question_id       = $key;
+
+                if(is_array($value['answer'])){
+                    $answer->answer_options         = $value['answer'];
+                }else{
+                    $answer->answer                 = $value['answer'];
+                }
+
+                $answer->save();
+            }
+        }
+        if($request->redirect == 'job'){
+            return redirect()->route('jobs.show', ['job' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
+        }else{
+            return redirect()->route('schedules.show', ['schedule' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
+        }
+
+    }
+
+    public function downloadJobForm($jobid, $formid){
+
+        $job                = Job::where('id', $jobid)->first();
+
+        if(!empty($job->job_forms) && is_array($job->job_forms)){
+            $job->forms     = JobForm::where('id', $formid)->get();
+        }else{
+            $job->forms     = [];
+        }
+        $data = ['job' => $job];
+        $pdf = Pdf::loadView('jobs.download', $data);
+        return $pdf->download('jobform.pdf');
     }
 
     /**

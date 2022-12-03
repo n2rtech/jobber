@@ -241,48 +241,68 @@
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
                                             <div class="card-tools">
-                                                <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a>
-                                                <a href="javascript:void(0)" class="btn btn-light btn-sm">Download</a>
+                                                {{-- <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a> --}}
+                                                <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
                                             </div>
                                         </div>
+                                        <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="job_form_id" value="{{ $form->id }}">
+                                            <input type="hidden" name="redirect" value="schedule">
                                         <div class="card-body">
                                             @foreach($form->questions as $question)
+
+                                                @php
+                                                $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
+                                                @endphp
                                                 <div class="form-group">
-                                                    <label>{{ $question->question }}</label>
+
+                                                    <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
+
                                                     @if($question->type == 'text')
-                                                        <input type="text" class="form-control form-control-sm" placeholder="Write Answer here">
+                                                        <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer }}" placeholder="Write Answer here">
                                                     @endif
+
                                                     @if($question->type == 'textarea')
-                                                        <textarea class="form-control form-control-sm" rows="3" placeholder="Write Answer here"></textarea>
+                                                        <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer }}</textarea>
                                                     @endif
+
                                                     @if($question->type == 'checkbox')
                                                         @foreach($question->options as $option)
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox">
-                                                                <label class="form-check-label" value="{{ $option->option }}">{{ $option->option }}</label>
+                                                            <div class="form-check" id="answer-{{ $question->id }}">
+                                                                <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }}>
+                                                                <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
                                                             </div>
                                                         @endforeach
                                                     @endif
 
                                                     @if($question->type == 'radio')
                                                         @foreach($question->options as $option)
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" value="{{ $option->option }}">
+                                                        <div class="form-check" id="answer-{{ $question->id }}">
+                                                            <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" {{ $option->id == $job_form_answer->answer ? 'checked' : '' }}>
                                                             <label class="form-check-label">{{ $option->option }}</label>
                                                           </div>
                                                         @endforeach
                                                     @endif
+
                                                     @if($question->type == 'dropdown')
-                                                    <select class="form-control form-control-sm">
+                                                    <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
                                                         <option value="">Choose One</option>
                                                         @foreach($question->options as $option)
-                                                            <option value="{{ $option->option }}">{{ $option->option }}</option>
+                                                            <option value="{{ $option->id }}" {{ $option->id == $job_form_answer->answer ? 'selected' : '' }}>{{ $option->option }}</option>
                                                         @endforeach
                                                     </select>
                                                     @endif
+
                                                 </div>
+
                                             @endforeach
                                         </div>
+                                        <div class="card-footer text-right">
+                                            <button type="submit" form="jobForm{{ $form->id }}" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Update</button>
+                                        </div>
+                                    </form>
                                     </div>
                                     @empty
                                     <p class="text-center mt-4"> No JobForm Found</p>
