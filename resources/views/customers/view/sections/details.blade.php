@@ -15,7 +15,7 @@
                         <tbody>
                             <tr>
                                 <th style="border-top: none;" width="40%">Address</th>
-                                <td class="text-right" style="border-top: none;">{{  getAddress($customer->id) }}</td>
+                                <td class="text-right" style="border-top: none;">{!!  getMapAddress($customer->id) !!}</td>
                             </tr>
                             <tr>
                                 <th style="border-top: none;" width="20%">Email</th>
