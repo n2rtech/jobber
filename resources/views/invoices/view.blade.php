@@ -165,7 +165,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
-                                                <td class="text-right">€ {{ $invoice->subtotal  }}</td>
+                                                <td class="text-right">€ {{ $invoice->products->sum('total')  }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-right">Discount {{ $invoice->discount_type == 'percentage' ? '('.$invoice->discount."%".')' : '' }}</td>
