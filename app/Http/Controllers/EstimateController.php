@@ -301,12 +301,15 @@ class EstimateController extends Controller
             $product->unit_price    = $estimate_product->unit_price;
             $product->tax_rate      = $selected_product->tax->rate;
             $product->tax_amount    = ($estimate_product->total * $selected_product->tax->rate / 100);
-            $product->total         = ($estimate_product->total + $estimate_product->total * $selected_product->tax->rate / 100);
+            $product->total         =  $estimate_product->total;
             $product->save();
         }
         $estimate->invoice_id       = $invoice->id;
         $estimate->status           = 'converted';
         $estimate->save();
+
+        $subtotal = InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
+        Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
         return redirect()->route('invoices.show', $invoice->id)->with('sucess', 'Estimate converted to Invoice Successfully');
 
