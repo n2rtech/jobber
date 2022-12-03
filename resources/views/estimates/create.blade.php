@@ -25,11 +25,21 @@
                                 @csrf
 
                                 <!-- Estimate Details Box Starts Here -->
-                                    @include('estimates.form-sections.estimate-details')
+                                @include('estimates.form-sections.estimate-details')
                                 <!-- Estimate Details Ends Here -->
+
+                                <!-- Line Items Box Starts Here -->
+                                @include('estimates.form-sections.line-items')
+                                <!-- Line Items Ends Here -->
+
+                                <!-- Notes and Terms Box Starts Here -->
+                                @include('estimates.form-sections.others')
+                                <!-- Notes and Terms Box Ends Here -->
+
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-sm btn-danger float-right" form="estimateForm">
+                                        <button type="submit" class="btn btn-sm btn-danger float-right"
+                                            form="estimateForm">
                                             <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
                                         </button>
                                     </div>
@@ -37,19 +47,12 @@
                             </form>
                         </div>
                     </div>
-                    <!-- Line Items Box Starts Here -->
-                    @include('estimates.form-sections.line-items')
-                    <!-- Line Items Ends Here -->
-
-                    <!-- Notes and Terms Box Starts Here -->
-                        @include('estimates.form-sections.others')
-                    <!-- Notes and Terms Box Ends Here -->
                 </div>
             </div>
         </div>
     </div>
-     <!-- Content Box Ends Here -->
-     @include('estimates.form-sections.shipping-address')
+    <!-- Content Box Ends Here -->
+    @include('estimates.form-sections.shipping-address')
 @endsection
 @push('scripts')
     @include('estimates.scripts')

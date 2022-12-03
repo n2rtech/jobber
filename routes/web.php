@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\CalendarSettingController;
 use App\Http\Controllers\CompanyController;
@@ -157,6 +159,14 @@ Route::get('customer/send-email/{id}', [UtilityController::class, 'sendEmailForm
 # Send Email Route
 Route::post('customer/email/send', [UtilityController::class, 'emailSend'])->name('customer.email-send');
 
+# My Account Routes
+Route::get('my-account', [MyAccountController::class, 'index'])->name('my-account');
+Route::post('my-account', [MyAccountController::class, 'update'])->name('my-account.update');
+
+# Change Password Routes
+Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
+Route::post('change-password', [ChangePasswordController::class, 'update'])->name('change-password.update');
+
 # Refresh Database Route
 Route::get('refresh-database', function () {
     Artisan::call('migrate:fresh');
@@ -167,3 +177,5 @@ Route::get('refresh-database', function () {
 
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
+
+

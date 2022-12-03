@@ -124,7 +124,7 @@ class EstimateController extends Controller
      */
     public function store(Request $request)
     {
-
+         // return $request->all();
         $estimate                           = new Estimate();
         $estimate->customer_id              = $request->customer_id;
         $estimate->user_id                  = Auth::user()->id;

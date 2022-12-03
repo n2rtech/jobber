@@ -127,7 +127,7 @@ class CustomerController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
-        $customer->type             = $request->type;
+        $customer->type             = $request->has('type') ? $request->type : 'customer';
         $customer->state            = $request->state;
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
@@ -202,7 +202,7 @@ class CustomerController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
-        $customer->type             = $request->type;
+        $customer->type             = $request->has('type') ? $request->type : 'customer';
         $customer->state            = $request->state;
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;

@@ -83,14 +83,14 @@ class SalesLeadController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->state            = $request->state;
-        $customer->type             = $request->type;
+        $customer->type             = $request->has('type') ? $request->type : 'customer';
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
 
-        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead added successfully!');
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Sales Lead added successfully!');
     }
 
     /**
@@ -150,14 +150,14 @@ class SalesLeadController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->state            = $request->state;
-        $customer->type             = $request->type;
+        $customer->type             = $request->has('type') ? $request->type : 'customer';
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>'.$customer->notes : $customer->notes;
         $customer->save();
 
-        return redirect()->route('sales-leads.index')->with('success', 'Sales Lead updated successfully!');
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Sales Lead updated successfully!');
     }
 
     /**

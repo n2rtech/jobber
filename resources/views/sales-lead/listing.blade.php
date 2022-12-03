@@ -33,7 +33,7 @@
                                 </button>
                                 <div class="dropdown-menu" role="menu" style="">
                                   <a class="dropdown-item" href="{{ route('sales-leads.edit', $lead->id) }}"><i class="fas fa-edit"></i> Edit</a>
-                                  <a class="dropdown-item" href="{{ route('sales-leads.show', $lead->id) }}"><i class="fas fa-eye"></i> View</a>
+                                  <a class="dropdown-item" href="{{ route('customers.show', $lead->id) }}"><i class="fas fa-eye"></i> View</a>
                                 </div>
                               </div>
                         </td>

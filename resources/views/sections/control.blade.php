@@ -6,14 +6,14 @@
             <!-- Authentication Links -->
             <div class="d-flex">
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="{{ route('my-account') }}">
                         My Account
                     </a>
                 </li>
             </div>
             <div class="d-flex">
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="{{ route('change-password') }}">
                         Change Password
                     </a>
                 </li>
