@@ -40,41 +40,53 @@
                     <label for="answer-{{ $question->id }}">Question: {{ $question->question }}</label>
 
                     @if($question->type == 'text')
-                        <p>Answer: {{ $job_form_answer->answer }}</p>
+                        <p>Answer: {{ $job_form_answer->answer ?? 'Not answered' }}</p>
                     @endif
 
                     @if($question->type == 'textarea')
-                        <p>Answer : {{ $job_form_answer->answer }}</p>
+                        <p>Answer : {{ $job_form_answer->answer ?? 'Not answered' }}</p>
                     @endif
 
                     @if($question->type == 'checkbox')
-                        @foreach($question->options as $option)
-                            @if(in_array($option->id, $job_form_answer->answer_options))
-                                <p>Answer : {{ $option->option }}</p>
-                            @else
-                                @continue
-                            @endif
-                        @endforeach
+                        @isset($job_form_answer->answer_options)
+                            @foreach($question->options as $option)
+                                @if(in_array($option->id, $job_form_answer->answer_options))
+                                    <p>Answer : {{ $option->option }}</p>
+                                @else
+                                    @continue
+                                @endif
+                            @endforeach
+                        @else
+                            <p>Answer : Not Answered</p>
+                        @endisset
                     @endif
 
                     @if($question->type == 'radio')
-                        @foreach($question->options as $option)
-                            @if($option->id == $job_form_answer->answer)
-                                <p>Answer : {{ $option->option }}</p>
-                            @else
-                                @continue
-                            @endif
-                        @endforeach
+                        @isset($job_form_answer->answer)
+                            @foreach($question->options as $option)
+                                @if($option->id == $job_form_answer->answer)
+                                    <p>Answer : {{ $option->option }}</p>
+                                @else
+                                    @continue
+                                @endif
+                            @endforeach
+                        @else
+                            <p>Answer : Not Answered</p>
+                        @endisset
                     @endif
 
                     @if($question->type == 'dropdown')
-                        @foreach($question->options as $option)
-                            @if($option->id == $job_form_answer->answer)
-                                <p>Answer : {{ $option->option }}</p>
-                            @else
-                                @continue
-                            @endif
-                        @endforeach
+                        @isset($job_form_answer->answer)
+                            @foreach($question->options as $option)
+                                @if($option->id == $job_form_answer->answer)
+                                    <p>Answer : {{ $option->option }}</p>
+                                @else
+                                    @continue
+                                @endif
+                            @endforeach
+                        @else
+                            <p>Answer : Not Answered</p>
+                        @endisset
                     @endif
                     </div>
                 @endforeach

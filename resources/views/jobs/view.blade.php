@@ -261,17 +261,17 @@
                                                     <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
 
                                                     @if($question->type == 'text')
-                                                        <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer }}" placeholder="Write Answer here">
+                                                        <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
                                                     @endif
 
                                                     @if($question->type == 'textarea')
-                                                        <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer }}</textarea>
+                                                        <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
                                                     @endif
 
                                                     @if($question->type == 'checkbox')
                                                         @foreach($question->options as $option)
                                                             <div class="form-check" id="answer-{{ $question->id }}">
-                                                                <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }}>
+                                                                <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
                                                                 <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
                                                             </div>
                                                         @endforeach
@@ -280,7 +280,7 @@
                                                     @if($question->type == 'radio')
                                                         @foreach($question->options as $option)
                                                         <div class="form-check" id="answer-{{ $question->id }}">
-                                                            <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" {{ $option->id == $job_form_answer->answer ? 'checked' : '' }}>
+                                                            <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
                                                             <label class="form-check-label">{{ $option->option }}</label>
                                                           </div>
                                                         @endforeach
@@ -290,7 +290,7 @@
                                                     <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
                                                         <option value="">Choose One</option>
                                                         @foreach($question->options as $option)
-                                                            <option value="{{ $option->id }}" {{ $option->id == $job_form_answer->answer ? 'selected' : '' }}>{{ $option->option }}</option>
+                                                            <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
                                                         @endforeach
                                                     </select>
                                                     @endif
