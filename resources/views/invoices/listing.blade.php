@@ -46,6 +46,7 @@
                                 <div class="dropdown-menu" role="menu" style="">
                                   <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
+                                   <a class="dropdown-item" href="{{ route('payments.show', $invoice->id) }}">Payments</a>
                                   <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Print</a>

@@ -23,7 +23,7 @@
                             <label for="amount" class="col-sm-4 col-form-label">{{ __('Amount') }}</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="amount" name="amount"
-                                    placeholder="Enter Amount" value="{{ $invoice->total - $invoice->payments->sum('amount') }}" required>
+                                    placeholder="Enter Amount" value="{{ $invoice->total - $invoice->payments->sum('amount') }}" min="0" step="any" required>
                             </div>
                         </div>
                         <div class="form-group row">

@@ -47,7 +47,8 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        return view('invoices.payments.index', compact('invoice'));
     }
 
     /**
@@ -78,8 +79,20 @@ class PaymentController extends Controller
         $payment->amount         = $request->amount;
         $payment->transaction_id = $request->transaction_id;
         $payment->save();
-        $invoice->paid           = $invoice->total - $payment->amount;
+
+        $invoice->paid           = $invoice->paid + $payment->amount;
         $invoice->save();
+
+
+        if($invoice->paid == $invoice->total){
+            $invoice->status           = 'paid';
+            $invoice->save();
+        }
+
+        if(($invoice->paid < $invoice->total) && ($invoice->paid > 0)){
+            $invoice->status           = 'partial';
+            $invoice->save();
+        }
 
         return redirect()->back()->with('success', 'Payment added successfully');
     }
@@ -92,6 +105,29 @@ class PaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $payment                 = Payment::find($id);
+        $invoice                 = Invoice::where('id', $payment->invoice_id)->first();
+        $paid                    = $invoice->paid - $payment->amount;
+        Invoice::where('id', $payment->invoice_id)->update(['paid' => $paid]);
+        $updated_invoice = Invoice::find($invoice->id);
+        if($updated_invoice->paid == $updated_invoice->total){
+            $updated_invoice->status           = 'paid';
+            $updated_invoice->save();
+        }
+
+        if($updated_invoice->paid == 0.00){
+            $updated_invoice->status           = 'unpaid';
+            $updated_invoice->save();
+        }
+
+        if(($updated_invoice->paid < $updated_invoice->total) && ($updated_invoice->paid > 0)){
+            $updated_invoice->status           = 'partial';
+            $updated_invoice->save();
+        }
+        $payment->delete();
+        return redirect()->back()->with('success', 'Payment deleted successfully');
+
+
+
     }
 }
