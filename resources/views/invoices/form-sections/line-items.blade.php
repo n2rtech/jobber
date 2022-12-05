@@ -66,7 +66,7 @@
                                             onchange="totalUpdate({{ $key }})" style="display: none">
                                             <option value="">Select Tax</option>
                                             @foreach ($tax_rates as $rate)
-                                                <option value="{{ $rate->rate }}" @if($rate->rate == $product->tax_rate) @endif>{{ $rate->name }}</option>
+                                                <option value="{{ $rate->rate }}" @if($rate->rate == $product->tax_rate) selected @endif>{{ $rate->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>

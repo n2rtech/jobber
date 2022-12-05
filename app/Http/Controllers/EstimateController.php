@@ -212,7 +212,6 @@ class EstimateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request->all();
         $estimate                           = Estimate::find($id);
         $estimate->customer_id              = $request->customer_id;
         $estimate->user_id                  = Auth::user()->id;
