@@ -141,7 +141,7 @@ tinymce.init({
                 @endforeach
             ],
             eventClick: function(info) {
-
+                console.log(info.event.start);
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
