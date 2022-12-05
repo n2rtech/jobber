@@ -22,6 +22,7 @@ use App\Http\Controllers\JobTitleController;
 use App\Http\Controllers\ManageTeamController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaxRateController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
 
@@ -182,5 +183,7 @@ Route::get('refresh-database', function () {
 
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
+
+Route::resource('test', TestController::class);
 
 

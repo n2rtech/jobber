@@ -92,8 +92,8 @@
                                             Send Confirmation
                                         </button>
                                         <div class="dropdown-menu confirmation">
-                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-email-template">Send Email</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-text-template">Send Text</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-email-template" onclick="gettemplate();">Send Email</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#modal-text-template" onclick="gettemplate();">Send Text</a>
                                         </div>
                                     </div>
                                     <div class="text-center">
@@ -315,6 +315,7 @@
             </div>
         </div>
     </section>
+
     <div class="modal fade" id="modal-email-template" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -325,12 +326,24 @@
               </button>
             </div>
             <div class="modal-body">
+                 <div class="form-group">
+                    <label for="email_address">Email Address</label>
+                    <input class="form-control" name="email_address" id="email_address">
+                </div>
                 <div class="form-group">
-                    <label for="subject">Subject</label>
+                    <label for="email_template">Template</label>
+                    <select class="form-control" name="email_template" id="email_template" onchange="gettemplate();">
+                        @foreach($template->contents as $content)
+                            <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email_subject">Subject</label>
                     <input class="form-control" name="email_subject" id="email_subject">
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
+                    <label for="email_message">Message</label>
                     <textarea class="form-control" name="email_message" id="email_message" rows="6"></textarea>
                 </div>
             </div>
@@ -371,7 +384,7 @@
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-    {{-- <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
     <script>
     tinymce.init({
         selector: 'textarea#email_message',
@@ -383,7 +396,7 @@
         'removeformat | help',
         content_style: 'body { font-family:roboto; font-size:16px }'
       });
-      </script> --}}
+      </script>
     <script>
         jQuery('#starts').datepicker();
     </script>
@@ -437,7 +450,7 @@
             $("#filterBox").slideToggle();
         });
 
-        gettemplate();
+
 
     });
 </script>
@@ -445,6 +458,7 @@
     function gettemplate(){
         var formData = {
                     id: '{{ $job->id }}',
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -457,9 +471,12 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data.message);
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
                         $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        $("#modal-email-template .modal-body #email_message").val(data.message);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
                         $("#modal-text-template .modal-body #text_message").html(data.message);
                     },
                     error: function(data) {
@@ -517,7 +534,8 @@
 var formData = {
      job_id: '{{ $job->id }}',
      subject: $("#modal-email-template .modal-body #email_subject").val(),
-     message: $("#modal-email-template .modal-body #email_message").val(),
+     email: $("#modal-email-template .modal-body #email_address").val(),
+     message: tinymce.get("email_message").getContent(),
      text_message: $("#modal-email-template .modal-body #text_message").val(),
      medium: value,
  };

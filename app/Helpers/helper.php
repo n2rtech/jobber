@@ -201,6 +201,8 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{COMPANY_ADDRESS}}', getCompanyAddress($company->id) , $message);
            $message     = str_replace('{{COMPANY_VAT}}', $company->vat , $message);
            $message     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $message);
+           $path        = asset('dist/img/logo-dark.png');
+           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width="26%"></img>' , $message);
 
            $message     = str_replace('{{CUSTOMER_NAME}}', $job->customer->name , $message);
            $message     = str_replace('{{CUSTOMER_EMAIL}}',$job->customer->email , $message);
