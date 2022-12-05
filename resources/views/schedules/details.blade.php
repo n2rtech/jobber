@@ -105,10 +105,10 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Booking Status</label>
                                                     <select name="booking_status" id="booking_status" class="form-control" onchange="assignStatus(this.value);" style="width: 100%">
-                                                        <option value="pending">Pending</option>
-                                                        <option value="provisional">Provisional</option>
-                                                        <option value="confirmed">Confirmed</option>
-                                                        <option value="completed">Completed</option>
+                                                        <option value="pending" @if($job->status == 'pending') selected @endif>Pending</option>
+                                                        <option value="provisional" @if($job->status == 'provisional') selected @endif>Provisional</option>
+                                                        <option value="confirmed" @if($job->status == 'confirmed') selected @endif>Confirmed</option>
+                                                        <option value="completed" @if($job->status == 'completed') selected @endif>Completed</option>
                                                     </select>
                                                     <small id="mark_complete"></small>
                                                 </div>
@@ -119,7 +119,7 @@
                                                     <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);" style="width: 100%">
                                                         <option value="">Choose Team Member</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        <option value="{{ $user->id }}" @if($job->user_id == $user->id) selected @endif>{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <small id="assign_message"></small>
