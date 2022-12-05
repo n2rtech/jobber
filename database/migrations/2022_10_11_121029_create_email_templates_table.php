@@ -17,11 +17,6 @@ return new class extends Migration
             $table->id();
             $table->enum('type', ['jobs', 'estimates', 'invoices', 'standard']);
             $table->enum('mode', ['confirmation', 'follow-up', 'standard']);
-            $table->longText('subject')->nullable();
-            $table->longText('message')->nullable();
-            $table->longText('default_subject')->nullable();
-            $table->longText('default_message')->nullable();
-            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

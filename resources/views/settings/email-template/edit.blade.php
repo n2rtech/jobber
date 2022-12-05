@@ -37,33 +37,39 @@
             @csrf
             @method('PUT')
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="title">Subject</label>
-                                <input type="text" class="form-control" id="subject" name="subject"
-                                    placeholder="EnterSubject here" value="{{ old('subject', $template->subject) }}">
-                                    @error('subject')
-                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="title">Message</label>
-                                <textarea class="form-control" id="message" name="message" placeholder="Enter Message here" rows="6">{!! $template->message!!}</textarea>
-                                @error('message')
-                                <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="setDefaultTemplate({{ $template->id }});">DEFAULT</button>
-                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-variable">INSERT VARIABLE</button>
-                                <button type="submit" class="btn btn-danger float-right" form="templateForm">
-                                    <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
-                                </button>
+                <div class="col-sm-12" id="template-row">
+                    @foreach($template->contents as $key => $content)
+                        <div class="card" id="template-card{{ $key }}">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="template_name{{ $key }}">Template Name</label>
+                                    <input type="text" class="form-control" id="template_name{{ $key }}" name="template[{{ $key }}][template_name]"
+                                        placeholder="Enter Template Name here" value="{{ old('template_name', $content->template_name) }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject{{ $key }}">Subject</label>
+                                    <input type="text" class="form-control" id="subject{{ $key }}" name="template[{{ $key }}][subject]"
+                                        placeholder="Enter Subject here" value="{{ old('subject', $content->subject) }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message{{ $key }}">Message</label>
+                                    <textarea class="form-control" id="message{{ $key }}" name="template[{{ $key }}][message]" placeholder="Enter Message here" rows="6" required>{!! $content->message!!}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-variable" onclick="$('#fieldrow').val({{ $key }});">INSERT VARIABLE</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"  onclick="deleteTemplate({{ $key }})"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-right mb-5">
+                    <button type="button" class="btn btn-primary" onclick="addTemplate();">Add Template</button>
+                    <button type="submit" class="btn btn-danger" form="templateForm">
+                        <i class="btn-icon fas fa-save"></i> {{ __('Save') }}
+                    </button>
                 </div>
             </div>
         </form>

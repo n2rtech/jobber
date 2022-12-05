@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailTemplate;
+use App\Models\EmailTemplateContent;
 use Illuminate\Http\Request;
 
 class EmailTemplateController extends Controller
@@ -75,17 +76,26 @@ class EmailTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'subject' => 'required',
-            'message' => 'required',
-        ]);
 
-        $template = EmailTemplate::find($id);
-        $template->subject = $request->subject;
-        $template->message = $request->message;
-        $template->save();
+        EmailTemplateContent::where('email_template_id', $id)->delete();
 
-        return redirect()->route('email-templates.index')->with('success', 'Email Template Updated Successfully!');
+        if(!empty($request->template) && is_array($request->template)){
+            foreach($request->template as $key => $value){
+                $template                           = new EmailTemplateContent();
+                $template->email_template_id        = $id;
+                $template->template_name            = $value['template_name'];
+                $template->subject                  = $value['subject'];
+                $template->message                  = $value['message'];
+                $template->save();
+            }
+        }
+
+        // $template = EmailTemplate::find($id);
+        // $template->subject = $request->subject;
+        // $template->message = $request->message;
+        // $template->save();
+
+        return redirect()->route('email-templates.index')->with('success', 'Email Templates Updated Successfully!');
     }
 
     /**

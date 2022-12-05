@@ -11,7 +11,12 @@ class EmailTemplate extends Model
 
     protected $table        = 'email_templates';
 
-    protected $fillable     = ['type', 'mode', 'subject', 'message', 'default', 'status'];
+    protected $fillable     = ['type', 'mode'];
+
+    public function contents()
+    {
+        return $this->hasMany(EmailTemplateContent::class);
+    }
 
     public $timestamps      = true;
 }

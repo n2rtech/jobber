@@ -8,6 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="fieldrow" value="0">
                 <div class="form-group">
                     <label for="insert_into">Insert Into</label>
                     <select class="custom-select" id="insert_into">
