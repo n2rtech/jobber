@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailTemplate;
+use App\Models\EmailTemplateContent;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Product;
@@ -30,10 +31,11 @@ class ScheduleController extends Controller
         $setting            = Setting::where('type', 'calendar')->value('value');
         $days               = Setting::where('type', 'calendar')->value('days');
         $all_days           = ["0", "1", "2", "3", "4", "5", "6"];
-        $result        = array_diff($all_days, $days);
-         $hidden_days = array_values($result);
+        $result             = array_diff($all_days, $days);
+        $hidden_days        = array_values($result);
+        $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
 
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days'));
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template'));
     }
 
     /**
@@ -115,7 +117,8 @@ class ScheduleController extends Controller
         foreach($job->customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
-        return view('schedules.details', compact('job', 'users', 'products'));
+        $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        return view('schedules.details', compact('job', 'users', 'products', 'template'));
     }
 
     /**
@@ -154,10 +157,12 @@ class ScheduleController extends Controller
 
     public function emailTemplate(Request $request)
     {
-        $template = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        // return $request->all();
+        $job      = Job::where('id', $request->id)->first();
+        $template = EmailTemplateContent::where('id', $request->email_template)->first();
         $subject  = getSubject($template->subject, $request->id);
         $message  = getMessage($template->message, $request->id);
 
-        return response()->json(['subject' => $subject, 'message' => $message]);
+        return response()->json(['email' => $job->customer->email, 'subject' => $subject, 'message' => $message]);
     }
 }

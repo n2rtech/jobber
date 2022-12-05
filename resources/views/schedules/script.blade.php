@@ -164,6 +164,7 @@ tinymce.init({
 
                 var formData = {
                     id: info.event.extendedProps.jobid,
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -176,8 +177,11 @@ tinymce.init({
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
                         $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        tinyMCE.get('email_message').setContent(data.message);
+                        var  emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
                         $("#modal-text-template .modal-body #text_message").html(data.message);
                     },
                     error: function(data) {
@@ -486,7 +490,8 @@ tinymce.init({
        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             subject: $("#modal-email-template .modal-body #email_subject").val(),
-            message: $("#modal-email-template .modal-body #email_message").html(),
+            email: $("#modal-email-template .modal-body #email_address").val(),
+            message: tinymce.get("email_message").getContent(),
             text_message: $("#modal-email-template .modal-body #text_message").val(),
             medium: value,
         };
@@ -647,5 +652,36 @@ tinymce.init({
     function updateTimeInput(element){
         var previoustim = $(element).val();
         $(element).val(previoustim+':00');
+    }
+</script>
+<script>
+    function changeTemplate(element){
+        var formData = {
+                    id: $("#successModal .modal-body .job_id").text(),
+                    email_template: $(element).val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
     }
 </script>
