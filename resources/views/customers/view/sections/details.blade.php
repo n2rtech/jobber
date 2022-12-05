@@ -10,27 +10,31 @@
         <div class="row">
             <div class="col-sm-12">
 
-                <div class="table-responsive">
+                <div class="table-responsive sm-customers">
                     <table class="table table-sm">
                         <tbody>
                             <tr>
-                                <th style="border-top: none;" width="40%">Address</th>
-                                <td class="text-right" style="border-top: none;">{!!  getMapAddress($customer->id) !!}</td>
+                                <th style="border-top: none;" width="40%">Address 1</th>
+                                <th class="text-right" style="border-top: none;">Address 2</th>
                             </tr>
                             <tr>
-                                <th style="border-top: none;" width="20%">Email</th>
-                                <td class="text-right" style="border-top: none;">{{  $customer->email ?? 'Not Found' }}</td>
+                                <td style="border-top: none;" width="40%">{!!  getMapAddress($customer->id) !!}</td>
+                                <td class="text-right" style="border-top: none;">test</td>
                             </tr>
                             <tr>
-                                <th style="border-top: none;" width="20%">Phone</th>
+                                <th style="border-top: none;" width="40%">Email</th>
+                                <th class="text-right" style="border-top: none;">Phone</th>
+                            </tr>
+                            <tr>
+                                <td style="border-top: none;" width="40%">{{  $customer->email ?? 'Not Found' }}</td>
                                 <td class="text-right" style="border-top: none;">@isset($customer->phone) {{ $customer->phone }} @isset($customer->phone_name) ({{ $customer->phone_name }}) @endisset @else {{ __('Not Found') }}  @endisset</td>
                             </tr>
                             <tr>
-                                <th style="border-top: none;" width="20%">Mobile 1</th>
-                                <td class="text-right" style="border-top: none;">@isset($customer->mobile_1) {{ $customer->mobile_1 }} @isset($customer->mobile_1_name) ({{ $customer->mobile_1_name }}) @endisset @else {{ __('Not Found') }}  @endisset</td>
+                                <th style="border-top: none;" width="40%">Mobile 1</th>
+                                <th class="text-right" style="border-top: none;">Mobile 2</th>
                             </tr>
                             <tr>
-                                <th style="border-top: none;" width="20%">Mobile 2</th>
+                                <td style="border-top: none;" width="40%">@isset($customer->mobile_1) {{ $customer->mobile_1 }} @isset($customer->mobile_1_name) ({{ $customer->mobile_1_name }}) @endisset @else {{ __('Not Found') }}  @endisset</td>
                                 <td class="text-right" style="border-top: none;">@isset($customer->mobile_2) {{ $customer->mobile_2 }} @isset($customer->mobile_2_name) ({{ $customer->mobile_2_name }}) @endisset @else {{ __('Not Found') }}  @endisset</td>
                             </tr>
                         </tbody>

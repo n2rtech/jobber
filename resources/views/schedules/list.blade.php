@@ -67,14 +67,14 @@
                             data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}">
                                 <div class="direct-chat-infos">
-                                    <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
+                                    <span class="direct-chat-name float-left"> <b>Name</b></span>
+                                    <span class="direct-chat-timestamp float-right">{{ $unscheduled_job->customer->name }}</span>
                                     <span class="clearfix"></span>
-                                    <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
+                                    <span class="direct-chat-name float-left"><b>City</b></span>
+                                    <span class="direct-chat-timestamp float-right">{{ $unscheduled_job->customer->city }}</span>
                                     <span class="clearfix"></span>
-                                    <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
+                                    <span class="direct-chat-name float-left"><b>Job</b></span>
+                                    <span class="direct-chat-timestamp float-right">{{ $unscheduled_job->jobTitle->title }}</span>
                                     <span class="clearfix"></span>
                                 </div>
                            </div>
@@ -89,14 +89,14 @@
                             data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}" class="hidden-sm schedule-xs">
                                <button class="direct-chat-infos btn-block" data-toggle="modal" data-target="#schedule-modal" onclick="$('#job_id').val($(this).parent().attr('data-jobid'))">
-                                    <span class="direct-chat-name float-left"> <small><b>Name</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->name }}</small></span>
+                                    <span class="direct-chat-name float-left"> <b>Name</b></span>
+                                    <span class="direct-chat-timestamp float-right">{{ $unscheduled_job->customer->name }}</span>
                                     <span class="clearfix"></span>
-                                    <span class="direct-chat-name float-left"> <small><b>City</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->customer->city }}</small></span>
+                                    <span class="direct-chat-name float-left"> <b>City</b></span>
+                                    <span class="direct-chat-timestamp float-right"> {{ $unscheduled_job->customer->city }}</span>
                                     <span class="clearfix"></span>
-                                    <span class="direct-chat-name float-left"> <small><b>Job</b></small></span>
-                                    <span class="direct-chat-timestamp float-right"> <small>{{ $unscheduled_job->jobTitle->title }}</small></span>
+                                    <span class="direct-chat-name float-left"> <b>Job</b></span>
+                                    <span class="direct-chat-timestamp float-right"> {{ $unscheduled_job->jobTitle->title }}</span>
                                     <span class="clearfix"></span>
                                 </button>
                            </div>

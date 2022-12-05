@@ -392,7 +392,7 @@ a.nav-link .active{
     font-size: 16px;
 }
 .customer-jobs-tabs table tr th, .customer-jobs-tabs table tr td{
-    font-size: 14px;
+    font-size: 16px;
     padding: 8px 12px;
 }
 .customer-jobs-tabs table thead th{
@@ -498,6 +498,15 @@ a.nav-link .active{
 #schedule_page .fc .fc-timegrid-slot {
     height: 43px !important;
 }
+#schedule_page .fc .fc-timegrid-slot-label-cushion, #schedule_page .fc .fc-col-header-cell-cushion{
+    font-size: 15px;
+}
+.direct-chat-infos span{
+    font-size: 13px;
+}
+.direct-chat-infos span b{
+    font-weight: normal;
+}
 .usertype {
     margin-left: -15px;
     margin-top: 5px;
@@ -553,6 +562,12 @@ a.nav-link .active{
     pointer-events: none;
     padding: 0 10px 0 0;
     opacity: 1 !important;
+}
+.sm-customers tr th{
+    padding: 5px 0px;
+}
+.sm-customers tr td{
+    padding: 0;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
@@ -672,8 +687,12 @@ a.nav-link .active{
     font-size: 18px;
 }
 .jobviewPop .scButtons button{
-    font-size: 15px;
+    font-size: 14px;
     width: 46%;
+}
+.view-job-page .jobviewPop .vcButtons a{
+    width: 47%;
+    font-size: 13px;
 }
 .jobviewPop h5 {
     font-size: 16px;

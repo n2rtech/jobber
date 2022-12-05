@@ -20,13 +20,13 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 col-6">
                                 <h5><strong>{{ $job->customer->name }}</strong></h5>
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
                                 <small>{{ getAddress($job->customer_id) }}</small>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 col-6">
                                 <div class="float-right">
                                     @isset($job->start)
                                     <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
