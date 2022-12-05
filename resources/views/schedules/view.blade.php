@@ -73,13 +73,13 @@
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Time</label>
-                                <input id="start_time" type="time" class="form-control" onchange="updateTimeInput(this)">
+                                <input id="start_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">
                             </div>
                         </div>
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Time</label>
-                                <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)">
+                                <input id="end_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">

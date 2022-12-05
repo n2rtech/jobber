@@ -59,7 +59,7 @@
 
                             <div class="form-group">
                                 <label for="timing_starts">Timing Starts at</label>
-                                <input type="text" class="form-control" id="timing_starts"
+                                <input type="time" class="form-control" id="timing_starts"
                                     name="timing_starts" placeholder="Enter Start Timing"
                                     value="{{ $setting['timing_starts'] }}">
                                 @error('timing_starts')
@@ -69,7 +69,7 @@
 
                             <div class="form-group">
                                 <label for="timing_starts">Timing Ends at</label>
-                                <input type="text" class="form-control" id="timing_ends"
+                                <input type="time" class="form-control" id="timing_ends"
                                     name="timing_ends" placeholder="Enter End Timing"
                                     value="{{ $setting['timing_ends'] }}">
                                 @error('timing_ends')
