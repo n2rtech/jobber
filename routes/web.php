@@ -20,6 +20,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobFormController;
 use App\Http\Controllers\JobTitleController;
 use App\Http\Controllers\ManageTeamController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaxRateController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
@@ -87,10 +88,11 @@ Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'
 # Add Note Route
 Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name('job.notes-add');
 
-
-
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);
+
+# Payments Route
+Route::resource('payments', PaymentController::class);
 
 # Estimates Route
 Route::resource('estimates', EstimateController::class);

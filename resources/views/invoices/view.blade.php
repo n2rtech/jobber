@@ -198,7 +198,7 @@
                                       <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                       <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
                                       <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                      <a class="dropdown-item" href="javascript:void(0)"> Add Payment</a>
+                                      <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#modal-payment"> Add Payment</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Print</a>
                                     </div>
                                   </div>
@@ -210,6 +210,7 @@
             </div><!-- /.row -->
         </div>
     </section>
+    @include('invoices.add-payment')
 @endsection
 @push('scripts')
 @if(Request::get('print'))

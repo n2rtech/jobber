@@ -47,5 +47,10 @@ class Customer extends Model
         return $this->hasMany(JobNote::class)->orderBy('id', 'desc');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
 
 }
