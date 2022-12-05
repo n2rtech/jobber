@@ -41,7 +41,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item hidden-xs">
                     <a href="{{ route('schedules.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-calendar-alt"></i>
                         <p>

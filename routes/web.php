@@ -20,7 +20,9 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobFormController;
 use App\Http\Controllers\JobTitleController;
 use App\Http\Controllers\ManageTeamController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaxRateController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,13 +89,26 @@ Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'
 # Add Note Route
 Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name('job.notes-add');
 
-
-
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);
 
+# Invoice Templates
+Route::post('invoices/email-template', [InvoiceController::class, 'emailTemplate'])->name('invoices.email-template');
+
+# Send Invoice Route
+Route::post('invoices/send-confirmation', [InvoiceController::class, 'confirmation'])->name('invoices.confirmation');
+
+# Payments Route
+Route::resource('payments', PaymentController::class);
+
 # Estimates Route
 Route::resource('estimates', EstimateController::class);
+
+# Estimates Templates
+Route::post('estimates/email-template', [EstimateController::class, 'emailTemplate'])->name('estimates.email-template');
+
+# Send Estimate Route
+Route::post('estimates/send-confirmation', [EstimateController::class, 'confirmation'])->name('estimates.confirmation');
 
 Route::get('estimates/convert/{id}', [EstimateController::class, 'convertToInvoice'])->name('estimates.convert');
 
@@ -180,5 +195,7 @@ Route::get('refresh-database', function () {
 
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
+
+Route::resource('test', TestController::class);
 
 

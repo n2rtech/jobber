@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendInvoiceConfirmation;
 use App\Models\CompanyDetail;
 use App\Models\Customer;
+use App\Models\EmailTemplate;
+use App\Models\EmailTemplateContent;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
@@ -12,6 +15,7 @@ use App\Models\TaxRate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -85,7 +89,11 @@ class InvoiceController extends Controller
 
         $invoices                   = $invoices->orderBy('id', 'desc')->get();
 
-        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box'));
+        $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
+
+        $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
+
+        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box', 'template_confirmation', 'template_followup'));
     }
 
     /**
@@ -282,5 +290,22 @@ class InvoiceController extends Controller
         InvoiceProduct::where('invoice_id', $id)->delete();
         Invoice::find($id)->delete();
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully!');
+    }
+
+    public function emailTemplate(Request $request)
+    {
+        $invoice = Invoice::where('id', $request->id)->first();
+        $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $subject  = getInvoiceSubject($template->subject, $request->id);
+        $message  = getInvoiceMessage($template->message, $request->id);
+
+        return response()->json(['email' => $invoice->customer->email, 'subject' => $subject, 'message' => $message]);
+    }
+
+    public function confirmation(Request $request){
+        $invoice = Invoice::where('id', $request->invoice_id)->first();
+        Mail::to($request->email_address)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
+        return redirect()->back()->with('success', 'Invoice has been sent for Invoice No. '.$invoice->id.' !');
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\JobBookingConfirmation;
 use App\Models\Customer;
+use App\Models\EmailTemplate;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Job;
@@ -235,7 +236,8 @@ class JobController extends Controller
         foreach($job->customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
-        return view('jobs.view', compact('job', 'users', 'products'));
+        $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        return view('jobs.view', compact('job', 'users', 'products', 'template'));
     }
 
     public function saveJobForm(Request $request, $id){
@@ -408,7 +410,7 @@ class JobController extends Controller
         Job::where('id', $request->job_id)->update(['status' => 'provisional']);
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
-            Mail::to($job->customer->email)->send(new JobBookingConfirmation($job, $request->message, $request->subject));
+            Mail::to($request->email)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
             return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
         }else{
             return response()->json(['success' => 'Booking Confirmation has been sent via Text!']);

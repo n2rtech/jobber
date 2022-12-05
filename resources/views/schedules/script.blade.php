@@ -24,6 +24,9 @@ tinymce.init({
 {{-- <script src="../dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
 <script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
     $(function() {
 
         /* initialize the external events
@@ -91,6 +94,8 @@ tinymce.init({
                     jobstatus: $(eventEl).data('jobstatus'),
                     location: $(eventEl).data('location'),
                     team: $(eventEl).data('team'),
+                    teamcolor: $(eventEl).data('teamcolor'),
+                    teamname: $(eventEl).data('teamname'),
                     city: $(eventEl).data('city'),
                     href: $(eventEl).data('href'),
                     show: $(eventEl).data('show'),
@@ -132,6 +137,8 @@ tinymce.init({
                             ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
                         jobid: '{{ $job->id }}',
                         team: '{{ $job->user_id }}',
+                        teamcolor: '{{$job->user->color ?? "red" }}',
+                        teamname: '{{$job->user->name ?? "Not Assigned" }}',
                         jobstatus: '{{ $job->status }}',
                         location: '{{ getAddress($job->customer_id) }}',
                         href: '{{ route('jobs.edit', $job->id) }}',
@@ -164,6 +171,7 @@ tinymce.init({
 
                 var formData = {
                     id: info.event.extendedProps.jobid,
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -176,8 +184,11 @@ tinymce.init({
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
                         $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        tinyMCE.get('email_message').setContent(data.message);
+                        var  emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
                         $("#modal-text-template .modal-body #text_message").html(data.message);
                     },
                     error: function(data) {
@@ -191,14 +202,19 @@ tinymce.init({
 
                 var event = arg.event;
 
-                var eventHtml = '<div class="row" id="job_event_'+ event.extendedProps.jobid +'">';
+                var eventHtml = '<div class="wallThumbs row" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
-                eventHtml += '<span>'+event.extendedProps.city+'</span><br>';
-                eventHtml += '<span>' + event.title + '</span><br>';
+                eventHtml += '<span class="wallTitle" style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
+                eventHtml += '<span class="wallName">'+event.extendedProps.city+'</span><br>';
+                eventHtml += '<span class="wallEvent">' + event.title + '</span><br>';
                 if(event.end){
-                        eventHtml += '<span id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
+                        eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
+                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="' + event.extendedProps.teamname + '">';
+                eventHtml += '<button style="color: ' + event.extendedProps.teamcolor + '" class="btn btn-link" type="button" disabled>'
+                eventHtml += '<i class="fas fa-dot-circle"></i>'
+                eventHtml += '</button>'
+                eventHtml += '</span>'
                 eventHtml += '</div>';
                 eventHtml += '</div>';
 
@@ -486,7 +502,8 @@ tinymce.init({
        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             subject: $("#modal-email-template .modal-body #email_subject").val(),
-            message: $("#modal-email-template .modal-body #email_message").html(),
+            email: $("#modal-email-template .modal-body #email_address").val(),
+            message: tinymce.get("email_message").getContent(),
             text_message: $("#modal-email-template .modal-body #text_message").val(),
             medium: value,
         };
@@ -647,5 +664,36 @@ tinymce.init({
     function updateTimeInput(element){
         var previoustim = $(element).val();
         $(element).val(previoustim+':00');
+    }
+</script>
+<script>
+    function changeTemplate(element){
+        var formData = {
+                    id: $("#successModal .modal-body .job_id").text(),
+                    email_template: $(element).val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('schedules.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
     }
 </script>

@@ -8,12 +8,24 @@
           </button>
         </div>
         <div class="modal-body">
+             <div class="form-group">
+                <label for="email_address">Email Address</label>
+                <input class="form-control" name="email_address" id="email_address">
+            </div>
             <div class="form-group">
-                <label for="subject">Subject</label>
+                <label for="email_template">Template</label>
+                <select class="form-control" name="email_template" id="email_template" onchange="changeTemplate(this);">
+                    @foreach($template->contents as $content)
+                        <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email_subject">Subject</label>
                 <input class="form-control" name="email_subject" id="email_subject">
             </div>
             <div class="form-group">
-                <label for="message">Message</label>
+                <label for="email_message">Message</label>
                 <textarea class="form-control" name="email_message" id="email_message" rows="6"></textarea>
             </div>
         </div>

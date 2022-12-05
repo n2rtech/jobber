@@ -271,6 +271,7 @@ a.nav-link .active{
     background-color: black !important;
     color: white !important;
     padding: 2px;
+    height: 87px;
 }
 .unscheduled-card {
     padding: 10px 6px 0px 6px;
@@ -391,7 +392,7 @@ a.nav-link .active{
     font-size: 16px;
 }
 .customer-jobs-tabs table tr th, .customer-jobs-tabs table tr td{
-    font-size: 14px;
+    font-size: 16px;
     padding: 8px 12px;
 }
 .customer-jobs-tabs table thead th{
@@ -476,6 +477,97 @@ a.nav-link .active{
 }
 #dataTable_wrapper .dt-buttons.btn-group.flex-wrap{
     display: none;
+}
+.label-small{
+    padding-bottom: 0px;
+    font-size: 90%;
+}
+.text-small{
+    font-size: 80%;
+    font-weight: 400 !important;
+}
+.ctrl-label::before, .ctrl-label::after{
+    top: 0px !important;
+}
+.wallThumbs .wallTitle{
+    font-size: 13px;
+}
+.wallThumbs .wallName, .wallThumbs .wallEvent, .wallThumbs .wallTime{
+    font-size: 12px;
+}
+#schedule_page .fc .fc-timegrid-slot {
+    height: 43px !important;
+}
+#schedule_page .fc .fc-timegrid-slot-label-cushion, #schedule_page .fc .fc-col-header-cell-cushion{
+    font-size: 15px;
+}
+.direct-chat-infos span{
+    font-size: 13px;
+}
+.direct-chat-infos span b{
+    font-weight: normal;
+}
+.usertype {
+    margin-left: -15px;
+    margin-top: 5px;
+}
+.usertype .radio label {
+    padding-left: 0;
+}
+.usertype .radio label input {
+    opacity: 0;
+}
+.usertype label > input + .forcustom {
+    cursor: pointer;
+    background-color: #fff;
+    border-color: #000;
+    font-size: 17px;
+    padding: 8px 30px;
+    line-height: 22px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.usertype label > input:checked + .red {
+    border: none;
+    color: #fff;
+    background: red;
+    border: 1px solid red;
+}
+.usertype label > input:checked + .blue {
+    border: none;
+    color: #fff;
+    background: blue;
+    border: 1px solid blue;
+}
+.usertype label > input:checked + .green {
+    border: none;
+    color: #fff;
+    background: green;
+    border: 1px solid green;
+}
+.usertype label > input:checked + .violet {
+    border: none;
+    color: #fff;
+    background: violet;
+    border: 1px solid violet;
+}
+.onTip{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99999;
+}
+.onTip button{
+    pointer-events: none;
+    padding: 0 10px 0 0;
+    opacity: 1 !important;
+}
+.sm-customers tr th{
+    padding: 5px 0px;
+}
+.sm-customers tr td{
+    padding: 0;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
@@ -595,8 +687,12 @@ a.nav-link .active{
     font-size: 18px;
 }
 .jobviewPop .scButtons button{
-    font-size: 15px;
+    font-size: 14px;
     width: 46%;
+}
+.view-job-page .jobviewPop .vcButtons a{
+    width: 47%;
+    font-size: 13px;
 }
 .jobviewPop h5 {
     font-size: 16px;
@@ -682,16 +778,4 @@ a.nav-link .active{
     min-height: 255px;
     padding-bottom: 0;
 }
-}
-.label-small{
-    padding-bottom: 0px;
-    font-size: 90%;
-}
-.text-small{
-    font-size: 80%;
-    font-weight: 400 !important;
-}
-
-.ctrl-label::before, .ctrl-label::after{
-    top: 0px !important;
 }

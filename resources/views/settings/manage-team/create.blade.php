@@ -97,6 +97,12 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="color">Set color</label>
+                                <div class="col-sm-9">
+                                    <input type="color" id="color" name="color" class="form-control" placeholder="Enter color code" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

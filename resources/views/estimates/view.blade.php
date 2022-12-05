@@ -191,7 +191,6 @@
                                       <a class="dropdown-item" href="{{ route('estimates.edit', $estimate->id) }}"> Edit</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Download PDF</a>
                                       <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                      <a class="dropdown-item" href="javascript:void(0)"> Add Payment</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Print</a>
                                     </div>
                                   </div>
