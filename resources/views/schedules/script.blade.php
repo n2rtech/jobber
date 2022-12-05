@@ -206,7 +206,7 @@ tinymce.init({
                 if(event.end){
                         eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
-                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="Disabled tooltip">';
+                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="Red">';
                 eventHtml += '<button style="color: red" class="btn btn-link" type="button" disabled>'
                 eventHtml += '<i class="fas fa-dot-circle"></i>'
                 eventHtml += '</button>'
