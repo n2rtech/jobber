@@ -148,6 +148,43 @@
                         <div class="card-body">
                             <h4 class="mb-3">{{ __('Preset permission levels') }}</h4>
                             <div class="form-group">
+                                <label class="control-label">Set color</label>
+                                <ul class="list-inline usertype">
+                                    <li class="list-inline-item">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" class="status-type" name="status_type" value="1" checked>
+                                                <span class="forcustom red">RED</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" class="status-type" name="status_type" value="0">
+                                                <span class="forcustom blue">BLUE</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" class="status-type" name="status_type" value="0">
+                                                <span class="forcustom green">GREEN</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" class="status-type" name="status_type" value="0">
+                                                <span class="forcustom violet">VIOLET</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input
                                         class="custom-control-input custom-control-input-success custom-control-input-outline"

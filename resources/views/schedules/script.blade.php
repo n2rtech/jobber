@@ -24,6 +24,9 @@ tinymce.init({
 {{-- <script src="../dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
 <script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
     $(function() {
 
         /* initialize the external events
@@ -191,14 +194,19 @@ tinymce.init({
 
                 var event = arg.event;
 
-                var eventHtml = '<div class="row" id="job_event_'+ event.extendedProps.jobid +'">';
+                var eventHtml = '<div class="wallThumbs row" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
-                eventHtml += '<span>'+event.extendedProps.city+'</span><br>';
-                eventHtml += '<span>' + event.title + '</span><br>';
+                eventHtml += '<span class="wallTitle" style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
+                eventHtml += '<span class="wallName">'+event.extendedProps.city+'</span><br>';
+                eventHtml += '<span class="wallEvent">' + event.title + '</span><br>';
                 if(event.end){
-                        eventHtml += '<span id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
+                        eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
+                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="Disabled tooltip">';
+                eventHtml += '<button style="color: red" class="btn btn-link" type="button" disabled>'
+                eventHtml += '<i class="fas fa-dot-circle"></i>'
+                eventHtml += '</button>'
+                eventHtml += '</span>'
                 eventHtml += '</div>';
                 eventHtml += '</div>';
 
