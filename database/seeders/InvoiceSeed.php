@@ -54,7 +54,7 @@ class InvoiceSeed extends Seeder
                 $product->unit_price    = $job_product->unit_price;
                 $product->tax_rate      = $selected_product->tax->rate;
                 $product->tax_amount    = ($job_product->total * $selected_product->tax->rate / 100);
-                $product->total         = ($job_product->total + $job_product->total * $selected_product->tax->rate / 100);
+                $product->total         = $job_product->total;
                 $product->save();
             }
 
