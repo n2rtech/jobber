@@ -92,11 +92,23 @@ Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);
 
+# Invoice Templates
+Route::post('invoices/email-template', [InvoiceController::class, 'emailTemplate'])->name('invoices.email-template');
+
+# Send Invoice Route
+Route::post('invoices/send-confirmation', [InvoiceController::class, 'confirmation'])->name('invoices.confirmation');
+
 # Payments Route
 Route::resource('payments', PaymentController::class);
 
 # Estimates Route
 Route::resource('estimates', EstimateController::class);
+
+# Estimates Templates
+Route::post('estimates/email-template', [EstimateController::class, 'emailTemplate'])->name('estimates.email-template');
+
+# Send Estimate Route
+Route::post('estimates/send-confirmation', [EstimateController::class, 'confirmation'])->name('estimates.confirmation');
 
 Route::get('estimates/convert/{id}', [EstimateController::class, 'convertToInvoice'])->name('estimates.convert');
 

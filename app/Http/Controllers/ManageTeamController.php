@@ -99,6 +99,7 @@ class ManageTeamController extends Controller
         $user->state            = $request->state;
         $user->country          = $request->country;
         $user->zipcode          = $request->zipcode;
+        $user->color            = $request->color;
         $user->role             = $request->role;
         $user->status           = $request->has('status') ? 1 : 0;
         $user->password         = Hash::make($request->password);
@@ -183,6 +184,7 @@ class ManageTeamController extends Controller
         $user->city             = $request->city;
         $user->state            = $request->state;
         $user->country          = $request->country;
+        $user->color            = $request->color;
         $user->zipcode          = $request->zipcode;
         $user->role             = $request->role;
         $user->status           = $request->has('status') ? 1 : 0;

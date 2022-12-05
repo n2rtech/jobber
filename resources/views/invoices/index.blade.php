@@ -44,7 +44,7 @@
         </div>
 
     </section>
-
+    @include('invoices.email')
 @endsection
 
 @push('scripts')
@@ -65,4 +65,50 @@
     });
 </script>
 <!-- Filter Box Scripts End -->
+<!-- Filter Box Scripts End -->
+<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+<script>
+tinymce.init({
+  selector: 'textarea#email_message',
+  height: 300,
+  menubar: false,
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:roboto; font-size:16px }'
+});
+</script>
+
+<script>
+    function gettemplate(){
+        var formData = {
+                    id: $("#modal-email-template .modal-body #invoice_id").val(),
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('invoices.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
 @endpush

@@ -63,6 +63,8 @@
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-team="{{ $unscheduled_job->user_id }}"
+                            data-teamcolor="{{ $unscheduled_job->user->color ?? 'red' }}"
+                            data-teamname="{{ $unscheduled_job->user->name ?? 'Not Assigned' }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
                             data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}">
@@ -85,6 +87,8 @@
                             data-jobstatus="{{ $unscheduled_job->status }}"
                             data-city="{{ $unscheduled_job->customer->city }}"
                             data-team="{{ $unscheduled_job->user_id }}"
+                            data-teamcolor="{{ $unscheduled_job->user->color ?? 'red' }}"
+                            data-teamname="{{ $unscheduled_job->user->name ?? 'Not Assigned' }}"
                             data-show="{{ route('schedules.show', $unscheduled_job->id) }}"
                             data-viewcustomer="{{ route('customers.show', $unscheduled_job->customer_id) }}"
                             data-title="{{ $unscheduled_job->jobTitle->title }}" class="hidden-sm schedule-xs">

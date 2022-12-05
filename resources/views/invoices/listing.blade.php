@@ -47,7 +47,7 @@
                                   <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
                                    <a class="dropdown-item" href="{{ route('payments.show', $invoice->id) }}">Payments</a>
-                                  <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                   <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#modal-email-template" onclick="$('#invoice_id').val({{ $invoice->id }});gettemplate();"> Send as Email</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
                                   <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Print</a>
                                   <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $invoice->id }})"> Delete</a>

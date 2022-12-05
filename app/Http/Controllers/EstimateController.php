@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendEstimateConfirmation;
 use App\Models\CompanyDetail;
 use App\Models\Customer;
+use App\Models\EmailTemplate;
+use App\Models\EmailTemplateContent;
 use App\Models\Estimate;
 use App\Models\EstimateProduct;
 use App\Models\Invoice;
@@ -14,6 +17,7 @@ use App\Models\TaxRate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class EstimateController extends Controller
 {
@@ -84,10 +88,11 @@ class EstimateController extends Controller
 
         isset($filter_date)         ? $estimates->where('estimate_date', $filter_date) : $estimates;
 
-
         $estimates                   = $estimates->orderBy('id', 'desc')->get();
 
-        return view('estimates.index', compact('estimates', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box'));
+        $template                    = EmailTemplate::where('type', 'estimates')->where('mode', 'confirmation')->first();
+
+        return view('estimates.index', compact('template', 'estimates', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box'));
     }
 
     /**
@@ -312,6 +317,24 @@ class EstimateController extends Controller
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
         return redirect()->route('invoices.show', $invoice->id)->with('sucess', 'Estimate converted to Invoice Successfully');
+
+    }
+
+    public function emailTemplate(Request $request)
+    {
+        $estimate = Estimate::where('id', $request->id)->first();
+        $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $subject  = getEstimateSubject($template->subject, $request->id);
+        $message  = getEstimateMessage($template->message, $request->id);
+
+        return response()->json(['email' => $estimate->customer->email, 'subject' => $subject, 'message' => $message]);
+    }
+
+    public function confirmation(Request $request){
+        Estimate::where('id', $request->estimate_id)->update(['status' => 'sent']);
+        $estimate = Estimate::where('id', $request->estimate_id)->first();
+        Mail::to($request->email_address)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
+        return redirect()->back()->with('success', 'Estimate has been sent for Estimate No. '.$estimate->id.' !');
 
     }
 }

@@ -18,8 +18,8 @@
                                 <th class="text-right" style="border-top: none;">Address 2</th>
                             </tr>
                             <tr>
-                                <td style="border-top: none;" width="40%">{!!  getMapAddress($customer->id) !!}</td>
-                                <td class="text-right" style="border-top: none;">test</td>
+                                <td style="border-top: none;" width="40%">{{ $customer->address_1 }}</td>
+                                <td class="text-right" style="border-top: none;">{{ $customer->address_2 }} {{ $customer->city }} {{ $customer->state }} @isset($customer->eir_code) <a target="_blank" href="http://maps.google.com/?q={{ $customer->eir_code }}">{{ $customer->eir_code }}</a> @endisset</td>
                             </tr>
                             <tr>
                                 <th style="border-top: none;" width="40%">Email</th>

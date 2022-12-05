@@ -98,9 +98,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Set color</label>
+                                <label class="col-sm-3 col-form-label" for="color">Set color</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="colorInput" name="colorInput" class="form-control" placeholder="Enter color code" />
+                                    <input type="color" id="color" name="color" class="form-control" placeholder="Enter color code" />
                                 </div>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="mb-3">{{ __('Preset permission levels') }}</h4> 
+                            <h4 class="mb-3">{{ __('Preset permission levels') }}</h4>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input

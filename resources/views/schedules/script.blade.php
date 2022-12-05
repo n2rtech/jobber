@@ -94,6 +94,8 @@ tinymce.init({
                     jobstatus: $(eventEl).data('jobstatus'),
                     location: $(eventEl).data('location'),
                     team: $(eventEl).data('team'),
+                    teamcolor: $(eventEl).data('teamcolor'),
+                    teamname: $(eventEl).data('teamname'),
                     city: $(eventEl).data('city'),
                     href: $(eventEl).data('href'),
                     show: $(eventEl).data('show'),
@@ -135,6 +137,8 @@ tinymce.init({
                             ' - ' + '{{ \Carbon\Carbon::parse($job->end)->format('h:i') }}',
                         jobid: '{{ $job->id }}',
                         team: '{{ $job->user_id }}',
+                        teamcolor: '{{$job->user->color ?? "red" }}',
+                        teamname: '{{$job->user->name ?? "Not Assigned" }}',
                         jobstatus: '{{ $job->status }}',
                         location: '{{ getAddress($job->customer_id) }}',
                         href: '{{ route('jobs.edit', $job->id) }}',
@@ -206,8 +210,8 @@ tinymce.init({
                 if(event.end){
                         eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
-                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="Red">';
-                eventHtml += '<button style="color: red" class="btn btn-link" type="button" disabled>'
+                eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="' + event.extendedProps.teamname + '">';
+                eventHtml += '<button style="color: ' + event.extendedProps.teamcolor + '" class="btn btn-link" type="button" disabled>'
                 eventHtml += '<i class="fas fa-dot-circle"></i>'
                 eventHtml += '</button>'
                 eventHtml += '</span>'
