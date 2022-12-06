@@ -31,7 +31,7 @@ return new class extends Migration
             $table->enum('terms',[30, 60, 0])->default(0);
             $table->date('expiry_date')->nullable();
             $table->date('estimate_date')->nullable();
-            $table->decimal('discount', 10, 2)->nullable();
+            $table->decimal('discount', 10, 2)->default(0.00);
             $table->enum('discount_type', ['percentage', 'amount'])->default('percentage');
             $table->decimal('tax', 10, 2)->nullable();
             $table->enum('tax_type', ['percentage', 'amount'])->default('amount');

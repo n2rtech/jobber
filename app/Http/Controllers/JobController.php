@@ -243,7 +243,7 @@ class JobController extends Controller
 
     public function saveJobForm(Request $request, $id){
         $job = Job::where('id', $id)->first();
-        JobFormAnswer::where('job_form_id', $request->job_form_id)->delete();
+        JobFormAnswer::where('job_id', $id)->where('job_form_id', $request->job_form_id)->delete();
         if(!empty($request->question) && is_array($request->question)){
             foreach($request->question as $key => $value){
                 $answer                             = new JobFormAnswer();
@@ -263,8 +263,10 @@ class JobController extends Controller
         }
         if($request->redirect == 'job'){
             return redirect()->route('jobs.show', ['job' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
-        }else{
+        }elseif($request->redirect == 'schedule'){
             return redirect()->route('schedules.show', ['schedule' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
+        }else{
+            return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Job Form updated successfully!');
         }
 
     }

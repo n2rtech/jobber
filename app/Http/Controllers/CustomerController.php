@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Job;
+use App\Models\JobForm;
 use App\Models\Lead;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -156,6 +158,14 @@ class CustomerController extends Controller
         $customer->setRelation('allnotes', $customer->allnotes()->paginate(5));
         foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
+        }
+
+        foreach($customer->jobs as $job){
+            if(!empty($job->job_forms) && is_array($job->job_forms)){
+                $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+            }else{
+                $job->forms     = [];
+            }
         }
         return view('customers.view.index', compact('customer'));
     }
