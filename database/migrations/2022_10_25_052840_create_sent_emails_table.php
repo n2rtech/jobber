@@ -19,10 +19,14 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('email')->nullable();
+            $table->enum('medium', ['email', 'text'])->default('text');
+            $table->enum('type', ['jobs', 'estimates', 'invoices', 'standard']);
+            $table->enum('mode', ['confirmation', 'follow-up', 'standard']);
             $table->string('subject')->nullable();
             $table->longText('message')->nullable();
-            $table->longText('attachments')->nullable();
+            $table->longText('text')->nullable();
+            $table->longText('attachment')->nullable();
+            $table->unsignedBigInteger('custom_id')->nullable();
             $table->timestamps();
         });
     }

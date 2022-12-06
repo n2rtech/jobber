@@ -13,6 +13,7 @@ use App\Models\JobFormAnswer;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
@@ -411,8 +412,29 @@ class JobController extends Controller
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
             Mail::to($request->email)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
+
+            $sent_email              = new SentEmail();
+            $sent_email->customer_id = $job->customer->id;
+            $sent_email->user_id     = Auth::user()->id;
+            $sent_email->medium      = 'email';
+            $sent_email->type        = 'jobs';
+            $sent_email->mode        = 'confirmation';
+            $sent_email->subject     =  $request->subject;
+            $sent_email->message     =  nl2br($request->message);
+            $sent_email->custom_id   =  $job->id;
+            $sent_email->save();
+
             return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
+
         }else{
+            $sent_email              = new SentEmail();
+            $sent_email->customer_id = $job->customer->id;
+            $sent_email->user_id     = Auth::user()->id;
+            $sent_email->medium      = 'text';
+            $sent_email->type        = 'jobs';
+            $sent_email->mode        = 'confirmation';
+            $sent_email->text        =  nl2br($request->message);
+            $sent_email->save();
             return response()->json(['success' => 'Booking Confirmation has been sent via Text!']);
         }
 

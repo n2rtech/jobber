@@ -12,6 +12,7 @@ use App\Models\EstimateProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\TaxRate;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -171,7 +172,7 @@ class EstimateController extends Controller
         $subtotal =EstimateProduct::where('estimate_id', $estimate->id)->sum('total');
         Estimate::where('id', $estimate->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('estimates.index')->with('success', 'Estimate added successfully!');
+        return redirect()->route('estimates.show', $estimate->id)->with('success', 'Estimate added successfully!');
     }
 
     /**
@@ -255,7 +256,7 @@ class EstimateController extends Controller
         $subtotal = EstimateProduct::where('estimate_id', $estimate->id)->sum('total');
         Estimate::where('id', $estimate->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('estimates.index')->with('success', 'Estimate updated successfully!');
+        return redirect()->route('estimates.show', $estimate->id)->with('success', 'Estimate updated successfully!');
     }
 
     /**
@@ -344,7 +345,20 @@ class EstimateController extends Controller
 
         $pdf = Pdf::loadView('estimates.pdf', $data);
         Storage::put('public/uploads/estimates/'.$estimate->id.'/estimate.pdf', $pdf->output());
+
         Mail::to($request->email_address)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
+
+        $sent_email              = new SentEmail();
+        $sent_email->customer_id = $estimate->customer->id;
+        $sent_email->user_id     = Auth::user()->id;
+        $sent_email->medium      = 'email';
+        $sent_email->type        = 'estimates';
+        $sent_email->mode        = 'confirmation';
+        $sent_email->subject     =  $request->email_subject;
+        $sent_email->message     =  nl2br($request->email_message);
+        $sent_email->custom_id   =  $estimate->id;
+        $sent_email->save();
+
         return redirect()->back()->with('success', 'Estimate has been sent for Estimate No. '.$estimate->id.' !');
 
     }

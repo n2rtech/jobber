@@ -21,7 +21,7 @@
                         <td><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
                         <td>€ {{ $invoice->total }}</td>
-                        <td><a href="{{ route('invoices.edit', $invoice->id) }}">#{{ $invoice->id }}</a></td>
+                        <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
                         <td>

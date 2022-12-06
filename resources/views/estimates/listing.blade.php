@@ -21,7 +21,7 @@
                         <td><a href="{{ route('customers.show', $estimate->customer_id) }}">{{ $estimate->customer->name }}</a></td>
                         <td>{{ $estimate->estimate_date}}</td>
                         <td>€ {{ $estimate->total }}</td>
-                        <td><a href="{{ route('estimates.edit', $estimate->id) }}">#{{ $estimate->id }}</a></td>
+                        <td><a href="{{ route('estimates.show', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td>€ {{ $estimate->paid }}</td>
                         <th>€ {{ $estimate->total - $estimate->paid }}</th>
                         <td>

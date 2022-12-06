@@ -10,6 +10,7 @@ use App\Models\EmailTemplateContent;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\TaxRate;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -195,7 +196,7 @@ class InvoiceController extends Controller
         $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('invoices.index')->with('success', 'Invoice added successfully!');
+        return redirect()->route('invoices.show', $invoice->id)->with('success', 'Invoice added successfully!');
     }
 
     /**
@@ -280,7 +281,7 @@ class InvoiceController extends Controller
         $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('invoices.index')->with('success', 'Invoice updated successfully!');
+        return redirect()->route('invoices.show', $invoice->id)->with('success', 'Invoice updated successfully!');
     }
 
     /**
@@ -308,6 +309,8 @@ class InvoiceController extends Controller
 
     public function confirmation(Request $request){
         $invoice = Invoice::where('id', $request->invoice_id)->first();
+        $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $mode     = EmailTemplate::where('id', $template->email_template_id)->value('mode');
         $company    = CompanyDetail::first();
         $data       = [
             'invoice'  => $invoice,
@@ -318,6 +321,18 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('invoices.pdf', $data);
         Storage::put('public/uploads/invoices/'.$invoice->id.'/invoice.pdf', $pdf->output());
         Mail::to($request->email_address)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
+
+        $sent_email              = new SentEmail();
+        $sent_email->customer_id = $invoice->customer->id;
+        $sent_email->user_id     = Auth::user()->id;
+        $sent_email->medium      = 'email';
+        $sent_email->type        = 'invoices';
+        $sent_email->mode        =  $mode;
+        $sent_email->subject     =  $request->email_subject;
+        $sent_email->message     =  nl2br($request->email_message);
+        $sent_email->custom_id   =  $invoice->id;
+        $sent_email->save();
+
         return redirect()->back()->with('success', 'Invoice has been sent for Invoice No. '.$invoice->id.' !');
 
     }

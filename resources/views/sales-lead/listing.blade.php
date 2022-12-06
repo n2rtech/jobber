@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('sales-lead.filter')
-        <table id="leadDataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
+        <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>

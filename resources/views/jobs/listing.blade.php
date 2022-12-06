@@ -30,7 +30,7 @@
                                 @isset($job->customer->mobile_1) {{ $job->customer->mobile_1 }} <br/> @endisset
                                 @isset($job->customer->mobile_2) {{ $job->customer->mobile_2 }}</td> @endisset
                             </td>
-                            <td><a href="{{ route('jobs.show', $job->id) }}">32</a></td>
+                            <td><a href="{{ route('jobs.show', $job->id) }}">{{ $job->id }}</a></td>
                             <td>
                                 {{ $job->jobTitle->title }}
                             </td>
