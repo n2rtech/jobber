@@ -158,7 +158,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
-                                                <td class="text-right">€ {{ $estimate->subtotal  }}</td>
+                                                <td class="text-right">€ {{ number_format($estimate->products->sum('total'), 2, '.', ',')  }}</td>
                                             </tr>
                                             <tr style="display: none">
                                                 <td class="text-right">Discount {{ $estimate->discount_type == 'percentage' ? '('.$estimate->discount."%".')' : '' }}</td>

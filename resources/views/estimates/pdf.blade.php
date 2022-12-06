@@ -151,7 +151,7 @@
                 Subtotal</td>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
-                € {{ $estimate->subtotal }}</td>
+                € {{ number_format($estimate->products->sum('total'), 2, '.', ',') }}</td>
         </tr>
         {{-- <tr>
             <td
