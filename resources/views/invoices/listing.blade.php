@@ -2,13 +2,13 @@
 <div class="card">
     <div class="card-body">
         @include('invoices.filter')
-        <table id="dataTable" class="table table-bordered table-striped" style="font-size: 14px;">
+        <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
-                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Invoice Date') }}</th>
                     <th>{{ __('Total') }}</th>
+                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
                     <th>{{ __('Status') }}</th>
@@ -18,10 +18,10 @@
             <tbody>
                 @foreach ($invoices as $invoice)
                     <tr>
-                        <td><a href="{{ route('invoices.edit', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
                         <td>€ {{ $invoice->total }}</td>
+                        <td><a href="{{ route('invoices.edit', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
                         <td>

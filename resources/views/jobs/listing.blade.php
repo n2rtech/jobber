@@ -3,13 +3,14 @@
     <div class="card-body">
         @include('jobs.filter')
         <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped" style="font-size: 14px;">
+            <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
                         <th style="width: 15%">{{ __('Customer') }}</th>
                         <th  style="width: 30%">{{ __('Address') }}</th>
-                        <th  style="width: 15%">{{ __('Contact') }}</th>
-                        <th  style="width: 15%">{{ __('Job Type') }}</th>
+                        <th  style="width: 10%">{{ __('Contact') }}</th>
+                        <th  style="width: 10%">Job No.</th>
+                        <th  style="width: 10%">{{ __('Job Type') }}</th>
                         <th  style="width: 10%">{{ __('Scheduled') }}</th>
                         <th  style="width: 10%">{{ __('Total') }}</th>
                         <th  style="width: 5%"></th>
@@ -29,6 +30,7 @@
                                 @isset($job->customer->mobile_1) {{ $job->customer->mobile_1 }} <br/> @endisset
                                 @isset($job->customer->mobile_2) {{ $job->customer->mobile_2 }}</td> @endisset
                             </td>
+                            <td><a href="{{ route('jobs.show', $job->id) }}">32</a></td>
                             <td>
                                 {{ $job->jobTitle->title }}
                             </td>

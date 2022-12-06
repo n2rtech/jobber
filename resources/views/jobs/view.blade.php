@@ -78,7 +78,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body m-pad-0">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade active show" id="view-information" role="tabpanel"
                                 aria-labelledby="view-information-tab">
@@ -162,9 +162,9 @@
                                     </div>
                                 </div>
 
-                                <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
+                                <span class="text-dark float-right pr-3"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <div class="card card-widget widget-user-2">
+                                <div class="card card-widget widget-user-2 mt-3">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
                                         <div class="card-tools">

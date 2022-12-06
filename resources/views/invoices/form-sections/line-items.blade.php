@@ -167,7 +167,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr style="display: none">
                                     <td width="65%" class="text-right">
                                         <div class="form-group row">
                                         <label for="discount" class="col-sm-3"><small>{{ __('Discount') }}</small></label>

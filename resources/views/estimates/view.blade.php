@@ -160,7 +160,7 @@
                                                 <td class="text-right" style="width:50%">Subtotal</td>
                                                 <td class="text-right">€ {{ $estimate->subtotal  }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none">
                                                 <td class="text-right">Discount {{ $estimate->discount_type == 'percentage' ? '('.$estimate->discount."%".')' : '' }}</td>
                                                 <td class="text-right">€ {{ $estimate->discount }}</td>
                                             </tr>
