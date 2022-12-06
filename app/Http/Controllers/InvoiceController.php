@@ -39,15 +39,15 @@ class InvoiceController extends Controller
 
         $filter_name                = $request->name;
 
-        $filter_email               = $request->email;
-
         $filter_phone               = $request->phone;
 
         $filter_status              = $request->status;
 
-        $filter_date                = $request->date;
+        $filter_invoice_from                = $request->invoice_from;
 
-        if(isset($filter_name) || isset($filter_email) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
+        $filter_invoice_to               = $request->invoice_to;
+
+        if(isset($filter_name) || isset($filter_invoice_from) || isset($filter_invoice_to) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
             $filter_box = 'show';
         }
 
@@ -87,7 +87,22 @@ class InvoiceController extends Controller
 
         isset($filter_status)       ? $invoices->where('status', $filter_status) : $invoices;
 
-        isset($filter_date)         ? $invoices->where('invoice_date', $filter_date) : $invoices;
+        if ($request->invoice_from && $request->invoice_to) {
+
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereBetween('invoice_date', [$from, $to]);
+        }
+
+        if ($request->invoice_from) {
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $invoices->whereDate('invoice_date', '>=', $from);
+        }
+
+        if ($request->invoice_to) {
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereDate('invoice_date', '<=', $to);
+        }
 
 
         $invoices                   = $invoices->orderBy('id', 'desc')->get();
@@ -96,7 +111,7 @@ class InvoiceController extends Controller
 
         $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
 
-        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box', 'template_confirmation', 'template_followup'));
+        return view('invoices.index', compact('invoices', 'filter_name', 'filter_invoice_from', 'filter_phone', 'filter_status', 'filter_invoice_to', 'filter_box', 'template_confirmation', 'template_followup'));
     }
 
     /**
