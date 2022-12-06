@@ -128,5 +128,4 @@ tinymce.init({
                 });
     }
 </script>
-<script>
 @endpush

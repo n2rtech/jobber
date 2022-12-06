@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Mail\JobBookingConfirmation;
+use App\Models\CompanyDetail;
 use App\Models\EmailTemplateContent;
+use App\Models\Estimate;
 use App\Models\Job;
+use App\Models\Product;
+use App\Models\Setting;
+use App\Models\TaxRate;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
@@ -49,13 +56,19 @@ class TestController extends Controller
      */
     public function show($id)
     {
-        $job = Job::where('id', $id)->first();
-        $template = EmailTemplateContent::where('id', 1)->first();
-        $subject = getSubject($template->subject, $job->id );
-        $message = getMessage(nl2br($template->message), $job->id);
+        $estimate   = Estimate::find($id);
+        $company    = CompanyDetail::first();
+        $data       = [
+            'estimate'  => $estimate,
+            'company'  => $company
+        ];
 
-        Mail::to($job->customer->email)->send(new JobBookingConfirmation($job, $message, $subject));
-        return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
+
+        $pdf = Pdf::loadView('estimates.pdf', $data);
+
+Storage::put('public/pdf/invoice.pdf', $pdf->output());
+
+return $pdf->download('invoice.pdf');
     }
 
     /**

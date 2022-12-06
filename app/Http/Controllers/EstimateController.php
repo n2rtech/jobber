@@ -14,10 +14,12 @@ use App\Models\InvoiceProduct;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\TaxRate;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EstimateController extends Controller
 {
@@ -185,7 +187,8 @@ class EstimateController extends Controller
         $tax_rates  = TaxRate::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
-        return view('estimates.view', compact('estimate', 'products', 'tax_rates', 'setting', 'company'));
+        $template   = EmailTemplate::where('type', 'estimates')->where('mode', 'confirmation')->first();
+        return view('estimates.view', compact('estimate', 'products', 'tax_rates', 'setting', 'company', 'template'));
     }
 
     /**
@@ -332,6 +335,15 @@ class EstimateController extends Controller
     public function confirmation(Request $request){
         Estimate::where('id', $request->estimate_id)->update(['status' => 'sent']);
         $estimate = Estimate::where('id', $request->estimate_id)->first();
+        $company    = CompanyDetail::first();
+        $data       = [
+            'estimate'  => $estimate,
+            'company'  => $company
+        ];
+
+
+        $pdf = Pdf::loadView('estimates.pdf', $data);
+        Storage::put('public/uploads/estimates/'.$estimate->id.'/estimate.pdf', $pdf->output());
         Mail::to($request->email_address)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
         return redirect()->back()->with('success', 'Estimate has been sent for Estimate No. '.$estimate->id.' !');
 
