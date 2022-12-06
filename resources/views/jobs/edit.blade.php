@@ -78,33 +78,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="card card-dark">
-                                            <div class="card-header">
-                                                <h3 class="card-title">{{ __('Invoicing') }}</h3>
-
-                                                <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                        title="Collapse">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input class="custom-control-input custom-control-input-success"
-                                                            type="checkbox" id="remind" name="invoice_remind" value="1" @if($job->invoice_remind == 1) checked @endif>
-                                                        <label for="remind" class="custom-control-label" style="font-size: 15px">Remind me to
-                                                            invoice when i close the job</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="card card-dark">
                                             <div class="card-header">
