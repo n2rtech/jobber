@@ -11,6 +11,7 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     function confirmDelete(no){
@@ -79,13 +80,9 @@
     });
     $(function () {
       $("#invoiceTable").DataTable({
+        responsive: true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": true, "info": true, "autoWidth": false, "responsive": true,
-        columnDefs: [
-            { responsivePriority: 1, targets: 0 },
-            { responsivePriority: -1, targets: 2 },
-            { responsivePriority: 2, targets: -4 }
-        ],
+        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "info": true, "ordering": false , "autoWidth": false,
       }).buttons().container().appendTo('#invoiceTable_wrapper .col-md-6:eq(0)');
     });
     $(function () {
@@ -95,7 +92,7 @@
           { responsivePriority: 2, targets: 4 }
         ],
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": true, "info": true, "autoWidth": false, "responsive": true,
+        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
       }).buttons().container().appendTo('#jobseTable_wrapper .col-md-6:eq(0)');
     });
 
