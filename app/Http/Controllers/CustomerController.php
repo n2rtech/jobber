@@ -153,6 +153,7 @@ class CustomerController extends Controller
         foreach($customer->documents as $document){
             $document->path = asset('storage/uploads/customers/' . $id . '/documents' .'/'. $document->document);
         }
+        $customer->setRelation('allnotes', $customer->allnotes()->paginate(5));
         foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }

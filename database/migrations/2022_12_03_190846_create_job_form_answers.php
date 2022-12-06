@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('job_form_answers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->unsignedBigInteger('job_id')->nullable();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->unsignedBigInteger('job_form_id')->nullable();

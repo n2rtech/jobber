@@ -35,5 +35,26 @@ class JobFormQuestionSeeder extends Seeder
             'question'    => 'Mobile Operator',
             'type'        => 'radio'
         ]);
+
+        JobFormQuestion::create([
+            'id'          => 4,
+            'job_form_id' => 2,
+            'question'    => 'Example Dropdown Question 1',
+            'type'        => 'dropdown'
+        ]);
+
+        JobFormQuestion::create([
+            'id'          => 5,
+            'job_form_id' => 2,
+            'question'    => 'Example Radio Question 2',
+            'type'        => 'radio'
+        ]);
+
+        JobFormQuestion::create([
+            'id'          => 6,
+            'job_form_id' => 2,
+            'question'    => 'Example Checkbox Question 3',
+            'type'        => 'checkbox'
+        ]);
     }
 }

@@ -101,7 +101,7 @@ class JobController extends Controller
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
         if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
-            $jobs                       = $jobs->orderBy('start', 'desc')->get();
+            $jobs                       = $jobs->orderBy('start', 'asc')->get();
         }else{
             $jobs                       = $jobs->orderBy('id', 'desc')->get();
         }
@@ -242,10 +242,12 @@ class JobController extends Controller
     }
 
     public function saveJobForm(Request $request, $id){
+        $job = Job::where('id', $id)->first();
         JobFormAnswer::where('job_form_id', $request->job_form_id)->delete();
         if(!empty($request->question) && is_array($request->question)){
             foreach($request->question as $key => $value){
                 $answer                             = new JobFormAnswer();
+                $answer->customer_id                = $job->customer_id;
                 $answer->job_id                     = $id;
                 $answer->job_form_id                = $request->job_form_id;
                 $answer->job_form_question_id       = $key;

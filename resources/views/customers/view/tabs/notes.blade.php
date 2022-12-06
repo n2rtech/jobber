@@ -1,4 +1,4 @@
-{{-- Notes Tab Start --}} 
+{{-- Notes Tab Start --}}
 
 <div class="tab-pane fade active show" id="customer-notes" role="tabpanel"
 aria-labelledby="customer-notes-tab">
@@ -27,8 +27,11 @@ aria-labelledby="customer-notes-tab">
             <p class="text-center mt-4">No Notes Added.</p>
         </div>
         @endforelse
+
     </div>
+
 </div>
+{{$customer->allnotes->appends(request()->query())->links("pagination::bootstrap-4")}}
 
 </div>
 
