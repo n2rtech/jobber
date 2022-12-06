@@ -5,9 +5,9 @@
         <table id="invoiceTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
-                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Invoice Date') }}</th>
+                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Total') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
@@ -18,10 +18,11 @@
             <tbody>
                 @foreach ($invoices as $invoice)
                     <tr>
-                        <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
-                        <td><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
+
+                        <td data-priority="1"><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
-                        <td>€ {{ $invoice->total }}</td>
+                        <td data-priority="2"><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
+                        <td data-priority="3">€ {{ $invoice->total }}</td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
                         {{-- <td>

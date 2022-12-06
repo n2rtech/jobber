@@ -79,12 +79,13 @@
     });
     $(function () {
       $("#invoiceTable").DataTable({
-        "columnDefs": [
-        { responsivePriority: 1, targets: 0 },
-        { responsivePriority: 2, targets: 3 }
-    ],
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
+        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": true, "info": true, "autoWidth": false, "responsive": true,
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: -1, targets: 2 },
+            { responsivePriority: 2, targets: -4 }
+        ],
       }).buttons().container().appendTo('#invoiceTable_wrapper .col-md-6:eq(0)');
     });
     $(function () {
@@ -94,9 +95,9 @@
           { responsivePriority: 2, targets: 4 }
         ],
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
+        "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": true, "info": true, "autoWidth": false, "responsive": true,
       }).buttons().container().appendTo('#jobseTable_wrapper .col-md-6:eq(0)');
     });
-    
+
 
 </script>

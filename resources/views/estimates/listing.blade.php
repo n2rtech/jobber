@@ -5,9 +5,9 @@
         <table id="invoiceTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
-                    <th>{{ __('Estimate No.') }}</th>
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Estimate Date') }}</th>
+                    <th>{{ __('Estimate No.') }}</th>
                     <th>{{ __('Total') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
@@ -18,9 +18,9 @@
             <tbody>
                 @foreach ($estimates as $estimate)
                     <tr>
-                        <td><a href="{{ route('estimates.show', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td><a href="{{ route('customers.show', $estimate->customer_id) }}">{{ $estimate->customer->name }}</a></td>
                         <td> {{ $estimate->estimate_date}}</td>
+                        <td><a href="{{ route('estimates.show', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td>€ {{ $estimate->total }}</td>
                         <td>€ {{ $estimate->paid }}</td>
                         <th>€ {{ $estimate->total - $estimate->paid }}</th>
