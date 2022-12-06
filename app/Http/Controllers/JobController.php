@@ -412,10 +412,15 @@ class JobController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email);
         Job::where('id', $request->job_id)->update(['status' => 'provisional']);
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
-            Mail::to($request->email)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
+            foreach($emails as $email){
+                $send_email_to = str_replace(' ', '', $email);
+                Mail::to($send_email_to)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
+            }
+
 
             $sent_email              = new SentEmail();
             $sent_email->customer_id = $job->customer->id;

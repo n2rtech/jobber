@@ -153,22 +153,24 @@
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 € {{ $estimate->subtotal }}</td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 Discount {{ $estimate->discount_type == 'percentage' ? '(' . $estimate->discount . '%' . ')' : '' }}</td>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 € {{ $estimate->discount }}</td>
-        </tr>
+        </tr> --}}
+        @foreach($tax_rates as $tax_rate)
         <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
-                Tax</td>
+                {{ $tax_rate->name }}</td>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
-                € {{ $estimate->products->sum('tax_amount') }}</td>
+                € {{ \App\Models\EstimateProduct::where('estimate_id', $estimate->id)->where('tax_rate', $tax_rate->rate)->sum('tax_amount')  }}</td>
         </tr>
+        @endforeach
         <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">

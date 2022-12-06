@@ -334,19 +334,25 @@ class EstimateController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email_address);
         Estimate::where('id', $request->estimate_id)->update(['status' => 'sent']);
         $estimate = Estimate::where('id', $request->estimate_id)->first();
         $company    = CompanyDetail::first();
+        $tax_rates  = TaxRate::get();
         $data       = [
             'estimate'  => $estimate,
-            'company'  => $company
+            'company'  => $company,
+            'tax_rates' => $tax_rates,
         ];
 
 
         $pdf = Pdf::loadView('estimates.pdf', $data);
         Storage::put('public/uploads/estimates/'.$estimate->id.'/estimate.pdf', $pdf->output());
+        foreach($emails as $email){
+            $send_email_to = str_replace(' ', '', $email);
+            Mail::to($send_email_to)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
+        }
 
-        Mail::to($request->email_address)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
 
         $sent_email              = new SentEmail();
         $sent_email->customer_id = $estimate->customer->id;

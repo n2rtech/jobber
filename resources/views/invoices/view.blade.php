@@ -171,10 +171,12 @@
                                                 <td class="text-right">Discount {{ $invoice->discount_type == 'percentage' ? '('.$invoice->discount."%".')' : '' }}</td>
                                                 <td class="text-right">€ {{ $invoice->discount }}</td>
                                             </tr>
+                                            @foreach($tax_rates as $tax_rate)
                                             <tr>
-                                                <td class="text-right">Tax</td>
-                                                <td class="text-right">€ {{ $invoice->products->sum('tax_amount')  }}</td>
+                                                <td class="text-right">{{ $tax_rate->name }}</td>
+                                                <td class="text-right">€ {{ \App\Models\InvoiceProduct::where('invoice_id', $invoice->id)->where('tax_rate', $tax_rate->rate)->sum('tax_amount')  }}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
                                                 <th class="text-right">Total</th>
                                                 <td class="text-right">€ {{ $invoice->total  }}</td>

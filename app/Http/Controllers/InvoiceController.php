@@ -308,20 +308,25 @@ class InvoiceController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email_address);
         $invoice = Invoice::where('id', $request->invoice_id)->first();
         $template = EmailTemplateContent::where('id', $request->email_template)->first();
         $mode     = EmailTemplate::where('id', $template->email_template_id)->value('mode');
         $company    = CompanyDetail::first();
+        $tax_rates  = TaxRate::get();
         $data       = [
             'invoice'  => $invoice,
-            'company'  => $company
+            'company'  => $company,
+            'tax_rates' => $tax_rates,
         ];
 
 
         $pdf = Pdf::loadView('invoices.pdf', $data);
         Storage::put('public/uploads/invoices/'.$invoice->id.'/invoice.pdf', $pdf->output());
-        Mail::to($request->email_address)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
-
+        foreach($emails as $email){
+            $send_email_to = str_replace(' ', '', $email);
+            Mail::to($send_email_to)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
+        }
         $sent_email              = new SentEmail();
         $sent_email->customer_id = $invoice->customer->id;
         $sent_email->user_id     = Auth::user()->id;

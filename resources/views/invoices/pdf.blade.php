@@ -152,22 +152,24 @@
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 € {{ $invoice->subtotal }}</td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 Discount {{ $invoice->discount_type == 'percentage' ? '(' . $invoice->discount . '%' . ')' : '' }}</td>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
                 € {{ $invoice->discount }}</td>
-        </tr>
+        </tr> --}}
+        @foreach($tax_rates as $tax_rate)
         <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
-                Tax</td>
+                {{ $tax_rate->name }}</td>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
-                € {{ $invoice->products->sum('tax_amount') }}</td>
+                € {{ \App\Models\InvoiceProduct::where('invoice_id', $invoice->id)->where('tax_rate', $tax_rate->rate)->sum('tax_amount')  }}</td>
         </tr>
+        @endforeach
         <tr>
             <td
                 style="font-size: 14px;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding: 10px;text-align: right">
