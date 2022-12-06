@@ -65,7 +65,6 @@
     });
 </script>
 <!-- Filter Box Scripts End -->
-<!-- Filter Box Scripts End -->
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
 <script>
 tinymce.init({

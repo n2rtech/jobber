@@ -12,10 +12,12 @@ use App\Models\InvoiceProduct;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\TaxRate;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -209,7 +211,9 @@ class InvoiceController extends Controller
         $products   = Product::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
-        return view('invoices.view', compact('invoice', 'products', 'tax_rates', 'setting', 'company'));
+        $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
+        $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
+        return view('invoices.view', compact('invoice', 'products', 'tax_rates', 'setting', 'company', 'template_confirmation', 'template_followup'));
     }
 
     /**
@@ -294,7 +298,7 @@ class InvoiceController extends Controller
 
     public function emailTemplate(Request $request)
     {
-        $invoice = Invoice::where('id', $request->id)->first();
+        $invoice  = Invoice::where('id', $request->id)->first();
         $template = EmailTemplateContent::where('id', $request->email_template)->first();
         $subject  = getInvoiceSubject($template->subject, $request->id);
         $message  = getInvoiceMessage($template->message, $request->id);
@@ -304,6 +308,15 @@ class InvoiceController extends Controller
 
     public function confirmation(Request $request){
         $invoice = Invoice::where('id', $request->invoice_id)->first();
+        $company    = CompanyDetail::first();
+        $data       = [
+            'invoice'  => $invoice,
+            'company'  => $company
+        ];
+
+
+        $pdf = Pdf::loadView('invoices.pdf', $data);
+        Storage::put('public/uploads/invoices/'.$invoice->id.'/invoice.pdf', $pdf->output());
         Mail::to($request->email_address)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
         return redirect()->back()->with('success', 'Invoice has been sent for Invoice No. '.$invoice->id.' !');
 
