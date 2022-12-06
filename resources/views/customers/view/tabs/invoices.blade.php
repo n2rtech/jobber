@@ -12,7 +12,7 @@
                     <th>{{ __('Total') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
@@ -25,7 +25,7 @@
                         <td>€ {{ $invoice->total }}</td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
-                        <td>
+                        {{-- <td>
                             @if ($invoice->status == 'paid')
                                 <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
                             @endif
@@ -38,7 +38,7 @@
                             @if ($invoice->status == 'partial')
                                 <span class="badge bg-info">{{ ucfirst($invoice->status) }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

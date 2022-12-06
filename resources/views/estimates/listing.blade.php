@@ -5,26 +5,26 @@
         <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
+                    <th>{{ __('Estimate No.') }}</th>
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Estimate Date') }}</th>
                     <th>{{ __('Total') }}</th>
-                    <th>{{ __('Estimate No.') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($estimates as $estimate)
                     <tr>
+                        <td><a href="{{ route('estimates.show', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td><a href="{{ route('customers.show', $estimate->customer_id) }}">{{ $estimate->customer->name }}</a></td>
                         <td>{{ $estimate->estimate_date}}</td>
                         <td>€ {{ $estimate->total }}</td>
-                        <td><a href="{{ route('estimates.show', $estimate->id) }}">#{{ $estimate->id }}</a></td>
                         <td>€ {{ $estimate->paid }}</td>
                         <th>€ {{ $estimate->total - $estimate->paid }}</th>
-                        <td>
+                        {{-- <td>
                             @if ($estimate->status == 'created')
                                 <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
                             @endif
@@ -37,7 +37,7 @@
                             @if ($estimate->status == 'sent')
                                 <span class="badge bg-warning">{{ ucfirst($estimate->status) }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

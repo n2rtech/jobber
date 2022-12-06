@@ -5,26 +5,26 @@
         <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
+                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Customer') }}</th>
                     <th>{{ __('Invoice Date') }}</th>
                     <th>{{ __('Total') }}</th>
-                    <th>{{ __('Invoice No.') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($invoices as $invoice)
                     <tr>
+                        <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td><a href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
                         <td>€ {{ $invoice->total }}</td>
-                        <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
-                        <td>
+                        {{-- <td>
                             @if ($invoice->status == 'paid')
                                 <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
                             @endif
@@ -37,7 +37,7 @@
                             @if ($invoice->status == 'partial')
                                 <span class="badge bg-info">{{ ucfirst($invoice->status) }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

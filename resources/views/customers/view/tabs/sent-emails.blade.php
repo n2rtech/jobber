@@ -1,7 +1,6 @@
 {{-- Sent Emails Tab Start --}}
 <div class="tab-pane fade" id="customer-sentemails" role="tabpanel" aria-labelledby="customer-sentemails-tab">
-    <div class="gallery">
-
+        @if(count($customer->sentEmails) > 0)
         <div class="table-responsive">
             <table id="dataTable" class="table table-sm table-bordered">
                 <thead>
@@ -108,7 +107,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="clear"></div>
-    </div>
+        @else
+            <p class="text-center mt-4">{{ __('No Sent emails found') }}</p>
+        @endif
 </div>
 {{-- Sent Emails Tab End --}}

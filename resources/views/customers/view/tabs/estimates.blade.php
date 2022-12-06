@@ -12,7 +12,7 @@
                     <th>{{ __('Total') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
@@ -25,7 +25,7 @@
                         <td>€ {{ $estimate->total }}</td>
                         <td>€ {{ $estimate->paid }}</td>
                         <th>€ {{ $estimate->total - $estimate->paid }}</th>
-                        <td>
+                        {{-- <td>
                             @if ($estimate->status == 'created')
                                 <span class="badge bg-info">{{ ucfirst($estimate->status) }}</span>
                             @endif
@@ -38,7 +38,7 @@
                             @if ($estimate->status == 'sent')
                                 <span class="badge bg-warning">{{ ucfirst($estimate->status) }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
