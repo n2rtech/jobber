@@ -628,6 +628,9 @@ a.nav-link .active{
     position: absolute;
     top: 0;
 }
+.set-fonts td, .set-fonts th{
+    font-size: 13px;
+}
 .content-header h1 {
   font-size: 24px;
   margin-bottom: 8px !important;

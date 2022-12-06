@@ -19,11 +19,14 @@
                         <td><a href="{{ route('customers.show', $lead->id) }}">{{ $lead->name }}</a></td>
                         <td>{{ getAddress($lead->id) }}</td>
                         <td>
+                            <br class="hidden-sm" />
                             {{ $lead->phone }}
                         <td>
+                            <br class="hidden-sm" />
                            {{ $lead->mobile_1 }}
                         </td>
                         <td>
+                            <br class="hidden-sm" />
                            {{ $lead->mobile_2 }}
                         </td>
                         <td>
