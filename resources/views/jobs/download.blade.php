@@ -19,6 +19,7 @@
         box-sizing: border-box;
     padding: 10px;
         border: 1px solid rgba(224, 207, 207, 0.548);
+        margin-bottom:20px;
         margin-bottom: 10px;
     }
    </style>
@@ -29,6 +30,7 @@
         <div class="card">
             <div class="card-header bg-dark">
                 <h2 class="card-title">{{ $form->title }}</h2>
+                <span style="margin-top:0px;margin-bottom:20px;">{{ \Carbon\Carbon::parse($form->created_at)->format('M d, Y h:i:s') }}</span>
             </div>
             <div class="card-body">
                 @foreach($form->questions as $question)
