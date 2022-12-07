@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('invoices.filter')
-        @if ($agent->isMobile())
+        @if ($agent->isMobile()) 
             <table id="invoiceTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>

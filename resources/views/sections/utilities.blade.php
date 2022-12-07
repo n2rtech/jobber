@@ -87,13 +87,10 @@
     });
     $(function () {
       $("#jobseTable").DataTable({
-        "columnDefs": [
-          { responsivePriority: 1, targets: 0 },
-          { responsivePriority: 2, targets: 4 }
-        ],
+        responsive: true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
-      });
+      }).buttons().container().appendTo('#jobseTable_wrapper .col-md-6:eq(0)');
     });
 
 
