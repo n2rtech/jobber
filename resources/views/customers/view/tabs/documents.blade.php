@@ -22,8 +22,7 @@
                                             <div class="card-body">
                                                 <div id="accordion">
                                                     @foreach ($job->forms as $form)
-
-
+                                                    @if(jobFormExists($job->id, $form->id))
                                                         <div @if(!jobFormExists($job->id, $form->id)) class="card card-warning" @else class="card card-success" @endif>
                                                             <div class="card-header">
                                                                 <small>
@@ -136,7 +135,7 @@
                                                             </div>
                                                             @endif
                                                         </div>
-
+                                                    @endif
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -148,6 +147,7 @@
                                             </div>
                                         @endif
                                     </div>
+                                    @else
                                     @endif
                                 @endforeach
                             </div>
