@@ -102,6 +102,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('external-forms.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>External Form</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('manage-team.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Manage Team</p>

@@ -35,6 +35,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(JobFormQuestionOptionSeeder::class);
 
+        $this->call(ExternalFormSeeder::class);
+
+        $this->call(ExternalFormTabSeeder::class);
+
+        $this->call(ExternalFormQuestionSeeder::class);
+
+        $this->call(ExternalFormQuestionOptionSeeder::class);
+
         $this->call(CustomerSeeder::class);
 
         $this->call(CustomerNoteSeed::class);

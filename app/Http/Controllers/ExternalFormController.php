@@ -2,20 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\JobBookingConfirmation;
-use App\Models\CompanyDetail;
-use App\Models\EmailTemplateContent;
-use App\Models\Estimate;
-use App\Models\Job;
-use App\Models\Product;
-use App\Models\Setting;
-use App\Models\TaxRate;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
-class TestController extends Controller
+class ExternalFormController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -56,19 +45,7 @@ class TestController extends Controller
      */
     public function show($id)
     {
-        $estimate   = Estimate::find($id);
-        $company    = CompanyDetail::first();
-        $data       = [
-            'estimate'  => $estimate,
-            'company'  => $company
-        ];
-
-
-        $pdf = Pdf::loadView('estimates.pdf', $data);
-
-Storage::put('public/pdf/invoice.pdf', $pdf->output());
-
-return $pdf->download('invoice.pdf');
+        //
     }
 
     /**

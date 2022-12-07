@@ -8,6 +8,8 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EstimateController;
+use App\Http\Controllers\ExternalFormController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\SalesLeadController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
@@ -120,6 +122,9 @@ Route::get('sales-leads/convert/lead/{id}', [SalesLeadController::class, 'conver
 # Job Forms Route
 Route::resource('job-forms', JobFormController::class);
 
+# External Forms Route
+Route::resource('external-forms', ExternalFormController::class);
+
 # Manage Team Route
 Route::resource('manage-team', ManageTeamController::class);
 
@@ -196,6 +201,6 @@ Route::get('refresh-database', function () {
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
 
-Route::resource('test', TestController::class);
+Route::resource('form', FormController::class);
 
 
