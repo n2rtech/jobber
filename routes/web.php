@@ -58,7 +58,7 @@ Route::get('customers/all-notes/{id}', [CustomerController::class, 'allNotes'])-
 Route::get('customers/convert/lead/{id}', [CustomerController::class, 'convertToLead'])->name('customers.lead');
 
 Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomplete'])->name('customers.autocomplete');
-
+Route::get('customers/delete/jobform', [CustomerController::class, 'deleteJobForm'])->name('customers.delete-jobform');
 # Schedules Route
 Route::resource('schedules', ScheduleController::class);
 Route::post('schedule/update-timing', [ScheduleController::class, 'updateTiming'])->name('schedules.update-timing');

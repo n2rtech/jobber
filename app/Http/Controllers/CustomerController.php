@@ -264,4 +264,18 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         return view('customers.all-notes', compact('customer'));
     }
+    public function deleteJobForm(Request $request){
+
+        $job = Job::where('id', $request->job_id)->first();
+        $job_array = $job->job_forms;
+        $array = array_splice($job_array, $request->form_id);
+        Job::where('id', $request->job_id)->update(['job_forms' => $array]);
+        if($request->redirect == 'job'){
+            return redirect()->route('jobs.show', ['job' => $job->id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form deleted successfully!');
+        }elseif($request->redirect == 'schedule'){
+            return redirect()->route('schedules.show', ['schedule' => $job->id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form deleted successfully!');
+        }else{
+            return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Job Form deleted successfully!');
+        }
+    }
 }

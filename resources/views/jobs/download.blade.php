@@ -33,9 +33,11 @@
                 @php
                 $form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->first();
             @endphp
+            @isset($form_answer)
             <span style="margin-top:0px;margin-bottom:20px;">{{ \App\Models\User::where('id', $form_answer->user_id)->value('name') }}</span>
-                <span style="margin-top:0px;margin-bottom:20px;">{{ \Carbon\Carbon::parse($form->created_at)->format('M d, Y h:i:s') }}</span><br>
             </div>
+            <span style="margin-top:0px;margin-bottom:20px;">{{ \Carbon\Carbon::parse($form->created_at)->format('M d, Y h:i:s') }}</span><br>
+            @endisset
             <div class="card-body">
                 @foreach($form->questions as $question)
                     <div class="question_answer">

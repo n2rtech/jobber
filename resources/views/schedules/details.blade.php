@@ -256,7 +256,8 @@
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
                                             <div class="card-tools">
-                                                {{-- <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a> --}}
+                                                <a href="javascript:void(0)"
+                                                class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'schedule','form_id' => $form->id]) }}');"><i class="fas fa-trash"></i></a>
                                                 <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
                                             </div>
                                         </div>
@@ -324,7 +325,8 @@
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
                                             <div class="card-tools">
-                                                {{-- <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a> --}}
+                                                <a href="javascript:void(0)" class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'schedule','form_id' => $form->id]) }}');">
+                                                                        <i class="fas fa-trash"></i></a>
                                                 <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
                                             </div>
                                         </div>
@@ -594,7 +596,7 @@ var formData = {
  });
 }
 </script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function assignStatus(value) {
         var formData = {
@@ -670,5 +672,22 @@ var formData = {
         var previoustim = $(element).val();
         $(element).val(previoustim+':00');
     }
+</script>
+<script type="text/javascript">
+    function confirmDeleteJobForm(href) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = href;
+            }
+        })
+    };
 </script>
 @endpush
