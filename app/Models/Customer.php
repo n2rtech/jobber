@@ -26,7 +26,7 @@ class Customer extends Model
 
     public function sentEmails()
     {
-        return $this->hasMany(sentEmail::class);
+        return $this->hasMany(SentEmail::class);
     }
 
     public function jobs()

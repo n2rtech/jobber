@@ -11,7 +11,7 @@ class SentEmail extends Model
 
     protected $table        = 'sent_emails';
 
-    protected $fillable     = ['customer_id', 'user_id','email', 'subject', 'message', 'attachments'];
+    protected $fillable     = ['customer_id', 'user_id','email', 'medium', 'type', 'mode', 'subject', 'message', 'text', 'attachments', 'custom_id'];
 
     public $timestamps      = true;
 

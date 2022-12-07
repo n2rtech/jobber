@@ -6,6 +6,7 @@ use App\Models\Estimate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -59,12 +60,16 @@ class SendEstimateConfirmation extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array
+     * @return \Illuminate\Mail\Mailables\Attachment[]
      */
-    public function attachments()
-    {
-        return [];
-    }
+        public function attachments()
+        {
+            return [
+                Attachment::fromPath(public_path().'/storage/uploads/estimates/'.$this->estimate->id.'/estimate.pdf')
+                        ->as('Estimate.pdf')
+                        ->withMime('application/pdf'),
+            ];
+        }
 
 
 }

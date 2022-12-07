@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\JobBookingConfirmation;
-use App\Models\EmailTemplateContent;
-use App\Models\Job;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
-class TestController extends Controller
+class ExternalFormController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -49,13 +45,7 @@ class TestController extends Controller
      */
     public function show($id)
     {
-        $job = Job::where('id', $id)->first();
-        $template = EmailTemplateContent::where('id', 1)->first();
-        $subject = getSubject($template->subject, $job->id );
-        $message = getMessage(nl2br($template->message), $job->id);
-
-        Mail::to($job->customer->email)->send(new JobBookingConfirmation($job, $message, $subject));
-        return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
+        //
     }
 
     /**

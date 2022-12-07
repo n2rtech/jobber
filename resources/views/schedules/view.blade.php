@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">
-                            <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
+                            <button class="btn btn-block btn-success" onclick="changeTimings();">Save & Exit</button>
                         </div>
                     </div>
                     <div class="text-center">

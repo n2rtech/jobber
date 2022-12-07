@@ -12,12 +12,15 @@ use App\Models\EstimateProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\TaxRate;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EstimateController extends Controller
 {
@@ -169,7 +172,7 @@ class EstimateController extends Controller
         $subtotal =EstimateProduct::where('estimate_id', $estimate->id)->sum('total');
         Estimate::where('id', $estimate->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('estimates.index')->with('success', 'Estimate added successfully!');
+        return redirect()->route('estimates.show', $estimate->id)->with('success', 'Estimate added successfully!');
     }
 
     /**
@@ -185,7 +188,8 @@ class EstimateController extends Controller
         $tax_rates  = TaxRate::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
-        return view('estimates.view', compact('estimate', 'products', 'tax_rates', 'setting', 'company'));
+        $template   = EmailTemplate::where('type', 'estimates')->where('mode', 'confirmation')->first();
+        return view('estimates.view', compact('estimate', 'products', 'tax_rates', 'setting', 'company', 'template'));
     }
 
     /**
@@ -252,7 +256,7 @@ class EstimateController extends Controller
         $subtotal = EstimateProduct::where('estimate_id', $estimate->id)->sum('total');
         Estimate::where('id', $estimate->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('estimates.index')->with('success', 'Estimate updated successfully!');
+        return redirect()->route('estimates.show', $estimate->id)->with('success', 'Estimate updated successfully!');
     }
 
     /**
@@ -330,9 +334,37 @@ class EstimateController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email_address);
         Estimate::where('id', $request->estimate_id)->update(['status' => 'sent']);
         $estimate = Estimate::where('id', $request->estimate_id)->first();
-        Mail::to($request->email_address)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
+        $company    = CompanyDetail::first();
+        $tax_rates  = TaxRate::get();
+        $data       = [
+            'estimate'  => $estimate,
+            'company'  => $company,
+            'tax_rates' => $tax_rates,
+        ];
+
+
+        $pdf = Pdf::loadView('estimates.pdf', $data);
+        Storage::put('public/uploads/estimates/'.$estimate->id.'/estimate.pdf', $pdf->output());
+        foreach($emails as $email){
+            $send_email_to = str_replace(' ', '', $email);
+            Mail::to($send_email_to)->send(new SendEstimateConfirmation($estimate, nl2br($request->email_message), $request->email_subject));
+        }
+
+
+        $sent_email              = new SentEmail();
+        $sent_email->customer_id = $estimate->customer->id;
+        $sent_email->user_id     = Auth::user()->id;
+        $sent_email->medium      = 'email';
+        $sent_email->type        = 'estimates';
+        $sent_email->mode        = 'confirmation';
+        $sent_email->subject     =  $request->email_subject;
+        $sent_email->message     =  nl2br($request->email_message);
+        $sent_email->custom_id   =  $estimate->id;
+        $sent_email->save();
+
         return redirect()->back()->with('success', 'Estimate has been sent for Estimate No. '.$estimate->id.' !');
 
     }

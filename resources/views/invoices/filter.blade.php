@@ -11,13 +11,6 @@
                 </div>
                 <div class="col-xl-2 col-md-12">
                     <div class="form-group">
-                        <label for="email">{{ __('Email') }}</label>
-                        <input type="email" name="email" class="form-control form-control-sm" placeholder="Email"
-                            value="{{ $filter_email }}">
-                    </div>
-                </div>
-                <div class="col-xl-2 col-md-12">
-                    <div class="form-group">
                         <label for="phone">{{ __('Contact No') }}</label>
                         <input type="text" class="form-control form-control-sm" id="phone"
                             placeholder="Contact No" name="phone" value="{{ $filter_phone }}">
@@ -37,8 +30,15 @@
                 </div>
                 <div class="col-xl-2 col-md-12">
                     <div class="form-group">
-                        <label for="date">{{ __('Invoice Date') }}</label>
-                        <input type="date" class="form-control form-control-sm" name="date" id="date" value="{{ $filter_date }}">
+                        <label for="invoice_from">{{ __('Invoice From') }}</label>
+                        <input type="date" name="invoice_from" id="invoice_from" class="form-control form-control-sm"
+                            value="{{ $filter_invoice_from }}">
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-12">
+                    <div class="form-group">
+                        <label for="invoice_to">{{ __('Invoice To') }}</label>
+                        <input type="date" class="form-control form-control-sm" name="invoice_to" id="invoice_to" value="{{ $filter_invoice_to }}">
                     </div>
                 </div>
                 <div class="col-xl-1 col-md-12 mt-4">

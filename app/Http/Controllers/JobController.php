@@ -13,6 +13,7 @@ use App\Models\JobFormAnswer;
 use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
@@ -100,7 +101,7 @@ class JobController extends Controller
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
         if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
-            $jobs                       = $jobs->orderBy('start', 'desc')->get();
+            $jobs                       = $jobs->orderBy('start', 'asc')->get();
         }else{
             $jobs                       = $jobs->orderBy('id', 'desc')->get();
         }
@@ -241,10 +242,12 @@ class JobController extends Controller
     }
 
     public function saveJobForm(Request $request, $id){
-        JobFormAnswer::where('job_form_id', $request->job_form_id)->delete();
+        $job = Job::where('id', $id)->first();
+        JobFormAnswer::where('job_id', $id)->where('job_form_id', $request->job_form_id)->delete();
         if(!empty($request->question) && is_array($request->question)){
             foreach($request->question as $key => $value){
                 $answer                             = new JobFormAnswer();
+                $answer->customer_id                = $job->customer_id;
                 $answer->job_id                     = $id;
                 $answer->job_form_id                = $request->job_form_id;
                 $answer->job_form_question_id       = $key;
@@ -260,8 +263,10 @@ class JobController extends Controller
         }
         if($request->redirect == 'job'){
             return redirect()->route('jobs.show', ['job' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
-        }else{
+        }elseif($request->redirect == 'schedule'){
             return redirect()->route('schedules.show', ['schedule' => $id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form updated successfully!');
+        }else{
+            return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Job Form updated successfully!');
         }
 
     }
@@ -407,12 +412,38 @@ class JobController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email);
         Job::where('id', $request->job_id)->update(['status' => 'provisional']);
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
-            Mail::to($request->email)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
+            foreach($emails as $email){
+                $send_email_to = str_replace(' ', '', $email);
+                Mail::to($send_email_to)->send(new JobBookingConfirmation($job, nl2br($request->message), $request->subject));
+            }
+
+
+            $sent_email              = new SentEmail();
+            $sent_email->customer_id = $job->customer->id;
+            $sent_email->user_id     = Auth::user()->id;
+            $sent_email->medium      = 'email';
+            $sent_email->type        = 'jobs';
+            $sent_email->mode        = 'confirmation';
+            $sent_email->subject     =  $request->subject;
+            $sent_email->message     =  nl2br($request->message);
+            $sent_email->custom_id   =  $job->id;
+            $sent_email->save();
+
             return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
+
         }else{
+            $sent_email              = new SentEmail();
+            $sent_email->customer_id = $job->customer->id;
+            $sent_email->user_id     = Auth::user()->id;
+            $sent_email->medium      = 'text';
+            $sent_email->type        = 'jobs';
+            $sent_email->mode        = 'confirmation';
+            $sent_email->text        =  nl2br($request->message);
+            $sent_email->save();
             return response()->json(['success' => 'Booking Confirmation has been sent via Text!']);
         }
 

@@ -12,20 +12,20 @@
                     <th>{{ __('Total') }}</th>
                     <th>{{ __('Paid') }}</th>
                     <th>{{ __('Balance') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    {{-- <th>{{ __('Status') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($customer->invoices as $invoice)
                     <tr>
-                        <td><a href="{{ route('invoices.edit', $invoice->id) }}">#{{ $invoice->id }}</a></td>
+                        <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                         <td>{{ $invoice->invoice_date}}</td>
                         <td>{{ $invoice->due_date}}</td>
                         <td>€ {{ $invoice->total }}</td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
-                        <td>
+                        {{-- <td>
                             @if ($invoice->status == 'paid')
                                 <span class="badge bg-success">{{ ucfirst($invoice->status) }}</span>
                             @endif
@@ -38,7 +38,7 @@
                             @if ($invoice->status == 'partial')
                                 <span class="badge bg-info">{{ ucfirst($invoice->status) }}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">

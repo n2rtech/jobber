@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('customers.filter')
-        <table id="customerDataTable" class="table table-bordered table-striped" style="font-size: 14px;">
+        <table id="customerDataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
@@ -19,11 +19,14 @@
                         <td><a href="{{ route('customers.show', $customer->id) }}">{{ $customer->name }}</a></td>
                         <td>{{ getAddress($customer->id) }}</td>
                         <td>
+                            <br class="hidden-sm" />
                             {{ $customer->phone }}
                         <td>
+                            <br class="hidden-sm" />
                            {{ $customer->mobile_1 }}
                         </td>
                         <td>
+                            <br class="hidden-sm" />
                            {{ $customer->mobile_2 }}
                         </td>
                         <td>

@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body">
         @include('sales-lead.filter')
-        <table id="leadDataTable" class="table table-bordered table-striped" style="font-size: 14px;">
+        <table id="dataTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
             <thead>
                 <tr>
                     <th>{{ __('Customer') }}</th>
@@ -19,11 +19,14 @@
                         <td><a href="{{ route('customers.show', $lead->id) }}">{{ $lead->name }}</a></td>
                         <td>{{ getAddress($lead->id) }}</td>
                         <td>
+                            <br class="hidden-sm" />
                             {{ $lead->phone }}
                         <td>
+                            <br class="hidden-sm" />
                            {{ $lead->mobile_1 }}
                         </td>
                         <td>
+                            <br class="hidden-sm" />
                            {{ $lead->mobile_2 }}
                         </td>
                         <td>

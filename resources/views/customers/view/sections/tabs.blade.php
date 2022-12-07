@@ -53,6 +53,12 @@
                                 aria-selected="false">Directions</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" id="customer-sentemails-tab" data-toggle="pill"
+                                href="#customer-sentemails" role="tab" aria-controls="customer-sentemails"
+                                aria-selected="false">Sent Emails</a>
+                        </li>
+
                     </ul>
 
                 </div>
@@ -75,6 +81,8 @@
                         @include('customers.view.tabs.documents')
 
                         @include('customers.view.tabs.directions')
+
+                        @include('customers.view.tabs.sent-emails')
 
                     </div>
                 </div>

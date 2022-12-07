@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -59,11 +60,15 @@ class SendInvoiceConfirmation extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array
+     * @return \Illuminate\Mail\Mailables\Attachment[]
      */
     public function attachments()
     {
-        return [];
+        return [
+            Attachment::fromPath(public_path().'/storage/uploads/invoices/'.$this->invoice->id.'/invoice.pdf')
+                    ->as('Invoice.pdf')
+                    ->withMime('application/pdf'),
+        ];
     }
 
 

@@ -92,7 +92,7 @@
                                         <tr>
                                             <td style="border-top: none;"><b>End Date</b></td>
                                             <td style="border-top: none;" class="text-right">
-                                                {{ \Carbon\Carbon::parse($estimate->due_date)->format('M d, Y') }}</td>
+                                                {{ \Carbon\Carbon::parse($estimate->expiry_date)->format('M d, Y') }}</td>
                                         </tr>
                                         <tr>
                                             <td style="border-top: none;"></td>
@@ -158,16 +158,18 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
-                                                <td class="text-right">€ {{ $estimate->subtotal  }}</td>
+                                                <td class="text-right">€ {{ number_format($estimate->products->sum('total'), 2, '.', ',')  }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none">
                                                 <td class="text-right">Discount {{ $estimate->discount_type == 'percentage' ? '('.$estimate->discount."%".')' : '' }}</td>
                                                 <td class="text-right">€ {{ $estimate->discount }}</td>
                                             </tr>
+                                            @foreach($tax_rates as $tax_rate)
                                             <tr>
-                                                <td class="text-right">Tax</td>
-                                                <td class="text-right">€ {{ $estimate->products->sum('tax_amount')  }}</td>
+                                                <td class="text-right">{{ $tax_rate->name }}</td>
+                                                <td class="text-right">€ {{ \App\Models\EstimateProduct::where('estimate_id', $estimate->id)->where('tax_rate', $tax_rate->rate)->sum('tax_amount')  }}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
                                                 <th class="text-right">Total</th>
                                                 <td class="text-right">€ {{ $estimate->total  }}</td>
@@ -190,7 +192,7 @@
                                     <div class="dropdown-menu" role="menu" style="">
                                       <a class="dropdown-item" href="{{ route('estimates.edit', $estimate->id) }}"> Edit</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Download PDF</a>
-                                      <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                      <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#modal-email-template" onclick="$('#estimate_id').val({{ $estimate->id }});gettemplate();"> Send as Email</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Print</a>
                                     </div>
                                   </div>
@@ -202,6 +204,7 @@
             </div><!-- /.row -->
         </div>
     </section>
+    @include('estimates.email')
 @endsection
 @push('scripts')
 @if(Request::get('print'))
@@ -211,4 +214,49 @@
     });
 </script>
 @endif
+<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+<script>
+tinymce.init({
+  selector: 'textarea#email_message',
+  height: 300,
+  menubar: false,
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:roboto; font-size:16px }'
+});
+</script>
+
+<script>
+    function gettemplate(){
+        var formData = {
+                    id: $("#modal-email-template .modal-body #estimate_id").val(),
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('estimates.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
 @endpush

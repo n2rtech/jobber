@@ -5,8 +5,8 @@
     <link href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" rel="stylesheet" />
 @endsection
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
+    <section class="content-header maxWidthControl" style="margin-bottom: 0 !important">
+        <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>{{ __('Edit Job') }}</h1>
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <section class="content">
+    <section class="content maxWidthControl">
         <form id="jobForm" method="POST" action="{{ route('jobs.update', $job->id) }}">
             @csrf
             @method('PUT')
@@ -32,213 +32,175 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
-
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">{{ __('Job For') }}</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" id="name" name="name">
-                                        <option value="{{ $job->customer_id }}">
-                                            {{ $job->customer->name }}
-                                      </option>
-                                    </select>
-                                    @error('name')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label">{{ __('Job For') }}</label>
+                                        <select class="form-control" id="name" name="name">
+                                            <option value="{{ $job->customer_id }}">
+                                                {{ $job->customer->name }}
+                                            </option>
+                                        </select>
+                                        @error('name')
+                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="address" class="col-sm-2 col-form-label">{{ __('Address') }}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Customer Address">
-                                    @error('address')
-                                        <span id="address-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="job_title_id" class="control-label">{{ __('Title') }}</label>
+                                        <select class="form-control" id="job_title_id" name="job_title_id" required>
+                                            <option value="">Select Job Title</option>
+                                            @foreach ($job_titles as $job_title)
+                                                <option value="{{ $job_title->id }}" @if($job_title->id == $job->job_title_id) selected @endif>{{ $job_title->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('email')
+                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="job_title_id" class="col-sm-2 col-form-label">{{ __('Title') }}</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" id="job_title_id" name="job_title_id" required>
-                                        <option value="">Select Job Title</option>
-                                        @foreach ($job_titles as $job_title)
-                                            <option value="{{ $job_title->id }}" @if($job_title->id == $job->job_title_id) selected @endif>{{ $job_title->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('email')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="address" class="control-label">{{ __('Address') }}</label>
+                                        <input type="text" class="min86 form-control" id="address" name="address" placeholder="Customer Address">
+                                        @error('address')
+                                            <span id="address-error" class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="instructions" class="col-sm-2 col-form-label">{{ __('Instructions') }}</label>
-                                <div class="col-sm-10">
-                                    <textarea rows="5" class="form-control" id="instructions" name="instructions" placeholder="Enter Instructions">{{ old('instructions', $job->instructions) }}</textarea>
-                                    @error('instructions')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="instructions" class="control-label">{{ __('Instructions') }}</label>
+                                        <textarea rows="3" class="form-control" id="instructions" name="instructions" placeholder="Enter Instructions">{{ old('instructions', $job->instructions) }}</textarea>
+                                        @error('instructions')
+                                            <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="card card-dark">
+                                            <div class="card-header">
+                                                <h3 class="card-title">{{ __('Job Forms') }}</h3>
 
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-5">
-                                    <div class="card card-dark">
-                                        <div class="card-header">
-                                            <h3 class="card-title">{{ __('Invoicing') }}</h3>
-
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                    title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                        title="Collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input custom-control-input-success"
-                                                        type="checkbox" id="remind" name="invoice_remind" value="1" @if($job->invoice_remind == 1) checked @endif>
-                                                    <label for="remind" class="custom-control-label">Remind me to
-                                                        invoice when i close the job</label>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    @foreach($job_forms as $job_form)
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input custom-control-input-success"
+                                                            type="checkbox" id="jobForm{{ $job_form->id }}" name="job_forms[]" value="{{ $job_form->id }}" @isset($job->job_forms) @if(in_array($job_form->id, $job->job_forms)) checked @endif @endisset>
+                                                        <label for="jobForm{{ $job_form->id }}" class="custom-control-label"  style="font-size: 15px">{{ $job_form->title }}</label>
+                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="card card-dark collapsed-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">{{ __('Line Items') }}</h3>
 
-                                <div class="col-sm-5">
-                                    <div class="card card-dark">
-                                        <div class="card-header">
-                                            <h3 class="card-title">{{ __('Job Forms') }}</h3>
-
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                    title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                @foreach($job_forms as $job_form)
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input custom-control-input-success"
-                                                        type="checkbox" id="jobForm{{ $job_form->id }}" name="job_forms[]" value="{{ $job_form->id }}" @isset($job->job_forms) @if(in_array($job_form->id, $job->job_forms)) checked @endif @endisset>
-                                                    <label for="jobForm{{ $job_form->id }}" class="custom-control-label">{{ $job_form->title }}</label>
-                                                </div>
-                                                @endforeach
-                                            </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                title="Collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <div class="card card-dark collapsed-card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">{{ __('Line Items') }}</h3>
-
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                    title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-sm" id="line_items">
-                                                    <thead>
-                                                        <tr>
-                                                            <th width="40%">{{ __('Product / Service') }}</th>
-                                                            <th class="text-right">{{ __('Quantity') }}</th>
-                                                            <th class="text-right">{{ __('Unit Price') }}</th>
-                                                            <th class="text-right">{{ __('Total') }}</th>
-                                                            <th class="text-right"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($job->products as $key => $product)
-                                                        <tr id="item-row{{ $key }}">
-                                                            <td>
-                                                                <select name="product[{{ $key }}][product]" id="product{{ $key }}" class="form-control form-control-sm" onchange="showProductOptions(this, {{ $key }})" required>
-                                                                    <option value="">Select Product</option>
-                                                                        @foreach($products as $row_product)
-                                                                            <option value="{{ $row_product->id }}" @if($row_product->id == $product->product_id) selected @endif data-unitprice="{{ $row_product->unit_price }}" data-description="{{ $row_product->description }}">{{ $row_product->name }}</option>
-                                                                        @endforeach
-                                                                </select>
-                                                                <textarea name="product[{{ $key }}][description]" id="description{{ $key }}" rows="2" placeholder="Description"
-                                                                    class="form-control form-control-sm mt-1">{{ $product->description }}</textarea>
-                                                            </td>
-                                                            <td>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm" id="line_items">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">{{ __('Product / Service') }}</th>
+                                                        <th class="text-right">{{ __('Quantity') }}</th>
+                                                        <th class="text-right">{{ __('Unit Price') }}</th>
+                                                        <th class="text-right">{{ __('Total') }}</th>
+                                                        <th class="text-right"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($job->products as $key => $product)
+                                                    <tr id="item-row{{ $key }}">
+                                                        <td>
+                                                            <select name="product[{{ $key }}][product]" id="product{{ $key }}" class="form-control form-control-sm" onchange="showProductOptions(this, {{ $key }})" required>
+                                                                <option value="">Select Product</option>
+                                                                    @foreach($products as $row_product)
+                                                                        <option value="{{ $row_product->id }}" @if($row_product->id == $product->product_id) selected @endif data-unitprice="{{ $row_product->unit_price }}" data-description="{{ $row_product->description }}">{{ $row_product->name }}</option>
+                                                                    @endforeach
+                                                            </select>
+                                                            <textarea name="product[{{ $key }}][description]" id="description{{ $key }}" rows="2" placeholder="Description"
+                                                                class="form-control form-control-sm mt-1">{{ $product->description }}</textarea>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-align-right"
+                                                                id="quantity{{ $key }}" name="product[{{ $key }}][quantity]" placeholder="Quantity" oninput="totalUpdate({{ $key }})" min="1" value="{{ $product->quantity }}">
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text text-sm">€</span>
+                                                                </div>
                                                                 <input type="number"
                                                                     class="form-control form-control-sm text-align-right"
-                                                                    id="quantity{{ $key }}" name="product[{{ $key }}][quantity]" placeholder="Quantity" oninput="totalUpdate({{ $key }})" min="1" value="{{ $product->quantity }}">
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text text-sm">€</span>
-                                                                    </div>
-                                                                    <input type="number"
-                                                                        class="form-control form-control-sm text-align-right"
-                                                                        id="unit_price{{ $key }}" name="product[{{ $key }}][unit_price]"
-                                                                        placeholder="Unit Price" oninput="totalUpdate({{ $key }})" value="{{ $product->unit_price }}" min="0" step="any" required>
+                                                                    id="unit_price{{ $key }}" name="product[{{ $key }}][unit_price]"
+                                                                    placeholder="Unit Price" oninput="totalUpdate({{ $key }})" value="{{ $product->unit_price }}" min="0" step="any" required>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text text-sm">€</span>
                                                                 </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text text-sm">€</span>
-                                                                    </div>
-                                                                    <input type="number"
-                                                                        class="form-control form-control-sm text-align-right totalpriceinput"
-                                                                        id="total{{ $key }}" name="product[{{ $key }}][total]"
-                                                                        placeholder="Total" value="{{ $product->total }}" min="0" step="any" required>
-                                                                </div>
-                                                            </td>
-                                                            <td class="text-right"><button type="button"
-                                                                    class="btn btn-sm btn-danger" onclick="$('#item-row{{ $key }}').remove();"><i
-                                                                        class="fa fa-minus"></i></button></td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td class="text-right" colspan="5">
-                                                                <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
-                                                                        class="fa fa-plus"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
+                                                                <input type="number"
+                                                                    class="form-control form-control-sm text-align-right totalpriceinput"
+                                                                    id="total{{ $key }}" name="product[{{ $key }}][total]"
+                                                                    placeholder="Total" value="{{ $product->total }}" min="0" step="any" required>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right"><button type="button"
+                                                                class="btn btn-sm btn-danger" onclick="$('#item-row{{ $key }}').remove();"><i
+                                                                    class="fa fa-minus"></i></button></td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td class="text-right" colspan="5">
+                                                            <button type="button" class="btn btn-sm btn-success" onclick="addLineItem();"><i
+                                                                    class="fa fa-plus"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <div class="card card-dark">
-                                        <div class="card-header">
-                                            <h3 class="card-title">{{ __('Totals') }}</h3>
-                                            <div class="card-tools">
-                                                <h6>€ <span id="totals">0</span></h6>
-                                            </div>
+                            <div class="form-group">
+                                <div class="card card-dark">
+                                    <div class="card-header">
+                                        <h3 class="card-title">{{ __('Totals') }}</h3>
+                                        <div class="card-tools">
+                                            <h6>€ <span id="totals">0</span></h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-12 text-right">
+                            <div class="form-group">
+                                <div class="float-right">
                                     <button type="submit" class="btn btn-danger" form="jobForm">
                                         <i class="btn-icon fas fa-save"></i> {{ __('Update') }}
                                     </button>

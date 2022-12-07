@@ -3,13 +3,14 @@
     <div class="card-body">
         @include('jobs.filter')
         <div class="table-responsive">
-            <table id="dataTable" class="table table-bordered table-striped" style="font-size: 14px;">
+            <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
                         <th style="width: 15%">{{ __('Customer') }}</th>
                         <th  style="width: 30%">{{ __('Address') }}</th>
-                        <th  style="width: 15%">{{ __('Contact') }}</th>
-                        <th  style="width: 15%">{{ __('Job Type') }}</th>
+                        <th  style="width: 10%">{{ __('Contact') }}</th>
+                        <th  style="width: 10%">Job No.</th>
+                        <th  style="width: 10%">{{ __('Job Type') }}</th>
                         <th  style="width: 10%">{{ __('Scheduled') }}</th>
                         <th  style="width: 10%">{{ __('Total') }}</th>
                         <th  style="width: 5%"></th>
@@ -25,10 +26,12 @@
                                 {{ getAddress($job->customer_id) }}
                             </td>
                             <td>
+                               <br class="hidden-sm" />
                                 @isset($job->customer->phone) {{ $job->customer->phone }} <br/> @endisset
                                 @isset($job->customer->mobile_1) {{ $job->customer->mobile_1 }} <br/> @endisset
                                 @isset($job->customer->mobile_2) {{ $job->customer->mobile_2 }}</td> @endisset
                             </td>
+                            <td><a href="{{ route('jobs.show', $job->id) }}">{{ $job->id }}</a></td>
                             <td>
                                 {{ $job->jobTitle->title }}
                             </td>
@@ -36,13 +39,14 @@
                                 @if ($job->scheduled == 'no')
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
-                                <span class="badge bg-success"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
+                                <br class="hidden-sm" />
+                                <span class="badge bg-info"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
                                 <br/>
-                                <span class="badge bg-info"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                    <span class="badge bg-info"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
+                                <br/>
+                                <span class="badge bg-success"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
                                 <span class="badge bg-danger"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
-                                <br/>
-                                    <span class="badge bg-yellow"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>

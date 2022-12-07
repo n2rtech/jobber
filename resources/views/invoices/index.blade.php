@@ -22,7 +22,7 @@
 
                 <div class="col-sm-6 text-right">
 
-                    <a href="javascript:void(0)" id="filter" class="btn btn-success d-none">
+                    <a href="javascript:void(0)" id="filter" class="btn btn-success">
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
                     </a>
 
@@ -64,7 +64,6 @@
 
     });
 </script>
-<!-- Filter Box Scripts End -->
 <!-- Filter Box Scripts End -->
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
 <script>

@@ -165,16 +165,18 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-right" style="width:50%">Subtotal</td>
-                                                <td class="text-right">€ {{ $invoice->products->sum('total')  }}</td>
+                                                <td class="text-right">€ {{ number_format($invoice->products->sum('total'), 2, '.', ',') }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none">
                                                 <td class="text-right">Discount {{ $invoice->discount_type == 'percentage' ? '('.$invoice->discount."%".')' : '' }}</td>
                                                 <td class="text-right">€ {{ $invoice->discount }}</td>
                                             </tr>
+                                            @foreach($tax_rates as $tax_rate)
                                             <tr>
-                                                <td class="text-right">Tax</td>
-                                                <td class="text-right">€ {{ $invoice->products->sum('tax_amount')  }}</td>
+                                                <td class="text-right">{{ $tax_rate->name }}</td>
+                                                <td class="text-right">€ {{ \App\Models\InvoiceProduct::where('invoice_id', $invoice->id)->where('tax_rate', $tax_rate->rate)->sum('tax_amount')  }}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
                                                 <th class="text-right">Total</th>
                                                 <td class="text-right">€ {{ $invoice->total  }}</td>
@@ -197,7 +199,7 @@
                                     <div class="dropdown-menu" role="menu" style="">
                                       <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                       <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
-                                      <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                      <a class="dropdown-item"href="javascript:void(0)" data-toggle="modal" data-target="#modal-email-template" onclick="$('#invoice_id').val({{ $invoice->id }});gettemplate();"> Send as Email</a>
                                       <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#modal-payment"> Add Payment</a>
                                       <a class="dropdown-item" href="javascript:void(0)" onclick="window.print()"> Print</a>
                                     </div>
@@ -211,6 +213,7 @@
         </div>
     </section>
     @include('invoices.add-payment')
+    @include('invoices.email')
 @endsection
 @push('scripts')
 @if(Request::get('print'))
@@ -220,4 +223,49 @@
     });
 </script>
 @endif
+<script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+<script>
+tinymce.init({
+  selector: 'textarea#email_message',
+  height: 300,
+  menubar: false,
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:roboto; font-size:16px }'
+});
+</script>
+
+<script>
+    function gettemplate(){
+        var formData = {
+                    id: $("#modal-email-template .modal-body #invoice_id").val(),
+                    email_template: $("#modal-email-template .modal-body #email_template").val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('invoices.email-template') }}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#modal-email-template .modal-body #email_template").val(formData.email_template);
+                        $("#modal-email-template .modal-body #email_address").val(data.email);
+                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
+                        var emailhtml = data.message.replace(/\n/ig,"<br>")
+                        tinyMCE.get('email_message').setContent(emailhtml);
+                        // $("#modal-email-template .modal-body #email_message").val(data.message);
+                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+    }
+</script>
 @endpush

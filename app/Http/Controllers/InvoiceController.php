@@ -10,12 +10,15 @@ use App\Models\EmailTemplateContent;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\TaxRate;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -36,15 +39,15 @@ class InvoiceController extends Controller
 
         $filter_name                = $request->name;
 
-        $filter_email               = $request->email;
-
         $filter_phone               = $request->phone;
 
         $filter_status              = $request->status;
 
-        $filter_date                = $request->date;
+        $filter_invoice_from                = $request->invoice_from;
 
-        if(isset($filter_name) || isset($filter_email) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
+        $filter_invoice_to               = $request->invoice_to;
+
+        if(isset($filter_name) || isset($filter_invoice_from) || isset($filter_invoice_to) || isset($filter_phone) || isset($filter_status) || isset($filter_date)){
             $filter_box = 'show';
         }
 
@@ -84,7 +87,22 @@ class InvoiceController extends Controller
 
         isset($filter_status)       ? $invoices->where('status', $filter_status) : $invoices;
 
-        isset($filter_date)         ? $invoices->where('invoice_date', $filter_date) : $invoices;
+        if ($request->invoice_from && $request->invoice_to) {
+
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereBetween('invoice_date', [$from, $to]);
+        }
+
+        if ($request->invoice_from) {
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $invoices->whereDate('invoice_date', '>=', $from);
+        }
+
+        if ($request->invoice_to) {
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereDate('invoice_date', '<=', $to);
+        }
 
 
         $invoices                   = $invoices->orderBy('id', 'desc')->get();
@@ -93,7 +111,7 @@ class InvoiceController extends Controller
 
         $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
 
-        return view('invoices.index', compact('invoices', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_date', 'filter_box', 'template_confirmation', 'template_followup'));
+        return view('invoices.index', compact('invoices', 'filter_name', 'filter_invoice_from', 'filter_phone', 'filter_status', 'filter_invoice_to', 'filter_box', 'template_confirmation', 'template_followup'));
     }
 
     /**
@@ -193,7 +211,7 @@ class InvoiceController extends Controller
         $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('invoices.index')->with('success', 'Invoice added successfully!');
+        return redirect()->route('invoices.show', $invoice->id)->with('success', 'Invoice added successfully!');
     }
 
     /**
@@ -209,7 +227,9 @@ class InvoiceController extends Controller
         $products   = Product::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
-        return view('invoices.view', compact('invoice', 'products', 'tax_rates', 'setting', 'company'));
+        $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
+        $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
+        return view('invoices.view', compact('invoice', 'products', 'tax_rates', 'setting', 'company', 'template_confirmation', 'template_followup'));
     }
 
     /**
@@ -276,7 +296,7 @@ class InvoiceController extends Controller
         $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 
-        return redirect()->route('invoices.index')->with('success', 'Invoice updated successfully!');
+        return redirect()->route('invoices.show', $invoice->id)->with('success', 'Invoice updated successfully!');
     }
 
     /**
@@ -294,7 +314,7 @@ class InvoiceController extends Controller
 
     public function emailTemplate(Request $request)
     {
-        $invoice = Invoice::where('id', $request->id)->first();
+        $invoice  = Invoice::where('id', $request->id)->first();
         $template = EmailTemplateContent::where('id', $request->email_template)->first();
         $subject  = getInvoiceSubject($template->subject, $request->id);
         $message  = getInvoiceMessage($template->message, $request->id);
@@ -303,8 +323,36 @@ class InvoiceController extends Controller
     }
 
     public function confirmation(Request $request){
+        $emails = explode(",",$request->email_address);
         $invoice = Invoice::where('id', $request->invoice_id)->first();
-        Mail::to($request->email_address)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
+        $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $mode     = EmailTemplate::where('id', $template->email_template_id)->value('mode');
+        $company    = CompanyDetail::first();
+        $tax_rates  = TaxRate::get();
+        $data       = [
+            'invoice'  => $invoice,
+            'company'  => $company,
+            'tax_rates' => $tax_rates,
+        ];
+
+
+        $pdf = Pdf::loadView('invoices.pdf', $data);
+        Storage::put('public/uploads/invoices/'.$invoice->id.'/invoice.pdf', $pdf->output());
+        foreach($emails as $email){
+            $send_email_to = str_replace(' ', '', $email);
+            Mail::to($send_email_to)->send(new SendInvoiceConfirmation($invoice, nl2br($request->email_message), $request->email_subject));
+        }
+        $sent_email              = new SentEmail();
+        $sent_email->customer_id = $invoice->customer->id;
+        $sent_email->user_id     = Auth::user()->id;
+        $sent_email->medium      = 'email';
+        $sent_email->type        = 'invoices';
+        $sent_email->mode        =  $mode;
+        $sent_email->subject     =  $request->email_subject;
+        $sent_email->message     =  nl2br($request->email_message);
+        $sent_email->custom_id   =  $invoice->id;
+        $sent_email->save();
+
         return redirect()->back()->with('success', 'Invoice has been sent for Invoice No. '.$invoice->id.' !');
 
     }
