@@ -17,6 +17,7 @@ use App\Models\SentEmail;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -238,7 +239,14 @@ class JobController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        return view('jobs.view', compact('job', 'users', 'products', 'template'));
+        
+        $setting            = Setting::where('type', 'calendar')->value('value');
+        $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
+        $slots = [];
+        foreach ($period as $item) {
+            array_push($slots, $item->format("H:i:s"));
+        }
+        return view('jobs.view', compact('job', 'users', 'products', 'template','slots'));
     }
 
     public function saveJobForm(Request $request, $id){

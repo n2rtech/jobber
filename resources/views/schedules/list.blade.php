@@ -148,13 +148,25 @@
               <div class="col-sm-3 col-12">
                   <div class="form-group">
                       <label class="control-label">Start Time</label>
-                      <input id="mobile_start_time" type="time" class="form-control" onchange="updateTimeInput(this)">
+                      <select name="mobile_start_time" id="mobile_start_time" class="form-control" >
+                        <option value="">Choose Start time</option>
+                        @foreach($slots as $slot)
+                          <option value="{{ $slot }}">{{ $slot }}</option>
+                        @endforeach
+                    </select>
+                     <!-- <input id="mobile_start_time" type="time" class="form-control" onchange="updateTimeInput(this)">-->
                   </div>
               </div>
               <div class="col-sm-3 col-12">
                   <div class="form-group">
                       <label class="control-label">End Time</label>
-                      <input id="mobile_end_time" type="time" class="form-control" onchange="updateTimeInput(this)">
+                      <select name="mobile_end_time" id="mobile_end_time" class="form-control" >
+                        <option value="">Choose End time</option>
+                        @foreach($slots as $slot)
+                          <option value="{{ $slot }}">{{ $slot }}</option>
+                        @endforeach
+                    </select>
+                      <!--<input id="mobile_end_time" type="time" class="form-control" onchange="updateTimeInput(this)">-->
                   </div>
               </div>
             </div>

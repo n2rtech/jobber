@@ -36,7 +36,7 @@ class ScheduleController extends Controller
         $hidden_days        = array_values($result);
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
         
-        $period =$period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
+        $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
         foreach ($period as $item) {
             array_push($slots, $item->format("H:i:s"));
@@ -125,7 +125,15 @@ class ScheduleController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        return view('schedules.details', compact('job', 'users', 'products', 'template'));
+        
+        $setting            = Setting::where('type', 'calendar')->value('value');
+        $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
+        $slots = [];
+        foreach ($period as $item) {
+            array_push($slots, $item->format("H:i:s"));
+        }
+
+        return view('schedules.details', compact('job', 'users', 'products', 'template','slots'));
     }
 
     /**

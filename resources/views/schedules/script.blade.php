@@ -621,8 +621,8 @@ tinymce.init({
     function scheduleMobile(){
         var formData = {
                     id: $("#schedule-modal .modal-body #job_id").val(),
-                    start: $('#mobile_starts').val()+' '+$('#mobile_start_time').val(),
-                    end: $('#mobile_starts').val()+' '+$('#mobile_end_time').val(),
+                    start: $('#mobile_starts').val()+' '+$('#mobile_start_time').find(":selected").val(),
+                    end: $('#mobile_starts').val()+' '+$('#mobile_end_time').find(":selected").val(),
                 };
                 $.ajaxSetup({
                     headers: {

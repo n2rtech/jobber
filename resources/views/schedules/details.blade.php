@@ -139,13 +139,27 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Start Time</label>
-                                                    <input id="start_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}">
+                                                    <select name="start_time" id="start_time" class="form-control" >
+                                                    <option>Choose start time</option>
+                                                    @php $sel = ''; @endphp
+                                                    @foreach($slots as $slot)
+                                                    <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->start)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
+                                                    @endforeach
+                                                </select>
+                                                    <!--<input id="start_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}">-->
                                                 </div>
                                             </div>
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">End Time</label>
-                                                    <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">
+                                                    <select name="end_time" id="end_time" class="form-control" >
+                                                    <option disabled>Choose End time</option>
+                                                    @php $sel = ''; @endphp
+                                                    @foreach($slots as $slot)
+                                                    <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->end)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
+                                                    @endforeach
+                                                </select>
+                                                    <!--<input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">--->
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 mt-2 mb-2">

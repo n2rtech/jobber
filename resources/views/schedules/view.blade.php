@@ -73,7 +73,7 @@
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Time</label>
-                                <select name="start_time" id="start_time" class="form-control" onchange="updateTimeInput(this)" >
+                                <select name="start_time" id="start_time" class="form-control" >
                                 <option value="">Choose Start time</option>
                                 @foreach($slots as $slot)
                                   <option value="{{ $slot }}">{{ $slot }}</option>
@@ -85,7 +85,7 @@
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Time</label>
-                                <select name="end_time" id="end_time" class="form-control" onchange="updateTimeInput(this)" >
+                                <select name="end_time" id="end_time" class="form-control">
                                 <option value="">Choose End time</option>
                                 @foreach($slots as $slot)
                                   <option value="{{ $slot }}">{{ $slot }}</option>
