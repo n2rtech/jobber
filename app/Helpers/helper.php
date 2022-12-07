@@ -7,6 +7,7 @@ use App\Models\EstimateProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Job;
+use App\Models\JobFormAnswer;
 use Illuminate\Http\Request;
 
 if (!function_exists('getAddress')) {
@@ -400,5 +401,12 @@ if (!function_exists('getCompanyAddress')) {
            }
 
            return $message;
+        }
+    }
+
+    if (!function_exists('jobFormExists')) {
+        function jobFormExists($jobid, $form_id){
+            $form_exists = JobFormAnswer::where('job_id', $jobid)->where('job_form_id', $form_id)->exists();
+            return $form_exists;
         }
     }

@@ -251,6 +251,7 @@
                                 aria-labelledby="view-jobform-tab">
                                 <div class="gallery">
                                     @forelse($job->forms as $form)
+                                    @if(!jobFormExists($job->id, $form->id))
                                     <div class="card">
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
@@ -318,6 +319,17 @@
                                         </div>
                                     </form>
                                     </div>
+                                    @else
+                                    <div class="card">
+                                        <div class="card-header bg-dark">
+                                            <h3 class="card-title">{{ $form->title }}</h3>
+                                            <div class="card-tools">
+                                                {{-- <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a> --}}
+                                                <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                     @empty
                                     <p class="text-center mt-4"> No JobForm Found</p>
                                     @endforelse

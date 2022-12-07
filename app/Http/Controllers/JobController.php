@@ -257,6 +257,7 @@ class JobController extends Controller
                 $answer                             = new JobFormAnswer();
                 $answer->customer_id                = $job->customer_id;
                 $answer->job_id                     = $id;
+                $answer->user_id                    = Auth::user()->id;
                 $answer->job_form_id                = $request->job_form_id;
                 $answer->job_form_question_id       = $key;
 

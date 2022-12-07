@@ -30,7 +30,11 @@
         <div class="card">
             <div class="card-header bg-dark">
                 <h2 class="card-title">{{ $form->title }}</h2>
-                <span style="margin-top:0px;margin-bottom:20px;">{{ \Carbon\Carbon::parse($form->created_at)->format('M d, Y h:i:s') }}</span>
+                @php
+                $form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->first();
+            @endphp
+            <span style="margin-top:0px;margin-bottom:20px;">{{ \App\Models\User::where('id', $form_answer->user_id)->value('name') }}</span>
+                <span style="margin-top:0px;margin-bottom:20px;">{{ \Carbon\Carbon::parse($form->created_at)->format('M d, Y h:i:s') }}</span><br>
             </div>
             <div class="card-body">
                 @foreach($form->questions as $question)
