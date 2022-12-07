@@ -73,13 +73,25 @@
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">Start Time</label>
-                                <input id="start_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">
+                                <select name="start_time" id="start_time" class="form-control" onchange="updateTimeInput(this)" >
+                                <option value="">Choose Start time</option>
+                                @foreach($slots as $slot)
+                                  <option value="{{ $slot }}">{{ $slot }}</option>
+                                @endforeach
+                            </select>
+                                <!--<input id="start_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">-->
                             </div>
                         </div>
                         <div class="col-sm-4 col-6">
                             <div class="form-group">
                                 <label class="control-label">End Time</label>
-                                <input id="end_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">
+                                <select name="end_time" id="end_time" class="form-control" onchange="updateTimeInput(this)" >
+                                <option value="">Choose End time</option>
+                                @foreach($slots as $slot)
+                                  <option value="{{ $slot }}">{{ $slot }}</option>
+                                @endforeach
+                            </select>
+                               <!-- <input id="end_time" type="time" min="{{ $setting["timing_starts"] }}" max="{{ $setting["timing_ends"] }}" class="form-control" onchange="updateTimeInput(this)">-->
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2 mb-2">

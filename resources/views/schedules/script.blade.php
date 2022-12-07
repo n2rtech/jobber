@@ -148,7 +148,7 @@ tinymce.init({
                 @endforeach
             ],
             eventClick: function(info) {
-                console.log(info.event.start);
+                
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
@@ -162,8 +162,8 @@ tinymce.init({
                     .customer);
                 $("#successModal .modal-body .location").text(info.event.extendedProps.location);
                 $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
-                $("#successModal .modal-body #start_time").val(formatSetTime(info.event.start));
-                $("#successModal .modal-body #end_time").val(formatSetTime(info.event.end));
+                $("#successModal .modal-body #start_time option[value='"+formatSetTime(info.event.start)+"']").prop('selected',true);
+                $("#successModal .modal-body #end_time option[value='"+formatSetTime(info.event.end)+"']").prop('selected',true);
                 $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
                 $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
                 $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
@@ -583,9 +583,10 @@ tinymce.init({
     function changeTimings(){
         var formData = {
                     id: $("#successModal .modal-body .job_id").text(),
-                    start: $('#starts').val()+' '+$('#start_time').val(),
-                    end: $('#starts').val()+' '+$('#end_time').val(),
+                    start: $('#starts').val()+' '+$('#start_time').find(":selected").val(),
+                    end: $('#starts').val()+' '+$('#end_time').find(":selected").val(),
                 };
+       // console.log(formData);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -662,8 +663,8 @@ tinymce.init({
 </script>
 <script>
     function updateTimeInput(element){
-        var previoustim = $(element).val();
-        $(element).val(previoustim+':00');
+       // var previoustim = $(element).val();
+        //$(element).val(previoustim+':00');
     }
 </script>
 <script>

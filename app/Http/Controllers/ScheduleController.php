@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -34,8 +35,14 @@ class ScheduleController extends Controller
         $result             = array_diff($all_days, $days);
         $hidden_days        = array_values($result);
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        
+        $period =$period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
+        $slots = [];
+        foreach ($period as $item) {
+            array_push($slots, $item->format("H:i:s"));
+        }
 
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template'));
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template','slots'));
     }
 
     /**

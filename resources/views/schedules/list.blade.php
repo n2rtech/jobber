@@ -38,7 +38,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-3">
             <div class="sticky-top mb-3">
               <div class="card">
