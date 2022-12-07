@@ -1,20 +1,20 @@
 <script>
-    var question_row = @isset($job_form->questions) {{ count($job_form->questions) }}  @else 1 @endisset;
+    var question_row = @isset($external_form->questions) {{ count($external_form->questions) }}  @else 1 @endisset;
 
     function addQuestion() {
         html = '<div class="card" id="question-row' + question_row + '">';
         html+= '<div class="job-form-footer">';
         html+= '<div class="form-group">';
-        html+= '<label for="question">Question</label>';
+        html+= '<label for="question">Field Name</label>';
         html+= '<div class="input-group">';
-        html+= '<input type="text" class="form-control" id="question' + question_row + '" name="question[' + question_row + '][question]" placeholder="Write Question here">';
+        html+= '<input type="text" class="form-control" id="question' + question_row + '" name="question[' + question_row + '][question]" placeholder="Field Name">';
         html+= '<div class="input-group-append">';
         html+= '<button type="button" class="btn btn-danger" onclick="$(\'#question-row' + question_row + '\').remove();"><i class="fas fa-trash-alt"></i></button>';
         html+= '</div>';
         html+= '</div>';
         html+= '</div>';
         html+= '<div class="form-group mt-3">';
-        html+= '<label for="question">Answer Type</label><br />';
+        html+= '<label for="question">Field Type</label><br />';
         html+= '<label class="radio-inline mr-3">';
         html+= '<div class="custom-control custom-radio">';
         html+= '<input class="custom-control-input" type="radio" id="checkbox' + question_row + '" name="question[' + question_row + '][type]" value="checkbox"  onclick="askOption(this.value, ' + question_row + ');">';

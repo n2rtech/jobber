@@ -1,18 +1,11 @@
 @extends('layouts.app')
-@section('title', 'Job Forms')
+@section('title', 'External Forms')
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Job Forms</h1>
-            </div>
-            <div class="col-sm-6 text-right">
-
-                <a href="{{ route('job-forms.create') }}" class="btn btn-danger">
-                    <i class="btn-icon fas fa-plus-circle"></i> {{ __('Add New') }}
-                </a>
-
+                <h1 class="m-0">External Forms</h1>
             </div>
         </div>
     </div>
@@ -23,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-body">
-                    @foreach ($job_forms as $job_form)
+                    @foreach ($external_forms as $external_form)
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-footer">
@@ -33,9 +26,9 @@
                                         <div class="post">
                                             <div class="user-block">
                                               <span class="form-name">
-                                                {{ $job_form->title }}
+                                                {{ $external_form->title }}
                                               </span>
-                                              <span class="form-description text-dark">Total Questions : {{ count($job_form->questions) }} </span>
+                                              <span class="form-description text-dark">Total Fields : {{ count($external_form->questions) }} </span>
                                             </div>
                                           </div>
                                     </div>
@@ -46,10 +39,10 @@
                                                     <i class="fa fa-ellipsis-vertical"></i>
                                                 </button>
                                                 <div class="dropdown-menu" role="menu" style="">
-                                                  <a class="dropdown-item" href="{{ route('job-forms.edit', $job_form->id) }}"><i class="fas fa-edit"></i> Edit</a>
-                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $job_form->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
-                                                  <form id='delete-form{{ $job_form->id }}'
-                                                    action='{{ route('job-forms.destroy', $job_form->id) }}' method='POST'>
+                                                  <a class="dropdown-item" href="{{ route('external-forms.edit', $external_form->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                                  <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $external_form->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
+                                                  <form id='delete-form{{ $external_form->id }}'
+                                                    action='{{ route('external-forms.destroy', $external_form->id) }}' method='POST'>
                                                     <input type='hidden' name='_token' value='{{ csrf_token() }}'>
                                                     <input type='hidden' name='_method' value='DELETE'>
                                                 </form>
