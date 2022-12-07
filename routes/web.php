@@ -54,7 +54,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 # Customers Route
 Route::resource('customers', CustomerController::class);
-
+Route::get('customers/all-notes/{id}', [CustomerController::class, 'allNotes'])->name('customers.all-notes');
 Route::get('customers/convert/lead/{id}', [CustomerController::class, 'convertToLead'])->name('customers.lead');
 
 Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomplete'])->name('customers.autocomplete');

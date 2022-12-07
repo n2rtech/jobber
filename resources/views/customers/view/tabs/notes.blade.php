@@ -22,6 +22,9 @@ aria-labelledby="customer-notes-tab">
                 </div>
             </div>
         </div>
+        @if($loop->iteration == 5)
+        @break
+        @endif
         @empty
         <div class="card-comment">
             <p class="text-center mt-4">No Notes Added.</p>
@@ -31,8 +34,12 @@ aria-labelledby="customer-notes-tab">
     </div>
 
 </div>
-{{$customer->allnotes->appends(request()->query())->links("pagination::bootstrap-4")}}
-
+@if(count($customer->allnotes) > 5)
+                            <div class="col-sm-12 text-center">
+                                <a href="{{ route('customers.all-notes', $customer->id) }}" class="btn btn-indigo">View All <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        @endif
 </div>
 
 {{-- Notes Tab End --}}

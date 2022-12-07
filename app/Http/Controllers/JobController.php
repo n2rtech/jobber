@@ -102,7 +102,7 @@ class JobController extends Controller
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
         if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
-            $jobs                       = $jobs->orderBy('start', 'asc')->get();
+            $jobs                       = $jobs->orderBy('start', 'asc')->whereNot('status', 'completed')->get();
         }else{
             $jobs                       = $jobs->orderBy('id', 'desc')->get();
         }
@@ -239,7 +239,7 @@ class JobController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];

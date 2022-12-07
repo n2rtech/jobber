@@ -83,7 +83,7 @@
         responsive: true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "info": true, "ordering": false , "autoWidth": false,
-      }).buttons().container().appendTo('#invoiceTable_wrapper .col-md-6:eq(0)');
+      });
     });
     $(function () {
       $("#jobseTable").DataTable({
@@ -93,7 +93,7 @@
         ],
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
-      }).buttons().container().appendTo('#jobseTable_wrapper .col-md-6:eq(0)');
+      });
     });
 
 

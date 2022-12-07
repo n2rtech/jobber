@@ -26,7 +26,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('start', 'asc')->get();
+        $scheduled_jobs     = Job::where('scheduled', 'yes ')->whereNot('status', 'completed')->orderBy('start', 'asc')->get();
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         $setting            = Setting::where('type', 'calendar')->value('value');
@@ -35,7 +35,7 @@ class ScheduleController extends Controller
         $result             = array_diff($all_days, $days);
         $hidden_days        = array_values($result);
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
         foreach ($period as $item) {
@@ -125,7 +125,7 @@ class ScheduleController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
