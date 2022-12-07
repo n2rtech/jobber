@@ -7,7 +7,7 @@
             <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
-                        <th class="all" style="width: 15%">{{ __('Customer') }}</th>
+                        <th class="all" style="width: 15%">{{ __('Customer') }} test</th>
                         <th class="all" style="width: 30%">{{ __('Address') }}</th>
                         <th class="none" style="width: 10%">{{ __('Contact') }}</th>
                         <th class="none" style="width: 10%">Job No.</th>
