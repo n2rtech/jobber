@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
+                            <a href="{{ url()->previous() }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -24,7 +24,7 @@
                                 <h5><strong>{{ $job->customer->name }}</strong></h5>
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
-                                <small>{{ getAddress($job->customer_id) }}</small>
+                                <small>{!! getAddress($job->customer_id) !!}</small>
                             </div>
                             <div class="col-sm-6 col-6">
                                 <div class="float-right">

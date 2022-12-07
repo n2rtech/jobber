@@ -23,7 +23,7 @@
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
                             <td>
-                                {{ getAddress($job->customer_id) }}
+                                {!! getAddress($job->customer_id) !!}
                             </td>
                             <td>
                                <br class="hidden-sm" />

@@ -27,7 +27,7 @@
 
     <div class="col-md-3">
         <label for="billing_address" class="label-small">{{ __('Billing Address') }}</label>
-        <p id="billing_address" class="text-small text-muted">@isset($customer) {{ getAddress($customer->id) }} @else @isset($estimate) {{ getAddress($estimate->customer->id) }} @else {{ __('Select Customer') }} @endisset @endif</p>
+        <p id="billing_address" class="text-small text-muted">@isset($customer) {!! getAddress($customer->id) !!} @else @isset($estimate) {!! getAddress($estimate->customer->id) !!} @else {{ __('Select Customer') }} @endisset @endif</p>
     </div>
 
     <div class="col-md-3">

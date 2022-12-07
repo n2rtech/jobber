@@ -17,7 +17,7 @@
                 @foreach ($leads as $lead)
                     <tr>
                         <td><a href="{{ route('customers.show', $lead->id) }}">{{ $lead->name }}</a></td>
-                        <td>{{ getAddress($lead->id) }}</td>
+                        <td>{!! getAddress($lead->id) !!}</td>
                         <td>
                             <br class="hidden-sm" />
                             {{ $lead->phone }}

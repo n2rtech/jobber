@@ -385,7 +385,7 @@ class JobController extends Controller
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
-        return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
+        return redirect()->route('jobs.show', $id)->with('success', 'Job updated successfully!');
     }
 
     /**

@@ -18,7 +18,7 @@ class AutocompleteController extends Controller
 
         foreach($customers as $customer){
 
-            $customer->address  = getAddress($customer->id);
+            $customer->address  = getCustomerAddress($customer->id);
 
         }
 

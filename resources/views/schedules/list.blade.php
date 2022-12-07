@@ -56,7 +56,7 @@
                         @foreach($unscheduled_jobs as $unscheduled_job)
                             <div class="external-event bg-light hidden-xs"
                             data-customer="{{ $unscheduled_job->customer->name }}"
-                            data-location="{{ getAddress($unscheduled_job->customer_id) }}"
+                            data-location="{{ getCustomerAddress($unscheduled_job->customer_id) }}"
                             data-jobid="{{ $unscheduled_job->id }}"
                             data-city="{{ $unscheduled_job->customer->city }}"
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
@@ -80,7 +80,7 @@
                                 </div>
                            </div>
                            <div data-customer="{{ $unscheduled_job->customer->name }}"
-                            data-location="{{ getAddress($unscheduled_job->customer_id) }}"
+                            data-location="{{ getCustomerAddress($unscheduled_job->customer_id) }}"
                             data-jobid="{{ $unscheduled_job->id }}"
                             data-href="{{ route('jobs.edit', $unscheduled_job->id) }}"
                             data-jobstatus="{{ $unscheduled_job->status }}"

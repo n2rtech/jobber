@@ -140,7 +140,7 @@ tinymce.init({
                         teamcolor: '{{$job->user->color ?? "red" }}',
                         teamname: '{{$job->user->name ?? "Not Assigned" }}',
                         jobstatus: '{{ $job->status }}',
-                        location: '{{ getAddress($job->customer_id) }}',
+                        location: '{{ getCustomerAddress($job->customer_id) }}',
                         href: '{{ route('jobs.edit', $job->id) }}',
                         show: '{{ route('schedules.show', $job->id) }}',
                         viewcustomer: '{{ route('customers.show', $job->customer_id) }}',
@@ -148,7 +148,7 @@ tinymce.init({
                 @endforeach
             ],
             eventClick: function(info) {
-                
+
                 $("#successModal .modal-body .job_title").text(info.event.title);
                 $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
                 $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
@@ -416,51 +416,108 @@ tinymce.init({
             job_id: $("#successModal .modal-body .job_id").text(),
             status: value,
         };
+        if(value == 'completed'){
+                $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure! Once mark completed! Job will be removed from Calendar.',
+                buttons: {
+                    confirm: function() {
+                        var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+                        switch (formData.status) {
+                            case 'pending':
+                                $(event).css('border-color', 'red');
+                                break;
+                            case 'provisional':
+                                $(event).css('border-color', '#fc9003');
+                                    break;
+                            case 'confirmed':
+                                $(event).css('border-color', '#01FF70');
+                                break;
+                            case 'completed':
+                                $(event).css('border-color', '#007BFF');
+                                break;
+                            default:
+                                $(event).css('border-color', 'red');
+                                break;
+                        };
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ route('jobs.change-status') }}',
+                            data: formData,
+                            dataType: 'json',
+                            success: function(data) {
+                                if(data.success){
+                                    $('#mark_complete').css('color', 'green');
+                                    $('#mark_complete').text(data.success);
+                                }else{
+                                    $('#mark_complete').css('color', 'red');
+                                    $('#mark_complete').text(data.danger);
+                                }
+                                setTimeout(function(){
+                                    window.location.reload(1);
+                                }, 1000);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                            }
+                        });
+                    },
+                    cancel: function() {
 
-        var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
-        switch (formData.status) {
-            case 'pending':
-                $(event).css('border-color', 'red');
-                break;
-            case 'provisional':
-                $(event).css('border-color', '#fc9003');
-                    break;
-            case 'confirmed':
-                $(event).css('border-color', '#01FF70');
-                break;
-            case 'completed':
-                $(event).css('border-color', '#007BFF');
-                break;
-            default:
-                $(event).css('border-color', 'red');
-                break;
-        };
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('jobs.change-status') }}',
-            data: formData,
-            dataType: 'json',
-            success: function(data) {
-                if(data.success){
-                    $('#mark_complete').css('color', 'green');
-                    $('#mark_complete').text(data.success);
-                }else{
-                    $('#mark_complete').css('color', 'red');
-                    $('#mark_complete').text(data.danger);
+                    },
                 }
-                setTimeout(function(){
-                    window.location.reload(1);
-                }, 1000);
-            },
-            error: function(data) {
-                console.log(data);
-            }
-        });
+            });
+        }else{
+            var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+            switch (formData.status) {
+                case 'pending':
+                    $(event).css('border-color', 'red');
+                    break;
+                case 'provisional':
+                    $(event).css('border-color', '#fc9003');
+                        break;
+                case 'confirmed':
+                    $(event).css('border-color', '#01FF70');
+                    break;
+                case 'completed':
+                    $(event).css('border-color', '#007BFF');
+                    break;
+                default:
+                    $(event).css('border-color', 'red');
+                    break;
+            };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('jobs.change-status') }}',
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success){
+                        $('#mark_complete').css('color', 'green');
+                        $('#mark_complete').text(data.success);
+                    }else{
+                        $('#mark_complete').css('color', 'red');
+                        $('#mark_complete').text(data.danger);
+                    }
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 1000);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
     }
 
     function assignTeam(value) {

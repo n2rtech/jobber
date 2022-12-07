@@ -180,7 +180,7 @@
                                 @foreach ($completed_jobs as $job)
                                     <tr>
                                         <td><a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a></td>
-                                        <td>{{ getAddress($job->customer_id) }}</td>
+                                        <td>{!! getAddress($job->customer_id) !!}</td>
 
                                         <td>
                                             @isset($job->customer->phone) <i class="fa fa-square-phone"></i> {{ $job->customer->phone }} <br/> @endisset

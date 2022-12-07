@@ -402,7 +402,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $customer->name }}");
             $("#customer_id").val("{{ $customer->id }}");
-            $("#address").val('{{ getAddress(Request::get('customer_id')) }}');
+            $("#address").val('{!! getAddress(Request::get('customer_id')) !!}');
        });
     </script>
 

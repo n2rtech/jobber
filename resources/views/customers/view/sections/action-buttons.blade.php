@@ -3,7 +3,7 @@
         <h3 style="font-size:1.1rem;font-weight: 400;margin: 0">Actions</h3>
     </div>
     <div class="card-body buttonBlocks">
-        <div class="row">
+        <div class="row pt-4">
             <div class="col-sm-3 col-6">
                 <a href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}"
                     class="btn mb-4">Add Job</a>
@@ -28,7 +28,7 @@
             <div class="col-sm-3 col-6">
                 <a href="{{ route('customer.send-email', $customer->id) }}"
                     class="btn mb-4">Send Email</a>
-            </div> 
+            </div>
             <div class="col-sm-3 col-6">
                 <a href="{{ route('customer.upload-documents', $customer->id) }}"
                     class="btn mb-4">Upload

@@ -24,7 +24,7 @@
                                 <h5><strong>{{ $job->customer->name }}</strong></h5>
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
-                                <small>{{ getAddress($job->customer_id) }}</small>
+                                <small>{!! getAddress($job->customer_id) !!}</small>
                             </div>
                             <div class="col-sm-6">
                                 <div class="float-right">
