@@ -294,6 +294,17 @@ class JobController extends Controller
         return $pdf->download('jobform.pdf');
     }
 
+    public function viewJobForm($jobid, $formid){
+        $job                = Job::where('id', $jobid)->first();
+
+        if(!empty($job->job_forms) && is_array($job->job_forms)){
+            $job->forms     = JobForm::where('id', $formid)->get();
+        }else{
+            $job->forms     = [];
+        }
+        return view('jobs.job-form', compact('job'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

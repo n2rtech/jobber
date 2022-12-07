@@ -13,7 +13,7 @@ class JobFormAnswer extends Model
 
     protected $table        = 'job_form_answers';
 
-    protected $fillable     = ['job_id', 'job_form_id', 'job_form_question_id', 'answer', 'answer_options'];
+    protected $fillable     = ['job_id', 'job_form_id', 'customer_id', 'job_form_question_id', 'answer', 'answer_options'];
 
     protected $casts = [
         'answer_options' => 'array',

@@ -410,3 +410,10 @@ if (!function_exists('getCompanyAddress')) {
             return $form_exists;
         }
     }
+
+    if (!function_exists('jobForms')) {
+        function jobForms($jobid, $customer_id){
+            $forms = JobFormAnswer::where('job_id', $jobid)->where('customer_id', $customer_id)->distinct()->pluck('job_form_id')->toArray();
+            return $forms;
+        }
+    }

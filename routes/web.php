@@ -85,6 +85,9 @@ Route::put('jobs/save/job-form/{id}', [JobController::class, 'saveJobForm'])->na
 # Download Job Form
 Route::get('jobs/download/{jobid}/job-form/{formid}', [JobController::class, 'downloadJobForm'])->name('jobs.download.job-form');
 
+# Download Job Form
+Route::get('jobs/view/{jobid}/job-form/{formid}', [JobController::class, 'viewJobForm'])->name('jobs.view.job-form');
+
 # Add Note Form Route
 Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'])->name('job.add-notes');
 

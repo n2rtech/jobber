@@ -11,6 +11,7 @@
                         @if (count($customer->jobs) > 0)
                             <div class="card-body">
                                 @foreach ($customer->jobs as $job)
+                                @if(jobForms($job->id, $customer->id))
                                     <div class="card">
                                         <div class="card-header bg-indigo">
                                             <small>{{ $job->jobTitle->title }}</small>
@@ -21,6 +22,8 @@
                                             <div class="card-body">
                                                 <div id="accordion">
                                                     @foreach ($job->forms as $form)
+
+
                                                         <div @if(!jobFormExists($job->id, $form->id)) class="card card-warning" @else class="card card-success" @endif>
                                                             <div class="card-header">
                                                                 <small>
@@ -30,9 +33,9 @@
                                                                 </small>
                                                                 <span class="float-right">
                                                                     @if(jobFormExists($job->id, $form->id))
-                                                                    <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}"
+                                                                    <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}"
                                                                         class="btn btn-tool">
-                                                                        <i class="fas fa-download"></i>
+                                                                        <i class="fas fa-eye"></i>
                                                                     </a>
                                                                     @endif
                                                                     <a href="javascript:void(0)"
@@ -133,6 +136,7 @@
                                                             </div>
                                                             @endif
                                                         </div>
+
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -144,6 +148,7 @@
                                             </div>
                                         @endif
                                     </div>
+                                    @endif
                                 @endforeach
                             </div>
                         @else

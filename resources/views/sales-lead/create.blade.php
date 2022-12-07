@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body  pb-5">
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
                                 <div class="col-sm-10">
@@ -108,16 +108,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="city" class="col-sm-2 col-form-label">{{ __('City') }}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="city" name="city"
-                                        placeholder="Enter City" value="{{ old('city') }}">
-                                    @error('city')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -134,6 +124,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="city" class="col-sm-2 col-form-label">{{ __('City') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="city" name="city"
+                                        placeholder="Enter City" value="{{ old('city') }}">
+                                    @error('city')
+                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            {{-- <div class="form-group row">
                                 <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="state" name="state"
@@ -142,12 +142,12 @@
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row">
-                                <label for="country" class="col-sm-2 col-form-label">{{ __('Country') }}</label>
+                                <label for="country" class="col-sm-2 col-form-label">{{ __('County') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="country" name="country"
-                                        placeholder="Enter Country" value="{{ old('country') }}">
+                                        placeholder="Enter County" value="{{ old('country') }}">
                                     @error('country')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror

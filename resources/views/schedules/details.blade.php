@@ -258,7 +258,7 @@
                                             <div class="card-tools">
                                                 <a href="javascript:void(0)"
                                                 class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'schedule','form_id' => $form->id]) }}');"><i class="fas fa-trash"></i></a>
-                                                <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
+                                                <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
                                             </div>
                                         </div>
                                         <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
@@ -327,7 +327,7 @@
                                             <div class="card-tools">
                                                 <a href="javascript:void(0)" class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'schedule','form_id' => $form->id]) }}');">
                                                                         <i class="fas fa-trash"></i></a>
-                                                <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
+                                                <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
                                             </div>
                                         </div>
                                     </div>
