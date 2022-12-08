@@ -136,7 +136,7 @@ class ScheduleController extends Controller
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.details', compact('job', 'users', 'products', 'template','slots', 'text-template'));
+        return view('schedules.details', compact('job', 'users', 'products', 'template','slots', 'text_template'));
     }
 
     /**

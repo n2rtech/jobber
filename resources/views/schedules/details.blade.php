@@ -396,6 +396,19 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="text_template">Mobile Number</label>
+                    <select class="form-control" name="mobile_no" id="mobile_no">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="text_template">Template</label>
+                    <select class="form-control" name="text_template" id="text_template" onchange="gettemplate();">
+                        @foreach($text_template->contents as $content)
+                            <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="message">Message</label>
                     <textarea class="form-control" name="text_message" id="text_message" rows="6"></textarea>
                 </div>
@@ -409,6 +422,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -425,9 +439,11 @@
         content_style: 'body { font-family:roboto; font-size:16px }'
       });
       </script>
+
     <script>
         jQuery('#starts').datepicker();
     </script>
+
     <script>
         function assignTeam(value) {
             var formData = {
@@ -487,6 +503,7 @@
         var formData = {
                     id: '{{ $job->id }}',
                     email_template: $("#modal-email-template .modal-body #email_template").val(),
+                    text_template: $("#modal-text-template .modal-body #text_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -505,7 +522,8 @@
                         var emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").html(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);
@@ -559,14 +577,22 @@
 <script>
     function sendConfirmation(value) {
 
-var formData = {
-     job_id: '{{ $job->id }}',
-     subject: $("#modal-email-template .modal-body #email_subject").val(),
-     email: $("#modal-email-template .modal-body #email_address").val(),
-     message: tinymce.get("email_message").getContent(),
-     text_message: $("#modal-email-template .modal-body #text_message").val(),
-     medium: value,
- };
+        if(value == 'email'){
+        var formData = {
+            job_id: '{{ $job->id }}',
+            subject: $("#modal-email-template .modal-body #email_subject").val(),
+            email: $("#modal-email-template .modal-body #email_address").val(),
+            message: tinymce.get("email_message").getContent(),
+            medium: value,
+        };
+    }else{
+        var formData = {
+            job_id: '{{ $job->id }}',
+            mobile_no: $("#modal-text-template .modal-body #mobile_no").val(),
+            text_message: $("#modal-text-template .modal-body #text_message").val(),
+            medium: value,
+        };
+    }
  $.ajaxSetup({
      headers: {
          'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')

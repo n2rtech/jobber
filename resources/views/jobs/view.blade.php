@@ -20,13 +20,13 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6 col-6">
+                            <div class="col-sm-6">
                                 <h5><strong>{{ $job->customer->name }}</strong></h5>
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
                                 <small>{!! getAddress($job->customer_id) !!}</small>
                             </div>
-                            <div class="col-sm-6 col-6">
+                            <div class="col-sm-6">
                                 <div class="float-right">
                                     @isset($job->start)
                                     <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
@@ -78,7 +78,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-body m-pad-0">
+                    <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade active show" id="view-information" role="tabpanel"
                                 aria-labelledby="view-information-tab">
@@ -119,7 +119,7 @@
                                                     <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);" style="width: 100%">
                                                         <option value="">Choose Team Member</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if($job->user_id == $user->id) selected @endif>{{ $user->name }}</option>
+                                                        <option value="{{ $user->id }}" @if($job->user_id == $user->id) selected @endif>{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <small id="assign_message"></small>
@@ -140,7 +140,8 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Start Time</label>
                                                     <select name="start_time" id="start_time" class="form-control" >
-                                                    <option value="">Choose Start time</option>
+                                                    <option>Choose start time</option>
+                                                    @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
                                                     <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->start)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
                                                     @endforeach
@@ -152,12 +153,13 @@
                                                 <div class="form-group">
                                                     <label class="control-label">End Time</label>
                                                     <select name="end_time" id="end_time" class="form-control" >
-                                                    <option value="">Choose End time</option>
+                                                    <option disabled>Choose End time</option>
+                                                    @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
                                                     <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->end)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
                                                     @endforeach
                                                 </select>
-                                                   <!-- <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">-->
+                                                    <!--<input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">--->
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 mt-2 mb-2">
@@ -174,9 +176,9 @@
                                     </div>
                                 </div>
 
-                                <span class="text-dark float-right pr-3"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
+                                <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <div class="card card-widget widget-user-2 mt-3">
+                                <div class="card card-widget widget-user-2">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
                                         <div class="card-tools">
@@ -263,7 +265,7 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="job_form_id" value="{{ $form->id }}">
-                                            <input type="hidden" name="redirect" value="job">
+                                            <input type="hidden" name="redirect" value="schedule">
                                         <div class="card-body">
                                             @foreach($form->questions as $question)
 
@@ -323,9 +325,8 @@
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
                                             <div class="card-tools">
-                                                <a href="javascript:void(0)"
-                                                class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'job','form_id' => $form->id]) }}');">
-                                                <i class="fas fa-trash"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'job','form_id' => $form->id]) }}');">
+                                                                        <i class="fas fa-trash"></i></a>
                                                 <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
                                             </div>
                                         </div>
@@ -395,6 +396,19 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="text_template">Mobile Number</label>
+                    <select class="form-control" name="mobile_no" id="mobile_no">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="text_template">Template</label>
+                    <select class="form-control" name="text_template" id="text_template" onchange="gettemplate();">
+                        @foreach($text_template->contents as $content)
+                            <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="message">Message</label>
                     <textarea class="form-control" name="text_message" id="text_message" rows="6"></textarea>
                 </div>
@@ -408,6 +422,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -424,9 +439,11 @@
         content_style: 'body { font-family:roboto; font-size:16px }'
       });
       </script>
+
     <script>
         jQuery('#starts').datepicker();
     </script>
+
     <script>
         function assignTeam(value) {
             var formData = {
@@ -486,6 +503,7 @@
         var formData = {
                     id: '{{ $job->id }}',
                     email_template: $("#modal-email-template .modal-body #email_template").val(),
+                    text_template: $("#modal-text-template .modal-body #text_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -504,7 +522,8 @@
                         var emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").html(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);
@@ -513,7 +532,6 @@
     }
 </script>
 <!-- Filter Box Scripts End -->
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function markUnscheduled() {
         var formData = {
@@ -559,14 +577,22 @@
 <script>
     function sendConfirmation(value) {
 
-var formData = {
-     job_id: '{{ $job->id }}',
-     subject: $("#modal-email-template .modal-body #email_subject").val(),
-     email: $("#modal-email-template .modal-body #email_address").val(),
-     message: tinymce.get("email_message").getContent(),
-     text_message: $("#modal-email-template .modal-body #text_message").val(),
-     medium: value,
- };
+        if(value == 'email'){
+        var formData = {
+            job_id: '{{ $job->id }}',
+            subject: $("#modal-email-template .modal-body #email_subject").val(),
+            email: $("#modal-email-template .modal-body #email_address").val(),
+            message: tinymce.get("email_message").getContent(),
+            medium: value,
+        };
+    }else{
+        var formData = {
+            job_id: '{{ $job->id }}',
+            mobile_no: $("#modal-text-template .modal-body #mobile_no").val(),
+            text_message: $("#modal-text-template .modal-body #text_message").val(),
+            medium: value,
+        };
+    }
  $.ajaxSetup({
      headers: {
          'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -596,7 +622,7 @@ var formData = {
  });
 }
 </script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function assignStatus(value) {
         var formData = {

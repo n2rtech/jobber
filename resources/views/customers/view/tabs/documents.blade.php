@@ -17,13 +17,18 @@
 
                                     <li class="nav-item">
                                         <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="nav-link text-info">
-                                            {{ $form->title }} <span
-                                                class="float-right badge bg-primary">{{ $form->created_at }}</span>
+                                            {{ $form->title }}
+                                            <span class="float-right badge bg-primary">{{ $form->created_at }}</span><span class="float-right badge bg-warning mr-1">{{ $job->jobTitle->title }}</span>
+                                            @php
+                                                $form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->first();
+                                            @endphp
+
                                         </a>
-                                        <a class="nav-link text-info" href="javascript:void(0)"
+                                        <a class="float-left pl-3 mb-3" href="javascript:void(0)"
                                         onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'customer','form_id' => $form->id]) }}');"><span
                                                 class="badge bg-danger"><i
                                                     class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
+                                        <span class="float-right badge bg-info mr-3">{{ \App\Models\User::where('id', $form_answer->user_id)->value('name') }}</span>
 
                                     </li>
 

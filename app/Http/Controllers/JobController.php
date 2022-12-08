@@ -248,7 +248,7 @@ class JobController extends Controller
         foreach ($period as $item) {
             array_push($slots, $item->format("H:i:s"));
         }
-        return view('jobs.view', compact('job', 'users', 'products', 'template','slots', 'text-template'));
+        return view('jobs.view', compact('job', 'users', 'products', 'template','slots', 'text_template'));
     }
 
     public function saveJobForm(Request $request, $id){

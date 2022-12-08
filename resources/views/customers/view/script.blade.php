@@ -88,6 +88,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = url;
+                }else{
+                    location.reload();
                 }
             })
 
@@ -104,6 +106,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = url;
+                }else{
+                    location.reload();
                 }
             })
 
