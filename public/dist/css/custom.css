@@ -271,7 +271,7 @@ a.nav-link .active{
     background-color: black !important;
     color: white !important;
     padding: 2px;
-    height: 87px;
+    /* height: 87px; */
 }
 .unscheduled-card {
     padding: 10px 6px 0px 6px;
