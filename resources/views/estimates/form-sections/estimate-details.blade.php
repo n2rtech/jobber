@@ -53,7 +53,7 @@
                                             Address') }}</label>
                     </div>
                 @else
-                <p id="shipping_address" class="text-small text-muted" data-toggle="#modal" onclick="showAddressModal();">{{ $estimate->shipping_address_1 }} {{ $estimate->shipping_address_2 }} {{ $estimate->shipping_city }} {{ $estimate->shipping_state }} {{ $estimate->shipping_country }} {{ $estimate->shipping_eir_code }}</p>
+                <p id="shipping_address" class="text-small text-muted" data-toggle="#modal" onclick="showAddressModal();">{{ $estimate->shipping_address_1 }} {{ $estimate->shipping_address_2 }} {{ $estimate->shipping_city }} {{ $estimate->shipping_state }} {{ $estimate->shipping_country }} <a target="_blank" href="http://maps.google.com/?q={{ $estimate->shipping_eir_code }}">{{ $estimate->shipping_eir_code }}</a></p>
                 @endif
             @else
                 <div class="custom-control custom-checkbox">

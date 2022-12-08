@@ -159,7 +159,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr id="item-row0">
+                                                        {{-- <tr id="item-row0">
                                                             <td>
                                                                 <select name="product[0][product]" id="product0" class="form-control form-control-sm" onchange="showProductOptions(this, 0)" required>
                                                                     <option value="">Select Product</option>
@@ -191,7 +191,7 @@
                                                             <td class="text-right"><button type="button"
                                                                     class="btn btn-sm btn-danger" onclick="$('#item-row0').remove();"><i
                                                                         class="fa fa-minus"></i></button></td>
-                                                        </tr>
+                                                        </tr> --}}
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>

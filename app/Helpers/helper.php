@@ -7,6 +7,7 @@ use App\Models\EstimateProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Job;
+use App\Models\JobForm;
 use App\Models\JobFormAnswer;
 use Illuminate\Http\Request;
 
@@ -415,5 +416,20 @@ if (!function_exists('getCompanyAddress')) {
         function jobForms($jobid, $customer_id){
             $forms = JobFormAnswer::where('job_id', $jobid)->where('customer_id', $customer_id)->distinct()->pluck('job_form_id')->toArray();
             return $forms;
+        }
+    }
+
+    if (!function_exists('savedjobForms')) {
+        function savedjobForms($customer_id){
+            $job_ids = JobFormAnswer::where('customer_id', $customer_id)->distinct()->pluck('job_id')->toArray();
+            $jobs    = Job::whereIn('id', $job_ids)->get();
+            foreach($jobs as $job){
+                if(!empty($job->job_forms) && is_array($job->job_forms)){
+                    $job->forms     = JobForm::whereIn('id', $job->job_forms)->get();
+                }else{
+                    $job->forms     = [];
+                }
+            }
+            return $jobs;
         }
     }

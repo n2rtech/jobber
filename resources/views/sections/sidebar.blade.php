@@ -120,6 +120,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('text-templates.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>Text Templates</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('tax-rates.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Tax Rates</p>

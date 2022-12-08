@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EmailTemplateSeed::class);
 
+        $this->call(TextTemplateSeed::class);
+
         $this->call(JobFormSeeder::class);
 
         $this->call(JobFormQuestionSeeder::class);

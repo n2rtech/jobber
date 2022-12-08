@@ -25,6 +25,7 @@ use App\Http\Controllers\ManageTeamController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaxRateController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TextTemplateController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
 
@@ -133,6 +134,9 @@ Route::resource('manage-team', ManageTeamController::class);
 
 # Email Template Route
 Route::resource('email-templates', EmailTemplateController::class);
+
+# Text Template Route
+Route::resource('text-templates', TextTemplateController::class);
 
 Route::post('email-template/default', [EmailTemplateController::class, 'autocomplete'])->name('email-templates.default');
 

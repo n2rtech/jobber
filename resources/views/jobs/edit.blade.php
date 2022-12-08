@@ -378,7 +378,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $job->customer->name }}");
             $("#customer_id").val("{{ $job->customer_id }}");
-            $('#address').val("{!! getAddress($job->customer_id) !!}");
+            $('#address').val("{{ getCustomerAddress($job->customer_id) }}");
        });
     </script>
 
