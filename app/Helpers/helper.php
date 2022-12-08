@@ -214,11 +214,11 @@ if (!function_exists('getCompanyAddress')) {
            $subject     = str_replace('{{CUSTOMER_PHONE}}', $job->customer->phone , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_1}}', $job->customer->mobile_1 , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_2}}', $job->customer->mobile_2 , $subject);
-           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($job->customer_id) , $subject);
+           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($job->customer_id) , $subject);
 
            $subject     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $subject);
            $subject     = str_replace('{{JOB_DATE_AND_TIME}}',$job->customer->start , $subject);
-           $subject     = str_replace('{{JOB_LOCATION}}', getAddress($job->customer_id) , $subject);
+           $subject     = str_replace('{{JOB_LOCATION}}', getCustomerAddress($job->customer_id) , $subject);
 
            return $subject;
         }
@@ -246,11 +246,11 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{CUSTOMER_PHONE}}', $job->customer->phone , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_1}}', $job->customer->mobile_1 , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_2}}', $job->customer->mobile_2 , $message);
-           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($job->customer_id) , $message);
+           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($job->customer_id) , $message);
 
            $message     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $message);
            $message     = str_replace('{{JOB_DATE_AND_TIME}}',$job->start , $message);
-           $message     = str_replace('{{JOB_LOCATION}}', getAddress($job->customer_id) , $message);
+           $message     = str_replace('{{JOB_LOCATION}}', getCustomerAddress($job->customer_id) , $message);
 
            return $message;
         }
@@ -274,15 +274,15 @@ if (!function_exists('getCompanyAddress')) {
            $subject     = str_replace('{{CUSTOMER_PHONE}}', $estimate->customer->phone , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_1}}', $estimate->customer->mobile_1 , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_2}}', $estimate->customer->mobile_2 , $subject);
-           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($estimate->customer_id) , $subject);
+           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($estimate->customer_id) , $subject);
 
            $subject     = str_replace('{{ESTIMATE_NO}}', $estimate->id , $subject);
            $subject     = str_replace('{{ESTIMATE_DATE}}', $estimate->estimate_date , $subject);
            $subject     = str_replace('{{EXPIRY_DATE}}', $estimate->expiry_date , $subject);
-           $subject     = str_replace('{{ESTIMATE_BILLING_ADDRESS}}', getAddress($estimate->customer_id) , $subject);
+           $subject     = str_replace('{{ESTIMATE_BILLING_ADDRESS}}', getCustomerAddress($estimate->customer_id) , $subject);
 
            if($estimate->same_as_billing_address){
-                $subject     = str_replace('{{ESTIMATE_SHIPPING_ADDRESS}}', getAddress($estimate->customer_id) , $subject);
+                $subject     = str_replace('{{ESTIMATE_SHIPPING_ADDRESS}}', getCustomerAddress($estimate->customer_id) , $subject);
            }else{
                 $subject     = str_replace('{{ESTIMATE_SHIPPING_ADDRESS}}', $estimate->shipping_address_1.' '.$estimate->shipping_address_2.' '.$estimate->shipping_city.' '.$estimate->shipping_state.' '.$estimate->shipping_country.' '.$estimate->shipping_eir_code , $subject);
            }
@@ -313,12 +313,12 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{CUSTOMER_PHONE}}', $estimate->customer->phone , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_1}}', $estimate->customer->mobile_1 , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_2}}', $estimate->customer->mobile_2 , $message);
-           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($estimate->customer_id) , $message);
+           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($estimate->customer_id) , $message);
 
            $message     = str_replace('{{ESTIMATE_NO}}', $estimate->id , $message);
            $message     = str_replace('{{ESTIMATE_DATE}}', $estimate->estimate_date , $message);
            $message     = str_replace('{{EXPIRY_DATE}}', $estimate->expiry_date , $message);
-           $message     = str_replace('{{ESTIMATE_BILLING_ADDRESS}}', getAddress($estimate->customer_id) , $message);
+           $message     = str_replace('{{ESTIMATE_BILLING_ADDRESS}}', getCustomerAddress($estimate->customer_id) , $message);
 
            if($estimate->same_as_billing_address){
                 $message     = str_replace('{{ESTIMATE_SHIPPING_ADDRESS}}', getAddress($estimate->customer_id) , $message);
@@ -349,15 +349,15 @@ if (!function_exists('getCompanyAddress')) {
            $subject     = str_replace('{{CUSTOMER_PHONE}}', $invoice->customer->phone , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_1}}', $invoice->customer->mobile_1 , $subject);
            $subject     = str_replace('{{CUSTOMER_MOBILE_2}}', $invoice->customer->mobile_2 , $subject);
-           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($invoice->customer_id) , $subject);
+           $subject     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $subject);
 
            $subject     = str_replace('{{INVOICE_NO}}', $invoice->id , $subject);
            $subject     = str_replace('{{INVOICE_DATE}}', $invoice->invoice_date , $subject);
            $subject     = str_replace('{{EXPIRY_DATE}}', $invoice->due_date , $subject);
-           $subject     = str_replace('{{INVOICE_BILLING_ADDRESS}}', getAddress($invoice->customer_id) , $subject);
+           $subject     = str_replace('{{INVOICE_BILLING_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $subject);
 
            if($invoice->same_as_billing_address){
-                $subject     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', getAddress($invoice->customer_id) , $subject);
+                $subject     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $subject);
            }else{
                 $subject     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', $invoice->shipping_address_1.' '.$invoice->shipping_address_2.' '.$invoice->shipping_city.' '.$invoice->shipping_state.' '.$invoice->shipping_country.' '.$invoice->shipping_eir_code , $subject);
            }
@@ -388,15 +388,15 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{CUSTOMER_PHONE}}', $invoice->customer->phone , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_1}}', $invoice->customer->mobile_1 , $message);
            $message     = str_replace('{{CUSTOMER_MOBILE_2}}', $invoice->customer->mobile_2 , $message);
-           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getAddress($invoice->customer_id) , $message);
+           $message     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $message);
 
            $message     = str_replace('{{INVOICE_NO}}', $invoice->id , $message);
            $message     = str_replace('{{INVOICE_DATE}}', $invoice->invoice_date , $message);
            $message     = str_replace('{{EXPIRY_DATE}}', $invoice->due_date , $message);
-           $message     = str_replace('{{INVOICE_BILLING_ADDRESS}}', getAddress($invoice->customer_id) , $message);
+           $message     = str_replace('{{INVOICE_BILLING_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $message);
 
            if($invoice->same_as_billing_address){
-                $message     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', getAddress($invoice->customer_id) , $message);
+                $message     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', getCustomerAddress($invoice->customer_id) , $message);
            }else{
                 $message     = str_replace('{{INVOICE_SHIPPING_ADDRESS}}', $invoice->shipping_address_1.' '.$invoice->shipping_address_2.' '.$invoice->shipping_city.' '.$invoice->shipping_state.' '.$invoice->shipping_country.' '.$invoice->shipping_eir_code , $message);
            }

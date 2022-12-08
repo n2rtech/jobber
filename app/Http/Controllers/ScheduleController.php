@@ -8,6 +8,8 @@ use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Models\TextTemplate;
+use App\Models\TextTemplateContent;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -35,6 +37,7 @@ class ScheduleController extends Controller
         $result             = array_diff($all_days, $days);
         $hidden_days        = array_values($result);
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
 
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
@@ -42,7 +45,7 @@ class ScheduleController extends Controller
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template','slots'));
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template', 'text_template', 'slots'));
     }
 
     /**
@@ -125,7 +128,7 @@ class ScheduleController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
@@ -133,7 +136,7 @@ class ScheduleController extends Controller
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.details', compact('job', 'users', 'products', 'template','slots'));
+        return view('schedules.details', compact('job', 'users', 'products', 'template','slots', 'text-template'));
     }
 
     /**
@@ -175,9 +178,20 @@ class ScheduleController extends Controller
         // return $request->all();
         $job      = Job::where('id', $request->id)->first();
         $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $texttemplate = TextTemplateContent::where('id', $request->text_template)->first();
         $subject  = getSubject($template->subject, $request->id);
         $message  = getMessage($template->message, $request->id);
-
-        return response()->json(['email' => $job->customer->email, 'subject' => $subject, 'message' => $message]);
+        $text_message =  getMessage($texttemplate->message, $request->id);
+        $mobile_options = '';
+        if(isset($job->customer->phone)){
+            $mobile_options .= '<option value='.$job->customer->phone.'>Phone: '.$job->customer->phone.'</option>';
+        }
+        if(isset($job->customer->mobile_1)){
+            $mobile_options .= '<option value='.$job->customer->mobile_1.'>Mobile 1: '.$job->customer->mobile_1.'</option>';
+        }
+        if(isset($job->customer->mobile_2)){
+            $mobile_options .= '<option value='.$job->customer->mobile_2.'>Mobile 2: '.$job->customer->mobile_2.'</option>';
+        }
+        return response()->json(['email' => $job->customer->email, 'mobile_options' => $mobile_options, 'subject' => $subject, 'message' => $message,  'text_message' => $text_message]);
     }
 }

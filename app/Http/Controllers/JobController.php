@@ -15,6 +15,7 @@ use App\Models\JobTitle;
 use App\Models\Product;
 use App\Models\SentEmail;
 use App\Models\Setting;
+use App\Models\TextTemplate;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -22,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
 
 class JobController extends Controller
 {
@@ -239,14 +241,14 @@ class JobController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
         foreach ($period as $item) {
             array_push($slots, $item->format("H:i:s"));
         }
-        return view('jobs.view', compact('job', 'users', 'products', 'template','slots'));
+        return view('jobs.view', compact('job', 'users', 'products', 'template','slots', 'text-template'));
     }
 
     public function saveJobForm(Request $request, $id){
@@ -456,6 +458,8 @@ class JobController extends Controller
             return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
 
         }else{
+            // return $request->all();
+            Http::get('https://api.textlocal.in/send?apikey=NzA2ZTQ1NzEzMDRmNzI2Zjc0NzE1MDYyNzMzNjRkNDY=&numbers='.$request->mobile_no.'&sender=TXTLCL&message='.$request->text_message);
             $sent_email              = new SentEmail();
             $sent_email->customer_id = $job->customer->id;
             $sent_email->user_id     = Auth::user()->id;

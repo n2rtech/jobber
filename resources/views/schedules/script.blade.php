@@ -172,6 +172,7 @@ tinymce.init({
                 var formData = {
                     id: info.event.extendedProps.jobid,
                     email_template: $("#modal-email-template .modal-body #email_template").val(),
+                    text_template: $("#modal-text-template .modal-body #text_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -189,7 +190,8 @@ tinymce.init({
                         var  emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").val(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);
@@ -555,15 +557,23 @@ tinymce.init({
     }
 
     function sendConfirmation(value) {
-
-       var formData = {
+    if(value == 'email'){
+        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             subject: $("#modal-email-template .modal-body #email_subject").val(),
             email: $("#modal-email-template .modal-body #email_address").val(),
             message: tinymce.get("email_message").getContent(),
-            text_message: $("#modal-email-template .modal-body #text_message").val(),
             medium: value,
         };
+    }else{
+        var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+            mobile_no: $("#modal-text-template .modal-body #mobile_no").val(),
+            text_message: $("#modal-text-template .modal-body #text_message").val(),
+            medium: value,
+        };
+    }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -729,6 +739,7 @@ tinymce.init({
         var formData = {
                     id: $("#successModal .modal-body .job_id").text(),
                     email_template: $(element).val(),
+                    text_template: $(element).val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -747,7 +758,8 @@ tinymce.init({
                         var emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").val(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);

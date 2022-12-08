@@ -45,7 +45,7 @@
         html += '<textarea class="form-control" id="message'+template_row+'" name="template['+template_row+'][message]" placeholder="Enter Message here" rows="6" required></textarea>';
         html += '</div>';
         html += '<div class="form-group">';
-        html += '<button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-variable"  onclick="$(\'#fieldrow' + template_row +'\').val('+template_row+');">INSERT VARIABLE</button>';
+        html += '<button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-variable"  onclick="setfieldrowvalue('+template_row+');">INSERT VARIABLE</button>';
         html += '<button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteTemplate('+template_row+')"><i class="fas fa-trash"></i></button>';
         html += '</div>';
         html += '</div>';
@@ -53,6 +53,10 @@
         $('#template-row').append(html);
 
         template_row++;
+    }
+
+    function setfieldrowvalue(val){
+        $('#fieldrow').val(val);
     }
 
     // function setDefaultTemplate(id) {
