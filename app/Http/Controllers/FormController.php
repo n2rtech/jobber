@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\ExternalForm;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -11,9 +13,19 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('forms.form');
+
+        if (isset($request->form)) {
+            $external_form = ExternalForm::where('slug', $request->form)->first();
+            if (isset($external_form)) {
+                return view('forms.dynamic-form', compact('external_form'));
+            } else {
+                abort(404);
+            }
+        } else {
+            return view('forms.form');
+        }
     }
 
     /**
@@ -34,7 +46,7 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -45,7 +57,8 @@ class FormController extends Controller
      */
     public function show($id)
     {
-
+        $customer = Customer::where('token', $id)->first();
+        return view('forms.form', compact('customer'));
     }
 
     /**
@@ -68,7 +81,7 @@ class FormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request->all();
     }
 
     /**

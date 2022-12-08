@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->enum('type', ['sales-lead', 'customer'])->default('customer');
             $table->enum('status', ['pending', 'converted'])->default('pending');
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

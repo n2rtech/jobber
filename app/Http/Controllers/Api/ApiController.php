@@ -11,10 +11,11 @@ use App\Models\JobProduct;
 use App\Models\JobTitle;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Notifications\FormLinkNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 class ApiController extends Controller
 {
     public function save(Request $request){
@@ -29,7 +30,11 @@ class ApiController extends Controller
 
         if($customer_exists){
 
+            Customer::where('email', $request->email)->update(['token' => Str::random(20)]);
+
             $customer_id = Customer::where('email', $request->email)->value('id');
+
+            $customer = Customer::where('id', $customer_id)->first();
 
         }else{
 
@@ -44,6 +49,7 @@ class ApiController extends Controller
             $customer->phone            = $request->phone;
             $customer->mobile_1         = $request->phone_other;
             $customer->email            = $request->email;
+            $customer->token            = Str::random(20);
             $customer->save();
 
             $customer_id                = $customer->id;
@@ -118,7 +124,7 @@ class ApiController extends Controller
 
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
-
+        $customer->notify(new FormLinkNotification($customer->token));
         return response()->json(['success'=> 'Data Saved Successfully'], 200);
     }
 }

@@ -40,6 +40,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" role="menu" style="">
                                                   <a class="dropdown-item" href="{{ route('external-forms.edit', $external_form->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                                   <a class="dropdown-item" href="{{ route('form.index', ['form' => $external_form->slug]) }}" target="_blank"><i class="fas fa-eye"></i> View</a>
                                                   {{-- <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $external_form->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
                                                   <form id='delete-form{{ $external_form->id }}'
                                                     action='{{ route('external-forms.destroy', $external_form->id) }}' method='POST'>
