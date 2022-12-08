@@ -136,8 +136,10 @@ class CustomerController extends Controller
         $customer->directions       = $request->directions;
         $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
-
-        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
+        $customer->id;
+        
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
+        //return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
 
     /**
