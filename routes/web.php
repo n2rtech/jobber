@@ -197,14 +197,6 @@ Route::post('my-account', [MyAccountController::class, 'update'])->name('my-acco
 Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
 Route::post('change-password', [ChangePasswordController::class, 'update'])->name('change-password.update');
 
-# Refresh Database Route
-Route::get('refresh-database', function () {
-    Artisan::call('migrate:fresh');
-    Artisan::call('db:seed');
-    dd("Hello ! Database has been refreshed and sample data has been inserted!");
-
-});
-
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
 
