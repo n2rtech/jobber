@@ -807,7 +807,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Edit JobForm!'
+            confirmButtonText: 'Yes, Overwrite JobForm!'
         }).then((result) => {
             if (result.isConfirmed) {
                $(".saved_job_form").toggle();
