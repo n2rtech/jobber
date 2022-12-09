@@ -212,9 +212,9 @@ class JobController extends Controller
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
-        if($request->has('redirect')){
-            return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
-        }
+        // if($request->has('redirect')){
+        //     return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
+        // }
         return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-jobs'])->with('success', 'Job added successfully!');
 
     }
