@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerNote;
+use App\Models\EmailTemplate;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Lead;
@@ -174,7 +175,12 @@ class CustomerController extends Controller
                 $job->forms     = [];
             }
         }
-        return view('customers.view.index', compact('customer'));
+
+        $template                   = EmailTemplate::where('type', 'estimates')->where('mode', 'confirmation')->first();
+        $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
+        $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
+
+        return view('customers.view.index', compact('customer', 'template', 'template_confirmation', 'template_followup'));
     }
 
     /**

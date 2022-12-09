@@ -52,8 +52,11 @@
                                 @else
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="confirmConvert({{ $estimate->id }})"> Convert to Invoice</a>
                                 @endif
-                                <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
-                                <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#modal-estimate-email-template"
+                                onclick="$('#estimate_id').val({{ $estimate->id }});getEstimatetemplate();"> Send
+                                as Email</a>
+                            <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Download PDF</a>
                                 <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Print</a>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $estimate->id }})"> Delete</a>
                                 <form id='delete-form{{ $estimate->id }}'

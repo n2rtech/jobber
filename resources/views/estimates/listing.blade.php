@@ -64,7 +64,7 @@
                                             data-target="#modal-email-template"
                                             onclick="$('#estimate_id').val({{ $estimate->id }});gettemplate();"> Send
                                             as Email</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"> Download PDF</a>
+                                        <a class="dropdown-item" href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}"> Download PDF</a>
                                         <a class="dropdown-item"
                                             href="{{ route('estimates.show', ['estimate' => $estimate->id, 'print' => 'yes']) }}">
                                             Print</a>
