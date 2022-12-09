@@ -136,7 +136,6 @@ class CustomerController extends Controller
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();
-<<<<<<< HEAD
 
         if(isset($request->note)){
             $note                   = new CustomerNote();
@@ -146,13 +145,7 @@ class CustomerController extends Controller
             $note->save();
         }
 
-        return redirect()->route('customers.show', $customer->id)->with('success', 'Customer added successfully!');
-=======
-        $customer->id;
-        
         return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
-        //return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
->>>>>>> c5975eab12bd1ae9a2471a3f28efaa46af139e2b
     }
 
     /**
