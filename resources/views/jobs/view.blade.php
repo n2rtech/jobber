@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ url()->previous() }}" class="btn btn-dark">
+                            <a href="{{ route('schedules.index') }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -252,73 +252,77 @@
                                 <div class="gallery">
                                     @forelse($job->forms as $form)
                                     @if(!jobFormExists($job->id, $form->id))
-                                    <div class="card">
+                                    <div class="card collapsed-card">
                                         <div class="card-header bg-dark">
-                                            <h3 class="card-title">{{ $form->title }}</h3>
+                                            <h3 class="card-title" data-card-widget="collapse" title="Collapse">{{ $form->title }}</h3>
                                             <div class="card-tools">
                                                 <a href="javascript:void(0)"
                                                 class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'job','form_id' => $form->id]) }}');"><i class="fas fa-trash"></i></a>
-                                                <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                                                <button type="button" class="btn btn-outline-light btn-tool" data-card-widget="collapse" title="Collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                                {{-- <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a> --}}
                                             </div>
                                         </div>
-                                        <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="hidden" name="job_form_id" value="{{ $form->id }}">
-                                            <input type="hidden" name="redirect" value="schedule">
-                                        <div class="card-body">
-                                            @foreach($form->questions as $question)
+                                        <div class="card-body" style="display: none;">
+                                            <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="job_form_id" value="{{ $form->id }}">
+                                                <input type="hidden" name="redirect" value="customer">
+                                                @foreach($form->questions as $question)
 
-                                                @php
-                                                $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
-                                                @endphp
-                                                <div class="form-group">
+                                                    @php
+                                                    $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
+                                                    @endphp
+                                                    <div class="form-group">
 
-                                                    <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
+                                                        <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
 
-                                                    @if($question->type == 'text')
-                                                        <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
-                                                    @endif
+                                                        @if($question->type == 'text')
+                                                            <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
+                                                        @endif
 
-                                                    @if($question->type == 'textarea')
-                                                        <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
-                                                    @endif
+                                                        @if($question->type == 'textarea')
+                                                            <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
+                                                        @endif
 
-                                                    @if($question->type == 'checkbox')
-                                                        @foreach($question->options as $option)
+                                                        @if($question->type == 'checkbox')
+                                                            @foreach($question->options as $option)
+                                                                <div class="form-check" id="answer-{{ $question->id }}">
+                                                                    <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
+                                                                    <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+
+                                                        @if($question->type == 'radio')
+                                                            @foreach($question->options as $option)
                                                             <div class="form-check" id="answer-{{ $question->id }}">
-                                                                <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
-                                                                <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
+                                                                <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
+                                                                <label class="form-check-label">{{ $option->option }}</label>
                                                             </div>
-                                                        @endforeach
-                                                    @endif
+                                                            @endforeach
+                                                        @endif
 
-                                                    @if($question->type == 'radio')
-                                                        @foreach($question->options as $option)
-                                                        <div class="form-check" id="answer-{{ $question->id }}">
-                                                            <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
-                                                            <label class="form-check-label">{{ $option->option }}</label>
-                                                          </div>
-                                                        @endforeach
-                                                    @endif
+                                                        @if($question->type == 'dropdown')
+                                                        <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
+                                                            <option value="">Choose One</option>
+                                                            @foreach($question->options as $option)
+                                                                <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @endif
 
-                                                    @if($question->type == 'dropdown')
-                                                    <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
-                                                        <option value="">Choose One</option>
-                                                        @foreach($question->options as $option)
-                                                            <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @endif
+                                                    </div>
 
-                                                </div>
-
-                                            @endforeach
+                                                @endforeach
+                                            </form>
                                         </div>
                                         <div class="card-footer text-right">
-                                            <button type="submit" form="jobForm{{ $form->id }}" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Update</button>
+                                            <button type="button" onclick="confirmJobFormSave({{ $form->id }})" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Save & Exit</button>
                                         </div>
-                                    </form>
+
                                     </div>
                                     @else
                                     <div class="card">
@@ -716,4 +720,22 @@
         })
     };
 </script>
+<script>
+    function confirmJobFormSave(no) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Save Job Form!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('jobForm' + no).submit();
+        }
+    })
+};
+</script>
+
 @endpush
