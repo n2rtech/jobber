@@ -215,7 +215,7 @@ class JobController extends Controller
         if($request->has('redirect')){
             return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
         }
-        return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
+        return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-jobs'])->with('success', 'Job added successfully!');
 
     }
 

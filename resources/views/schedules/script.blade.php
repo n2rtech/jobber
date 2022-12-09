@@ -149,56 +149,59 @@ tinymce.init({
             ],
             eventClick: function(info) {
 
-                $("#successModal .modal-body .job_title").text(info.event.title);
-                $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
-                $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
-                if (info.event.extendedProps.jobstatus !== undefined) {
-                    $("#successModal .modal-body #booking_status").val(info.event.extendedProps.jobstatus);
-                }
-                if (info.event.extendedProps.team !== undefined) {
-                    $("#successModal .modal-body #team").val(info.event.extendedProps.team);
-                }
-                $("#successModal .modal-body .customer_name").text(info.event.extendedProps
-                    .customer);
-                $("#successModal .modal-body .location").text(info.event.extendedProps.location);
-                $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
-                $("#successModal .modal-body #start_time option[value='"+formatSetTime(info.event.start)+"']").prop('selected',true);
-                $("#successModal .modal-body #end_time option[value='"+formatSetTime(info.event.end)+"']").prop('selected',true);
-                $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
-                $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
-                $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
-                $("#successModal .modal-body #show_customer").attr("href", info.event.extendedProps.viewcustomer);
+            //     $("#successModal .modal-body .job_title").text(info.event.title);
+            //     $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
+            //     $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
+            //     if (info.event.extendedProps.jobstatus !== undefined) {
+            //         $("#successModal .modal-body #booking_status").val(info.event.extendedProps.jobstatus);
+            //     }
+            //     if (info.event.extendedProps.team !== undefined) {
+            //         $("#successModal .modal-body #team").val(info.event.extendedProps.team);
+            //     }
+            //     $("#successModal .modal-body .customer_name").text(info.event.extendedProps
+            //         .customer);
+            //     $("#successModal .modal-body .location").text(info.event.extendedProps.location);
+            //     $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
+            //     $("#successModal .modal-body #start_time option[value='"+formatSetTime(info.event.start)+"']").prop('selected',true);
+            //     $("#successModal .modal-body #end_time option[value='"+formatSetTime(info.event.end)+"']").prop('selected',true);
+            //     $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
+            //     $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
+            //     $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
+            //     $("#successModal .modal-body #show_customer").attr("href", info.event.extendedProps.viewcustomer);
 
-                var formData = {
-                    id: info.event.extendedProps.jobid,
-                    email_template: $("#modal-email-template .modal-body #email_template").val(),
-                    text_template: $("#modal-text-template .modal-body #text_template").val(),
-                };
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('schedules.email-template') }}',
-                    data: formData,
-                    dataType: 'json',
-                    success: function(data) {
-                        $("#modal-email-template .modal-body #email_address").val(data.email);
-                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        var  emailhtml = data.message.replace(/\n/ig,"<br>")
-                        tinyMCE.get('email_message').setContent(emailhtml);
-                        // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
-                        $("#modal-text-template .modal-body #text_message").val(data.text_message);
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-                $("#successModal").modal("show");
+            //     var formData = {
+            //         id: info.event.extendedProps.jobid,
+            //         email_template: $("#modal-email-template .modal-body #email_template").val(),
+            //         text_template: $("#modal-text-template .modal-body #text_template").val(),
+            //     };
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '{{ route('schedules.email-template') }}',
+            //         data: formData,
+            //         dataType: 'json',
+            //         success: function(data) {
+            //             $("#modal-email-template .modal-body #email_address").val(data.email);
+            //             $("#modal-email-template .modal-body #email_subject").val(data.subject);
+            //             var  emailhtml = data.message.replace(/\n/ig,"<br>")
+            //             tinyMCE.get('email_message').setContent(emailhtml);
+            //             // $("#modal-email-template .modal-body #email_message").val(data.message);
+            //             $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+            //             $("#modal-text-template .modal-body #text_message").val(data.text_message);
+            //         },
+            //         error: function(data) {
+            //             console.log(data);
+            //         }
+            //     });
+            //     $("#successModal").modal("show");
+            location.href = info.event.extendedProps.show;
             },
+
+
 
             eventContent: function(arg) {
 

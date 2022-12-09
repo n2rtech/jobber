@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerNote;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Lead;
@@ -134,10 +135,17 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
 
-        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
+
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Customer added successfully!');
     }
 
     /**
@@ -217,16 +225,15 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>'.$customer->notes : $customer->notes;
         $customer->save();
 
-        // if(isset($request->note)){
-        //     $note                   = new CustomerNote();
-        //     $note->customer_id      = $customer->id;
-        //     $note->user_id          = Auth::user()->id;
-        //     $note->note             = $request->note;
-        //     $note->save();
-        // }
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
 
         return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
     }

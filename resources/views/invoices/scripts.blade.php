@@ -180,7 +180,7 @@
                 html += '<select name="product[' + item_row +'][product]" id="product' + item_row +'" class="form-control form-control-sm select2" onfocusout="productFocusOut(' + item_row +')" onchange="showProductOptions(this, ' + item_row +')" style="display: none">';
                 html += '<option value="">Select Product</option>';
                 html += '@foreach ($products as $product)';
-                html += '<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}" data-tax="{{ $product->tax->rate }}">{{ $product->name }}</option>';
+                html += '<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ trim(preg_replace('/\s\s+/', ' ', $product->description)) }}" data-tax="{{ $product->tax->rate }}">{{ $product->name }}</option>';
                 html += '@endforeach';
                 html += '</select>';
                 html += '<p class="text-small" id="text-description' + item_row +'" onclick="editDescription(' + item_row +')">Product Description</p>';

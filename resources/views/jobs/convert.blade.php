@@ -5,7 +5,7 @@
     <link href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" rel="stylesheet" />
 @endsection
 @section('content')
-    <section class="content-header">
+    <section class="content-header maxWidthControl" style="margin-bottom: 0 !important">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <section class="content">
+    <section class="content maxWidthControl">
         <form id="jobForm" method="POST" action="{{ route('jobs.store') }}">
             @csrf
             <input type="hidden" name="customer_id" id="customer_id" value="{{ Request::get('customer_id') }}">
@@ -80,7 +80,7 @@
 
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-5">
+                                {{-- <div class="col-sm-5">
                                     <div class="card card-dark">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Invoicing') }}</h3>
@@ -103,9 +103,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-sm-5">
+                                <div class="col-sm-10">
                                     <div class="card card-dark">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Job Forms') }}</h3>
@@ -321,7 +321,7 @@
                 html +='<select name="product['+ item_row +'][product]" id="product'+ item_row +'" class="form-control form-control-sm" onchange="showProductOptions(this, '+ item_row +')" required>';
                 html +='<option value="">Select Product</option>';
                 html +='@foreach($products as $product)';
-                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>';
+                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ trim(preg_replace('/\s\s+/', ' ', $product->description)) }}">{{ $product->name }}</option>';
                 html +='@endforeach';
                 html +='</select>';
                 html +='<textarea name="product['+ item_row +'][description]" id="description'+ item_row +'" rows="2" placeholder="Description" class="form-control form-control-sm mt-1"></textarea>';
@@ -402,7 +402,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $customer->name }}");
             $("#customer_id").val("{{ $customer->id }}");
-            $("#address").val('{!! getAddress(Request::get('customer_id')) !!}');
+            $("#address").val('{{ getCustomerAddress(Request::get('customer_id')) }}');
        });
     </script>
 
