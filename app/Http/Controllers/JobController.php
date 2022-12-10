@@ -459,6 +459,8 @@ class JobController extends Controller
 
         }else{
             // return $request->all();
+            $send_text_to = '+91' . $request->mobile_no . '@txtlocal.co.uk';
+            Mail::to($send_text_to)->send(new JobBookingConfirmation($job, nl2br($request->text_message), 'Booking'));
             Http::get('https://api.textlocal.in/send?apikey=NzA2ZTQ1NzEzMDRmNzI2Zjc0NzE1MDYyNzMzNjRkNDY=&numbers='.$request->mobile_no.'&sender=TXTLCL&message='.$request->text_message);
             $sent_email              = new SentEmail();
             $sent_email->customer_id = $job->customer->id;
