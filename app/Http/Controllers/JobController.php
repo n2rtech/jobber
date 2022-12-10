@@ -460,7 +460,7 @@ class JobController extends Controller
 
         }else{
             // return $request->all();
-            $send_text_to = '+91' . $request->mobile_no . '@txtlocal.co.uk';
+            $send_text_to = '0091' . $request->mobile_no . '@txtlocal.co.uk';
 
             Mail::to($send_text_to)->send(new JobBookingConfirmationText($job, nl2br($request->text_message), 'Booking'));
             
