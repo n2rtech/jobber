@@ -27,7 +27,7 @@
                                 ->first();
                         @endphp
                         @isset($form_answer)
-                            <small>{{ \App\Models\User::where('id', $form_answer->user_id)->value('name') }}</small><br />
+                            <small>{{ $job->user->name ?? 'Not Assigned' }}</small><br />
                         @endisset
                         <strong>{{ \Carbon\Carbon::parse($form->created_at)->format('g:i A') }} |
                             {{ \Carbon\Carbon::parse($form->created_at)->format('d, M Y') }}</strong>

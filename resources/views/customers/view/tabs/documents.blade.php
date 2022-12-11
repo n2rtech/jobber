@@ -28,7 +28,6 @@
                                         onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'customer','form_id' => $form->id]) }}');"><span
                                                 class="badge bg-danger"><i
                                                     class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
-                                        <span class="float-right badge bg-info mr-3">{{ $job->user->name ?? 'Not Assigned' }}</span>
 
                                     </li>
 
