@@ -183,14 +183,15 @@ class ScheduleController extends Controller
         $message  = getMessage($template->message, $request->id);
         $text_message =  getMessage($texttemplate->message, $request->id);
         $mobile_options = '';
-        if(isset($job->customer->phone)){
-            $mobile_options .= '<option value='.$job->customer->phone.'>Phone: '.$job->customer->phone.'</option>';
-        }
+        
         if(isset($job->customer->mobile_1)){
             $mobile_options .= '<option value='.$job->customer->mobile_1.'>Mobile 1: '.$job->customer->mobile_1.'</option>';
         }
         if(isset($job->customer->mobile_2)){
             $mobile_options .= '<option value='.$job->customer->mobile_2.'>Mobile 2: '.$job->customer->mobile_2.'</option>';
+        }
+        if(isset($job->customer->phone)){
+            $mobile_options .= '<option value='.$job->customer->phone.'>Phone: '.$job->customer->phone.'</option>';
         }
         return response()->json(['email' => $job->customer->email, 'mobile_options' => $mobile_options, 'subject' => $subject, 'message' => $message,  'text_message' => $text_message]);
     }
