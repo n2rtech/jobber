@@ -119,7 +119,7 @@ tinymce.init({
             initialDate: id,
             datesSet: function (dateInfo) {
                 localStorage.setItem("fcDefaultView", dateInfo.view.type);
-                localStorage.setItem("fcDefaultDate", dateInfo.startStr);
+                localStorage.setItem("fcDefaultDate", dateInfo.view.currentStart.toISOString());
             },
             themeSystem: 'bootstrap',
             slotMinTime: '{{ $setting["timing_starts"] }}',
