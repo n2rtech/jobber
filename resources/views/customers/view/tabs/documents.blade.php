@@ -24,7 +24,7 @@
                                             @endphp
 
                                         </a>
-                                        <a class="float-left pl-3 mb-3" href="javascript:void(0)"
+                                        <a class="float-left pl-3 mb-1 mt-4" href="javascript:void(0)"
                                         onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'customer','form_id' => $form->id]) }}');"><span
                                                 class="badge bg-danger"><i
                                                     class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
@@ -56,7 +56,7 @@
                                     {{ $document->document }} <span
                                         class="float-right badge bg-primary">{{ $document->created_at }}</span>
                                 </a>
-                                <a class="nav-link text-info" href="javascript:void(0)"
+                                <a class="nav-link text-info mt-2" href="javascript:void(0)"
                                     onclick="confirmDocumentDelete({{ $document->id }})"><span
                                         class="badge bg-danger"><i
                                             class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
