@@ -240,7 +240,7 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $message);
            //$path        = asset('dist/img/logo-dark.png');
            $path        = 'https://dev.n2rtechnologies.com/logo-dark.png';
-           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width="26%"></img>' , $message);
+           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width=""></img>' , $message);
 
            $message     = str_replace('{{CUSTOMER_NAME}}', $job->customer->name , $message);
            $message     = str_replace('{{CUSTOMER_EMAIL}}',$job->customer->email , $message);
@@ -308,7 +308,7 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $message);
            //$path        = asset('dist/img/logo-dark.png');
            $path        = 'https://dev.n2rtechnologies.com/logo-dark.png';
-           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width="26%"></img>' , $message);
+           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width=""></img>' , $message);
 
            $message     = str_replace('{{CUSTOMER_NAME}}', $estimate->customer->name , $message);
            $message     = str_replace('{{CUSTOMER_EMAIL}}',$estimate->customer->email , $message);
@@ -384,7 +384,7 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{COMPANY_WEBSITE}}', $company->website , $message);
            //$path        = asset('dist/img/logo-dark.png');
            $path        = 'https://dev.n2rtechnologies.com/logo-dark.png';
-           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width="26%"></img>' , $message);
+           $message     = str_replace('{{COMPANY_LOGO}}', '<img src="'.$path.'" width=""></img>' , $message);
 
            $message     = str_replace('{{CUSTOMER_NAME}}', $invoice->customer->name , $message);
            $message     = str_replace('{{CUSTOMER_EMAIL}}',$invoice->customer->email , $message);
