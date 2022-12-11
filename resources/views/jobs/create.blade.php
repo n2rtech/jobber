@@ -105,7 +105,7 @@
                                 </div> --}}
 
                                 <div class="col-sm-10">
-                                    <div class="card card-dark">
+                                    <div class="card card-dark collapsed-card">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ __('Job Forms') }}</h3>
 
