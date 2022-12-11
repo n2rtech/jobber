@@ -18,7 +18,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="nav-link text-info">
                                             {{ $form->title }}
-                                            <span class="float-right badge bg-primary">{{ $form->created_at }}</span><span class="float-right badge bg-warning mr-1">{{ $job->jobTitle->title }}</span>
+                                            <span class="float-right badge bg-primary">{{ $form->created_at }}</span>
                                             @php
                                                 $form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->first();
                                             @endphp
