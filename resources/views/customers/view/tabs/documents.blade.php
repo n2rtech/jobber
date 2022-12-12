@@ -53,12 +53,12 @@
                             <li class="nav-item">
                                 <a href="{{ $document->path }}" class="nav-link text-info" download="">
                                     {{ $document->document }} <span
-                                        class="float-right badge bg-primary">{{ $document->created_at }}</span>
+                                        class="float-right text-primary">{{ \Carbon\Carbon::parse($document->created_at)->format('d-m-Y h:i') }}</span>
                                 </a>
                                 <a class="nav-link text-info mt-2" href="javascript:void(0)"
                                     onclick="confirmDocumentDelete({{ $document->id }})"><span
-                                        class="badge bg-danger"><i
-                                            class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete</span></a>
+                                        class="text-danger"><i
+                                            class="fa fa-trash"></i>Delete</span></a>
 
                             </li>
                         @empty

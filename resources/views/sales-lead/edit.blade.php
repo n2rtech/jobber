@@ -133,11 +133,8 @@
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="type" class="col-sm-2 col-form-label">{{ __('As Lead') }}</label>
-                                <div class="col-sm-10 mt-1">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="type" id="sales-lead" value="sales-lead" @if($lead->type == 'sales-lead') checked @endif>
-                                        <label class="form-check-label" for="sales-lead">On</label>
-                                      </div>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" id="type" name="type" value="sales-lead" @if($lead->type == 'sales-lead') checked @endif data-bootstrap-switch>
                                 </div>
                             </div>
                             {{-- <div class="form-group row">
@@ -235,4 +232,12 @@
 @endsection
 @push('scripts')
 @include('sections.utilities')
+@push('scripts')
+<script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+    <script>
+        $("input[data-bootstrap-switch]").each(function(){
+        $(this).bootstrapSwitch();
+        })
+    </script>
+@endpush
 @endpush
