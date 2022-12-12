@@ -674,7 +674,11 @@
          if(data.success){
              $("#modal-email-template .close").click();
              $("#modal-text-template .close").click();
-             assignStatus('provisional');
+             var bookingStatus = $('#booking_status').val();
+             if(bookingStatus == 'pending'){
+                assignStatus('provisional');
+                $('#booking_status').val('provisional');
+             }
              $("#successModal .modal-body #booking_status").val('provisional');
              $('#confirmation_message').css('color', 'green');
              $('#confirmation_message').text(data.success);
