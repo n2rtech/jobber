@@ -215,7 +215,7 @@ tinymce.init({
 
                 var event = arg.event;
 
-                var eventHtml = '<div class="wallThumbs row" id="job_event_'+ event.extendedProps.jobid +'">';
+                var eventHtml = '<div class="wallThumbs row colSetting" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
                 eventHtml += '<div class="myFlex">'
                 eventHtml += '<span class="wallTitle" style="font-weight:700;">' + event.extendedProps.customer + '</span>';
@@ -225,8 +225,10 @@ tinymce.init({
                 eventHtml += '</button>'
                 eventHtml += '</span>'
                 eventHtml += '</div>'
+                eventHtml += '<div>'
                 eventHtml += '<span class="wallName">'+event.extendedProps.city+'</span><br>';
                 eventHtml += '<span class="wallEvent">' + event.title + '</span><br>';
+                eventHtml += '</div>'
                 if(event.end){
                         eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }

@@ -584,6 +584,14 @@ a.nav-link .active{
     padding: 0;
     opacity: 1 !important;
     line-height: 0;
+    margin-right: -6px;
+}
+.colSetting{
+    width: 100%;
+    padding-left: 3px;
+}
+.colSetting .col-sm-12{
+    padding-right: 0;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
