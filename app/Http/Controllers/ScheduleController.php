@@ -77,11 +77,11 @@ class ScheduleController extends Controller
 
         switch ($request->end) {
             case 'addHour':
-                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->addHour();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $start)->addHour();
                 break;
 
             case 'allDay':
-                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->endOfDay();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $start)->addHour();
                 break;
 
             default:
