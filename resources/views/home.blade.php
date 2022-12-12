@@ -191,11 +191,13 @@
                                             @if ($job->scheduled == 'no')
                                                 <span class="badge bg-danger">{{ __('No') }}</span>
                                             @else
-                                            <span class="badge bg-success"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
+                                            <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                             <br/>
-                                            <span class="badge bg-info"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
-                                            <br>
-                                            <span class="badge bg-danger"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                                <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                            <br/>
+                                            <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                            <br/>
+                                            <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                             @endif
                                         </td>
                                         <td>€ {{ $job->total }}</td>
