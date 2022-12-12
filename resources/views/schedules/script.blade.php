@@ -341,7 +341,7 @@ tinymce.init({
                         var url = new URL(currentUrl);
                         url.searchParams.set("view", calendar.view.type); // setting your param
                         var newUrl = url.href;
-                        // window.location.href = newUrl;
+                        window.location.href = newUrl;
 
                     },
                     error: function(data) {
