@@ -83,8 +83,14 @@ class ScheduleController extends Controller
                 $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->end);
                 break;
         }
+        $current_status = Job::where('id', $request->id)->value('status');
 
-        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
+
         return response()->json(['success' => 'success']);
     }
 
@@ -105,7 +111,13 @@ class ScheduleController extends Controller
                 break;
         }
 
-        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        $current_status = Job::where('id', $request->id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
         return response()->json(['success' => 'success']);
     }
 
@@ -184,7 +196,7 @@ class ScheduleController extends Controller
         $message  = getMessage($template->message, $request->id);
         $text_message =  getMessage($texttemplate->message, $request->id);
         $mobile_options = '';
-        
+
         if(isset($job->customer->mobile_1)){
             $mobile_options .= '<option value='.$job->customer->mobile_1.'>Mobile 1: '.$job->customer->mobile_1.'</option>';
         }

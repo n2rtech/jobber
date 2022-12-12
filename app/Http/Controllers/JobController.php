@@ -462,7 +462,15 @@ class JobController extends Controller
 
     public function confirmation(Request $request){
         $emails = explode(",",$request->email);
-        Job::where('id', $request->job_id)->update(['status' => 'provisional']);
+
+        $current_status = Job::where('id', $request->job_id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+
+        }else{
+            Job::where('id', $request->job_id)->update(['scheduled' => 'yes', 'status' => 'provisional']);
+        }
+
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
             foreach($emails as $email){
@@ -489,7 +497,7 @@ class JobController extends Controller
             $send_text_to = '00353' . $request->mobile_no . '@txtlocal.co.uk';
 
             Mail::to($send_text_to)->send(new JobBookingConfirmationText($job, nl2br($request->text_message), 'Booking'));
-            
+
             //Http::get('https://api.textlocal.in/send?apikey=NzA2ZTQ1NzEzMDRmNzI2Zjc0NzE1MDYyNzMzNjRkNDY=&numbers='.$request->mobile_no.'&sender=TXTLCL&message='.$request->text_message);
             $sent_email              = new SentEmail();
             $sent_email->customer_id = $job->customer->id;

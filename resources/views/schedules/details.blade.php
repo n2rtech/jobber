@@ -674,7 +674,7 @@
          if(data.success){
              $("#modal-email-template .close").click();
              $("#modal-text-template .close").click();
-             assignStatus('provisional');
+            //  assignStatus('provisional');
              $("#successModal .modal-body #booking_status").val('provisional');
              $('#confirmation_message').css('color', 'green');
              $('#confirmation_message').text(data.success);
