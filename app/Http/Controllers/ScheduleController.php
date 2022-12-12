@@ -67,6 +67,13 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        $time =  Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->format('H:i:s');
+
+        if($time == '00:00:00'){
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->addHours(9);
+        }else{
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start);
+        }
 
         $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start);
 

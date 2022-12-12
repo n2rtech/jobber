@@ -233,7 +233,7 @@ tinymce.init({
                 if(event.end){
                         eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
                     }
-                
+
                 eventHtml += '</div>';
                 eventHtml += '</div>';
 
@@ -341,7 +341,7 @@ tinymce.init({
                         var url = new URL(currentUrl);
                         url.searchParams.set("view", calendar.view.type); // setting your param
                         var newUrl = url.href;
-                        window.location.href = newUrl;
+                        // window.location.href = newUrl;
 
                     },
                     error: function(data) {
