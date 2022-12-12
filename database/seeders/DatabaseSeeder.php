@@ -54,5 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InvoiceSeed::class);
 
         $this->call(EstimateSeed::class);
+
+        $this->call(CountrySeed::class);
     }
 }

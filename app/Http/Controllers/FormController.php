@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Customer;
 use App\Models\ExternalForm;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class FormController extends Controller
                 abort(404);
             }
         } else {
-            return view('forms.form');
+            $countries = Country::get(['country_name']);
+            return view('forms.form', compact('countries'));
         }
     }
 
