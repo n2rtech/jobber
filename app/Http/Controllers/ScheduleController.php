@@ -26,8 +26,9 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $start_date         = isset($request->date) ? Carbon::parse($request->date)->startOfWeek()->format('Y-m-d') : null ;
         $scheduled_jobs     = Job::where('scheduled', 'yes ')->whereNot('status', 'completed')->orderBy('start', 'asc')->get();
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
@@ -45,7 +46,7 @@ class ScheduleController extends Controller
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template', 'text_template', 'slots'));
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template', 'text_template', 'slots', 'start_date'));
     }
 
     /**

@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('schedules.index') }}" class="btn btn-dark">
+                            <a href="{{ route('schedules.index', ['date' => \Carbon\Carbon::parse($job->start)->format('Y-m-d')]) }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
@@ -209,9 +209,6 @@
                                                         <label class="custom-file-label" for="file">{{ __('Choose File') }}</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group text-right">
-                                                <button type="submit" class="btn btn-success" form="documentUploadForm">{{ __('Save') }}</button>
                                             </div>
                                         </form>
                                         </div>
@@ -549,20 +546,25 @@
         @endif
     </script>
     <!-- Filter Box Scripts Start -->
-<script>
-    $(document).ready(function(){
-        @error('note')
-            $("#filterBox").css('display', 'block');
-        @enderror
+    <script>
+        $(document).ready(function(){
+            @error('note')
+                $("#filterBox").css('display', 'block');
+            @enderror
 
-        $("#filter").click(function(){
-            $("#filterBox").slideToggle();
+            $("#filter").click(function(){
+                if($('#filterBox').css("display") == "block") {
+                    $('#documentUploadForm').submit();
+                }else{
+                    $("#filterBox").slideToggle();
+                }
+
+            });
+
+
+
         });
-
-
-
-    });
-</script>
+    </script>
 <script>
     function gettemplate(){
         var formData = {
@@ -712,6 +714,10 @@
                 }else{
                     $('#mark_complete').css('color', 'red');
                     $('#mark_complete').text(data.danger);
+                }
+
+                if(formData.status == 'completed'){
+                    window.location.href = '{{ route("home") }}';
                 }
             },
             error: function(data) {

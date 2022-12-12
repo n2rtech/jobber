@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\JobBookingConfirmation;
 use App\Models\Customer;
+use App\Models\CustomerNote;
 use App\Models\EmailTemplate;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
@@ -106,7 +107,12 @@ class JobController extends Controller
         if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
             $jobs                       = $jobs->orderBy('start', 'asc')->whereNot('status', 'completed')->get();
         }else{
-            $jobs                       = $jobs->orderBy('id', 'desc')->get();
+            if(isset($filter_completed)){
+                $jobs                       = $jobs->orderBy('completed_on', 'desc')->get();
+            }else{
+                $jobs                       = $jobs->orderBy('id', 'desc')->get();
+            }
+
         }
 
 
@@ -215,6 +221,14 @@ class JobController extends Controller
         // if($request->has('redirect')){
         //     return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
         // }
+
+        if(isset($request->instructions)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $job->customer_id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->instructions;
+            $note->save();
+        }
         return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-jobs'])->with('success', 'Job added successfully!');
 
     }
@@ -340,6 +354,14 @@ class JobController extends Controller
         $job->total             = 0;
         $job->save();
 
+        if(isset($request->instructions)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $job->customer_id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->instructions;
+            $note->save();
+        }
+
         JobProduct::where('job_id', $id)->delete();
         if(!empty($request->product) && is_array($request->product)){
             foreach($request->product as $key => $value){
@@ -417,7 +439,11 @@ class JobController extends Controller
 
     public function changeStatus(Request $request){
         $job = Job::where('id', $request->job_id)->first();
-        Job::where('id', $request->job_id)->update(['status' => $request->status]);
+        if($request->status == 'completed'){
+            Job::where('id', $request->job_id)->update(['status' => $request->status, 'completed_on' => Carbon::now()]);
+        }else{
+            Job::where('id', $request->job_id)->update(['status' => $request->status, 'completed_on' => null]);
+        }
         return response()->json(['success' => 'Job marked '.ucfirst($request->status).' successfully!']);
     }
 

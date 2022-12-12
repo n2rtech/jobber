@@ -210,9 +210,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group text-right">
-                                                <button type="submit" class="btn btn-success" form="documentUploadForm">{{ __('Save') }}</button>
-                                            </div>
                                         </form>
                                         </div>
                                     </div>
@@ -556,7 +553,12 @@
         @enderror
 
         $("#filter").click(function(){
-            $("#filterBox").slideToggle();
+            if($('#filterBox').css("display") == "block") {
+                $('#documentUploadForm').submit();
+            }else{
+                $("#filterBox").slideToggle();
+            }
+
         });
 
 
@@ -709,6 +711,9 @@
                 if(data.success){
                     $('#mark_complete').css('color', 'green');
                     $('#mark_complete').text(data.success);
+                    if(formData.status == 'completed'){
+                        window.location.href = '{{ route("home") }}';
+                    }
                 }else{
                     $('#mark_complete').css('color', 'red');
                     $('#mark_complete').text(data.danger);

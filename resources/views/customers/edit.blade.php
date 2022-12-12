@@ -60,42 +60,51 @@
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="phone" name="phone"
                                         placeholder="Enter Phone" value="{{ old('phone', $customer->phone) }}">
-                                    @error('phone')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="phone_name" name="phone_name"
                                         placeholder="Enter Name" value="{{ old('phone_name', $customer->phone_name) }}">
                                 </div>
+                                @error('phone')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="mobile_1" class="col-sm-2 col-form-label">{{ __('Mobile 1') }}</label>
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="mobile_1" name="mobile_1"
                                         placeholder="Enter Mobile 1" value="{{ old('mobile_1', $customer->mobile_1) }}">
-                                    @error('mobile_1')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="mobile_1_name" name="mobile_1_name"
                                         placeholder="Enter Name" value="{{ old('mobile_1_name', $customer->mobile_1_name) }}">
                                 </div>
+                                @error('mobile_1')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="mobile_2" class="col-sm-2 col-form-label">{{ __('Mobile 2') }}</label>
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="mobile_2" name="mobile_2"
                                         placeholder="Enter Mobile 2" value="{{ old('mobile_2', $customer->mobile_2) }}">
-                                    @error('mobile_2')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="mobile_2_name" name="mobile_2_name"
                                         placeholder="Enter Name" value="{{ old('mobile_2_name', $customer->mobile_2_name) }}">
                                 </div>
+                                @error('mobile_2')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="address_1" class="col-sm-2 col-form-label">{{ __('Address 1') }}</label>
