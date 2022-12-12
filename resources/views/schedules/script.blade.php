@@ -106,13 +106,21 @@ tinymce.init({
             }
         });
 
+        var iv = localStorage.getItem("fcDefaultView") || 'timeGridWeek'
+        var id = localStorage.getItem("fcDefaultDate") || new Date
+
         var calendar = new Calendar(calendarEl, {
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            initialView: '{{ Request::get("view") ?? "timeGridWeek"}}',
+            initialView: iv,
+            initialDate: id,
+            datesSet: function (dateInfo) {
+                localStorage.setItem("fcDefaultView", dateInfo.view.type);
+                localStorage.setItem("fcDefaultDate", dateInfo.view.currentStart.toISOString());
+            },
             themeSystem: 'bootstrap',
             slotMinTime: '{{ $setting["timing_starts"] }}',
             dayCount: 7,
