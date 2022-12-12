@@ -556,17 +556,6 @@ a.nav-link .active{
     background: violet;
     border: 1px solid violet;
 }
-.onTip{
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 99999;
-}
-.onTip button{
-    pointer-events: none;
-    padding: 0 10px 0 0;
-    opacity: 1 !important;
-}
 .sm-customers tr th{
     padding: 3px 0px;
     font-size: 16px;
@@ -577,6 +566,32 @@ a.nav-link .active{
 }
 .set-fonts td, .set-fonts th{
     font-size: 15.5px;
+}
+.myFlex{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: -5px;
+    margin-top: 1px;
+}
+.myFlex .wallTitle{
+    font-weight: 700;
+    float: left;
+}
+.myFlex .onTip{
+    float: right;
+}
+.myFlex .onTip button{
+    padding: 0;
+    opacity: 1 !important;
+    line-height: 0;
+    margin-right: -6px;
+}
+.colSetting{
+    width: 100%;
+    padding-left: 3px;
+}
+.colSetting .col-sm-12{
+    padding-right: 0;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
