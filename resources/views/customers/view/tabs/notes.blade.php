@@ -9,7 +9,7 @@ aria-labelledby="customer-notes-tab">
         <div class="card-comment">
             <div class="row">
                 <div class="col-sm-7 col-6">
-                    <span class="noteDate" style="font-weight: 600">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
+                    <span class="noteDate" style="font-weight: 600">{{ \Carbon\Carbon::parse($note->created_at)->format('d-m-Y h:i') }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
                 </div>
                 <div class="col-sm-5 col-6">
                     <div class="float-right noteUser">

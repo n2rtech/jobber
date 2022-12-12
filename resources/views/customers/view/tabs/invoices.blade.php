@@ -20,8 +20,8 @@
                 @foreach ($customer->invoices as $invoice)
                     <tr>
                         <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
-                        <td>{{ $invoice->invoice_date}}</td>
-                        <td>{{ $invoice->due_date}}</td>
+                        <td>{{  \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}</td>
+                        <td>{{  \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}</td>
                         <td>€ {{ $invoice->total }}</td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>

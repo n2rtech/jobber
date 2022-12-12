@@ -118,6 +118,7 @@ tinymce.init({
             initialView: iv,
             initialDate: id,
             datesSet: function (dateInfo) {
+                console.log(dateInfo);
                 localStorage.setItem("fcDefaultView", dateInfo.view.type);
                 localStorage.setItem("fcDefaultDate", dateInfo.view.currentStart.toISOString());
             },

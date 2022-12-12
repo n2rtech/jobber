@@ -1,8 +1,8 @@
 <!-- Listing Box Starts Here -->
 <div class="card">
-    <div class="card-body"> 
+    <div class="card-body">
         @include('jobs.filter')
-        @if ($agent->isMobile()) 
+        @if ($agent->isMobile())
         <div class="table-responsive">
             <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
@@ -41,13 +41,13 @@
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span class="badge bg-info"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
+                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span class="badge bg-info"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
+                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span class="badge bg-success"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
-                                <span class="badge bg-danger"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>
@@ -73,7 +73,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         @else
         <div class="table-responsive">
             <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
@@ -113,13 +113,13 @@
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span class="badge bg-info"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
+                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span class="badge bg-info"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
+                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span class="badge bg-success"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
-                                <span class="badge bg-danger"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>
@@ -146,7 +146,7 @@
             </table>
         </div>
         @endif
-        
+
     </div>
 </div>
 <!-- Listing Box Starts Here -->
