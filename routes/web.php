@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\AutocompleteController;
+use App\Http\Controllers\BanhController;
 use App\Http\Controllers\CalendarSettingController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
@@ -63,6 +64,8 @@ Route::get('customers/delete/jobform', [CustomerController::class, 'deleteJobFor
 # Schedules Route
 Route::resource('schedules', ScheduleController::class);
 Route::post('schedule/update-timing', [ScheduleController::class, 'updateTiming'])->name('schedules.update-timing');
+
+Route::post('schedule/update-timing/auto', [ScheduleController::class, 'updateTimingAuto'])->name('schedules.update-timing.auto');
 
 Route::post('schedule/email-template', [ScheduleController::class, 'emailTemplate'])->name('schedules.email-template');
 Route::post('schedule/text-template', [ScheduleController::class, 'textTemplate'])->name('schedules.text-template');
@@ -200,7 +203,10 @@ Route::post('change-password', [ChangePasswordController::class, 'update'])->nam
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
 
+Route::resource('banh', BanhController::class);
+
 Route::resource('form', FormController::class);
+
 Route::post('form/banh', [ FormController::class, 'banh'])->name('form.banh');
 
 

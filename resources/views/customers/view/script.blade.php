@@ -69,6 +69,22 @@
             }
         })
     };
+
+    function confirmBanhDelete(no) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete Banh Form!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-Banhform' + no).submit();
+            }
+        })
+    };
 </script>
 <script type="text/javascript">
     function confirmAccept(id) {
@@ -228,6 +244,7 @@ currentTime();
         })
     };
 </script>
+
 {{-- <script type="text/javascript">
     // Javascript to enable link to tab
     var hash = location.hash.replace(/^#/, '');  // ^ means starting, meaning only match the first hash

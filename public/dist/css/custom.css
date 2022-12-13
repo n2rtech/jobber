@@ -584,7 +584,7 @@ a.nav-link .active{
     padding: 0;
     opacity: 1 !important;
     line-height: 0;
-    margin-right: -6px;
+    margin-right: -8px;
 }
 .colSetting{
     width: 100%;
@@ -808,4 +808,9 @@ a.nav-link .active{
 .m-pad-0{
     padding: 0;
 }
+}
+#customer-banh table thead th {
+    background: darkblue;
+    color: #fff;
+    font-weight: normal;
 }

@@ -126,6 +126,22 @@ class ScheduleController extends Controller
         return response()->json(['success' => 'success']);
     }
 
+    public function updateTimingAuto(Request $request){
+        $start = Carbon::createFromFormat('m/d/Y H:i:s', $request->start);
+        $end   = Carbon::createFromFormat('m/d/Y H:i:s', $request->start)->addHour();
+
+
+        $current_status = Job::where('id', $request->id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
+        return response()->json(['success' => 'success']);
+    }
+
+
     /**
      * Display the specified resource.
      *

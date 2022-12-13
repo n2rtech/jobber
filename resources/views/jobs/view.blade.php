@@ -139,7 +139,7 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Start Time</label>
-                                                    <select name="start_time" id="start_time" class="form-control" >
+                                                    <select name="start_time" id="start_time" class="form-control" onchange="changeTimings();">
                                                     <option>Choose start time</option>
                                                     @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
@@ -152,7 +152,7 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">End Time</label>
-                                                    <select name="end_time" id="end_time" class="form-control" >
+                                                    <select name="end_time" id="end_time" class="form-control" onchange="changeTimings();">
                                                     <option disabled>Choose End time</option>
                                                     @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
@@ -162,9 +162,9 @@
                                                     <!--<input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">--->
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 mt-2 mb-2">
+                                            {{-- <div class="col-sm-12 mt-2 mb-2">
                                                 <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="text-center">
                                             <small id="change_timing_message"></small>
@@ -743,7 +743,7 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.update-timing') }}',
+                    url: '{{ route('schedules.update-timing.auto') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -756,7 +756,7 @@
                             $('#change_timing_message').text('Found some error!');
                         }
                         setTimeout(function(){
-                        window.location.reload(1);
+                            window.location.href = '{{ route('schedules.index') }}';
                         }, 1000);
 
                     },

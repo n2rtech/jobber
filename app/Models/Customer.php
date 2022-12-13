@@ -53,5 +53,10 @@ class Customer extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function banh()
+    {
+        return $this->hasMany(Banh::class)->orderBy('id', 'desc');
+    }
+
 
 }

@@ -4,7 +4,7 @@
         @include('jobs.filter')
         @if ($agent->isMobile())
         <div class="table-responsive">
-            <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
+            <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
                         <th class="all" style="width: 15%">{{ __('Customer') }}</th>
@@ -76,7 +76,7 @@
 
         @else
         <div class="table-responsive">
-            <table id="jobseTable" class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
+            <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
                         <th style="width: 15%">{{ __('Customer') }}</th>

@@ -51,4 +51,9 @@ class Banh extends Model
     ];
 
     public $timestamps      = true;
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

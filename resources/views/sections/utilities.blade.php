@@ -93,5 +93,12 @@
       }).buttons();
     });
 
+    $(function () {
+      $("#jobseTablewithButtons").DataTable({
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
+      }).buttons().container().appendTo('#jobseTablewithButtons_wrapper .col-md-6:eq(0)');
+    });
+
 
 </script>
