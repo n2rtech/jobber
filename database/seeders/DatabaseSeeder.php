@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TaxRateSeeder::class);
 
-        $this->call(ProductSeed::class);
+        // $this->call(ProductSeed::class);
 
         $this->call(EmailTemplateSeed::class);
 
@@ -45,15 +45,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ExternalFormQuestionOptionSeeder::class);
 
-        $this->call(CustomerSeeder::class);
+        // $this->call(CustomerSeeder::class);
 
-        $this->call(CustomerNoteSeed::class);
+        // $this->call(CustomerNoteSeed::class);
 
-        $this->call(JobSeed::class);
+        // $this->call(JobSeed::class);
 
-        $this->call(InvoiceSeed::class);
+        // $this->call(InvoiceSeed::class);
 
-        $this->call(EstimateSeed::class);
+        // $this->call(EstimateSeed::class);
 
         $this->call(CountrySeed::class);
     }

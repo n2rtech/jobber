@@ -26,7 +26,7 @@ class EmailTemplateSeed extends Seeder
             'email_template_id' => 1,
             'template_name' => 'Confirm Booking Template 1',
             'subject' => 'You\'ve been booked in with {{COMPANY_NAME}}',
-            'message' => "Hi {{CUSTOMER_NAME}},\nThank you for booking with us.\nYour work has been booked on {{JOB_DATE_AND_TIME}} at {{JOB_LOCATION}}.\nSincerely,\n{{COMPANY_NAME}}",
+            'message' => "Hi {{CUSTOMER_NAME}},\nThank you for booking with us.\nYour work has been booked on {{JOB_DATE_AND_TIME}} at {{JOB_LOCATION}}.\nSincerely,\n{{COMPANY_NAME}}\n{{COMPANY_LOGO}}",
         ]);
 
         EmailTemplateContent::create([
