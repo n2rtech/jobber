@@ -7,21 +7,21 @@
             <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
-                        <th class="all" style="width: 15%">{{ __('Customer') }}</th>
-                        <th class="all" style="width: 30%">{{ __('Address') }}</th>
+                        <th class="all" style="width: 25%">{{ __('Customer') }}</th>
+                        <th class="all" style="width: 10%">{{ __('Address') }}</th>
                         <th class="all" style="width: 10%">{{ __('Scheduled') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
                         <tr>
-                            <td>
+                            <td style="font-size: 15px">
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
-                            <td>
+                            <td style="font-size: 15px">
                                 {!! getCity($job->customer_id) !!}
                             </td>
-                            <td>
+                            <td style="font-size: 15px">
                                 @if ($job->scheduled == 'no')
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
