@@ -39,7 +39,7 @@ class ProductController extends Controller
 
         isset($filter_tax)    ? $products->where('tax_rate_id', $filter_tax) : $products;
 
-        $products              = $products->orderBy('id', 'desc')->paginate(20);
+        $products              = $products->orderBy('id', 'desc')->get();
 
         $taxes    = TaxRate::get();
 
