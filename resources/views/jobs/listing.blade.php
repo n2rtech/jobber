@@ -7,9 +7,9 @@
             <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
-                        <th class="all" style="width: 22%">{{ __('Customer') }}</th>
+                        <th class="all" style="width: 15%">{{ __('Customer') }}</th>
                         <th class="all" style="width: 10%">{{ __('Address') }}</th>
-                        <th class="all" style="width: 10%">{{ __('Scheduled') }}</th>
+                        <th class="all" style="width: 11%">{{ __('Scheduled') }}</th>
                     </tr>
                 </thead>
                 <tbody>
