@@ -215,7 +215,7 @@ class ScheduleController extends Controller
         $texttemplate = TextTemplateContent::where('id', $request->text_template)->first();
         $subject  = getSubject($template->subject, $request->id);
         $message  = getMessage($template->message, $request->id);
-        $text_message =  getMessage($texttemplate->message, $request->id);
+        $text_message =  getTextMessage($texttemplate->message, $request->id);
         $mobile_options = '';
 
         if(isset($job->customer->mobile_1)){
