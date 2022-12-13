@@ -24,7 +24,7 @@
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
                             <td>
-                                {!! getAddress($job->customer_id) !!}
+                                {!! getCity($job->customer_id) !!}
                             </td>
                             <td>
                                 <br class="hidden-sm" />
@@ -41,13 +41,13 @@
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
                                 <br/>
                                     <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }}</span>
                                 <br/>
-                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>

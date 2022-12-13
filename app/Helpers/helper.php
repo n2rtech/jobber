@@ -44,6 +44,20 @@ if (!function_exists('getAddress')) {
     }
 }
 
+if (!function_exists('getCity')) {
+    function getCity($id)
+    {
+        $customer = Customer::find($id);
+        $customer->address  = '';
+
+        if(isset($customer->city) && strlen($customer->city) > 0){
+            $customer->address .= $customer->city;
+        }
+
+        return ($customer->address);
+    }
+}
+
 if (!function_exists('getCustomerAddress')) {
     function getCustomerAddress($id)
     {
