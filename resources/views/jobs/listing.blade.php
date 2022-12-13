@@ -25,11 +25,13 @@
                                 @if ($job->scheduled == 'no')
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
+                                <a href="{{ route('jobs.show', $job->id) }}">
                                 <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
                                 <br/>
                                 <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
                                 <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
+                                </a>
                                 @endif
                             </td>
                         </tr>
