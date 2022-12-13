@@ -69,7 +69,7 @@ class CustomerController extends Controller
                     ->orWhere('phone','like','%'.$request->inp.'%')
                     ->orWhere('mobile_1','like','%'.$request->inp.'%')
                     ->orWhere('mobile_2','like','%'.$request->inp.'%')
-                    ->get()->toArray();
+                    ->take(20)->get()->toArray();
 
                     if(!empty($result)){
 
