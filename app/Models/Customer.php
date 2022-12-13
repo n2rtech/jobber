@@ -36,7 +36,7 @@ class Customer extends Model
     }
     public function invoices()
     {
-        return $this->hasMany(Invoice::class)->orderBy('id', 'desc');
+        return $this->hasMany(Invoice::class)->whereNot('total', '0.00')->orderBy('id', 'desc');
     }
     public function estimates()
     {

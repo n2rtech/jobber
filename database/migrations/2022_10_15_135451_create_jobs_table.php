@@ -30,6 +30,7 @@ return new class extends Migration
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
             $table->string('total')->nullable();
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

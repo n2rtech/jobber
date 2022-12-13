@@ -20,21 +20,15 @@ class ApiController extends Controller
 {
     public function save(Request $request){
 
-        $product_id = Product::where('name', 'Building A New Home')->value('id');
+        $product_id                     = Product::where('name', 'Building A New Home')->value('id');
 
-        $products   = Product::whereIn('id', [$product_id])->get();
+        $products                       = Product::whereIn('id', [$product_id])->get();
 
-
-
-        $customer_exists = Customer::where('email', $request->email)->exists();
+        $customer_exists                = Customer::where('email', $request->email)->exists();
 
         if($customer_exists){
 
-            Customer::where('email', $request->email)->update(['token' => Str::random(20)]);
-
-            $customer_id = Customer::where('email', $request->email)->value('id');
-
-            $customer = Customer::where('id', $customer_id)->first();
+            $customer_id                = Customer::where('email', $request->email)->value('id');
 
         }else{
 
@@ -49,20 +43,20 @@ class ApiController extends Controller
             $customer->phone            = $request->phone;
             $customer->mobile_1         = $request->phone_other;
             $customer->email            = $request->email;
-            $customer->token            = Str::random(20);
             $customer->save();
 
             $customer_id                = $customer->id;
 
         }
 
-        $job                    = new Job();
-        $job->customer_id       = $customer_id;
-        $job->job_title_id      = 1;
-        $job->instructions      = null;
-        $job->invoice_remind    = true;
-        $job->job_forms         = [1];
-        $job->total             = 0;
+        $job                            = new Job();
+        $job->customer_id               = $customer_id;
+        $job->job_title_id              = 1;
+        $job->instructions              = null;
+        $job->invoice_remind            = true;
+        $job->job_forms                 = [1];
+        $job->total                     = 0;
+        $job->token                     = Str::random(20);
         $job->save();
 
         if(count($products) > 0){
@@ -124,7 +118,8 @@ class ApiController extends Controller
 
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
-        $customer->notify(new FormLinkNotification($customer->token));
+        $notifycustomer = Customer::where('id', $job->customer_id)->first();
+        $notifycustomer->notify(new FormLinkNotification($job->token));
         return response()->json(['success'=> 'Data Saved Successfully'], 200);
     }
 }

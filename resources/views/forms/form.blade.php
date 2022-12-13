@@ -9,16 +9,18 @@
                         <h6 class="mb-0">Building a New Home (Survey Form)</h6>
                     </div>
 
-                    <form class="wizard-form steps-validation" action="#">
+                    <form class="wizard-form steps-validation" id="banhForm" action="{{ route('form.banh') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="job_id" value="{{ $job->id }}">
                         <h6>General Information</h6>
                         <fieldset>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label class="form-label" for="firstname">Name</label>
+                                    <label class="form-label" for="firstname">Name</label><span class="text-danger">*</span>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <input type="text" name="firstname" id="firstname" class="form-control form-control-sm" placeholder="Firstname">
+                                        <input type="text" name="firstname" id="firstname" class="form-control form-control-sm" placeholder="Firstname" required>
                                     </div>
                                 </div>
 
@@ -29,12 +31,12 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <label class="form-label" for="address_1">Address</label>
+                                    <label class="form-label" for="address_1">Address</label><span class="text-danger">*</span>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" placeholder="Street Address">
+                                        <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" placeholder="Street Address" required>
                                     </div>
                                 </div>
 
@@ -74,8 +76,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <label class="form-label" for="mobile_1">Phone Mobile</label>
-                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile">
+                                        <label class="form-label" for="mobile_1">Phone Mobile</label><span class="text-danger">*</span>
+                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile" required>
                                     </div>
                                 </div>
 
@@ -88,9 +90,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <label class="form-label" for="email">Email</label>
+                                        <label class="form-label" for="email">Email</label><span class="text-danger">*</span>
                                         <input type="email" name="email" id="email" class="form-control form-control-sm"
-                                            placeholder="your@email.com">
+                                            placeholder="your@email.com" required>
                                     </div>
                                 </div>
                             </div>
@@ -190,43 +192,43 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Free to Air Saorview TV" name="soartv" onchange="$('.soartvdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Free to Air Saorview TV" name="tv[]" onchange="$('.soartvdiv').slideToggle();">
                                         <span class="form-check-label">Free to Air Saorview TV</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Free to Air Satellite TV" name="satellitetv"  onchange="$('.satellitetvdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Free to Air Satellite TV" name="tv[]"  onchange="$('.satellitetvdiv').slideToggle();">
                                         <span class="form-check-label">Free to Air Satellite TV</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky+ HD" name="skyplushd" onchange="$('.skyplusdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky+ HD" name="tv[]" onchange="$('.skyplusdiv').slideToggle();">
                                         <span class="form-check-label">Sky+ HD</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky Q" name="skyq" onchange="$('.skyqdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky Q" name="tv[]" onchange="$('.skyqdiv').slideToggle();">
                                         <span class="form-check-label">Sky Q</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky Multi Room" name="skymultiroom" onchange="$('.skymultiroomdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Sky Multi Room" name="tv[]" onchange="$('.skymultiroomdiv').slideToggle();">
                                         <span class="form-check-label">Sky Multi Room</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Web TV" name="webtv" onchange="$('.webtvdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Web TV" name="tv[]" onchange="$('.webtvdiv').slideToggle();">
                                         <span class="form-check-label">Web TV</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Wall Mounted TV's" name="wallmountedtv" onchange="$('.wallmountedtvdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Wall Mounted TV's" name="tv[]" onchange="$('.wallmountedtvdiv').slideToggle();">
                                         <span class="form-check-label">Wall Mounted TV's</span>
                                     </label>
                                 </div>
@@ -285,19 +287,19 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Full Home Wi-FI" name="fullhomewifi" onchange="$('.fullhomewifidiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Full Home Wi-FI" name="wifi[]" onchange="$('.fullhomewifidiv').slideToggle();">
                                         <span class="form-check-label">Full Home Wi-FI</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Wired data sockets & internal distribution" name="wireddatasocket"  onchange="$('.wireddatasocketdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Wired data sockets & internal distribution" name="wifi[]"  onchange="$('.wireddatasocketdiv').slideToggle();">
                                         <span class="form-check-label">Wired data sockets & internal distribution</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="I need internet and Wi-Fi in a detached office or garage" name="wifidetached" onchange="$('.wifidetacheddiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="I need internet and Wi-Fi in a detached office or garage" name="wifi[]" onchange="$('.wifidetacheddiv').slideToggle();">
                                         <span class="form-check-label">I need internet and Wi-Fi in a detached office or garage</span>
                                     </label>
                                 </div>
@@ -332,25 +334,25 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Ceiling mounted speakers" name="cielingmountedspeakers" onchange="$('.cielingmountedspeakersdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Ceiling mounted speakers" name="multiroom_music[]" onchange="$('.cielingmountedspeakersdiv').slideToggle();">
                                         <span class="form-check-label">Ceiling mounted speakers</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Stand alone cabinet speakers" name="standalonespeakers"  onchange="$('.standalonespeakersdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Stand alone cabinet speakers" name="multiroom_music[]"  onchange="$('.standalonespeakersdiv').slideToggle();">
                                         <span class="form-check-label">Stand alone cabinet speakers</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Outdoor speakers for patio area" name="outdoorspeakers" onchange="$('.outdoorspeakersdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Outdoor speakers for patio area" name="multiroom_music[]" onchange="$('.outdoorspeakersdiv').slideToggle();">
                                         <span class="form-check-label">Outdoor speakers for patio area</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="TV sound through speakers" name="tvsoundthroughspeakers" onchange="$('.tvsoundthroughspeakersdiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="TV sound through speakers" name="multiroom_music[]" onchange="$('.tvsoundthroughspeakersdiv').slideToggle();">
                                         <span class="form-check-label">TV sound through speakers</span>
                                     </label>
                                 </div>
@@ -391,25 +393,25 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Full home mobile coverage" name="fullhomemobilecoverage" onchange="$('.fullhomemobilecoveragediv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Full home mobile coverage" name="mobile_phone_repeaters[]" onchange="$('.fullhomemobilecoveragediv').slideToggle();">
                                         <span class="form-check-label">Full home mobile coverage</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="I need mobile phone coverage in a detached office or garage" name="detachedofficecoverage"  onchange="$('.detachedofficecoveragediv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="I need mobile phone coverage in a detached office or garage" name="mobile_phone_repeaters[]"  onchange="$('.detachedofficecoveragediv').slideToggle();">
                                         <span class="form-check-label">I need mobile phone coverage in a detached office or garage</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Voice coverage only" name="voicecovergaeonly" onchange="$('.voicecovergaeonlydiv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Voice coverage only" name="mobile_phone_repeaters[]" onchange="$('.voicecovergaeonlydiv').slideToggle();">
                                         <span class="form-check-label">Voice coverage only</span>
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Voice and data coverage" name="voiceanddatacoverage" onchange="$('.voiceanddatacoveragediv').slideToggle();">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Voice and data coverage" name="mobile_phone_repeaters[]" onchange="$('.voiceanddatacoveragediv').slideToggle();">
                                         <span class="form-check-label">Voice and data coverage</span>
                                     </label>
                                 </div>
@@ -443,8 +445,8 @@
                              <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="mobile_operator">Mobile Operator</label>
-                                        <input type="text" name="mobile_operator" id="mobile_operator" class="form-control form-control-sm" placeholder="Mobile Operator">
+                                        <label class="form-label" for="mobile_operator">Mobile Operator</label><span class="text-danger">*</span>
+                                        <input type="text" name="mobile_operator" id="mobile_operator" class="form-control form-control-sm" placeholder="Mobile Operator" required>
                                     </div>
                                 </div>
                              </div>

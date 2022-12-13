@@ -18,7 +18,7 @@
 </script>
 <script>
     function dwellingOptions(value) {
-        if (wall == 'I have a copy of my plans') {
+        if (value == 'I have a copy of my plans') {
             $('.uploadplan').slideToggle();
         } else {
             $('.uploadplan').slideToggle();

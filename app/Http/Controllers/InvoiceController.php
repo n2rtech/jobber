@@ -107,7 +107,7 @@ class InvoiceController extends Controller
         }
 
 
-        $invoices                   = $invoices->orderBy('id', 'desc')->get();
+        $invoices                   = $invoices->whereNot('total', '0.00')->orderBy('id', 'desc')->get();
 
         $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
 

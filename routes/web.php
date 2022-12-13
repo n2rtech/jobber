@@ -201,5 +201,6 @@ Route::post('change-password', [ChangePasswordController::class, 'update'])->nam
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
 
 Route::resource('form', FormController::class);
+Route::post('form/banh', [ FormController::class, 'banh'])->name('form.banh');
 
 
