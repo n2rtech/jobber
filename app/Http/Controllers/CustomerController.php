@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerNote;
+use App\Models\EmailTemplate;
 use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Lead;
@@ -109,6 +111,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
+            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
         ];
 
         $messages = [
@@ -134,10 +139,17 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>' : null;
         $customer->save();
 
-        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
+
+        return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
     }
 
     /**
@@ -155,7 +167,6 @@ class CustomerController extends Controller
         foreach($customer->documents as $document){
             $document->path = asset('storage/uploads/customers/' . $id . '/documents' .'/'. $document->document);
         }
-        $customer->setRelation('allnotes', $customer->allnotes()->paginate(5));
         foreach($customer->allnotes as $note){
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
@@ -167,7 +178,12 @@ class CustomerController extends Controller
                 $job->forms     = [];
             }
         }
-        return view('customers.view.index', compact('customer'));
+
+        $template                   = EmailTemplate::where('type', 'estimates')->where('mode', 'confirmation')->first();
+        $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
+        $template_followup          = EmailTemplate::where('type', 'invoices')->where('mode', 'follow-up')->first();
+
+        return view('customers.view.index', compact('customer', 'template', 'template_confirmation', 'template_followup'));
     }
 
     /**
@@ -193,6 +209,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
+            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
         ];
 
         $messages = [
@@ -218,16 +237,15 @@ class CustomerController extends Controller
         $customer->country          = $request->country;
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
-        $customer->notes            = isset($request->note) ? '<table class="table table-sm"><tbody><tr><th style="border-top:none;">Date</th><td style="border-top:none;" class="text-right"><span class="badge bg-warning">'. Carbon::now() .'</span></td><tr/><tr><th style="border-top:none;" width="20%">Note</th><td style="border-top:none;" class="text-right">'.$request->note.'</td><tr/></tbody></table><hr>'.$customer->notes : $customer->notes;
         $customer->save();
 
-        // if(isset($request->note)){
-        //     $note                   = new CustomerNote();
-        //     $note->customer_id      = $customer->id;
-        //     $note->user_id          = Auth::user()->id;
-        //     $note->note             = $request->note;
-        //     $note->save();
-        // }
+        if(isset($request->note)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $customer->id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->note;
+            $note->save();
+        }
 
         return redirect()->route('customers.show', $customer->id)->with('success', 'Customer updated successfully!');
     }
@@ -259,5 +277,24 @@ class CustomerController extends Controller
             return redirect()->back()->with('warning', 'Customer removed from Sales Lead successfully!');
         }
 
+    }
+
+    public function allNotes($id){
+        $customer = Customer::find($id);
+        return view('customers.all-notes', compact('customer'));
+    }
+    public function deleteJobForm(Request $request){
+
+        $job = Job::where('id', $request->job_id)->first();
+        $job_array = $job->job_forms;
+        $array = array_splice($job_array, $request->form_id);
+        Job::where('id', $request->job_id)->update(['job_forms' => $array]);
+        if($request->redirect == 'job'){
+            return redirect()->route('jobs.show', ['job' => $job->id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form deleted successfully!');
+        }elseif($request->redirect == 'schedule'){
+            return redirect()->route('schedules.show', ['schedule' => $job->id, 'activeTab' => 'view-jobform'])->with('success', 'Job Form deleted successfully!');
+        }else{
+            return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Job Form deleted successfully!');
+        }
     }
 }

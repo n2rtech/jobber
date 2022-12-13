@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\JobBookingConfirmation;
+use App\Mail\JobBookingConfirmationText;
 use App\Models\Customer;
+use App\Models\CustomerNote;
 use App\Models\EmailTemplate;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
@@ -15,6 +17,7 @@ use App\Models\JobTitle;
 use App\Models\Product;
 use App\Models\SentEmail;
 use App\Models\Setting;
+use App\Models\TextTemplate;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -22,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
 
 class JobController extends Controller
 {
@@ -102,9 +106,14 @@ class JobController extends Controller
         isset($filter_completed)    ? $jobs->where('scheduled', 'yes')->where('status', $filter_completed) : $jobs;
 
         if((isset($filter_scheduled) && $filter_scheduled == 'yes')){
-            $jobs                       = $jobs->orderBy('start', 'asc')->get();
+            $jobs                       = $jobs->orderBy('start', 'asc')->whereNot('status', 'completed')->get();
         }else{
-            $jobs                       = $jobs->orderBy('id', 'desc')->get();
+            if(isset($filter_completed)){
+                $jobs                       = $jobs->orderBy('completed_on', 'desc')->get();
+            }else{
+                $jobs                       = $jobs->orderBy('id', 'desc')->get();
+            }
+
         }
 
 
@@ -210,10 +219,18 @@ class JobController extends Controller
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
-        if($request->has('redirect')){
-            return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
+        // if($request->has('redirect')){
+        //     return redirect()->route('schedules.index')->with('success', 'Job added successfully!');
+        // }
+
+        if(isset($request->instructions)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $job->customer_id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->instructions;
+            $note->save();
         }
-        return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
+        return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-jobs'])->with('success', 'Job added successfully!');
 
     }
 
@@ -239,14 +256,14 @@ class JobController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
         foreach ($period as $item) {
             array_push($slots, $item->format("H:i:s"));
         }
-        return view('jobs.view', compact('job', 'users', 'products', 'template','slots'));
+        return view('jobs.view', compact('job', 'users', 'products', 'template','slots', 'text_template'));
     }
 
     public function saveJobForm(Request $request, $id){
@@ -257,6 +274,7 @@ class JobController extends Controller
                 $answer                             = new JobFormAnswer();
                 $answer->customer_id                = $job->customer_id;
                 $answer->job_id                     = $id;
+                $answer->user_id                    = Auth::user()->id;
                 $answer->job_form_id                = $request->job_form_id;
                 $answer->job_form_question_id       = $key;
 
@@ -293,6 +311,17 @@ class JobController extends Controller
         return $pdf->download('jobform.pdf');
     }
 
+    public function viewJobForm($jobid, $formid){
+        $job                = Job::where('id', $jobid)->first();
+
+        if(!empty($job->job_forms) && is_array($job->job_forms)){
+            $job->forms     = JobForm::where('id', $formid)->get();
+        }else{
+            $job->forms     = [];
+        }
+        return view('jobs.job-form', compact('job'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -325,6 +354,14 @@ class JobController extends Controller
         $job->job_forms         = $request->job_forms;
         $job->total             = 0;
         $job->save();
+
+        if(isset($request->instructions)){
+            $note                   = new CustomerNote();
+            $note->customer_id      = $job->customer_id;
+            $note->user_id          = Auth::user()->id;
+            $note->note             = $request->instructions;
+            $note->save();
+        }
 
         JobProduct::where('job_id', $id)->delete();
         if(!empty($request->product) && is_array($request->product)){
@@ -385,7 +422,7 @@ class JobController extends Controller
         $total = ($subtotal + $added_tax - $deduct_discount);
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal, 'total' => $total]);
 
-        return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
+        return redirect()->route('jobs.show', $id)->with('success', 'Job updated successfully!');
     }
 
     /**
@@ -403,7 +440,11 @@ class JobController extends Controller
 
     public function changeStatus(Request $request){
         $job = Job::where('id', $request->job_id)->first();
-        Job::where('id', $request->job_id)->update(['status' => $request->status]);
+        if($request->status == 'completed'){
+            Job::where('id', $request->job_id)->update(['status' => $request->status, 'completed_on' => Carbon::now()]);
+        }else{
+            Job::where('id', $request->job_id)->update(['status' => $request->status, 'completed_on' => null]);
+        }
         return response()->json(['success' => 'Job marked '.ucfirst($request->status).' successfully!']);
     }
 
@@ -421,7 +462,15 @@ class JobController extends Controller
 
     public function confirmation(Request $request){
         $emails = explode(",",$request->email);
-        Job::where('id', $request->job_id)->update(['status' => 'provisional']);
+
+        $current_status = Job::where('id', $request->job_id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+
+        }else{
+            Job::where('id', $request->job_id)->update(['scheduled' => 'yes', 'status' => 'provisional']);
+        }
+
         $job = Job::where('id', $request->job_id)->first();
         if($request->medium == 'email'){
             foreach($emails as $email){
@@ -444,6 +493,12 @@ class JobController extends Controller
             return response()->json(['success' => 'Booking Confirmation has been sent via Email!']);
 
         }else{
+            // return $request->all();
+            $send_text_to = '00353' . $request->mobile_no . '@txtlocal.co.uk';
+
+            Mail::to($send_text_to)->send(new JobBookingConfirmationText($job, nl2br($request->text_message), 'Booking'));
+
+            //Http::get('https://api.textlocal.in/send?apikey=NzA2ZTQ1NzEzMDRmNzI2Zjc0NzE1MDYyNzMzNjRkNDY=&numbers='.$request->mobile_no.'&sender=TXTLCL&message='.$request->text_message);
             $sent_email              = new SentEmail();
             $sent_email->customer_id = $job->customer->id;
             $sent_email->user_id     = Auth::user()->id;

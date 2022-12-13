@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <div class="card card-dark">
+                                        <div class="card card-dark collapsed-card">
                                             <div class="card-header">
                                                 <h3 class="card-title">{{ __('Job Forms') }}</h3>
 
@@ -297,7 +297,7 @@
                 html +='<select name="product['+ item_row +'][product]" id="product'+ item_row +'" class="form-control form-control-sm" onchange="showProductOptions(this, '+ item_row +')" required>';
                 html +='<option value="">Select Product</option>';
                 html +='@foreach($products as $product)';
-                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ $product->description }}">{{ $product->name }}</option>';
+                html +='<option value="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-description="{{ trim(preg_replace('/\s\s+/', ' ', $product->description)) }}">{{ $product->name }}</option>';
                 html +='@endforeach';
                 html +='</select>';
                 html +='<textarea name="product['+ item_row +'][description]" id="description'+ item_row +'" rows="2" placeholder="Description" class="form-control form-control-sm mt-1"></textarea>';
@@ -378,7 +378,7 @@
        $(document).ready(function () {
             $("#select2-name-container").text("{{ $job->customer->name }}");
             $("#customer_id").val("{{ $job->customer_id }}");
-            $('#address').val("{{ getAddress($job->customer_id) }}");
+            $('#address').val("{{ getCustomerAddress($job->customer_id) }}");
        });
     </script>
 

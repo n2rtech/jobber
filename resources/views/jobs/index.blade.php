@@ -6,6 +6,16 @@
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  @if($filter_scheduled == 'yes')
+  <style>
+    .dtr-control{
+        padding-left: 0.75rem !important;
+    }
+    .dtr-control:before{
+        display: none !important;
+    }
+  </style>
+  @endif
 @endsection
 
 @section('content')

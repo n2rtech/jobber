@@ -17,6 +17,8 @@
         </div>
         @include('customers.view.sections.tabs')
     </section>
+    @include('customers.emails.invoice-email')
+    @include('customers.emails.estimate-email')
 @endsection
 @push('scripts')
     @include('customers.view.script')

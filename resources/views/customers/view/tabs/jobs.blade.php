@@ -6,20 +6,20 @@
         <table id="dataTable" class="table table-sm table-bordered">
             <thead>
                 <tr>
-                    <th class="bg-darkblue">{{ __('Job N.o') }}</th>
-                    <th class="bg-darkblue">{{ __('Date Added') }}</th>
-                    <th>{{ __('Job Type') }}</th>
-                    <th>{{ __('Products / Services') }}</th>
-                    <th>{{ __('Scheduled') }}</th>
-                    <th>{{ __('Total') }}</th>
-                    <th></th>
+                    <th width="10%">{{ __('Job No.') }}</th>
+                    <th width="10%">{{ __('Date Added') }}</th>
+                    <th width="10%">{{ __('Job Type') }}</th>
+                    <th width="45%">{{ __('Products / Services') }}</th>
+                    <th width="10%">{{ __('Scheduled') }}</th>
+                    <th width="10%">{{ __('Total') }}</th>
+                    <th width="5%"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($customer->jobs as $job)
                     <tr>
                         <td><a href="{{ route('jobs.show', $job->id) }}">#{{ $job->id }}</a></td>
-                        <td>{{ \Carbon\Carbon::parse($job->created_at)->format('Y-m-d') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($job->created_at)->format('d-m-Y') }}</td>
                         <td>{{ $job->jobTitle->title }}</td>
 
                         <td>
@@ -33,13 +33,13 @@
                             @if ($job->scheduled == 'no')
                                 <span class="badge bg-danger">{{ __('No') }}</span>
                             @else
-                            <span class="badge bg-info"> <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('Y-m-d')}}</span>
-                            <br/>
-                                <span class="badge bg-info"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('l') }}</span>
-                            <br/>
-                            <span class="badge bg-success"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
-                            <br/>
-                            <span class="badge bg-danger"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                            <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <br/>
+                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                <br/>
+                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <br/>
+                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                             @endif
                         </td>
                         <td>€ {{ $job->total }}</td>

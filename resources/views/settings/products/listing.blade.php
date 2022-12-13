@@ -15,8 +15,8 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $product->name }}</a></td>
-                        <td>€ {{ ucfirst($product->type) }}</td>
-                        <td>{{ $product->unit_price }}</td>
+                        <td>{{ ucfirst($product->type) }}</td>
+                        <td>€ {{ $product->unit_price }}</td>
                         @php
                          $tax_rates = \App\Models\TaxRate::where('id', $product->tax_rate_id)->first();
                         @endphp
@@ -28,7 +28,7 @@
                                 </button>
                                 <div class="dropdown-menu" role="menu" style="">
                                     <a href="javascript:void(0)" class="dropdown-item btn edit-product" data-toggle="modal"
-                                    data-target="#modal-edit-product"  data-type="{{ $product->type }}" data-name="{{ $product->name }}" data-description="{{ $product->description }}"
+                                    data-target="#modal-edit-product"  data-type="{{ $product->type }}" data-productid="{{ $product->product_id }}" data-name="{{ $product->name }}" data-description="{{ $product->description }}"
                                     data-id="{{ $product->id }}" data-unitprice="{{ $product->unit_price }}" data-tax="{{ $product->tax_rate_id }}">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>

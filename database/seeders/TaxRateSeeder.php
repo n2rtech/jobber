@@ -19,5 +19,7 @@ class TaxRateSeeder extends Seeder
 
         TaxRate::create(['name' => 'VAT 23%', 'rate' => 23.00]);
 
+        TaxRate::create(['name' => 'VAT 0%', 'rate' => 0.00]);
+
     }
 }

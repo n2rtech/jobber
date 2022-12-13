@@ -106,13 +106,22 @@ tinymce.init({
             }
         });
 
+        var iv = localStorage.getItem("fcDefaultView") || 'timeGridWeek'
+        var id = localStorage.getItem("fcDefaultDate") || new Date
+
         var calendar = new Calendar(calendarEl, {
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            initialView: '{{ Request::get("view") ?? "timeGridWeek"}}',
+            initialView: iv,
+            initialDate: id,
+            datesSet: function (dateInfo) {
+                console.log(dateInfo);
+                localStorage.setItem("fcDefaultView", dateInfo.view.type);
+                localStorage.setItem("fcDefaultDate", dateInfo.view.currentStart.toISOString());
+            },
             themeSystem: 'bootstrap',
             slotMinTime: '{{ $setting["timing_starts"] }}',
             dayCount: 7,
@@ -140,7 +149,7 @@ tinymce.init({
                         teamcolor: '{{$job->user->color ?? "red" }}',
                         teamname: '{{$job->user->name ?? "Not Assigned" }}',
                         jobstatus: '{{ $job->status }}',
-                        location: '{{ getAddress($job->customer_id) }}',
+                        location: '{{ getCustomerAddress($job->customer_id) }}',
                         href: '{{ route('jobs.edit', $job->id) }}',
                         show: '{{ route('schedules.show', $job->id) }}',
                         viewcustomer: '{{ route('customers.show', $job->customer_id) }}',
@@ -148,73 +157,83 @@ tinymce.init({
                 @endforeach
             ],
             eventClick: function(info) {
-                
-                $("#successModal .modal-body .job_title").text(info.event.title);
-                $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
-                $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
-                if (info.event.extendedProps.jobstatus !== undefined) {
-                    $("#successModal .modal-body #booking_status").val(info.event.extendedProps.jobstatus);
-                }
-                if (info.event.extendedProps.team !== undefined) {
-                    $("#successModal .modal-body #team").val(info.event.extendedProps.team);
-                }
-                $("#successModal .modal-body .customer_name").text(info.event.extendedProps
-                    .customer);
-                $("#successModal .modal-body .location").text(info.event.extendedProps.location);
-                $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
-                $("#successModal .modal-body #start_time option[value='"+formatSetTime(info.event.start)+"']").prop('selected',true);
-                $("#successModal .modal-body #end_time option[value='"+formatSetTime(info.event.end)+"']").prop('selected',true);
-                $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
-                $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
-                $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
-                $("#successModal .modal-body #show_customer").attr("href", info.event.extendedProps.viewcustomer);
 
-                var formData = {
-                    id: info.event.extendedProps.jobid,
-                    email_template: $("#modal-email-template .modal-body #email_template").val(),
-                };
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('schedules.email-template') }}',
-                    data: formData,
-                    dataType: 'json',
-                    success: function(data) {
-                        $("#modal-email-template .modal-body #email_address").val(data.email);
-                        $("#modal-email-template .modal-body #email_subject").val(data.subject);
-                        var  emailhtml = data.message.replace(/\n/ig,"<br>")
-                        tinyMCE.get('email_message').setContent(emailhtml);
-                        // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-                $("#successModal").modal("show");
+            //     $("#successModal .modal-body .job_title").text(info.event.title);
+            //     $("#successModal .modal-body .job_id").text(info.event.extendedProps.jobid);
+            //     $("#successModal .modal-body #complete_job").val(info.event.extendedProps.jobid);
+            //     if (info.event.extendedProps.jobstatus !== undefined) {
+            //         $("#successModal .modal-body #booking_status").val(info.event.extendedProps.jobstatus);
+            //     }
+            //     if (info.event.extendedProps.team !== undefined) {
+            //         $("#successModal .modal-body #team").val(info.event.extendedProps.team);
+            //     }
+            //     $("#successModal .modal-body .customer_name").text(info.event.extendedProps
+            //         .customer);
+            //     $("#successModal .modal-body .location").text(info.event.extendedProps.location);
+            //     $("#successModal .modal-body #starts").val(formatSetDate(info.event.start));
+            //     $("#successModal .modal-body #start_time option[value='"+formatSetTime(info.event.start)+"']").prop('selected',true);
+            //     $("#successModal .modal-body #end_time option[value='"+formatSetTime(info.event.end)+"']").prop('selected',true);
+            //     $("#successModal .modal-body #ends").val(formatDateTime(info.event.end));
+            //     $("#successModal .modal-body #edit_job").attr("href", info.event.extendedProps.href);
+            //     $("#successModal .modal-body #show_job").attr("href", info.event.extendedProps.show);
+            //     $("#successModal .modal-body #show_customer").attr("href", info.event.extendedProps.viewcustomer);
+
+            //     var formData = {
+            //         id: info.event.extendedProps.jobid,
+            //         email_template: $("#modal-email-template .modal-body #email_template").val(),
+            //         text_template: $("#modal-text-template .modal-body #text_template").val(),
+            //     };
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '{{ route('schedules.email-template') }}',
+            //         data: formData,
+            //         dataType: 'json',
+            //         success: function(data) {
+            //             $("#modal-email-template .modal-body #email_address").val(data.email);
+            //             $("#modal-email-template .modal-body #email_subject").val(data.subject);
+            //             var  emailhtml = data.message.replace(/\n/ig,"<br>")
+            //             tinyMCE.get('email_message').setContent(emailhtml);
+            //             // $("#modal-email-template .modal-body #email_message").val(data.message);
+            //             $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+            //             $("#modal-text-template .modal-body #text_message").val(data.text_message);
+            //         },
+            //         error: function(data) {
+            //             console.log(data);
+            //         }
+            //     });
+            //     $("#successModal").modal("show");
+            location.href = info.event.extendedProps.show;
             },
+
+
 
             eventContent: function(arg) {
 
                 var event = arg.event;
 
-                var eventHtml = '<div class="wallThumbs row" id="job_event_'+ event.extendedProps.jobid +'">';
+                var eventHtml = '<div class="wallThumbs row colSetting" id="job_event_'+ event.extendedProps.jobid +'">';
                 eventHtml += '<div class="col-sm-12">';
-                eventHtml += '<span class="wallTitle" style="font-weight:700;">' + event.extendedProps.customer + '</span><br>';
-                eventHtml += '<span class="wallName">'+event.extendedProps.city+'</span><br>';
-                eventHtml += '<span class="wallEvent">' + event.title + '</span><br>';
-                if(event.end){
-                        eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
-                    }
+                eventHtml += '<div class="myFlex">'
+                eventHtml += '<span class="wallTitle" style="font-weight:700;">' + event.extendedProps.customer + '</span>';
                 eventHtml += '<span class="onTip" tabindex="0" data-toggle="tooltip" data-placement="top" title="' + event.extendedProps.teamname + '">';
                 eventHtml += '<button style="color: ' + event.extendedProps.teamcolor + '" class="btn btn-link" type="button" disabled>'
                 eventHtml += '<i class="fas fa-dot-circle"></i>'
                 eventHtml += '</button>'
                 eventHtml += '</span>'
+                eventHtml += '</div>'
+                eventHtml += '<div>'
+                eventHtml += '<span class="wallName">'+event.extendedProps.city+'</span><br>';
+                eventHtml += '<span class="wallEvent">' + event.title + '</span><br>';
+                eventHtml += '</div>'
+                if(event.end){
+                        eventHtml += '<span class="wallTime" id="time-period">' + formatTime(event.start) + ' - ' + formatTime(event.end) + '</span>';
+                    }
+
                 eventHtml += '</div>';
                 eventHtml += '</div>';
 
@@ -416,51 +435,108 @@ tinymce.init({
             job_id: $("#successModal .modal-body .job_id").text(),
             status: value,
         };
+        if(value == 'completed'){
+                $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure! Once mark completed! Job will be removed from Calendar.',
+                buttons: {
+                    confirm: function() {
+                        var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+                        switch (formData.status) {
+                            case 'pending':
+                                $(event).css('border-color', 'red');
+                                break;
+                            case 'provisional':
+                                $(event).css('border-color', '#fc9003');
+                                    break;
+                            case 'confirmed':
+                                $(event).css('border-color', '#01FF70');
+                                break;
+                            case 'completed':
+                                $(event).css('border-color', '#007BFF');
+                                break;
+                            default:
+                                $(event).css('border-color', 'red');
+                                break;
+                        };
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ route('jobs.change-status') }}',
+                            data: formData,
+                            dataType: 'json',
+                            success: function(data) {
+                                if(data.success){
+                                    $('#mark_complete').css('color', 'green');
+                                    $('#mark_complete').text(data.success);
+                                }else{
+                                    $('#mark_complete').css('color', 'red');
+                                    $('#mark_complete').text(data.danger);
+                                }
+                                setTimeout(function(){
+                                    window.location.reload(1);
+                                }, 1000);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                            }
+                        });
+                    },
+                    cancel: function() {
 
-        var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
-        switch (formData.status) {
-            case 'pending':
-                $(event).css('border-color', 'red');
-                break;
-            case 'provisional':
-                $(event).css('border-color', '#fc9003');
-                    break;
-            case 'confirmed':
-                $(event).css('border-color', '#01FF70');
-                break;
-            case 'completed':
-                $(event).css('border-color', '#007BFF');
-                break;
-            default:
-                $(event).css('border-color', 'red');
-                break;
-        };
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('jobs.change-status') }}',
-            data: formData,
-            dataType: 'json',
-            success: function(data) {
-                if(data.success){
-                    $('#mark_complete').css('color', 'green');
-                    $('#mark_complete').text(data.success);
-                }else{
-                    $('#mark_complete').css('color', 'red');
-                    $('#mark_complete').text(data.danger);
+                    },
                 }
-                setTimeout(function(){
-                    window.location.reload(1);
-                }, 1000);
-            },
-            error: function(data) {
-                console.log(data);
-            }
-        });
+            });
+        }else{
+            var event = document.getElementById("job_event_"+formData.job_id).parentElement.parentElement;
+            switch (formData.status) {
+                case 'pending':
+                    $(event).css('border-color', 'red');
+                    break;
+                case 'provisional':
+                    $(event).css('border-color', '#fc9003');
+                        break;
+                case 'confirmed':
+                    $(event).css('border-color', '#01FF70');
+                    break;
+                case 'completed':
+                    $(event).css('border-color', '#007BFF');
+                    break;
+                default:
+                    $(event).css('border-color', 'red');
+                    break;
+            };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('jobs.change-status') }}',
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success){
+                        $('#mark_complete').css('color', 'green');
+                        $('#mark_complete').text(data.success);
+                    }else{
+                        $('#mark_complete').css('color', 'red');
+                        $('#mark_complete').text(data.danger);
+                    }
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 1000);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
     }
 
     function assignTeam(value) {
@@ -498,15 +574,23 @@ tinymce.init({
     }
 
     function sendConfirmation(value) {
-
-       var formData = {
+    if(value == 'email'){
+        var formData = {
             job_id: $("#successModal .modal-body .job_id").text(),
             subject: $("#modal-email-template .modal-body #email_subject").val(),
             email: $("#modal-email-template .modal-body #email_address").val(),
             message: tinymce.get("email_message").getContent(),
-            text_message: $("#modal-email-template .modal-body #text_message").val(),
             medium: value,
         };
+    }else{
+        var formData = {
+            job_id: $("#successModal .modal-body .job_id").text(),
+            mobile_no: $("#modal-text-template .modal-body #mobile_no").val(),
+            text_message: $("#modal-text-template .modal-body #text_message").val(),
+            medium: value,
+        };
+    }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -672,6 +756,7 @@ tinymce.init({
         var formData = {
                     id: $("#successModal .modal-body .job_id").text(),
                     email_template: $(element).val(),
+                    text_template: $(element).val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -690,7 +775,8 @@ tinymce.init({
                         var emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").val(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);

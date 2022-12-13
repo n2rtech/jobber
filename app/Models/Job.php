@@ -11,7 +11,7 @@ class Job extends Model
 
     protected $table        = 'jobs';
 
-    protected $fillable     = ['customer_id', 'job_title_id', 'user_id', 'instructions', 'invoice_remind', 'job_forms', 'scheduled', 'start', 'end', 'total'];
+    protected $fillable     = ['customer_id', 'job_title_id', 'user_id', 'instructions', 'invoice_remind', 'job_forms', 'scheduled', 'start', 'end', 'total','completed_on', 'token'];
 
     public $timestamps      = true;
 

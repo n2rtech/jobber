@@ -13,7 +13,7 @@
 .view-job-page .nav-tabs .nav-link{
     background: #eaeaea;
     color: #000;
-}   
+}
 .login-page, .register-page {
     background-color: #ff5927 !important;
 }
@@ -271,7 +271,7 @@ a.nav-link .active{
     background-color: black !important;
     color: white !important;
     padding: 2px;
-    height: 87px;
+    /* height: 87px; */
 }
 .unscheduled-card {
     padding: 10px 6px 0px 6px;
@@ -408,7 +408,7 @@ a.nav-link .active{
     min-height: 252px;
 }
 .buttonBlocks{
-    min-height: 255px;
+    min-height: 275px;
 }
 .buttonBlocks .btn{
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
@@ -556,27 +556,42 @@ a.nav-link .active{
     background: violet;
     border: 1px solid violet;
 }
-.onTip{
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 99999;
-}
-.onTip button{
-    pointer-events: none;
-    padding: 0 10px 0 0;
-    opacity: 1 !important;
-}
 .sm-customers tr th{
-    padding: 5px 0px;
-    font-size: 17px;
+    padding: 3px 0px;
+    font-size: 16px;
 }
 .sm-customers tr td{
     padding: 0;
-    font-size: 17px;
+    font-size: 16px;
 }
 .set-fonts td, .set-fonts th{
     font-size: 15.5px;
+}
+.myFlex{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: -5px;
+    margin-top: 1px;
+}
+.myFlex .wallTitle{
+    font-weight: 700;
+    float: left;
+}
+.myFlex .onTip{
+    float: right;
+}
+.myFlex .onTip button{
+    padding: 0;
+    opacity: 1 !important;
+    line-height: 0;
+    margin-right: -8px;
+}
+.colSetting{
+    width: 100%;
+    padding-left: 3px;
+}
+.colSetting .col-sm-12{
+    padding-right: 0;
 }
 @media (min-width: 768px) and (max-width: 4000px){
 .changeBlock{
@@ -686,11 +701,11 @@ a.nav-link .active{
 }
 .cardforResponsive .noteDate{
     font-size: 14px;
-} 
+}
 .cardforResponsive .noteUser{
     font-size: 14px;
     margin-top: 5px;
-} 
+}
 .cardforResponsive .noteUser img{
     position: relative;
     top: -5px;
@@ -793,4 +808,9 @@ a.nav-link .active{
 .m-pad-0{
     padding: 0;
 }
+}
+#customer-banh table thead th {
+    background: darkblue;
+    color: #fff;
+    font-weight: normal;
 }

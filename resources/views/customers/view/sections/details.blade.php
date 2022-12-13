@@ -11,7 +11,7 @@
             <div class="col-sm-12">
 
                 <div class="table-responsive sm-customers">
-                    <table class="table table-sm">
+                    <table class="table table-sm" style="font-size: 14px;">
                         <tbody>
                             <tr>
                                 <th style="border-top: none;" width="40%">Address 1</th>
@@ -40,20 +40,14 @@
                                 <td class="text-right" style="border-top: none;">@isset($customer->mobile_2) {{ $customer->mobile_2 }} @isset($customer->mobile_2_name) ({{ $customer->mobile_2_name }}) @endisset @else {{ __('Not Found') }}  @endisset</td>
                             </tr>
                             <tr>
-                                <th style="border-top: none;" width="40%">Country</th>
-                                <th class="text-right" style="border-top: none;">Email</th>
-                            </tr>
-                            <tr>
-                                <td style="border-top: none;" width="40%">{{ $customer->country ?? 'Not Found' }}</td>
-                                <td class="text-right" style="border-top: none;">{{ $customer->email ?? 'Not Found' }}</td>
-                            </tr>
-                            <tr>
                                 <th style="border-top: none;" width="40%">Eircode</th>
+                                <th class="text-right" style="border-top: none;">Email</th>
                             </tr>
                             <tr>
                                 <td style="border-top: none;" width="40%">
                                     @isset($customer->eir_code) <a target="_blank" href="http://maps.google.com/?q={{ $customer->eir_code }}">{{ $customer->eir_code }}</a> @endisset
                                 </td>
+                                <td class="text-right" style="border-top: none;">{{ $customer->email ?? 'Not Found' }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -83,17 +83,21 @@
         responsive: true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "info": true, "ordering": false , "autoWidth": false,
-      }).buttons().container().appendTo('#invoiceTable_wrapper .col-md-6:eq(0)');
+      });
     });
     $(function () {
       $("#jobseTable").DataTable({
-        "columnDefs": [
-          { responsivePriority: 1, targets: 0 },
-          { responsivePriority: 2, targets: 4 }
-        ],
+        responsive: true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "paging": true, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": true, "autoWidth": false, "responsive": true,
-      }).buttons().container().appendTo('#jobseTable_wrapper .col-md-6:eq(0)');
+      }).buttons();
+    });
+
+    $(function () {
+      $("#jobseTablewithButtons").DataTable({
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "paging": false, "pageLength": 20, "lengthChange": false, "searching": true, "ordering": false, "info": false, "autoWidth": false, "responsive": true,
+      }).buttons().container().appendTo('#jobseTablewithButtons_wrapper .col-md-6:eq(0)');
     });
 
 

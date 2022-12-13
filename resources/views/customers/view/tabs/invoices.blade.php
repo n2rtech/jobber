@@ -20,8 +20,8 @@
                 @foreach ($customer->invoices as $invoice)
                     <tr>
                         <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
-                        <td>{{ $invoice->invoice_date}}</td>
-                        <td>{{ $invoice->due_date}}</td>
+                        <td>{{  \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}</td>
+                        <td>{{  \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}</td>
                         <td>€ {{ $invoice->total }}</td>
                         <td>€ {{ $invoice->paid }}</td>
                         <th>€ {{ $invoice->total - $invoice->paid }}</th>
@@ -47,7 +47,7 @@
                                 <div class="dropdown-menu" role="menu" style="">
                                 <a class="dropdown-item" href="{{ route('invoices.edit', $invoice->id) }}"> Edit</a>
                                 <a class="dropdown-item" href="{{ route('invoices.show', $invoice->id) }}"> View</a>
-                                <a class="dropdown-item" href="javascript:void(0)"> Send as Email</a>
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#modal-invoice-email-template" onclick="$('#invoice_id').val({{ $invoice->id }});getInvoicetemplate();"> Send as Email</a>
                                 <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Download PDF</a>
                                 <a class="dropdown-item" href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}"> Print</a>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $invoice->id }})"> Delete</a>

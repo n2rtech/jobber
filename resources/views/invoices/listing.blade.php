@@ -25,7 +25,7 @@
                             </td>
                             <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                             <td>€ {{ $invoice->total }}</td>
-                            <td>{{ $invoice->invoice_date }}</td>
+                            <td>{{  \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}</td>
                             <td>€ {{ $invoice->paid }}</td>
                             <th>€ {{ $invoice->total - $invoice->paid }}</th>
                             {{-- <td>
@@ -100,7 +100,7 @@
                             <td><a
                                     href="{{ route('customers.show', $invoice->customer_id) }}">{{ $invoice->customer->name }}</a>
                             </td>
-                            <td>{{ $invoice->invoice_date }}</td>
+                            <td>{{  \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}</td>
                             <td>€ {{ $invoice->total }}</td>
                             <td><a href="{{ route('invoices.show', $invoice->id) }}">#{{ $invoice->id }}</a></td>
                             <td>€ {{ $invoice->paid }}</td>

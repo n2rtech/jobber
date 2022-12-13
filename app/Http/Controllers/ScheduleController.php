@@ -8,6 +8,8 @@ use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Models\TextTemplate;
+use App\Models\TextTemplateContent;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -24,9 +26,10 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $scheduled_jobs     = Job::where('scheduled', 'yes ')->orderBy('start', 'asc')->get();
+        $start_date         = isset($request->date) ? Carbon::parse($request->date)->startOfWeek()->format('Y-m-d') : null ;
+        $scheduled_jobs     = Job::where('scheduled', 'yes ')->whereNot('status', 'completed')->orderBy('start', 'asc')->get();
         $unscheduled_jobs   = Job::where('scheduled', 'no ')->orderBy('id', 'desc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
         $setting            = Setting::where('type', 'calendar')->value('value');
@@ -35,14 +38,15 @@ class ScheduleController extends Controller
         $result             = array_diff($all_days, $days);
         $hidden_days        = array_values($result);
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
+
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
         foreach ($period as $item) {
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template','slots'));
+        return view('schedules.list', compact('scheduled_jobs', 'unscheduled_jobs', 'users', 'setting', 'hidden_days', 'template', 'text_template', 'slots', 'start_date'));
     }
 
     /**
@@ -63,24 +67,35 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        $time =  Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->format('H:i:s');
 
-        $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start);
+        if($time == '00:00:00'){
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->addHours(9);
+        }else{
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start);
+        }
 
         switch ($request->end) {
             case 'addHour':
-                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->addHour();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $start)->addHour();
                 break;
 
             case 'allDay':
-                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->start)->endOfDay();
+                $end   = Carbon::createFromFormat('Y-m-d H:i:s', $start)->addHour();
                 break;
 
             default:
                 $end   = Carbon::createFromFormat('Y-m-d H:i:s', $request->end);
                 break;
         }
+        $current_status = Job::where('id', $request->id)->value('status');
 
-        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
+
         return response()->json(['success' => 'success']);
     }
 
@@ -101,9 +116,31 @@ class ScheduleController extends Controller
                 break;
         }
 
-        $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        $current_status = Job::where('id', $request->id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
         return response()->json(['success' => 'success']);
     }
+
+    public function updateTimingAuto(Request $request){
+        $start = Carbon::createFromFormat('m/d/Y H:i:s', $request->start);
+        $end   = Carbon::createFromFormat('m/d/Y H:i:s', $request->start)->addHour();
+
+
+        $current_status = Job::where('id', $request->id)->value('status');
+
+        if($current_status == 'confirmed' || $current_status == 'provisional'){
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end]);
+        }else{
+            $job   = Job::where('id', $request->id)->update(['scheduled' => 'yes', 'start' => $start, 'end' => $end, 'status' => 'pending']);
+        }
+        return response()->json(['success' => 'success']);
+    }
+
 
     /**
      * Display the specified resource.
@@ -125,7 +162,7 @@ class ScheduleController extends Controller
             $note->path = asset('storage/uploads/customers/' . $id . '/notes' .'/'. $note->file);
         }
         $template           = EmailTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
-        
+        $text_template      = TextTemplate::where('type', 'jobs')->where('mode', 'confirmation')->first();
         $setting            = Setting::where('type', 'calendar')->value('value');
         $period = new CarbonPeriod($setting['timing_starts'], '30 minutes', $setting['timing_ends']);
         $slots = [];
@@ -133,7 +170,7 @@ class ScheduleController extends Controller
             array_push($slots, $item->format("H:i:s"));
         }
 
-        return view('schedules.details', compact('job', 'users', 'products', 'template','slots'));
+        return view('schedules.details', compact('job', 'users', 'products', 'template','slots', 'text_template'));
     }
 
     /**
@@ -175,9 +212,21 @@ class ScheduleController extends Controller
         // return $request->all();
         $job      = Job::where('id', $request->id)->first();
         $template = EmailTemplateContent::where('id', $request->email_template)->first();
+        $texttemplate = TextTemplateContent::where('id', $request->text_template)->first();
         $subject  = getSubject($template->subject, $request->id);
         $message  = getMessage($template->message, $request->id);
+        $text_message =  getMessage($texttemplate->message, $request->id);
+        $mobile_options = '';
 
-        return response()->json(['email' => $job->customer->email, 'subject' => $subject, 'message' => $message]);
+        if(isset($job->customer->mobile_1)){
+            $mobile_options .= '<option value='.$job->customer->mobile_1.'>Mobile 1: '.$job->customer->mobile_1.'</option>';
+        }
+        if(isset($job->customer->mobile_2)){
+            $mobile_options .= '<option value='.$job->customer->mobile_2.'>Mobile 2: '.$job->customer->mobile_2.'</option>';
+        }
+        if(isset($job->customer->phone)){
+            $mobile_options .= '<option value='.$job->customer->phone.'>Phone: '.$job->customer->phone.'</option>';
+        }
+        return response()->json(['email' => $job->customer->email, 'mobile_options' => $mobile_options, 'subject' => $subject, 'message' => $message,  'text_message' => $text_message]);
     }
 }

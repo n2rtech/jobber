@@ -9,7 +9,7 @@ aria-labelledby="customer-notes-tab">
         <div class="card-comment">
             <div class="row">
                 <div class="col-sm-7 col-6">
-                    <span class="noteDate" style="font-weight: 600">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
+                    <span class="noteDate" style="font-weight: 600">{{ \Carbon\Carbon::parse($note->created_at)->format('d-m-Y h:i') }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
                 </div>
                 <div class="col-sm-5 col-6">
                     <div class="float-right noteUser">
@@ -22,6 +22,9 @@ aria-labelledby="customer-notes-tab">
                 </div>
             </div>
         </div>
+        @if($loop->iteration == 5)
+        @break
+        @endif
         @empty
         <div class="card-comment">
             <p class="text-center mt-4">No Notes Added.</p>
@@ -31,8 +34,12 @@ aria-labelledby="customer-notes-tab">
     </div>
 
 </div>
-{{$customer->allnotes->appends(request()->query())->links("pagination::bootstrap-4")}}
-
+@if(count($customer->allnotes) > 5)
+                            <div class="col-sm-12 text-center">
+                                <a href="{{ route('customers.all-notes', $customer->id) }}" class="btn btn-indigo">View All <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        @endif
 </div>
 
 {{-- Notes Tab End --}}

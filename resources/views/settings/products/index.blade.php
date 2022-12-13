@@ -64,11 +64,13 @@
             var unitprice = $(this).data('unitprice');
             var description = $(this).data('description');
             var tax = $(this).data('tax');
+            var productid = $(this).data('productid');
             $('#edit_type').val(type);
             $('#edit_name').val(name);
             $('#edit_description').val(description);
             $('#edit_unitprice').val(unitprice);
             $('#product_id').val(id);
+            $('#edit_product_id').val(productid);
             $('#edit_tax'+tax).prop('checked', true);
         });
     </script>

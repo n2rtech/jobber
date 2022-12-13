@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public function allnotes()
     {
@@ -35,7 +36,7 @@ class Customer extends Model
     }
     public function invoices()
     {
-        return $this->hasMany(Invoice::class)->orderBy('id', 'desc');
+        return $this->hasMany(Invoice::class)->whereNot('total', '0.00')->orderBy('id', 'desc');
     }
     public function estimates()
     {
@@ -50,6 +51,11 @@ class Customer extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function banh()
+    {
+        return $this->hasMany(Banh::class)->orderBy('id', 'desc');
     }
 
 

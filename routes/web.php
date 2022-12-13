@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\AutocompleteController;
+use App\Http\Controllers\BanhController;
 use App\Http\Controllers\CalendarSettingController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\ManageTeamController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaxRateController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TextTemplateController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,14 +56,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 # Customers Route
 Route::resource('customers', CustomerController::class);
-
+Route::get('customers/all-notes/{id}', [CustomerController::class, 'allNotes'])->name('customers.all-notes');
 Route::get('customers/convert/lead/{id}', [CustomerController::class, 'convertToLead'])->name('customers.lead');
 
 Route::post('customer/autocomplete', [AutocompleteController::class, 'autocomplete'])->name('customers.autocomplete');
-
+Route::get('customers/delete/jobform', [CustomerController::class, 'deleteJobForm'])->name('customers.delete-jobform');
 # Schedules Route
 Route::resource('schedules', ScheduleController::class);
 Route::post('schedule/update-timing', [ScheduleController::class, 'updateTiming'])->name('schedules.update-timing');
+
+Route::post('schedule/update-timing/auto', [ScheduleController::class, 'updateTimingAuto'])->name('schedules.update-timing.auto');
 
 Route::post('schedule/email-template', [ScheduleController::class, 'emailTemplate'])->name('schedules.email-template');
 Route::post('schedule/text-template', [ScheduleController::class, 'textTemplate'])->name('schedules.text-template');
@@ -84,6 +88,9 @@ Route::put('jobs/save/job-form/{id}', [JobController::class, 'saveJobForm'])->na
 
 # Download Job Form
 Route::get('jobs/download/{jobid}/job-form/{formid}', [JobController::class, 'downloadJobForm'])->name('jobs.download.job-form');
+
+# Download Job Form
+Route::get('jobs/view/{jobid}/job-form/{formid}', [JobController::class, 'viewJobForm'])->name('jobs.view.job-form');
 
 # Add Note Form Route
 Route::get('job/add-notes/{id}', [UtilityController::class, 'jobNotesUploadForm'])->name('job.add-notes');
@@ -130,6 +137,9 @@ Route::resource('manage-team', ManageTeamController::class);
 
 # Email Template Route
 Route::resource('email-templates', EmailTemplateController::class);
+
+# Text Template Route
+Route::resource('text-templates', TextTemplateController::class);
 
 Route::post('email-template/default', [EmailTemplateController::class, 'autocomplete'])->name('email-templates.default');
 
@@ -190,17 +200,13 @@ Route::post('my-account', [MyAccountController::class, 'update'])->name('my-acco
 Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
 Route::post('change-password', [ChangePasswordController::class, 'update'])->name('change-password.update');
 
-# Refresh Database Route
-Route::get('refresh-database', function () {
-    Artisan::call('migrate:fresh');
-    Artisan::call('db:seed');
-    dd("Hello ! Database has been refreshed and sample data has been inserted!");
-
-});
-
 //search customer
 Route::post('customer-search',[CustomerController::class,'customerSearch'])->name('customer-search');
 
+Route::resource('banh', BanhController::class);
+
 Route::resource('form', FormController::class);
+
+Route::post('form/banh', [ FormController::class, 'banh'])->name('form.banh');
 
 

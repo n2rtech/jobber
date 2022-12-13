@@ -1,0 +1,88 @@
+label.form-label {
+    color: #FF5927;
+}
+.floor_type_concrete{
+    display:none;
+}
+.wall_type_concrete{
+    display:none;
+}
+.soartvdiv{
+    display: none;
+}
+.satellitetvdiv{
+    display:none;
+}
+.skyplusdiv{
+    display:none;
+}
+.skyqdiv{
+    display:none;
+}
+.skymultiroomdiv{
+    display:none;
+}
+.webtvdiv{
+    display:none;
+}
+.wallmountedtvdiv{
+    display:none;
+}
+.fullhomewifidiv{
+    display:none;
+}
+.wireddatasocketdiv{
+    display:none;
+}
+.wifidetacheddiv{
+    display:none;
+}
+.cielingmountedspeakersdiv{
+    display:none;
+}
+.standalonespeakersdiv{
+    display:none;
+}
+.outdoorspeakersdiv{
+    display:none;
+}
+.tvsoundthroughspeakersdiv{
+    display:none;
+}
+.fullhomemobilecoveragediv{
+    display:none;
+}
+.detachedofficecoveragediv{
+    display:none;
+}
+.voicecovergaeonlydiv{
+    display:none;
+}
+.voiceanddatacoveragediv{
+    display:none;
+}
+.uploadplan{
+    display: none;
+}
+.wizard>.steps>ul>li.done .number {
+    background-color: #ff5927;
+    color: #ffffff;
+    border-color: #ff5927;
+    font-size: 0;
+}
+.wizard>.steps>ul>li.current .number {
+    border-color: #ff5927;
+    color: #ff5927;
+    font-size: 0;
+}
+.wizard>.steps>ul>li:after, .wizard>.steps>ul>li:before {
+    background-color: #ff5927;
+}
+.btn-primary {
+    background-color: #ff5927;
+    border: 1px solid black;
+}
+a.btn.btn-primary:hover {
+    background-color: #ff5927d1;
+    border: 1px solid black;
+}

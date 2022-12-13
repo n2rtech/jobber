@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body  pb-5">
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
                                 <div class="col-sm-10">
@@ -51,42 +51,51 @@
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="phone" name="phone"
                                         placeholder="Enter Phone" value="{{ old('phone') }}">
-                                    @error('phone')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="phone_name" name="phone_name"
                                         placeholder="Enter Name" value="{{ old('phone_name') }}">
                                 </div>
+                                @error('phone')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="mobile_1" class="col-sm-2 col-form-label">{{ __('Mobile 1') }}</label>
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="mobile_1" name="mobile_1"
                                         placeholder="Enter Mobile 1" value="{{ old('mobile_1') }}">
-                                    @error('mobile_1')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="mobile_1_name" name="mobile_1_name"
                                         placeholder="Enter Name" value="{{ old('mobile_1_name') }}">
                                 </div>
+                                @error('mobile_1')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="mobile_2" class="col-sm-2 col-form-label">{{ __('Mobile 2') }}</label>
                                 <div class="col-sm-5">
                                     <input type="tel" class="form-control" id="mobile_2" name="mobile_2"
                                         placeholder="Enter Mobile 2" value="{{ old('mobile_2') }}">
-                                    @error('mobile_2')
-                                        <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="mobile_2_name" name="mobile_2_name"
                                         placeholder="Enter Name" value="{{ old('mobile_2_name') }}">
                                 </div>
+                                @error('mobile_2')
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
                             <div class="form-group row">
                                 <label for="address_1" class="col-sm-2 col-form-label">{{ __('Address 1') }}</label>
@@ -108,6 +117,18 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="type" class="col-sm-2 col-form-label">{{ __('As Lead') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" id="type" name="type" value="sales-lead" checked data-bootstrap-switch>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="city" class="col-sm-2 col-form-label">{{ __('City') }}</label>
                                 <div class="col-sm-10">
@@ -118,22 +139,7 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label for="type" class="col-sm-2 col-form-label">{{ __('As Lead') }}</label>
-                                <div class="col-sm-10 mt-1">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="type" id="sales-lead" value="sales-lead" checked>
-                                        <label class="form-check-label" for="sales-lead">On</label>
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label for="state" class="col-sm-2 col-form-label">{{ __('State') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="state" name="state"
@@ -142,12 +148,12 @@
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row">
-                                <label for="country" class="col-sm-2 col-form-label">{{ __('Country') }}</label>
+                                <label for="country" class="col-sm-2 col-form-label">{{ __('County') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="country" name="country"
-                                        placeholder="Enter Country" value="{{ old('country') }}">
+                                        placeholder="Enter County" value="{{ old('country') }}">
                                     @error('country')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -188,3 +194,11 @@
         </form>
     </section>
 @endsection
+@push('scripts')
+<script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+    <script>
+        $("input[data-bootstrap-switch]").each(function(){
+        $(this).bootstrapSwitch();
+        })
+    </script>
+@endpush

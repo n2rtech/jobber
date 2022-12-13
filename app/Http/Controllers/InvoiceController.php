@@ -9,6 +9,8 @@ use App\Models\EmailTemplate;
 use App\Models\EmailTemplateContent;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
+use App\Models\Job;
+use App\Models\JobProduct;
 use App\Models\Product;
 use App\Models\SentEmail;
 use App\Models\Setting;
@@ -105,7 +107,7 @@ class InvoiceController extends Controller
         }
 
 
-        $invoices                   = $invoices->orderBy('id', 'desc')->get();
+        $invoices                   = $invoices->whereNot('total', '0.00')->orderBy('id', 'desc')->get();
 
         $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
 
@@ -279,6 +281,9 @@ class InvoiceController extends Controller
         $invoice->save();
 
         InvoiceProduct::where('invoice_id', $id)->delete();
+        if(isset($invoice->job_id)){
+            JobProduct::where('job_id', $invoice->job_id)->delete();
+        }
         if(!empty($request->product) && is_array($request->product)){
             foreach($request->product as $key => $value){
                 $product                = new InvoiceProduct();
@@ -291,8 +296,26 @@ class InvoiceController extends Controller
                 $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
+
+                if(isset($invoice->job_id)){
+                    $job_product                = new JobProduct();
+                    $job_product->job_id        = $invoice->job_id;
+                    $job_product->product_id    = $value['product'];
+                    $job_product->description   = $value['description'];
+                    $job_product->quantity      = $value['quantity'];
+                    $job_product->unit_price    = $value['unit_price'];
+                    $job_product->total         = $value['total'];
+                    $job_product->save();
+                }
             }
+
         }
+
+        if(isset($invoice->job_id)){
+            $total = JobProduct::where('job_id', $invoice->job_id)->sum('total');
+            Job::where('id', $invoice->job_id)->update(['total' => $total]);
+        }
+
         $subtotal =InvoiceProduct::where('invoice_id', $invoice->id)->sum('total');
         Invoice::where('id', $invoice->id)->update(['subtotal' => $subtotal]);
 

@@ -27,7 +27,7 @@
 
     <div class="col-md-3">
         <label for="billing_address" class="label-small">{{ __('Billing Address') }}</label>
-        <p id="billing_address" class="text-small text-muted">@isset($customer) {{ getAddress($customer->id) }} @else @isset($invoice) {{ getAddress($invoice->customer->id) }} @else {{ __('Select Customer') }} @endisset @endif</p>
+        <p id="billing_address" class="text-small text-muted">@isset($customer) {!! getAddress($customer->id) !!} @else @isset($invoice) {!! getAddress($invoice->customer->id) !!} @else {{ __('Select Customer') }} @endisset @endif</p>
     </div>
 
     <div class="col-md-3">
@@ -53,7 +53,7 @@
                                             Address') }}</label>
                     </div>
                 @else
-                <p id="shipping_address" class="text-small text-muted" data-toggle="#modal" onclick="showAddressModal();">{{ $invoice->shipping_address_1 }} {{ $invoice->shipping_address_2 }} {{ $invoice->shipping_city }} {{ $invoice->shipping_state }} {{ $invoice->shipping_country }} {{ $invoice->shipping_eir_code }}</p>
+                <p id="shipping_address" class="text-small text-muted" data-toggle="#modal" onclick="showAddressModal();">{{ $invoice->shipping_address_1 }} {{ $invoice->shipping_address_2 }} {{ $invoice->shipping_city }} {{ $invoice->shipping_state }} {{ $invoice->shipping_country }} <a target="_blank" href="http://maps.google.com/?q={{ $invoice->shipping_eir_code }}">{{ $invoice->shipping_eir_code }}</a></p>
                 @endif
             @else
                 <div class="custom-control custom-checkbox">

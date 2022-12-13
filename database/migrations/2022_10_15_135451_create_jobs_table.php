@@ -26,9 +26,11 @@ return new class extends Migration
             $table->longText('job_forms')->nullable();
             $table->enum('scheduled',['yes', 'no'])->default('no');
             $table->enum('status',['pending', 'provisional', 'confirmed', 'completed'])->default('pending');
+            $table->timestamp('completed_on')->nullable();
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
             $table->string('total')->nullable();
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

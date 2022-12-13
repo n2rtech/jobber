@@ -13,20 +13,20 @@
                     <div class="card-header">
                         <h3 class="card-title">Job Details</h3>
                         <div class="card-tools">
-                            <a href="{{ route('jobs.index') }}" class="btn btn-dark">
+                            <a href="{{ route('customers.show', $job->customer->id) }}" class="btn btn-dark">
                                 <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6 col-6">
+                            <div class="col-sm-6">
                                 <h5><strong>{{ $job->customer->name }}</strong></h5>
                                 <span class="text-muted"><cite>{{ $job->jobTitle->title }}</cite></span><br />
                                 <small>{{ $job->customer->name }}</small><br />
-                                <small>{{ getAddress($job->customer_id) }}</small>
+                                <small>{!! getAddress($job->customer_id) !!}</small>
                             </div>
-                            <div class="col-sm-6 col-6">
+                            <div class="col-sm-6">
                                 <div class="float-right">
                                     @isset($job->start)
                                     <small class="text-dark mb-2"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;<strong>
@@ -78,7 +78,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-body m-pad-0">
+                    <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade active show" id="view-information" role="tabpanel"
                                 aria-labelledby="view-information-tab">
@@ -119,7 +119,7 @@
                                                     <select name="team" id="team" class="form-control" onchange="assignTeam(this.value);" style="width: 100%">
                                                         <option value="">Choose Team Member</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if($job->user_id == $user->id) selected @endif>{{ $user->name }}</option>
+                                                        <option value="{{ $user->id }}" @if($job->user_id == $user->id) selected @endif>{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <small id="assign_message"></small>
@@ -139,8 +139,9 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Start Time</label>
-                                                    <select name="start_time" id="start_time" class="form-control" >
-                                                    <option value="">Choose Start time</option>
+                                                    <select name="start_time" id="start_time" class="form-control" onchange="changeTimings();">
+                                                    <option>Choose start time</option>
+                                                    @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
                                                     <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->start)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
                                                     @endforeach
@@ -151,18 +152,19 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">End Time</label>
-                                                    <select name="end_time" id="end_time" class="form-control" >
-                                                    <option value="">Choose End time</option>
+                                                    <select name="end_time" id="end_time" class="form-control" onchange="changeTimings();">
+                                                    <option disabled>Choose End time</option>
+                                                    @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
                                                     <option value="{{ $slot }}"  @php ( $slot == \Carbon\Carbon::parse($job->end)->format('H:i:s') ) ? $sel = "selected" : $sel = ''; echo $sel; @endphp >{{ $slot }}</option>
                                                     @endforeach
                                                 </select>
-                                                   <!-- <input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">-->
+                                                    <!--<input id="end_time" type="time" class="form-control" onchange="updateTimeInput(this)" value="{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}">--->
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 mt-2 mb-2">
+                                            {{-- <div class="col-sm-12 mt-2 mb-2">
                                                 <button class="btn btn-block btn-success" onclick="changeTimings();">Update Timings</button>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="text-center">
                                             <small id="change_timing_message"></small>
@@ -174,9 +176,9 @@
                                     </div>
                                 </div>
 
-                                <span class="text-dark float-right pr-3"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
+                                <span class="text-dark float-right"> <strong>Invoice Total</strong> : € {{ $job->invoice->total }}</span>
                                 <span class="clearfix"></span>
-                                <div class="card card-widget widget-user-2 mt-3">
+                                <div class="card card-widget widget-user-2">
                                     <div class="card-header">
                                         <h3 class="card-title">Achived Notes</h3>
                                         <div class="card-tools">
@@ -207,9 +209,6 @@
                                                         <label class="custom-file-label" for="file">{{ __('Choose File') }}</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group text-right">
-                                                <button type="submit" class="btn btn-success" form="documentUploadForm">{{ __('Save') }}</button>
                                             </div>
                                         </form>
                                         </div>
@@ -249,73 +248,152 @@
                                 aria-labelledby="view-jobform-tab">
                                 <div class="gallery">
                                     @forelse($job->forms as $form)
-                                    <div class="card">
+                                    @if(!jobFormExists($job->id, $form->id))
+                                    <div class="card collapsed-card">
+                                        <div class="card-header bg-dark">
+                                            <h3 class="card-title" data-card-widget="collapse" title="Collapse">{{ $form->title }}</h3>
+                                            <div class="card-tools">
+                                                <a href="javascript:void(0)"
+                                                class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'job','form_id' => $form->id]) }}');"><i class="fas fa-trash"></i></a>
+                                                <button type="button" class="btn btn-outline-light btn-tool" data-card-widget="collapse" title="Collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                                {{-- <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a> --}}
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="display: none;">
+                                            <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="job_form_id" value="{{ $form->id }}">
+                                                <input type="hidden" name="redirect" value="customer">
+                                                @foreach($form->questions as $question)
+
+                                                    @php
+                                                    $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
+                                                    @endphp
+                                                    <div class="form-group">
+
+                                                        <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
+
+                                                        @if($question->type == 'text')
+                                                            <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
+                                                        @endif
+
+                                                        @if($question->type == 'textarea')
+                                                            <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
+                                                        @endif
+
+                                                        @if($question->type == 'checkbox')
+                                                            @foreach($question->options as $option)
+                                                                <div class="form-check" id="answer-{{ $question->id }}">
+                                                                    <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
+                                                                    <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+
+                                                        @if($question->type == 'radio')
+                                                            @foreach($question->options as $option)
+                                                            <div class="form-check" id="answer-{{ $question->id }}">
+                                                                <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
+                                                                <label class="form-check-label">{{ $option->option }}</label>
+                                                            </div>
+                                                            @endforeach
+                                                        @endif
+
+                                                        @if($question->type == 'dropdown')
+                                                        <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
+                                                            <option value="">Choose One</option>
+                                                            @foreach($question->options as $option)
+                                                                <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @endif
+
+                                                    </div>
+
+                                                @endforeach
+                                            </form>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <button type="button" onclick="confirmJobFormSave({{ $form->id }})" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Save & Exit</button>
+                                        </div>
+
+                                    </div>
+                                    @else
+                                    <div class="card collapsed-card">
                                         <div class="card-header bg-dark">
                                             <h3 class="card-title">{{ $form->title }}</h3>
                                             <div class="card-tools">
-                                                {{-- <a href="javascript:void(0)" class="btn btn-outline-light btn-sm">Email</a> --}}
-                                                <a href="{{ route('jobs.download.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm">Download</a>
+                                                <a href="javascript:void(0)" class="btn btn-outline-light btn-sm mr-1" onclick="confirmDeleteJobForm('{{ route('customers.delete-jobform', ['job_id' => $job->id, 'redirect' => 'job','form_id' => $form->id]) }}');">
+                                                                        <i class="fas fa-trash"></i></a>
+                                                <a href="{{ route('jobs.view.job-form', ['jobid' => $job->id, 'formid' => $form->id]) }}" class="btn btn-light btn-sm"><i class="fas fa-eye"></i></a>
+                                                <button type="button" onclick="editSavedJobForm()" class="btn btn-outline-light btn-sm">
+                                                    <i class="fas fa-pen"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                        <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="hidden" name="job_form_id" value="{{ $form->id }}">
-                                            <input type="hidden" name="redirect" value="job">
-                                        <div class="card-body">
-                                            @foreach($form->questions as $question)
+                                        <div class="card-body saved_job_form" style="display: none">
+                                            <form method="POST" id="jobForm{{ $form->id }}" action="{{ route('jobs.save.job-form', $job->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="job_form_id" value="{{ $form->id }}">
+                                                <input type="hidden" name="redirect" value="customer">
+                                                @foreach($form->questions as $question)
 
-                                                @php
-                                                $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
-                                                @endphp
-                                                <div class="form-group">
+                                                    @php
+                                                    $job_form_answer = \App\Models\JobFormAnswer::where('job_id', $job->id)->where('job_form_id', $form->id)->where('job_form_question_id', $question->id)->first();
+                                                    @endphp
+                                                    <div class="form-group">
 
-                                                    <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
+                                                        <label for="answer-{{ $question->id }}">{{ $question->question }}</label>
 
-                                                    @if($question->type == 'text')
-                                                        <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
-                                                    @endif
+                                                        @if($question->type == 'text')
+                                                            <input type="text" class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" value="{{ $job_form_answer->answer ?? '' }}" placeholder="Write Answer here">
+                                                        @endif
 
-                                                    @if($question->type == 'textarea')
-                                                        <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
-                                                    @endif
+                                                        @if($question->type == 'textarea')
+                                                            <textarea class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]" rows="3" placeholder="Write Answer here">{{ $job_form_answer->answer ?? '' }}</textarea>
+                                                        @endif
 
-                                                    @if($question->type == 'checkbox')
-                                                        @foreach($question->options as $option)
+                                                        @if($question->type == 'checkbox')
+                                                            @foreach($question->options as $option)
+                                                                <div class="form-check" id="answer-{{ $question->id }}">
+                                                                    <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
+                                                                    <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+
+                                                        @if($question->type == 'radio')
+                                                            @foreach($question->options as $option)
                                                             <div class="form-check" id="answer-{{ $question->id }}">
-                                                                <input class="form-check-input" type="checkbox" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer][]" @isset($job_form_answer->answer_options) {{ in_array($option->id, $job_form_answer->answer_options)  ? 'checked' : '' }} @endisset>
-                                                                <label class="form-check-label" id="option-{{ $option->id }}">{{ $option->option }}</label>
+                                                                <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
+                                                                <label class="form-check-label">{{ $option->option }}</label>
                                                             </div>
-                                                        @endforeach
-                                                    @endif
+                                                            @endforeach
+                                                        @endif
 
-                                                    @if($question->type == 'radio')
-                                                        @foreach($question->options as $option)
-                                                        <div class="form-check" id="answer-{{ $question->id }}">
-                                                            <input class="form-check-input" type="radio" id="option-{{ $option->id }}"  value="{{ $option->id }}" name="question[{{ $question->id }}][answer]" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'checked' : '' }} @endisset>
-                                                            <label class="form-check-label">{{ $option->option }}</label>
-                                                          </div>
-                                                        @endforeach
-                                                    @endif
+                                                        @if($question->type == 'dropdown')
+                                                        <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
+                                                            <option value="">Choose One</option>
+                                                            @foreach($question->options as $option)
+                                                                <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @endif
 
-                                                    @if($question->type == 'dropdown')
-                                                    <select class="form-control form-control-sm" id="answer-{{ $question->id }}" name="question[{{ $question->id }}][answer]">
-                                                        <option value="">Choose One</option>
-                                                        @foreach($question->options as $option)
-                                                            <option value="{{ $option->id }}" @isset($job_form_answer->answer) {{ $option->id == $job_form_answer->answer ? 'selected' : '' }} @endisset>{{ $option->option }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @endif
+                                                    </div>
 
-                                                </div>
-
-                                            @endforeach
+                                                @endforeach
+                                            </form>
                                         </div>
-                                        <div class="card-footer text-right">
-                                            <button type="submit" form="jobForm{{ $form->id }}" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Update</button>
+                                        <div class="card-footer text-right saved_job_form" style="display: none">
+                                            <button type="button" onclick="confirmJobFormSave({{ $form->id }})" class="btn btn-sm btn-danger"><i class="fas fa-save"></i> Save & Exit</button>
                                         </div>
-                                    </form>
                                     </div>
+                                    @endif
                                     @empty
                                     <p class="text-center mt-4"> No JobForm Found</p>
                                     @endforelse
@@ -380,6 +458,19 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="text_template">Mobile Number</label>
+                    <select class="form-control" name="mobile_no" id="mobile_no">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="text_template">Template</label>
+                    <select class="form-control" name="text_template" id="text_template" onchange="gettemplate();">
+                        @foreach($text_template->contents as $content)
+                            <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="message">Message</label>
                     <textarea class="form-control" name="text_message" id="text_message" rows="6"></textarea>
                 </div>
@@ -393,6 +484,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -409,9 +501,11 @@
         content_style: 'body { font-family:roboto; font-size:16px }'
       });
       </script>
+
     <script>
         jQuery('#starts').datepicker();
     </script>
+
     <script>
         function assignTeam(value) {
             var formData = {
@@ -459,7 +553,12 @@
         @enderror
 
         $("#filter").click(function(){
-            $("#filterBox").slideToggle();
+            if($('#filterBox').css("display") == "block") {
+                $('#documentUploadForm').submit();
+            }else{
+                $("#filterBox").slideToggle();
+            }
+
         });
 
 
@@ -471,6 +570,7 @@
         var formData = {
                     id: '{{ $job->id }}',
                     email_template: $("#modal-email-template .modal-body #email_template").val(),
+                    text_template: $("#modal-text-template .modal-body #text_template").val(),
                 };
                 $.ajaxSetup({
                     headers: {
@@ -489,7 +589,8 @@
                         var emailhtml = data.message.replace(/\n/ig,"<br>")
                         tinyMCE.get('email_message').setContent(emailhtml);
                         // $("#modal-email-template .modal-body #email_message").val(data.message);
-                        $("#modal-text-template .modal-body #text_message").html(data.message);
+                        $("#modal-text-template .modal-body #mobile_no").html(data.mobile_options);
+                        $("#modal-text-template .modal-body #text_message").html(data.text_message);
                     },
                     error: function(data) {
                         console.log(data);
@@ -543,14 +644,22 @@
 <script>
     function sendConfirmation(value) {
 
-var formData = {
-     job_id: '{{ $job->id }}',
-     subject: $("#modal-email-template .modal-body #email_subject").val(),
-     email: $("#modal-email-template .modal-body #email_address").val(),
-     message: tinymce.get("email_message").getContent(),
-     text_message: $("#modal-email-template .modal-body #text_message").val(),
-     medium: value,
- };
+        if(value == 'email'){
+        var formData = {
+            job_id: '{{ $job->id }}',
+            subject: $("#modal-email-template .modal-body #email_subject").val(),
+            email: $("#modal-email-template .modal-body #email_address").val(),
+            message: tinymce.get("email_message").getContent(),
+            medium: value,
+        };
+    }else{
+        var formData = {
+            job_id: '{{ $job->id }}',
+            mobile_no: $("#modal-text-template .modal-body #mobile_no").val(),
+            text_message: $("#modal-text-template .modal-body #text_message").val(),
+            medium: value,
+        };
+    }
  $.ajaxSetup({
      headers: {
          'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -565,7 +674,11 @@ var formData = {
          if(data.success){
              $("#modal-email-template .close").click();
              $("#modal-text-template .close").click();
-             assignStatus('provisional');
+             var bookingStatus = $('#booking_status').val();
+             if(bookingStatus == 'pending'){
+                assignStatus('provisional');
+                $('#booking_status').val('provisional');
+             }
              $("#successModal .modal-body #booking_status").val('provisional');
              $('#confirmation_message').css('color', 'green');
              $('#confirmation_message').text(data.success);
@@ -580,7 +693,7 @@ var formData = {
  });
 }
 </script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function assignStatus(value) {
         var formData = {
@@ -602,6 +715,9 @@ var formData = {
                 if(data.success){
                     $('#mark_complete').css('color', 'green');
                     $('#mark_complete').text(data.success);
+                    if(formData.status == 'completed'){
+                        window.location.href = '{{ route("home") }}';
+                    }
                 }else{
                     $('#mark_complete').css('color', 'red');
                     $('#mark_complete').text(data.danger);
@@ -627,7 +743,7 @@ var formData = {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.update-timing') }}',
+                    url: '{{ route('schedules.update-timing.auto') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -640,7 +756,7 @@ var formData = {
                             $('#change_timing_message').text('Found some error!');
                         }
                         setTimeout(function(){
-                        window.location.reload(1);
+                            window.location.href = '{{ route('schedules.index') }}';
                         }, 1000);
 
                     },
@@ -655,6 +771,57 @@ var formData = {
     function updateTimeInput(element){
         var previoustim = $(element).val();
         $(element).val(previoustim+':00');
+    }
+</script>
+<script type="text/javascript">
+    function confirmDeleteJobForm(href) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = href;
+            }
+        })
+    };
+</script>
+<script>
+    function confirmJobFormSave(no) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Save Job Form!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('jobForm' + no).submit();
+        }
+    })
+};
+</script>
+<script>
+    function editSavedJobForm(){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Overwrite JobForm!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               $(".saved_job_form").toggle();
+            }
+        })
     }
 </script>
 @endpush

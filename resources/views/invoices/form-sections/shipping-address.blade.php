@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="country" class="col-sm-3 col-form-label">{{ __('Country') }}</label>
+                    <label for="country" class="col-sm-3 col-form-label">{{ __('County') }}</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="country" name="country"
-                            placeholder="Enter Country" value="@isset($invoice) {{ $invoice->shipping_country }} @endisset">
+                            placeholder="Enter County" value="@isset($invoice) {{ $invoice->shipping_country }} @endisset">
                     </div>
                 </div>
                 <div class="form-group row">

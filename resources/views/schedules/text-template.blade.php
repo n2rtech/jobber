@@ -9,6 +9,19 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
+                <label for="text_template">Mobile Number</label>
+                <select class="form-control" name="mobile_no" id="mobile_no">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="text_template">Template</label>
+                <select class="form-control" name="text_template" id="text_template" onchange="changeTemplate(this);">
+                    @foreach($text_template->contents as $content)
+                        <option value="{{ $content->id }}" @if($loop->first) selected @endif>{{ $content->template_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="message">Message</label>
                 <textarea class="form-control" name="text_message" id="text_message" rows="6"></textarea>
             </div>

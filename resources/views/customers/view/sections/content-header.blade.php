@@ -17,7 +17,7 @@
                 </a> --}}
 
 
-                <input type="checkbox" id="type" name="type" value="{{ $customer->id }}" @if($customer->type == 'sales-lead') checked @endif data-bootstrap-switch onchange="confirmAccept(this.value)">
+                {{-- <input type="checkbox" id="type" name="type" value="{{ $customer->id }}" @if($customer->type == 'sales-lead') checked @endif data-bootstrap-switch onchange="confirmAccept(this.value)"> --}}
 
                 {{-- <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-pink">
                     <i class="btn-icon fas fa-pen"></i> {{ __('Edit Customer') }}

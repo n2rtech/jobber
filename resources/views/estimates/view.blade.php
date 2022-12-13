@@ -15,7 +15,7 @@
                     <h1>Estimate #{{ $estimate->id }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-            <a href="{{ route('estimates.index') }}" class="btn btn-dark">
+            <a href="{{ route('customers.show', $estimate->customer_id) }}" class="btn btn-dark">
             <i class="btn-icon fas fa-undo"></i> {{ __('Back') }}
             </a>
            </div>
