@@ -15,8 +15,8 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $product->name }}</a></td>
-                        <td>€ {{ ucfirst($product->type) }}</td>
-                        <td>{{ $product->unit_price }}</td>
+                        <td>{{ ucfirst($product->type) }}</td>
+                        <td>€ {{ $product->unit_price }}</td>
                         @php
                          $tax_rates = \App\Models\TaxRate::where('id', $product->tax_rate_id)->first();
                         @endphp
