@@ -55,6 +55,8 @@ class JobSeed extends Seeder
                         'quantity'      => 1,
                         'unit_price'    => $product->unit_price,
                         'total'         => 1 * $product->unit_price,
+                        'tax_rate'      => $product->tax->rate,
+                        'tax_amount'    => ($product->unit_price * $product->tax->rate / 100),
                         'created_at'    => Carbon::now(),
                         'updated_at'    => Carbon::now(),
                     ]);

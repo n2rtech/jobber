@@ -11,7 +11,7 @@ class JobProduct extends Model
 
     protected $table        = 'job_products';
 
-    protected $fillable     = ['job_id', 'product_id', 'description','quantity', 'unit_price', 'total'];
+    protected $fillable     = ['job_id', 'product_id', 'description','quantity', 'unit_price', 'tax_rate', 'tax_amount', 'total'];
 
     public $timestamps      = true;
 

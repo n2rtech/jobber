@@ -21,6 +21,8 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('quantity')->nullable();
             $table->decimal('unit_price', 10, 2)->nullable();
+            $table->decimal('tax_rate', 10, 2)->nullable();
+            $table->decimal('tax_amount', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
             $table->timestamps();
         });

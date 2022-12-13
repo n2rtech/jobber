@@ -17,6 +17,7 @@ use App\Models\JobTitle;
 use App\Models\Product;
 use App\Models\SentEmail;
 use App\Models\Setting;
+use App\Models\TaxRate;
 use App\Models\TextTemplate;
 use App\Models\User;
 use Carbon\Carbon;
@@ -132,12 +133,14 @@ class JobController extends Controller
             $job_forms  = JobForm::get();
             $products   = Product::get();
             $customer   = Customer::find($request->customer_id);
-            return view('jobs.convert', compact('job_titles', 'job_forms', 'products', 'customer'));
+            $tax_rates  = TaxRate::get();
+            return view('jobs.convert', compact('job_titles', 'job_forms', 'products', 'customer', 'tax_rates'));
         }else{
             $job_titles = JobTitle::get();
             $job_forms  = JobForm::get();
             $products   = Product::get();
-            return view('jobs.create', compact('job_titles', 'job_forms', 'products'));
+            $tax_rates  = TaxRate::get();
+            return view('jobs.create', compact('job_titles', 'job_forms', 'products', 'tax_rates'));
         }
 
     }
@@ -167,6 +170,8 @@ class JobController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }
@@ -334,7 +339,8 @@ class JobController extends Controller
         $job_titles = JobTitle::get();
         $job_forms  = JobForm::get();
         $products   = Product::get();
-        return view('jobs.edit', compact('job_titles', 'job_forms', 'job', 'products'));
+        $tax_rates  = TaxRate::get();
+        return view('jobs.edit', compact('job_titles', 'job_forms', 'job', 'products', 'tax_rates'));
     }
 
     /**
@@ -372,6 +378,8 @@ class JobController extends Controller
                 $product->description   = $value['description'];
                 $product->quantity      = $value['quantity'];
                 $product->unit_price    = $value['unit_price'];
+                $product->tax_rate      = $value['tax_rate'];
+                $product->tax_amount    = ($value['total'] * $value['tax_rate'] / 100);
                 $product->total         = $value['total'];
                 $product->save();
             }
