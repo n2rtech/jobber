@@ -7,9 +7,8 @@
             <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
                     <tr>
-                        <th class="all" style="width: 10%">{{ __('Customer') }}</th>
-                        <th class="all" style="width: 10%">{{ __('Address') }}</th>
-                        <th class="all" style="width: 25%">{{ __('Scheduled') }}</th>
+                        <th class="all" style="width: 50%">{{ __('Customer') }}</th>
+                        <th class="all" style="width: 50%">{{ __('Scheduled') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,21 +18,22 @@
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
                             <td style="font-size: 17px">
-                                {!! getCity($job->customer_id) !!}
-                            </td>
-                            <td style="font-size: 17px">
-                                @if ($job->scheduled == 'no')
-                                    <span class="badge bg-danger">{{ __('No') }}</span>
-                                @else
                                 <a href="{{ route('jobs.show', $job->id) }}">
-                                <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
-                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
-                                <br/>
-                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
-                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
-                                </a>
-                                @endif
+                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
+                                    <br/>
+                                    <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
+                                    <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
+                                    </a>
+                               
                             </td>
+                        </tr>
+                        <tr>
+                            <th class="all" colspan="2">{{ __('Address') }}
+                            <br/>
+                               <span style="font-size: 17px;font-weight: 400"> {!! getCity($job->customer_id) !!} </span>
+                            
+                        </th>
                         </tr>
                     @endforeach
                 </tbody>
