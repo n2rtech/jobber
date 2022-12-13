@@ -42,7 +42,7 @@
                                 <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                             @endif
                         </td>
-                        <td>€ {{ $job->total }}</td>
+                        <td>€ {{ $job->invoice->total }}</td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">
