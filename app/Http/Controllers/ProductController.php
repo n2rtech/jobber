@@ -65,7 +65,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->has('id') ? Product::where('id', $request->id)->update(['type' => $request->type, 'name' => $request->name, 'description' => $request->description, 'tax_rate_id' => $request->tax_rate_id, 'unit_price' => $request->unit_price]) : Product::create(['type' => $request->type,'name' => $request->name, 'description' => $request->description, 'tax_rate_id' => $request->tax_rate_id, 'unit_price' => $request->unit_price]);
+        $request->has('id') ? Product::where('id', $request->id)->update(['type' => $request->type, 'product_id' => $request->product_id, 'name' => $request->name, 'description' => $request->description, 'tax_rate_id' => $request->tax_rate_id, 'unit_price' => $request->unit_price]) : Product::create(['type' => $request->type, 'product_id' => $request->product_id,'name' => $request->name, 'description' => $request->description, 'tax_rate_id' => $request->tax_rate_id, 'unit_price' => $request->unit_price]);
 
         if($request->has('id')){
 

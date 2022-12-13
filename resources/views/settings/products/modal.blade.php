@@ -18,6 +18,10 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="product_id">Product Id</label>
+                        <input type="number" class="form-control" id="product_id" name="product_id" placeholder="Enter Product Id here">
+                    </div>
+                    <div class="form-group">
                         <label for="name">Product Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Product name here" required>
                     </div>
@@ -67,6 +71,10 @@
                             <option value="product">Product</option>
                             <option value="service">Service</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_product_id">Product Id</label>
+                        <input type="number" class="form-control" id="edit_product_id" name="product_id" placeholder="Enter Product Id here">
                     </div>
                     <div class="form-group">
                         <label for="edit_title">Product Name</label>
