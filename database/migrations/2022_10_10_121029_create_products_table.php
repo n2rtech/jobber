@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['product', 'service'])->default('product');
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->string('name');
             $table->longText('description')->nullable();
             $table->decimal('unit_price', 10, 2)->nullable();
