@@ -90,7 +90,7 @@
             
                htm =  '<tr class="'+cls+' search">';
                htm += '<td class="dtr-control" tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
-               htm += '<td> '+( (d.address_1 != null) ? d.address_1 : "" )+", "+( (d.address_2 != null) ? d.address_2 : "")+", "+((d.city != null) ? d.city : "")+", "+((d.country != null) ? d.country : "")+", "+((d.eir_code != null) ? d.eir_code : "")+'</td>';
+               htm += '<td> '+( (d.address_1 != null) ? d.address_1 : "" )+" "+( (d.address_2 != null) ? d.address_2 : "")+" "+((d.city != null) ? d.city : "")+" "+((d.country != null) ? d.country : "")+" "+((d.eir_code != null) ? d.eir_code : "")+'</td>';
                htm += '<td> '+((d.phone != null) ? d.phone : "") +' </td>';
                htm += '<td> '+((d.mobile_1 != null) ? d.mobile_1 : "")+' </td>';
                htm += '<td> '+((d.mobile_2 != null) ? d.mobile_2 : "")+' </td>';
