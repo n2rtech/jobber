@@ -54,6 +54,9 @@ if (!function_exists('getCity')) {
         if(isset($customer->city) && strlen($customer->city) > 0){
             $customer->address .= $customer->city;
         }
+        if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
+            $customer->address .= '<br/><a target="_blank" href="http://maps.google.com/?q='.$customer->eir_code.'">'.$customer->eir_code.'</a>';
+        }
 
         return ($customer->address);
     }
@@ -300,7 +303,7 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $message);
            $message     = str_replace('{{JOB_DATE_AND_TIME}}',$job->start , $message);
            $message     = str_replace('{{JOB_LOCATION}}', getCustomerAddress($job->customer_id) , $message);
-
+           echo $message;die;
            return $message;
         }
     }
