@@ -46,7 +46,7 @@ class CustomerController extends Controller
             $filter_box_customer = 'show';
         }
 
-        isset($filter_search)   ? $customers->where('name', 'like', '%'.$filter_search.'%')->orWhere('email', 'like', '%'.$filter_search.'%')->orWhere('phone', 'like', '%'.$filter_search.'%')->orWhere('mobile_1', 'like', '%'.$filter_search.'%')->orWhere('mobile_2', 'like', '%'.$filter_search.'%')->orWhere('address_1', 'like', '%'.$filter_search.'%')->orWhere('address_2', 'like', '%'.$filter_search.'%')->orWhere('city', 'like', '%'.$filter_search.'%')->orWhere('state', 'like', '%'.$filter_search.'%') : $customers;
+        isset($filter_search)   ? $customers->where('name', 'like', '%'.$filter_search.'%')->orWhere('email', 'like', '%'.$filter_search.'%')->orWhere('phone', 'like', '%'.$filter_search.'%')->orWhere('mobile_1', 'like', '%'.$filter_search.'%')->orWhere('mobile_2', 'like', '%'.$filter_search.'%')->orWhere('address_1', 'like', '%'.$filter_search.'%')->orWhere('address_2', 'like', '%'.$filter_search.'%')->orWhere('city', 'like', '%'.$filter_search.'%')->orWhere('county', 'like', '%'.$filter_search.'%') : $customers;
 
         isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
 
@@ -54,7 +54,7 @@ class CustomerController extends Controller
 
         isset($filter_phone)    ? $customers->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $customers;
 
-        isset($filter_address)  ? $customers->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $customers;
+        isset($filter_address)  ? $customers->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('county', 'like', '%'.$filter_address.'%') : $customers;
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
@@ -63,13 +63,10 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box_customer', 'filter_search'));
     }
 
+
     public function customerSearch(Request $request){
 
         if(!is_null($request->inp)){
-
-            $exp = explode(" ",$request->inp);
-            $words = array_reverse($exp);
-            $revName = join(" ",$words); 
 
           $result = Customer::where('name','like','%'.$request->inp.'%')
                     ->orWhere('phone','like','%'.$request->inp.'%')
@@ -79,9 +76,12 @@ class CustomerController extends Controller
                     ->orWhere('address_2','like','%'.$request->inp.'%')
                     ->orWhere('city','like','%'.$request->inp.'%')
                     ->orWhere('country','like','%'.$request->inp.'%')
+                    ->orWhere('county','like','%'.$request->inp.'%')
                     ->orWhere('eir_code','like','%'.$request->inp.'%')
+
                     ->orWhere('name','like','%'.$revName.'%')
                     ->take(200)->get()->toArray();
+
 
                     if(!empty($result)){
 
@@ -122,8 +122,8 @@ class CustomerController extends Controller
         $rules = [
             'name'                  => 'required',
             'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
         ];
 
         $messages = [
@@ -145,8 +145,8 @@ class CustomerController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->state            = $request->state;
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();
@@ -220,8 +220,8 @@ class CustomerController extends Controller
         $rules = [
             'name'                  => 'required',
             'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
         ];
 
         $messages = [
@@ -243,8 +243,8 @@ class CustomerController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->state            = $request->state;
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();

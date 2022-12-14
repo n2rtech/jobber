@@ -87,9 +87,9 @@ class SalesLeadController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
-        $customer->state            = $request->state;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();
@@ -164,9 +164,9 @@ class SalesLeadController extends Controller
         $customer->address_1        = $request->address_1;
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
-        $customer->state            = $request->state;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();

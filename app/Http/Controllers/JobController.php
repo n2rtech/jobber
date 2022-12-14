@@ -131,14 +131,14 @@ class JobController extends Controller
         if(isset($request->customer_id)){
             $job_titles = JobTitle::get();
             $job_forms  = JobForm::get();
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $customer   = Customer::find($request->customer_id);
             $tax_rates  = TaxRate::get();
             return view('jobs.convert', compact('job_titles', 'job_forms', 'products', 'customer', 'tax_rates'));
         }else{
             $job_titles = JobTitle::get();
             $job_forms  = JobForm::get();
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $tax_rates  = TaxRate::get();
             return view('jobs.create', compact('job_titles', 'job_forms', 'products', 'tax_rates'));
         }
@@ -248,7 +248,7 @@ class JobController extends Controller
     public function show($id)
     {
         $job                = Job::find($id);
-        $products           = Product::get();
+        $products           = Product::orderBy('name', 'asc')->get();
         $users              = User::where('role', 'worker')->get(['id', 'name']);
 
         if(!empty($job->job_forms) && is_array($job->job_forms)){
@@ -338,7 +338,7 @@ class JobController extends Controller
         $job        = Job::find($id);
         $job_titles = JobTitle::get();
         $job_forms  = JobForm::get();
-        $products   = Product::get();
+        $products   = Product::orderBy('name', 'asc')->get();
         $tax_rates  = TaxRate::get();
         return view('jobs.edit', compact('job_titles', 'job_forms', 'job', 'products', 'tax_rates'));
     }
