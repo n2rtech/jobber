@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerDocument;
 use App\Models\CustomerNote;
+use App\Models\CustomerPhoto;
 use App\Models\EmailTemplate;
 use App\Models\Estimate;
 use App\Models\Invoice;
@@ -11,6 +13,8 @@ use App\Models\Job;
 use App\Models\JobForm;
 use App\Models\JobFormAnswer;
 use App\Models\Lead;
+use App\Models\Payment;
+use App\Models\SentEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -275,6 +279,15 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        Job::where('customer_id', $id)->delete();
+        Invoice::where('customer_id', $id)->delete();
+        Estimate::where('customer_id', $id)->delete();
+        JobFormAnswer::where('customer_id', $id)->delete();
+        CustomerNote::where('customer_id', $id)->delete();
+        CustomerPhoto::where('customer_id', $id)->delete();
+        CustomerDocument::where('customer_id', $id)->delete();
+        SentEmail::where('customer_id', $id)->delete();
+        Payment::where('customer_id', $id)->delete();
         Customer::find($id)->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
@@ -297,13 +310,7 @@ class CustomerController extends Controller
     }
 
     public function allNotes($id){
-        Job::where('customer_id', $id)->delete();
-        Invoice::where('customer_id', $id)->delete();
-        Estimate::where('customer_id', $id)->delete();
-        JobFormAnswer::where('customer_id', $id)->delete();
-        CustomerNote::where('customer_id', $id)->delete();
         $customer = Customer::find($id);
-
         return view('customers.all-notes', compact('customer'));
     }
     public function deleteJobForm(Request $request){
