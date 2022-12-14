@@ -117,8 +117,8 @@ class CustomerController extends Controller
         $rules = [
             'name'                  => 'required',
             'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
         ];
 
         $messages = [
@@ -140,8 +140,8 @@ class CustomerController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->state            = $request->state;
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();
@@ -215,8 +215,8 @@ class CustomerController extends Controller
         $rules = [
             'name'                  => 'required',
             'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
         ];
 
         $messages = [
@@ -238,8 +238,8 @@ class CustomerController extends Controller
         $customer->address_2        = $request->address_2;
         $customer->city             = $request->city;
         $customer->type             = $request->has('type') ? $request->type : 'customer';
-        $customer->state            = $request->state;
-        $customer->country          = $request->country;
+        $customer->county           = $request->county;
+        $customer->country          = 'Ireland';
         $customer->eir_code         = $request->eir_code;
         $customer->directions       = $request->directions;
         $customer->save();
