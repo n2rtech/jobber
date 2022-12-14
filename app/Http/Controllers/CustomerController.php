@@ -54,7 +54,7 @@ class CustomerController extends Controller
 
         isset($filter_phone)    ? $customers->where('phone', 'like', '%'.$filter_phone.'%')->orWhere('mobile_1', 'like', '%'.$filter_phone.'%')->orWhere('mobile_2', 'like', '%'.$filter_phone.'%') : $customers;
 
-        isset($filter_address)  ? $customers->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('state', 'like', '%'.$filter_address.'%') : $customers;
+        isset($filter_address)  ? $customers->where('address_1', 'like', '%'.$filter_address.'%')->orWhere('address_2', 'like', '%'.$filter_address.'%')->orWhere('city', 'like', '%'.$filter_address.'%')->orWhere('county', 'like', '%'.$filter_address.'%') : $customers;
 
         isset($filter_status)   ? $customers->where('status', $filter_status) : $customers;
 
@@ -75,6 +75,7 @@ class CustomerController extends Controller
                     ->orWhere('address_2','like','%'.$request->inp.'%')
                     ->orWhere('city','like','%'.$request->inp.'%')
                     ->orWhere('country','like','%'.$request->inp.'%')
+                    ->orWhere('county','like','%'.$request->inp.'%')
                     ->orWhere('eir_code','like','%'.$request->inp.'%')
                     ->take(20)->get()->toArray();
 
