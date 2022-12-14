@@ -736,6 +736,11 @@
                     start: $('#starts').val()+' '+$('#start_time').val(),
                     end: $('#starts').val()+' '+$('#end_time').val(),
                 };
+                @if ($agent->isMobile())
+                    var redirect_route = {{ route('jobs.index', ['scheduled' => 'yes']) }};
+                else
+                    var redirect_route = {{ route('schedules.index') }};
+                @endif
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -756,7 +761,7 @@
                             $('#change_timing_message').text('Found some error!');
                         }
                         setTimeout(function(){
-                            window.location.href = '{{ route('schedules.index') }}';
+                            window.location.href = redirect_route;
                         }, 1000);
 
                     },
