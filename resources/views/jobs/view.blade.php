@@ -229,7 +229,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    {{ $note->note }}
+                                                    {!! $note->note !!}
                                                 </div>
                                             </div>
                                         </div>

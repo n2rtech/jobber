@@ -46,7 +46,7 @@
                                     <span class="badge bg-success"><i
                                             class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($note->created_at)->format('H:i:s') }}</span>
                                 </td>
-                                <td>{{ $note->note }}</td>
+                                <td>{!! $note->note !!}</td>
                             </tr>
                         @endforeach
                     </tbody>

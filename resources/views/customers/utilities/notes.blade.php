@@ -69,7 +69,7 @@
                                             {{  $note->user->name }}
                                             <span class="text-muted float-right">{{ $note->created_at }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>
                                         </span>
-                                        {{ $note->note }}
+                                        {!! $note->note !!}
                                     </div>
 
                                 </div>
