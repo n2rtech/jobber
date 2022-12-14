@@ -225,7 +225,7 @@
                                                 <div class="col-sm-5 col-6">
                                                     <div class="float-right noteUser">
                                                         <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
-                                                        &nbsp; {{  $note->user->name }}
+                                                        &nbsp; {{ isset($note->user_id) ? $note->user->name : 'Customer' }}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">

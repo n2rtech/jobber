@@ -10,6 +10,28 @@ class Customer extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'phone_name',
+        'mobile_1',
+        'mobile_1_name',
+        'mobile_2',
+        'mobile_2_name',
+        'address_1',
+        'address_2',
+        'city',
+        'state',
+        'country',
+        'eir_code',
+        'directions',
+        'notes',
+        'avatar',
+        'type',
+        'status'
+    ];
+
     public function allnotes()
     {
         return $this->hasMany(CustomerNote::class)->orderBy('id', 'desc');
@@ -57,6 +79,4 @@ class Customer extends Model
     {
         return $this->hasMany(Banh::class)->orderBy('id', 'desc');
     }
-
-
 }

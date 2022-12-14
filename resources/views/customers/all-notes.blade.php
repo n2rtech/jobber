@@ -35,7 +35,7 @@
                             <tr>
                                 <td>
                                     <span class="badge bg-danger"><i
-                                            class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ $note->user->name }}</span>
+                                            class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ isset($note->user_id) ? $note->user->name : 'Customer' }}</span>
                                     <br>
                                     <span class="badge bg-info"> <i
                                             class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($note->created_at)->format('Y-m-d') }}</span>
