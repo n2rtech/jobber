@@ -71,7 +71,7 @@ class CustomerController extends Controller
             $exp = explode(" ",$request->inp);
             $word = array_reverse($exp);
             $revName = join(" ",$word);
-            
+
           $result = Customer::where('name','like','%'.$request->inp.'%')
                     ->orWhere('phone','like','%'.$request->inp.'%')
                     ->orWhere('mobile_1','like','%'.$request->inp.'%')
@@ -125,9 +125,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
         ];
 
         $messages = [
@@ -223,9 +223,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
         ];
 
         $messages = [
