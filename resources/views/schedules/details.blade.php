@@ -725,6 +725,8 @@
 
                 if(formData.status == 'completed'){
                     window.location.href = '{{ route("home") }}';
+                }else{
+                    window.location.href = "{{ route('schedules.index') }}";
                 }
             },
             error: function(data) {

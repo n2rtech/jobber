@@ -604,6 +604,13 @@
         var formData = {
             job_id: '{{ $job->id }}',
         };
+
+        if(window.matchMedia("(max-width: 767px)").matches){
+            var redirect_route = "{{ route('jobs.index', ['scheduled' => 'no']) }}";
+        }else{
+            var redirect_route = "{{ route('schedules.index') }}";
+        }
+
         $.confirm({
                     title: 'Confirm!',
                     content: 'Are you sure! You want to Unschedule the Job!.',
@@ -624,6 +631,9 @@
 
                                         $('#confirmation_message').css('color', 'green');
                                         $('#confirmation_message').text(data.success);
+
+                                        window.location.href = redirect_route;
+
                                     }else{
                                         $('#confirmation_message').css('color', 'red');
                                         $('#confirmation_message').text(data.danger);
@@ -701,6 +711,12 @@
             status: value,
         };
 
+        if(window.matchMedia("(max-width: 767px)").matches){
+            var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
+        }else{
+            var redirect_route = "{{ route('schedules.index') }}";
+        }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -717,6 +733,8 @@
                     $('#mark_complete').text(data.success);
                     if(formData.status == 'completed'){
                         window.location.href = '{{ route("home") }}';
+                    }else{
+                        window.location.href = redirect_route;
                     }
                 }else{
                     $('#mark_complete').css('color', 'red');
