@@ -46,7 +46,7 @@ class CustomerController extends Controller
             $filter_box_customer = 'show';
         }
 
-        isset($filter_search)   ? $customers->where('name', 'like', '%'.$filter_search.'%')->orWhere('email', 'like', '%'.$filter_search.'%')->orWhere('phone', 'like', '%'.$filter_search.'%')->orWhere('mobile_1', 'like', '%'.$filter_search.'%')->orWhere('mobile_2', 'like', '%'.$filter_search.'%')->orWhere('address_1', 'like', '%'.$filter_search.'%')->orWhere('address_2', 'like', '%'.$filter_search.'%')->orWhere('city', 'like', '%'.$filter_search.'%')->orWhere('state', 'like', '%'.$filter_search.'%') : $customers;
+        isset($filter_search)   ? $customers->where('name', 'like', '%'.$filter_search.'%')->orWhere('email', 'like', '%'.$filter_search.'%')->orWhere('phone', 'like', '%'.$filter_search.'%')->orWhere('mobile_1', 'like', '%'.$filter_search.'%')->orWhere('mobile_2', 'like', '%'.$filter_search.'%')->orWhere('address_1', 'like', '%'.$filter_search.'%')->orWhere('address_2', 'like', '%'.$filter_search.'%')->orWhere('city', 'like', '%'.$filter_search.'%')->orWhere('county', 'like', '%'.$filter_search.'%') : $customers;
 
         isset($filter_name)     ? $customers->where('name', 'like', '%'.$filter_name.'%') : $customers;
 
