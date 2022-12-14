@@ -63,6 +63,7 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers', 'filter_name', 'filter_email', 'filter_phone', 'filter_status', 'filter_address','filter_box_customer', 'filter_search'));
     }
 
+
     public function customerSearch(Request $request){
 
         if(!is_null($request->inp)){
