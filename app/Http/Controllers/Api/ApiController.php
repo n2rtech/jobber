@@ -33,7 +33,7 @@ class ApiController extends Controller
         }else{
 
             $customer                   = new Customer;
-            $customer->type             = 'customer';
+            $customer->type             = 'sales-lead';
             $customer->name             = $request->firstname.' '.$request->lastname;
             $customer->address_1        = $request->address_1;
             $customer->address_2        = $request->address_2;
