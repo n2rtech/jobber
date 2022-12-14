@@ -70,7 +70,7 @@
 
       function filterGlobal(inp){
 
-        if(inp.length > 3){
+        if(inp.length >= 3){
             
         $.ajax({
         url : "{{ route('customer-search') }}",
@@ -86,14 +86,43 @@
        
         if(res.data != 404 && res.data != ''){
            $('#customerDataTable tbody tr').remove();
+           
             for(var i = 0; i< res.data.length; i++){
                 
-                var d = res.data[i];
-                (i%2 == 0) ? cls = 'even' : cls = 'odd'; 
-            
-               htm =  '<tr class="'+cls+' search">';
-               htm += '<td class="dtr-control" tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
-               htm += '<td> '+((d.address_1 != null) ? d.address_1 : "" )+" "+( (d.address_2 != null) ? d.address_2 : "")+" "+((d.city != null) ? d.city : "")+" "+((d.country != null) ? d.country : "")+" "+((d.eir_code != null) ? d.eir_code : "")+'</td>';
+            var d = res.data[i];
+            (i%2 == 0) ? cls = 'even' : cls = 'odd'; 
+
+            if (window.matchMedia('(max-width: 767px)').matches) {
+
+               htm =  '<tr class="'+cls+'" dt-hasChild>';
+               htm += '<td class="dtr-control"  tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
+               htm += '<td> <br class="hidden-sm">'+((d.address_1 != null) ? d.address_1 : "" )+" "+( (d.address_2 != null) ? d.address_2 : "")+" "+((d.city != null) ? d.city : "")+" "+((d.country != null) ? d.country : "")+" "+((d.eir_code != null) ? d.eir_code : "")+'</td>';
+               htm += '<td> '+((d.phone != null) ? d.phone : "") +' </td>';
+               htm += '<td style="display:none"><br class="hidden-sm"> '+((d.mobile_1 != null) ? d.mobile_1 : "")+' </td>';
+               htm += '<td style="display:none"><br class="hidden-sm"> '+((d.mobile_2 != null) ? d.mobile_2 : "")+' </td>';
+               htm += '<td style="display:none"> <br class="hidden-sm">';
+               htm +=   '<div class="btn-group">';
+               htm +=     '<button type="button" class="btn btn-light dropdown-toggle dropdown-hover" data-toggle="dropdown" aria-expanded="false">';
+               htm +=      '<i class="fa fa-ellipsis-vertical"></i>';
+               htm += '         </button>';
+               htm += '         <div class="dropdown-menu" role="menu" style="">';
+               htm += '             <a class="dropdown-item" href="/customers/'+d.id+'/edit"><i class="fas fa-edit"></i> Edit</a>';
+               htm += '             <a class="dropdown-item" href="/customers/'+d.id+'"><i class="fas fa-eye"></i> View</a>';
+               htm += '         </div>';
+               htm += '     </div>';
+               htm += ' </td>';
+               htm += ' </tr>';
+
+               $('#customerDataTable').addClass('collapsed');
+               $('#customerDataTable thead tr:eq(3)').hide();
+               $('#customerDataTable thead tr:eq(4)').hide();
+               $('#customerDataTable thead tr:eq(5)').hide();
+                
+            } else {
+
+               htm =  '<tr class="'+cls+'">';
+               htm += '<td class="dtr-control"  tabindex="0"><a href="/customers/'+d.id+'">'+d.name+'</a></td>';
+               htm += '<td>'+((d.address_1 != null) ? d.address_1 : "" )+" "+( (d.address_2 != null) ? d.address_2 : "")+" "+((d.city != null) ? d.city : "")+" "+((d.country != null) ? d.country : "")+" "+((d.eir_code != null) ? d.eir_code : "")+'</td>';
                htm += '<td> '+((d.phone != null) ? d.phone : "") +' </td>';
                htm += '<td> '+((d.mobile_1 != null) ? d.mobile_1 : "")+' </td>';
                htm += '<td> '+((d.mobile_2 != null) ? d.mobile_2 : "")+' </td>';
@@ -109,12 +138,15 @@
                htm += '     </div>';
                htm += ' </td>';
                htm += ' </tr>';
-          
+
+            }
+
                 $('#customerDataTable tbody').prepend(htm);
-                $('.mt-2:eq(1)').hide();
+               
+               
                
             }
-       
+            $('.mt-2:eq(1)').hide();
         }
          
     }

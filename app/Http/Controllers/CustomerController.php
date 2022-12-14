@@ -81,7 +81,7 @@ class CustomerController extends Controller
                     ->orWhere('country','like','%'.$request->inp.'%')
                     ->orWhere('eir_code','like','%'.$request->inp.'%')
                     ->orWhere('name','like','%'.$revName.'%')
-                    ->take(100)->get()->toArray();
+                    ->take(200)->get()->toArray();
 
                     if(!empty($result)){
 
