@@ -736,11 +736,11 @@
                     start: $('#starts').val()+' '+$('#start_time').val(),
                     end: $('#starts').val()+' '+$('#end_time').val(),
                 };
-                @if ($agent->isMobile())
-                    var redirect_route = {{ route('jobs.index', ['scheduled' => 'yes']) }};
-                else
-                    var redirect_route = {{ route('schedules.index') }};
-                @endif
+                if(navigator.userAgent.indexOf('IEMobile') !== -1){
+                    var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
+                }else{
+                    var redirect_route = "{{ route('schedules.index') }}";
+                }    
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
