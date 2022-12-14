@@ -69,6 +69,9 @@
       });
 
       function filterGlobal(inp){
+
+        if(inp.length > 3){
+            
         $.ajax({
         url : "{{ route('customer-search') }}",
         dataType: 'json',
@@ -108,6 +111,7 @@
                htm += ' </tr>';
           
                 $('#customerDataTable tbody').prepend(htm);
+                $('.mt-2:eq(1)').hide();
                
             }
        
@@ -117,6 +121,7 @@
 
  });
    
+}
 }
 
     $('input[type="search"]').on('input',function () {
