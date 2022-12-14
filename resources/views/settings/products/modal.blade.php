@@ -19,7 +19,7 @@
                     </div>
                     <div class="form-group">
                         <label for="product_id">Product Id</label>
-                        <input type="number" class="form-control" id="product_id" name="product_id" placeholder="Enter Product Id here">
+                        <input type="number" class="form-control" name="product_id" placeholder="Enter Product Id here">
                     </div>
                     <div class="form-group">
                         <label for="name">Product Name</label>
