@@ -736,7 +736,7 @@
                     start: $('#starts').val()+' '+$('#start_time').val(),
                     end: $('#starts').val()+' '+$('#end_time').val(),
                 };
-                if(navigator.userAgent.indexOf('IEMobile') !== -1){
+                if(window.matchMedia("(max-width: 767px)").matches){
                     var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
                 }else{
                     var redirect_route = "{{ route('schedules.index') }}";
