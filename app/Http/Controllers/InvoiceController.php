@@ -330,8 +330,10 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
+        $invoice = Invoice::find($id);
+        Job::where('id', $invoice->job_id)->delete();
         InvoiceProduct::where('invoice_id', $id)->delete();
-        Invoice::find($id)->delete();
+        $invoice->delete();
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully!');
     }
 

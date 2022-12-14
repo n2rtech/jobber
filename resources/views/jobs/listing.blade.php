@@ -25,14 +25,14 @@
                                     <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
                                     <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
                                     </a>
-                               
+
                             </td>
                         </tr>
                         <tr>
                             <th class="all" colspan="2">{{ __('Address') }}
                             <br/>
                                <span style="font-size: 17px;font-weight: 400"> {!! getCity($job->customer_id) !!} </span>
-                            
+
                         </th>
                         </tr>
                     @endforeach
@@ -97,7 +97,7 @@
                                     <div class="dropdown-menu" role="menu" style="">
                                         <a class="dropdown-item" href="{{ route('jobs.edit', $job->id) }}"><i class="fas fa-edit"></i> Edit</a>
                                         <a class="dropdown-item" href="{{ route('jobs.show', $job->id) }}"><i class="fas fa-eye"></i> View</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="confirmDelete({{ $job->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="confirmJobDelete({{ $job->id }})"><i class="fas fa-trash-alt"></i> Delete</a>
                                         <form id='delete-form{{ $job->id }}'
                                         action='{{ route('jobs.destroy', $job->id) }}' method='POST'>
                                         <input type='hidden' name='_token' value='{{ csrf_token() }}'>

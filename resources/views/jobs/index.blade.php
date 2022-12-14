@@ -71,6 +71,25 @@
 @push('scripts')
 
 @include('sections.utilities')
+
+<script type="text/javascript">
+    function confirmJobDelete(no){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Deleting this Job will also delete the associated Invoice also!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete both!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form'+no).submit();
+            }
+        })
+    };
+</script>
+
 <!-- Filter Box Scripts Start -->
 <script>
     $(document).ready(function(){

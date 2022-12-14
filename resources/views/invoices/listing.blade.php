@@ -66,7 +66,7 @@
                                             href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}">
                                             Print</a>
                                         <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="confirmDelete({{ $invoice->id }})"> Delete</a>
+                                            onclick="confirmInvoiceDelete({{ $invoice->id }})"> Delete</a>
                                         <form id='delete-form{{ $invoice->id }}'
                                             action='{{ route('invoices.destroy', $invoice->id) }}' method='POST'>
                                             <input type='hidden' name='_token' value='{{ csrf_token() }}'>
@@ -143,7 +143,7 @@
                                             href="{{ route('invoices.show', ['invoice' => $invoice->id, 'print' => 'yes']) }}">
                                             Print</a>
                                         <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="confirmDelete({{ $invoice->id }})"> Delete</a>
+                                            onclick="confirmInvoiceDelete({{ $invoice->id }})"> Delete</a>
                                         <form id='delete-form{{ $invoice->id }}'
                                             action='{{ route('invoices.destroy', $invoice->id) }}' method='POST'>
                                             <input type='hidden' name='_token' value='{{ csrf_token() }}'>

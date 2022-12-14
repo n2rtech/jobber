@@ -51,6 +51,23 @@
 
 @include('sections.utilities')
 <!-- Filter Box Scripts Start -->
+<script type="text/javascript">
+    function confirmInvoiceDelete(no){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Deleting this Invoice will also delete the associated Job also!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete both!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form'+no).submit();
+            }
+        })
+    };
+</script>
 <script>
     $(document).ready(function(){
         var filterBox = '{{ $filter_box }}';
