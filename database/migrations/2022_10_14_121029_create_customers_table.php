@@ -26,7 +26,7 @@ return new class extends Migration
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
             $table->string('city')->nullable();
-            $table->string('state')->nullable();
+            $table->string('county')->nullable();
             $table->string('country')->nullable();
             $table->string('eir_code')->nullable();
             $table->longText('directions')->nullable();

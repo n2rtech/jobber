@@ -158,11 +158,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="country" class="col-sm-2 col-form-label">{{ __('County') }}</label>
+                                <label for="county" class="col-sm-2 col-form-label">{{ __('County') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="country" name="country"
-                                        placeholder="Enter County" value="{{ old('country', $lead->country) }}">
-                                    @error('country')
+                                    <input type="text" class="form-control" id="county" name="county"
+                                        placeholder="Enter County" value="{{ old('county', $lead->county) }}">
+                                    @error('county')
                                         <span id="name-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

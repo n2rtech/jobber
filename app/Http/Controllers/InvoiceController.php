@@ -124,7 +124,7 @@ class InvoiceController extends Controller
     public function create(Request $request)
     {
         if(isset($request->customer_id)){
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $customer   = Customer::find($request->customer_id);
             $customer->address ='';
             if(isset($customer->address_1) && strlen($customer->address_1) > 0){
@@ -156,7 +156,7 @@ class InvoiceController extends Controller
             $setting    = Setting::where('type', 'invoice')->value('value');
             return view('invoices.convert', compact('products', 'customer', 'invoice_no','tax_rates', 'setting'));
         }else{
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $count      = Invoice::count();
             $invoice_no = $count + 1;
             $tax_rates  = TaxRate::get();
@@ -226,7 +226,7 @@ class InvoiceController extends Controller
     {
         $invoice    = Invoice::find($id);
         $tax_rates  = TaxRate::get();
-        $products   = Product::get();
+        $products   = Product::orderBy('name', 'asc')->get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
         $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
@@ -244,7 +244,7 @@ class InvoiceController extends Controller
     {
         $invoice    = Invoice::find($id);
         $tax_rates  = TaxRate::get();
-        $products   = Product::get();
+        $products   = Product::orderBy('name', 'asc')->get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         return view('invoices.edit', compact('invoice', 'products', 'tax_rates', 'setting'));
     }

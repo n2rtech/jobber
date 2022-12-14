@@ -106,7 +106,7 @@ class EstimateController extends Controller
     public function create(Request $request)
     {
         if(isset($request->customer_id)){
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $customer   = Customer::find($request->customer_id);
             $customer->address = getAddress($customer->id);
             $count      = Estimate::count();
@@ -115,7 +115,7 @@ class EstimateController extends Controller
             $setting    = Setting::where('type', 'invoice')->value('value');
             return view('estimates.convert', compact('products', 'customer', 'estimate_no', 'tax_rates', 'setting'));
         }else{
-            $products   = Product::get();
+            $products   = Product::orderBy('name', 'asc')->get();
             $count      = Estimate::count();
             $tax_rates  = TaxRate::get();
             $estimate_no = $count + 1;
@@ -184,7 +184,7 @@ class EstimateController extends Controller
     public function show($id)
     {
         $estimate   = Estimate::find($id);
-        $products   = Product::get();
+        $products   = Product::orderBy('name', 'asc')->get();
         $tax_rates  = TaxRate::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         $company    = CompanyDetail::first();
@@ -201,7 +201,7 @@ class EstimateController extends Controller
     public function edit($id)
     {
         $estimate    = Estimate::find($id);
-        $products   = Product::get();
+        $products   = Product::orderBy('name', 'asc')->get();
         $tax_rates  = TaxRate::get();
         $setting    = Setting::where('type', 'invoice')->value('value');
         return view('estimates.edit', compact('estimate', 'products', 'tax_rates', 'setting'));

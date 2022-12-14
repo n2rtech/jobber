@@ -30,8 +30,8 @@ if (!function_exists('getAddress')) {
             $customer->address .= ', '.$customer->city;
         }
 
-        if(isset($customer->state) && strlen($customer->state) > 0){
-            $customer->address .= ', '.$customer->state;
+        if(isset($customer->county) && strlen($customer->county) > 0){
+            $customer->address .= ', '.$customer->county;
         }
 
         // if(isset($customer->country) && strlen($customer->country) > 0){
@@ -80,8 +80,8 @@ if (!function_exists('getCustomerAddress')) {
             $customer->address .= ', '.$customer->city;
         }
 
-        if(isset($customer->state) && strlen($customer->state) > 0){
-            $customer->address .= ', '.$customer->state;
+        if(isset($customer->county) && strlen($customer->county) > 0){
+            $customer->address .= ', '.$customer->county;
         }
 
         // if(isset($customer->country) && strlen($customer->country) > 0){
@@ -146,8 +146,8 @@ if (!function_exists('getMapAddress')) {
             $customer->address .= ', '.$customer->city;
         }
 
-        if(isset($customer->state) && strlen($customer->state) > 0){
-            $customer->address .= ', '.$customer->state;
+        if(isset($customer->county) && strlen($customer->county) > 0){
+            $customer->address .= ', '.$customer->county;
         }
 
         // if(isset($customer->country) && strlen($customer->country) > 0){
@@ -179,8 +179,8 @@ if (!function_exists('getCompanyAddress')) {
             $company->address .= ', '.$company->city;
         }
 
-        if(isset($company->state) && strlen($company->state) > 0){
-            $company->address .= ', '.$company->state;
+        if(isset($company->county) && strlen($company->county) > 0){
+            $company->address .= ', '.$company->county;
         }
 
         if(isset($company->country) && strlen($company->country) > 0){

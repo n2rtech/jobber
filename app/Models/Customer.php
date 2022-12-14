@@ -22,7 +22,7 @@ class Customer extends Model
         'address_1',
         'address_2',
         'city',
-        'state',
+        'county',
         'country',
         'eir_code',
         'directions',
