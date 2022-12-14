@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Banh;
 use App\Models\Country;
 use App\Models\Customer;
+use App\Models\CustomerNote;
 use App\Models\ExternalForm;
+use App\Models\ExternalFormQuestion;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
@@ -92,7 +94,136 @@ class FormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request->all();
+        $externalform = ExternalForm::find($id);
+        // return $request->all();
+        if($externalform->type == 'single'){
+
+            $data = [];
+
+            if(!empty($request->question && is_array($request->question))){
+                foreach($request->question as $key => $value){
+
+                    $question   = ExternalFormQuestion::where('id', $key)->first();
+
+                    $field      = strtolower(str_replace(' ', '', $question->question));
+
+                    if($field == 'name'){
+                        $data['name'] = $value['answer'];
+                    }
+
+                    if($field == 'email'){
+                        $data['email'] = $value['answer'];
+                    }
+
+                    if($field == 'phonenumber'){
+                        $data['phone'] = $value['answer'];
+                    }
+
+                    if($field == 'message'){
+                        $data['note'] = $value['answer'];
+                    }
+                }
+            }
+
+            $customer_exists = Customer::where('email', $data['email'])->exists();
+
+            if($customer_exists){
+                $customer = Customer::where('email', $data['email'])->first();
+
+                if(isset($data['note'])){
+                    $note                   = new CustomerNote();
+                    $note->customer_id      = $customer->id;
+                    $note->user_id          = null;
+                    $note->note             = $data['note'];
+                    $note->save();
+                }
+
+            }else{
+                $customer = Customer::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'type' => 'sales-lead',
+                    'country' => 'Ireland',
+                ]);
+                if(isset($data['note'])){
+                    $note                   = new CustomerNote();
+                    $note->customer_id      = $customer->id;
+                    $note->user_id          = null;
+                    $note->note             = $data['note'];
+                    $note->save();
+                }
+            }
+
+            return response()->json('Thank you for contacting us, Our Team will get back to you very soon!');
+
+        }else{
+
+            $data = [];
+
+            if(!empty($request->question && is_array($request->question))){
+                foreach($request->question as $key => $value){
+
+                    $question   = ExternalFormQuestion::where('id', $key)->first();
+
+                    $field      = strtolower(str_replace(' ', '', $question->question));
+
+                    if($field == 'name'){
+                        $data['name'] = $value['answer'];
+                    }
+
+                    if($field == 'email'){
+                        $data['email'] = $value['answer'];
+                    }
+
+                    if($field == 'phonenumber'){
+                        $data['phone'] = $value['answer'];
+                    }
+
+                    if($field == 'message'){
+                        $data['note'] = $value['answer'];
+                    }
+
+                    if($field == 'eircode'){
+                        $data['eir_code'] = $value['answer'];
+                    }
+                }
+            }
+
+            $customer_exists = Customer::where('email', $data['email'])->exists();
+
+            if($customer_exists){
+                $customer = Customer::where('email', $data['email'])->first();
+
+                if(isset($data['note'])){
+                    $note                   = new CustomerNote();
+                    $note->customer_id      = $customer->id;
+                    $note->user_id          = null;
+                    $note->note             = $data['note'];
+                    $note->save();
+                }
+
+            }else{
+
+                $customer = Customer::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'eir_code' => $data['eir_code'],
+                    'country' => 'Ireland',
+                    'type' => 'sales-lead',
+                ]);
+                if(isset($data['note'])){
+                    $note                   = new CustomerNote();
+                    $note->customer_id      = $customer->id;
+                    $note->user_id          = null;
+                    $note->note             = $data['note'];
+                    $note->save();
+                }
+            }
+
+            return response()->json('Thank you for contacting us, Our Team will get back to you very soon!');
+        }
     }
 
     /**

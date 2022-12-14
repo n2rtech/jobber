@@ -139,7 +139,7 @@
                                             <div class="col-sm-4 col-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Start Time</label>
-                                                    <select name="start_time" id="start_time" class="form-control" onchange="changeTimings();">
+                                                    <select name="start_time" id="start_time" class="form-control">
                                                     <option>Choose start time</option>
                                                     @php $sel = ''; @endphp
                                                     @foreach($slots as $slot)
@@ -225,7 +225,7 @@
                                                 <div class="col-sm-5 col-6">
                                                     <div class="float-right noteUser">
                                                         <img class="img-circle img-sm" src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
-                                                        &nbsp; {{  $note->user->name }}
+                                                        &nbsp; {{ isset($note->user_id) ? $note->user->name : 'Customer' }}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -743,7 +743,7 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('schedules.update-timing.auto') }}',
+                    url: '{{ route('schedules.update-timing') }}',
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
