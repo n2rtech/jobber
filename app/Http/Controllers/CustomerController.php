@@ -68,6 +68,10 @@ class CustomerController extends Controller
 
         if(!is_null($request->inp)){
 
+            $exp = explode(" ",$request->inp);
+            $word = array_reverse($exp);
+            $revName = join(" ",$word);
+            
           $result = Customer::where('name','like','%'.$request->inp.'%')
                     ->orWhere('phone','like','%'.$request->inp.'%')
                     ->orWhere('mobile_1','like','%'.$request->inp.'%')
