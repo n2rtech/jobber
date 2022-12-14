@@ -39,7 +39,7 @@ if (!function_exists('getAddress')) {
         // }
 
         if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
-            $customer->address .= ', <a target="_blank" href="http://maps.google.com/?q='.$customer->eir_code.'">'.$customer->eir_code.'</a>';
+            $customer->address .= ' <a target="_blank" href="http://maps.google.com/?q='.$customer->eir_code.'">'.$customer->eir_code.'</a>';
         }
         return ($customer->address);
     }
