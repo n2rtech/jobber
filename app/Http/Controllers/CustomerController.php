@@ -354,6 +354,30 @@ class CustomerController extends Controller
     }
     return $count." eircode records updated";
         */
-        return "Code commented now";
+    $mob1 = Customer::whereNotNull('mobile_1')->get(['id','mobile_1'])->toArray();
+    $count2 = 0;
+    foreach($mob1 as $mob){
+     $chk = substr((int)$mob['mobile_1'][0],0,1);
+     if($chk != 0){
+        Customer::where('id',$mob['id'])->update([ 'mobile_1'=>'0'.$mob['mobile_1'] ]); 
+        $count2++;
+     }
+
+    }
+    echo $count2." Mobile 1 updated<br>";
+
+    $mob2 = Customer::whereNotNull('mobile_2')->get(['id','mobile_2'])->toArray();
+    $count3 = 0;
+    foreach($mob2 as $mobi){
+     $chkm = substr((int)$mobi['mobile_2'][0],0,1);
+     if($chkm != 0){
+        Customer::where('id',$mobi['id'])->update([ 'mobile_2'=>'0'.$mobi['mobile_2'] ]); 
+        $count3++;
+     }
+
+    }
+    echo $count3." Mobile 2 updated";
+    
+        //return "Code commented now";
     }
 }
