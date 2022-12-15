@@ -311,4 +311,32 @@ class CustomerController extends Controller
             return redirect()->route('customers.show', ['customer' => $job->customer_id, 'activeTab' => 'customer-documents'])->with('success', 'Job Form deleted successfully!');
         }
     }
+
+    public function copyeir(){
+
+        $records = Customer::Where('directions','!=','')
+        ->whereRaw('directions <> ""')
+        ->whereRaw('length(directions)<10')
+        ->get()->toArray();
+        $count = 0;
+        if(!empty($records)){
+        foreach($records as $record){
+             
+            Customer::where([
+
+                'id'=>$record['id'],
+                'directions'=>$record['directions']
+               
+                ])->update([
+                    'eir_code'=>$record['directions']
+                ]);
+            $count++;
+
+        }
+
+        
+    }
+    return $count." eircode records updated";
+        
+    }
 }
