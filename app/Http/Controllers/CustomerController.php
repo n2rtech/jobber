@@ -76,36 +76,49 @@ class CustomerController extends Controller
         if(!is_null($request->inp)){
 
             $exp = explode(" ",$request->inp);
-            $word = array_reverse($exp);
-            $revName = join(" ",$word);
+            $words = array_reverse($exp);
+            $revName = join(" ",$words);
 
-          $result = Customer::where('name','like','%'.$request->inp.'%')
-                    ->orWhere('phone','like','%'.$request->inp.'%')
-                    ->orWhere('mobile_1','like','%'.$request->inp.'%')
-                    ->orWhere('mobile_2','like','%'.$request->inp.'%')
-                    ->orWhere('address_1','like','%'.$request->inp.'%')
-                    ->orWhere('address_2','like','%'.$request->inp.'%')
-                    ->orWhere('city','like','%'.$request->inp.'%')
-                    ->orWhere('country','like','%'.$request->inp.'%')
-                    ->orWhere('county','like','%'.$request->inp.'%')
-                    ->orWhere('eir_code','like','%'.$request->inp.'%')
+            $result = Customer::query();
 
-                    ->orWhere('name','like','%'.$revName.'%')
-                    ->take(200)->get()->toArray();
+            $result->where('name','like','%'.$request->inp.'%');
+            $result->orWhere('phone','like','%'.$request->inp.'%');
+            $result->orWhere('mobile_1','like','%'.$request->inp.'%');
+            $result->orWhere('mobile_2','like','%'.$request->inp.'%');
+            $result->orWhere('address_1','like','%'.$request->inp.'%');
+            $result->orWhere('address_2','like','%'.$request->inp.'%');
+            $result->orWhere('city','like','%'.$request->inp.'%');
+            $result->orWhere('country','like','%'.$request->inp.'%');
+            $result->orWhere('county','like','%'.$request->inp.'%');
+            $result->orWhere('eir_code','like','%'.$request->inp.'%');
 
+                $revEx = explode(" ",$revName);
+                if(isset($revEx)){
 
-                    if(!empty($result)){
-
-                        return response([
-                            'data'    => $result
-                        ], 200);
-
-                    } else {
-
-                        return response([
-                            'data'    => 404,
-                        ], 200);
+                    foreach($revEx as $k => $rev){
+                        if($k == 0)
+                        $result->orwhere('name','like','%'.$rev.'%');   
+                        else
+                        $result->Where('name','like','%'.$rev.'%'); 
                     }
+                    
+                }
+                
+                $result = $result->take(200)->get()->toArray();
+
+
+                if(!empty($result)){
+
+                    return response([
+                        'data'    => $result
+                    ], 200);
+
+                } else {
+
+                    return response([
+                        'data'    => 404,
+                    ], 200);
+                }
              }
 
 
