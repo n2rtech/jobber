@@ -22,7 +22,7 @@
                 <tbody class="mytable">
                     @foreach ($jobs as $job)
                         <tr>
-                            <td style="font-size: 17px">
+                            <td style="font-size: 17px;border-right:none;border-bottom:none">
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
                             <td style="font-size: 17px">
@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th class="all" colspan="2">{{ __('Address') }}
+                            <th style="border-top:none;" class="all" colspan="2">{{ __('Address') }}
                             <br/>
                                <span style="font-size: 17px;font-weight: 400"> {!! getCity($job->customer_id) !!} </span>
 
