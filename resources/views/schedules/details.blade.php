@@ -57,8 +57,8 @@
                                     @endisset
                                     @isset($job->customer->directions)
                                         <br />
-                                        <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
-                                            {{ $job->customer->directions }}</small>
+                                        {{-- <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->directions }}</small> --}}
                                     @endisset
                                 </div>
                             </div>
