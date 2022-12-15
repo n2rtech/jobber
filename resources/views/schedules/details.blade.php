@@ -563,7 +563,11 @@
 
             });
 
-
+           
+            ﻿
+            $('select[name="start_time"]').on("change",function(){
+                $('select[name="end_time"] option:eq(0)').prop('selected',true)
+            });
 
         });
     </script>
@@ -622,10 +626,16 @@
                                 data: formData,
                                 dataType: 'json',
                                 success: function(data) {
+                                    if(window.matchMedia("(max-width: 767px)").matches){
+                                        var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
+                                    }else{
+                                        var redirect_route = "{{ route('schedules.index') }}";
+                                    }  
                                     if(data.success){
 
                                         $('#confirmation_message').css('color', 'green');
                                         $('#confirmation_message').text(data.success);
+                                        window.location.href = redirect_route;
                                     }else{
                                         $('#confirmation_message').css('color', 'red');
                                         $('#confirmation_message').text(data.danger);
