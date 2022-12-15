@@ -330,7 +330,7 @@ class CustomerController extends Controller
 
     public function copyeir(){
 
-        $records = Customer::Where('directions','!=','')
+        /*$records = Customer::Where('directions','!=','')
         ->whereRaw('directions <> ""')
         ->whereRaw('length(directions)<10')
         ->get()->toArray();
@@ -353,6 +353,7 @@ class CustomerController extends Controller
         
     }
     return $count." eircode records updated";
-        
+        */
+        return "Code commented now";
     }
 }
