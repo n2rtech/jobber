@@ -81,16 +81,16 @@ class CustomerController extends Controller
 
             $result = Customer::query();
 
-            $result->where('name','like','%'.$request->inp.'%');
-            $result->orWhere('phone','like','%'.$request->inp.'%');
-            $result->orWhere('mobile_1','like','%'.$request->inp.'%');
-            $result->orWhere('mobile_2','like','%'.$request->inp.'%');
+            $result->where('name',       'like','%'.$request->inp.'%');
+            $result->orWhere('phone',    'like','%'.$request->inp.'%');
+            $result->orWhere('mobile_1', 'like','%'.$request->inp.'%');
+            $result->orWhere('mobile_2', 'like','%'.$request->inp.'%');
             $result->orWhere('address_1','like','%'.$request->inp.'%');
             $result->orWhere('address_2','like','%'.$request->inp.'%');
-            $result->orWhere('city','like','%'.$request->inp.'%');
-            $result->orWhere('country','like','%'.$request->inp.'%');
-            $result->orWhere('county','like','%'.$request->inp.'%');
-            $result->orWhere('eir_code','like','%'.$request->inp.'%');
+            $result->orWhere('city',     'like','%'.$request->inp.'%');
+            $result->orWhere('country',  'like','%'.$request->inp.'%');
+            $result->orWhere('county',   'like','%'.$request->inp.'%');
+            $result->orWhere('eir_code', 'like','%'.$request->inp.'%');
 
                 $revEx = explode(" ",$revName);
                 if(isset($revEx)){
@@ -145,9 +145,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            /*'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
             'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],*/
         ];
 
         $messages = [
@@ -243,9 +243,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            /*'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
             'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],*/
         ];
 
         $messages = [
@@ -343,30 +343,35 @@ class CustomerController extends Controller
 
     public function copyeir(){
 
-        /*$records = Customer::Where('directions','!=','')
-        ->whereRaw('directions <> ""')
-        ->whereRaw('length(directions)<10')
-        ->get()->toArray();
+        $records = Customer::all()->toArray();
         $count = 0;
+       
         if(!empty($records)){
         foreach($records as $record){
-             
-            Customer::where([
+            
+            $ins = str_replace(" ","",$record['directions']);
+            $str = preg_replace('/\s+/', '', $ins);
+            if(strlen($str) < 10 && strlen($str) > 0 ){
+            
+                Customer::where([
 
-                'id'=>$record['id'],
-                'directions'=>$record['directions']
-               
-                ])->update([
-                    'eir_code'=>$record['directions']
-                ]);
-            $count++;
+                    'id'=>$record['id'],
+                    'directions'=>$record['directions']
+                   
+                    ])->update([
+                        'eir_code'=>$record['directions']
+                    ]);
+                $count++;
+
+            }
 
         }
 
         
     }
+    
     return $count." eircode records updated";
-        */
+    /*
     /*$mob1 = Customer::whereNotNull('mobile_1')->get(['id','mobile_1'])->toArray();
     $count2 = 0;
     foreach($mob1 as $mob){
@@ -392,6 +397,6 @@ class CustomerController extends Controller
     echo $count3." Mobile 2 updated";
     */
     
-        return "Code commented now";
+       // return "Code commented now";
     }
 }
