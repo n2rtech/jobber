@@ -57,8 +57,8 @@
                                     @endisset
                                     @isset($job->customer->directions)
                                         <br />
-                                        <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
-                                            {{ $job->customer->directions }}</small>
+                                        {{-- <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->directions }}</small> --}}
                                     @endisset
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    {{ $note->note }}
+                                                    {!! $note->note !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -604,6 +604,13 @@
         var formData = {
             job_id: '{{ $job->id }}',
         };
+
+        if(window.matchMedia("(max-width: 767px)").matches){
+            var redirect_route = "{{ route('jobs.index', ['scheduled' => 'no']) }}";
+        }else{
+            var redirect_route = "{{ route('schedules.index') }}";
+        }
+
         $.confirm({
                     title: 'Confirm!',
                     content: 'Are you sure! You want to Unschedule the Job!.',
@@ -624,6 +631,9 @@
 
                                         $('#confirmation_message').css('color', 'green');
                                         $('#confirmation_message').text(data.success);
+
+                                        window.location.href = redirect_route;
+
                                     }else{
                                         $('#confirmation_message').css('color', 'red');
                                         $('#confirmation_message').text(data.danger);
@@ -701,6 +711,12 @@
             status: value,
         };
 
+        if(window.matchMedia("(max-width: 767px)").matches){
+            var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
+        }else{
+            var redirect_route = "{{ route('schedules.index') }}";
+        }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -717,6 +733,8 @@
                     $('#mark_complete').text(data.success);
                     if(formData.status == 'completed'){
                         window.location.href = '{{ route("home") }}';
+                    }else{
+                        window.location.href = redirect_route;
                     }
                 }else{
                     $('#mark_complete').css('color', 'red');
@@ -736,6 +754,11 @@
                     start: $('#starts').val()+' '+$('#start_time').val(),
                     end: $('#starts').val()+' '+$('#end_time').val(),
                 };
+                if(window.matchMedia("(max-width: 767px)").matches){
+                    var redirect_route = "{{ route('jobs.index', ['scheduled' => 'yes']) }}";
+                }else{
+                    var redirect_route = "{{ route('schedules.index') }}";
+                }    
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -756,7 +779,7 @@
                             $('#change_timing_message').text('Found some error!');
                         }
                         setTimeout(function(){
-                            window.location.href = '{{ route('schedules.index') }}';
+                            window.location.href = redirect_route;
                         }, 1000);
 
                     },

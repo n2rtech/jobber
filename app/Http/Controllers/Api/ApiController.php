@@ -20,7 +20,7 @@ class ApiController extends Controller
 {
     public function save(Request $request){
 
-        $product_id                     = Product::where('name', 'Building A New Home')->value('id');
+        $product_id                     = Product::where('product_id', $request->product_id)->value('id');
 
         $products                       = Product::whereIn('id', [$product_id])->get();
 
@@ -33,7 +33,7 @@ class ApiController extends Controller
         }else{
 
             $customer                   = new Customer;
-            $customer->type             = 'customer';
+            $customer->type             = 'sales-lead';
             $customer->name             = $request->firstname.' '.$request->lastname;
             $customer->address_1        = $request->address_1;
             $customer->address_2        = $request->address_2;
@@ -68,6 +68,8 @@ class ApiController extends Controller
                 $jobproduct->quantity      = 1;
                 $jobproduct->unit_price    = $product->unit_price;
                 $jobproduct->total         = $product->unit_price;
+                $jobproduct->tax_rate      = $product->tax->rate;
+                $jobproduct->tax_amount    = ($product->unit_price * $product->tax->rate / 100);
                 $jobproduct->save();
             }
         }

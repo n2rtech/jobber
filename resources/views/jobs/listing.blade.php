@@ -3,6 +3,14 @@
     <div class="card-body">
         @include('jobs.filter')
         @if ($agent->isMobile())
+        <style>
+        .mytable tr:nth-of-type(odd) {
+             background-color: #fff !important;
+        }
+        .mytable tr:nth-child(4n+1), .mytable tr:nth-child(4n+2) {
+            background: rgba(0,0,0,.05) !important;
+        }
+        </style>
         <div class="table-responsive">
             <table @if($filter_scheduled == 'yes') id="jobseTablewithButtons" @else id="jobseTable"  @endif class="set-fonts table table-bordered table-striped" style="font-size: 14px;">
                 <thead>
@@ -11,13 +19,13 @@
                         <th class="all" style="width: 50%">{{ __('Scheduled') }}</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="mytable">
                     @foreach ($jobs as $job)
                         <tr>
-                            <td style="font-size: 17px">
+                            <td style="font-size: 17px;border-right:none;border-bottom:none">
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
                             </td>
-                            <td style="font-size: 17px">
+                            <td style="font-size: 17px;border-left:none;border-bottom:none">
                                 @if ($job->scheduled == 'no')
                                 <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
@@ -32,7 +40,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th class="all" colspan="2">{{ __('Address') }}
+                            <th style="border-top:none;" class="all" colspan="2">{{ __('Address') }}
                             <br/>
                                <span style="font-size: 17px;font-weight: 400"> {!! getCity($job->customer_id) !!} </span>
 

@@ -49,6 +49,12 @@
                                 </td>
                                 <td class="text-right" style="border-top: none;">{{ $customer->email ?? 'Not Found' }}</td>
                             </tr>
+                            <tr>
+                                <th style="border-top: none;" width="40%">County</th>
+                            </tr>
+                            <tr>
+                                <td style="border-top: none;" width="40%">{{ $customer->county ?? 'Not Found' }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

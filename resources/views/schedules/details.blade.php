@@ -57,8 +57,8 @@
                                     @endisset
                                     @isset($job->customer->directions)
                                         <br />
-                                        <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
-                                            {{ $job->customer->directions }}</small>
+                                        {{-- <small class="text-dark"><i class="fa fa-location-pin"></i>&nbsp;&nbsp;&nbsp;
+                                            {{ $job->customer->directions }}</small> --}}
                                     @endisset
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    {{ $note->note }}
+                                                    {!! $note->note !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -725,6 +725,8 @@
 
                 if(formData.status == 'completed'){
                     window.location.href = '{{ route("home") }}';
+                }else{
+                    window.location.href = "{{ route('schedules.index') }}";
                 }
             },
             error: function(data) {

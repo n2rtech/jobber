@@ -39,7 +39,7 @@ if (!function_exists('getAddress')) {
         // }
 
         if(isset($customer->eir_code) && strlen($customer->eir_code) > 0){
-            $customer->address .= ', <a target="_blank" href="http://maps.google.com/?q='.$customer->eir_code.'">'.$customer->eir_code.'</a>';
+            $customer->address .= ' <a target="_blank" href="http://maps.google.com/?q='.$customer->eir_code.'">'.$customer->eir_code.'</a>';
         }
         return ($customer->address);
     }
@@ -331,7 +331,9 @@ if (!function_exists('getCompanyAddress')) {
            $message     = str_replace('{{CUSTOMER_ADDRESS}}', getCustomerAddress($job->customer_id) , $message);
 
            $message     = str_replace('{{JOB_TITLE}}', $job->jobTitle->title , $message);
-           $message     = str_replace('{{JOB_DATE_AND_TIME}}',\Carbon\Carbon::parse($job->start)->format('d-M'). ' between ' . \Carbon\Carbon::parse($job->start)->format('H:iA') . ' and ' . \Carbon\Carbon::parse($job->end)->format('H:iA'), $message);
+           $message     = str_replace('{{JOB_DATE}}',\Carbon\Carbon::parse($job->start)->format('d-M'), $message);
+           $message     = str_replace('{{JOB_START_TIME}}',\Carbon\Carbon::parse($job->start)->format('H:iA'), $message);
+           $message     = str_replace('{{JOB_END_TIME}}',\Carbon\Carbon::parse($job->end)->format('H:iA'), $message);
            $message     = str_replace('{{JOB_LOCATION}}', getCustomerAddress($job->customer_id) , $message);
            return $message;
         }

@@ -30,7 +30,9 @@
 
                         <optgroup label="Job"></optgroup>
                         <option value="@{{JOB_TITLE}}">@{{JOB_TITLE}}</option>
-                        <option value="@{{JOB_DATE_AND_TIME}}">@{{JOB_DATE_AND_TIME}}</option>
+                        <option value="@{{JOB_DATE}}">@{{JOB_DATE}}</option>
+                        <option value="@{{JOB_START_TIME}}">@{{JOB_START_TIME}}</option>
+                        <option value="@{{JOB_END_TIME}}">@{{JOB_END_TIME}}</option>
                         <option value="@{{JOB_LOCATION}}">@{{JOB_LOCATION}}</option>
 
                         <optgroup label="Company"></optgroup>

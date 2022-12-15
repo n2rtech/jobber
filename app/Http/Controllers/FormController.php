@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\CustomerNote;
 use App\Models\ExternalForm;
 use App\Models\ExternalFormQuestion;
+use App\Models\ExternalFormQuestionOption;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
@@ -160,7 +161,7 @@ class FormController extends Controller
         }else{
 
             $data = [];
-
+            $note = ' <ul>';
             if(!empty($request->question && is_array($request->question))){
                 foreach($request->question as $key => $value){
 
@@ -187,23 +188,49 @@ class FormController extends Controller
                     if($field == 'eircode'){
                         $data['eir_code'] = $value['answer'];
                     }
+
+                      if(isset($value['answer'])){
+
+                        if($question->type == 'text' || $question->type == 'textarea'){
+                            if($question->question == 'Name' || $question->question == 'Email' || $question->question == 'Phone Number' || $question->question == 'Eircode'){
+                                //
+                            }else{
+                                $note .= '<li>'.$question->question.': '.$value['answer'].'</li>';
+                            }
+                        }
+                        if($question->type == 'radio' || $question->type == 'dropdown'){
+                            $value_answer = ExternalFormQuestionOption::where('id', $value['answer'])->value('option');
+                            $note .= '<li>'.$question->question.': '.$value_answer.'</li>';
+                        }
+                        if($question->type == 'checkbox'){
+                            foreach($value['answer'] as $answer){
+                                $value_answer = ExternalFormQuestionOption::where('id', $answer)->value('option');
+                                $note .= '<li>'.$question->question.': '.$value_answer.'</li>';
+                            }
+                        }
+
+                      }
+
+
                 }
             }
+            $note .= '<ul>';
 
             $customer_exists = Customer::where('email', $data['email'])->exists();
 
             if($customer_exists){
                 $customer = Customer::where('email', $data['email'])->first();
 
-                if(isset($data['note'])){
-                    $note                   = new CustomerNote();
-                    $note->customer_id      = $customer->id;
-                    $note->user_id          = null;
-                    $note->note             = $data['note'];
-                    $note->save();
+                if(isset($note)){
+                    $newnote                   = new CustomerNote();
+                    $newnote->customer_id      = $customer->id;
+                    $newnote->user_id          = null;
+                    $newnote->note             = $note;
+                    $newnote->save();
                 }
 
             }else{
+
 
                 $customer = Customer::create([
                     'name' => $data['name'],
@@ -213,12 +240,12 @@ class FormController extends Controller
                     'country' => 'Ireland',
                     'type' => 'sales-lead',
                 ]);
-                if(isset($data['note'])){
-                    $note                   = new CustomerNote();
-                    $note->customer_id      = $customer->id;
-                    $note->user_id          = null;
-                    $note->note             = $data['note'];
-                    $note->save();
+                if(isset($note)){
+                    $newnote                   = new CustomerNote();
+                    $newnote->customer_id      = $customer->id;
+                    $newnote->user_id          = null;
+                    $newnote->note             = $note;
+                    $newnote->save();
                 }
             }
 

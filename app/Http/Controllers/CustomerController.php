@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerDocument;
 use App\Models\CustomerNote;
+use App\Models\CustomerPhoto;
 use App\Models\EmailTemplate;
+use App\Models\Estimate;
+use App\Models\Invoice;
 use App\Models\Job;
 use App\Models\JobForm;
+use App\Models\JobFormAnswer;
 use App\Models\Lead;
+use App\Models\Payment;
+use App\Models\SentEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +78,7 @@ class CustomerController extends Controller
             $exp = explode(" ",$request->inp);
             $word = array_reverse($exp);
             $revName = join(" ",$word);
-            
+
           $result = Customer::where('name','like','%'.$request->inp.'%')
                     ->orWhere('phone','like','%'.$request->inp.'%')
                     ->orWhere('mobile_1','like','%'.$request->inp.'%')
@@ -125,9 +132,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
         ];
 
         $messages = [
@@ -223,9 +230,9 @@ class CustomerController extends Controller
     {
         $rules = [
             'name'                  => 'required',
-            'phone'                 =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:10,14'],
-            'mobile_1'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
-            'mobile_2'              =>  ['sometimes', 'nullable', 'numeric', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'digits_between:9,10'],
+            'phone'                 =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_1'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
+            'mobile_2'              =>  ['sometimes', 'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/' ,'min:9', 'max:11'],
         ];
 
         $messages = [
@@ -272,6 +279,15 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        Job::where('customer_id', $id)->delete();
+        Invoice::where('customer_id', $id)->delete();
+        Estimate::where('customer_id', $id)->delete();
+        JobFormAnswer::where('customer_id', $id)->delete();
+        CustomerNote::where('customer_id', $id)->delete();
+        CustomerPhoto::where('customer_id', $id)->delete();
+        CustomerDocument::where('customer_id', $id)->delete();
+        SentEmail::where('customer_id', $id)->delete();
+        Payment::where('customer_id', $id)->delete();
         Customer::find($id)->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
