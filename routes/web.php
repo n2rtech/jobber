@@ -208,6 +208,10 @@ Route::resource('banh', BanhController::class);
 Route::resource('form', FormController::class);
 
 Route::post('form/banh', [ FormController::class, 'banh'])->name('form.banh');
+
+
 Route::get('/copyeir',[CustomerController::class,'copyeir'])->name('copyeir');
 
-
+Route::get('new-home-survey', function(){
+    return view('customers.survey');
+})->name('customers.survey');

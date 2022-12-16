@@ -1,6 +1,9 @@
  {{-- Banh Tab Start --}}
 
  <div class="tab-pane" id="customer-banh" role="tabpanel" aria-labelledby="customer-banh-tab">
+    <div class="col-sm-12 text-right mb-2">
+        <a href="{{ route('customers.survey')}}" class="btn btn-danger">Create Survey</a>
+    </div>
      @if (count($customer->banh) > 0)
          <div class="table-responsive">
              <table id="dataTable" class="table table-sm table-bordered">
