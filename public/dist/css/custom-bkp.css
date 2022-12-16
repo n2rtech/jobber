@@ -1,0 +1,885 @@
+.view-job-page h3{
+    margin-top: 10px;
+    font-weight: bold;
+}
+.view-job-page .nav-tabs .nav-item.show .nav-link, .view-job-page .nav-tabs .nav-link.active{
+    color: #fff;
+    background-color: darkblue;
+    border-color: unset;
+    border: none;
+    margin: unset;
+    min-height: 41px;
+}
+.view-job-page .nav-tabs .nav-link{
+    background: #eaeaea;
+    color: #000;
+}
+.login-page, .register-page {
+    background-color: #ff5927 !important;
+}
+.invalid-feedback{
+    display: block;
+}
+.btn-orange {
+    color: #fff;
+    background-color: #ff5927;
+    border-color: #ff5927;
+    box-shadow: none;
+}
+.btn-black {
+    color: #ff5927;
+    background-color: #000000;
+    border-color: #000000;
+    box-shadow: none;
+}
+.btn-black:hover {
+    color: #000000;
+    background-color: #ff5927;
+    border-color: #ff5927;
+    box-shadow: none;
+}
+.text-orange {
+    color: #ff5927;
+}
+.brand-link {
+    text-align: center;
+    padding: 9px;
+}
+.small-box>.inner {
+    padding: 10px;
+    text-align: center;
+}
+.elevation-4 {
+    box-shadow: none !important;
+}
+.btn-icon{
+    font-weight: 600;
+    margin-right: 0.4rem!important;
+}
+.btn-indigo {
+    color: #fff;
+    background-color: #6610f2;
+    border-color: #6610f2;
+    box-shadow: none;
+}
+.btn-indigo:hover {
+    color: #fff;
+    background-color: #605ca8;
+    border-color: #605ca8;
+}
+.btn-pink {
+    color: #fff;
+    background-color: #f012be;
+    border-color: #f012be;
+    box-shadow: none;
+}
+.btn-pink:hover {
+    color: #fff;
+    background-color: #e83e8c;
+    border-color: #e83e8c;
+}
+.btn-grey {
+    color: #1f2d3d;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+.btn-lime{
+    color: #1f2d3d;
+    background-color: #01ff70;
+    border-color: #01ff70;
+    box-shadow: none;
+
+}
+.btn-lime:hover {
+    color: #1f2d3d;
+    background-color: #5BFFA2;
+    border-color: #5BFFA2;
+}
+.error-code {
+    color: #ff5927;
+    font-size: 100px;
+    font-weight: 300;
+}
+.error-message {
+    font-size: 25px;
+    font-weight: 300;
+}
+.text-sm{
+    line-height: 1 !important;
+}
+.text-align-right{
+    text-align: right;
+}
+.post .user-block {
+    margin-bottom: 0px;
+    width: 100%;
+}
+.btn-light {
+    color: #1f2d3d;
+    background-color: #ffffff;
+    border-color: #dae0e5;
+}
+.dropdown-toggle::after {
+    display: none;
+}
+.dropdown-menu.show {
+    left: -63px !important;
+}
+.form-name {
+    display: block;
+    margin-left: 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-description {
+    display: block;
+    margin-left: 0px;
+    color: #6c757d;
+    font-size: 13px;
+    margin-top: -3px;
+}
+.job-form-footer {
+    padding: 1.25rem 1.25rem;
+    background-color: rgba(0,0,0,.03);
+    border: 1px solid rgba(0,0,0,.125);
+}
+.circle {
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
+    padding: 0px;
+    background: #f8f9fa!important;
+    border: 1px solid #00000026;
+    color: #000;
+    text-align: center;
+}
+.external-event {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    cursor: move;
+    border-left: 4px solid #000;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding: 5px 7px;
+}
+#schedule_page{
+    font-size: 13px;
+}
+#schedule_page > p {
+    margin-top: 0;
+    margin-bottom: 0px !important;
+}
+.fc .fc-timegrid-slot {
+    height: 2.5em !important;
+}
+.card-calender-title {
+    float: left;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+/*******Form********/
+.card-default {
+    max-width: 650px;
+    margin: 0 auto;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 7%);
+    background-color: #f9f9f9;
+    position: relative;
+}
+.bs-stepper-header {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+.bs-stepper .step-trigger {
+    flex-wrap: inherit;
+    padding: 5px;
+}
+.bs-stepper-label {
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
+}
+.active .bs-stepper-circle {
+    background-color: #3a87ad;
+}
+.bs-stepper-header .step.active{
+    background: #f1f6fc;
+    color: #3a87ad;
+    cursor: default;
+    padding: 0 20px 0 10px;
+}
+.bs-stepper-header .step{
+    float: left;
+    margin: 0;
+    padding: 0 20px 0 30px;
+    height: 40px;
+    position: relative;
+    background: #ededed;
+    color: #999999;
+    font-size: 16px;
+    cursor: not-allowed;
+}
+.bs-stepper-circle{
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.2em 0;
+    font-size: 14px;
+}
+.steper {
+    padding-top: 70px;
+}
+.bs-stepper .step-trigger:hover {
+    text-decoration: none;
+    background-color: #0000;
+}
+.bs-stepper .step-trigger:focus {
+    color: #3a87ad;
+    outline: 0;
+}
+.bs-stepper-header .step.active .chevron:before {
+    border-left: 14px solid #f1f6fc;
+}
+.bs-stepper-header .step .chevron {
+    border: 24px solid transparent;
+    border-left: 14px solid #d4d4d4;
+    border-right: 0;
+    display: block;
+    position: absolute;
+    right: -14px;
+    top: -3px;
+    z-index: 1;
+}
+.bs-stepper-header .step .chevron:before {
+    border: 24px solid transparent;
+    border-left: 14px solid #ededed;
+    border-right: 0;
+    content: "";
+    display: block;
+    position: absolute;
+    right: 1px;
+    top: -24px;
+}
+/*******FormEnd*****/
+
+
+
+@media (min-width: 768px){
+    .col-mdc-2 {
+        -ms-flex: 0 0 19.666667%;
+        flex: 0 0 19.666667%;
+        max-width: 19.666667%;
+    }
+
+    .col-mdc-10 {
+        -ms-flex: 0 0 80.333333%;
+        flex: 0 0 80.333333%;
+        max-width: 80.333333%;
+    }
+}
+
+.col-mdc-10, .col-mdc-2 {
+    position: relative;
+    width: 100%;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+.filter-date-after::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+.fc-event{
+    border-width: 3px;
+}
+select#team , select#booking_status{
+    background: #ced4da54;
+    width: 196px;
+}
+@media (min-width: 576px){
+    .modal-sm {
+        max-width: 310px;
+    }
+
+}
+.visit-card-title {
+    float: left;
+    font-size: 18.5px;
+    font-weight: 700;
+    margin: 0;
+}
+a.nav-link{
+    color: white;
+}
+
+a.nav-link .active{
+    color: black;
+}
+.image-box {
+    display: initial;
+    float: left;
+    margin: 3px;
+    border: 1px solid rgb(118 118 118 / 36%);
+}
+.delete-image-btn{
+    display: block;
+    width: 72px;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.customer-detail-heading {
+    text-align: center;
+    background-color: #494E53;
+    color: white;
+    height: 27px;
+}
+.customer-detail-box {
+    background-color: #eaeff700;
+    padding: 10px;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+.btn-customer-action {
+    width: 96px;
+    margin-bottom: 11px;
+}
+#filterBox{
+    display:none;
+}
+.fc-event {
+    background-color: black !important;
+    color: white !important;
+    padding: 2px;
+    /* height: 87px; */
+}
+.unscheduled-card {
+    padding: 10px 6px 0px 6px;
+    overflow-y: auto;
+    height: 638.27px;
+}
+.confirmation.show {
+    left: 20px !important;
+}
+.confirmation-menu.show{
+    left: -1px !important;
+}
+.modify-container form{
+    max-width: 770px;
+    margin: 0 auto;
+}
+.maxWidthControl{
+    max-width: 770px;
+    margin: 0 auto;
+    margin-bottom: 30px !important;
+}
+.min86{
+    padding: 15px 15px 69px 10px;
+}
+.content-header h1{
+    font-size: 26px;
+}
+.maxWidthControl .col-sm-6 h1{
+    position: relative;
+    top: 5px;
+}
+.modify-container form .select2-selection__rendered{
+    font-size: 15px;
+}
+.modify-container form select, .modify-container form input{
+    font-size: 15px;
+}
+.jobviewPop .modal-body{
+    padding: 0;
+}
+.jobviewPop h4.main-title{
+    background: darkred;
+    color: #fff !important;
+    padding: 15px;
+    font-size: 21px;
+}
+.jobviewPop h5{
+    font-size: 18px;
+}
+.jobviewPop button.close{
+    color: #fff;
+    opacity: 1;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+.jobviewPop .scButtons{
+    padding: 0 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.jobviewPop .scButtons button{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    padding: 6px 12px;
+    color: #222 !important;
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    width: 48%;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+.jobviewPop .scButtons button:hover{
+    box-shadow: 0px 4px 3px rgb(10 35 139);
+    color: #fff !important;
+    transform: translateY(-3px);
+    border: 1px solid #0a238b;
+    background-color: #0a238b;
+}
+.jobviewPop .scButtons button:first-child{
+    margin-right: 15px;
+}
+.jobviewPop .job-details, .jobviewPop .bookingStatus, .jobviewPop .bookingTime, .jobviewPop .bookLocation{
+    padding: 0 20px;
+    margin-top: 20px;
+}
+.jobviewPop .bookingStatus label{
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+.jobviewPop .bookingStatus select{
+    border: 1px solid #f4f4f4;
+    border-radius: 6px;
+    background: #e8f4ff !important;
+    border: 1px solid #b4ddff;
+    width: 98% !important;
+}
+.jobviewPop .bookingTime label{
+    margin-bottom: 4px;
+    margin-top: 5px;
+    color: darkred;
+}
+.jobviewPop .bookingTime input{
+    background: #e8f4ff;
+    border: 1px solid #b4ddff;
+}
+.jobviewPop .vcButtons{
+    padding: 0px 13px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.jobviewPop .vcButtons a{
+    width: 31%;
+    margin-right: 5px;
+}
+.jobviewPop .vcButtons a.btn-dark, .jobviewPop .vcButtons a:hover{
+    background: darkblue;
+    border: 1px solid darkblue;
+}
+#customer-archived-notes .bg-warning{
+    background: unset !important;
+    font-size: 16px;
+}
+.customer-jobs-tabs table tr th, .customer-jobs-tabs table tr td{
+    font-size: 16px;
+    padding: 8px 12px;
+}
+.customer-jobs-tabs table thead th{
+    background: darkblue;
+    color: #fff;
+    font-weight: normal;
+}
+.min252{
+    min-height: 252px;
+}
+.buttonBlocks{
+    min-height: 275px;
+}
+.buttonBlocks .btn{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 28px 0;
+    border-radius: 10px;
+}
+.buttonBlocks .btn:hover{
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    background: #000;
+    color: #fff;
+}
+#ui-datepicker-div{
+    width: 528px;
+    background: #fff;
+    box-shadow: 0 1px 6px 0 rgb(0 0 0 / 20%);
+}
+#ui-datepicker-div .ui-datepicker-calendar{
+    width: 100%;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr th{
+    border: 1px solid #ddd;
+    text-align: center;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td{
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td.ui-datepicker-current-day{
+    background: #e5f2ff;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td a{
+    color: #222;
+}
+.ui-datepicker-header{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.ui-datepicker-header .ui-datepicker-prev, .ui-datepicker-header .ui-datepicker-next{
+    padding: 4px 16px;
+    background: crimson;
+    color: #fff;
+    border-radius: 4px;
+    margin: 3px 0 5px 5px;
+    width: 13%;
+    font-size: 15px;
+}
+.ui-datepicker-header .ui-datepicker-title{
+    text-align: right;
+    width: 74%;
+    padding-right: 10px;
+    font-size: 21px;
+    margin-top: 6px;
+}
+.jobviewPop .modal-dialog {
+    max-width: 570px;
+}
+.afterIcon{
+    color: #666;
+    position: absolute;
+    right: 0;
+    margin-top: -32px;
+    margin-right: 14px;
+    background: #e8f4fe;
+    padding: 5px;
+}
+#dataTable_wrapper .dt-buttons.btn-group.flex-wrap{
+    display: none;
+}
+.label-small{
+    padding-bottom: 0px;
+    font-size: 90%;
+}
+.text-small{
+    font-size: 80%;
+    font-weight: 400 !important;
+}
+.ctrl-label::before, .ctrl-label::after{
+    top: 0px !important;
+}
+.wallThumbs .wallTitle{
+    font-size: 13px;
+}
+.wallThumbs .wallName, .wallThumbs .wallEvent, .wallThumbs .wallTime{
+    font-size: 12px;
+}
+#schedule_page .fc .fc-timegrid-slot {
+    height: 43px !important;
+}
+#schedule_page .fc .fc-timegrid-slot-label-cushion, #schedule_page .fc .fc-col-header-cell-cushion{
+    font-size: 15px;
+}
+.direct-chat-infos span{
+    font-size: 13px;
+}
+.direct-chat-infos span b{
+    font-weight: normal;
+}
+.usertype {
+    margin-left: -15px;
+    margin-top: 5px;
+}
+.usertype .radio label {
+    padding-left: 0;
+}
+.usertype .radio label input {
+    opacity: 0;
+}
+.usertype label > input + .forcustom {
+    cursor: pointer;
+    background-color: #fff;
+    border-color: #000;
+    font-size: 17px;
+    padding: 8px 30px;
+    line-height: 22px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.usertype label > input:checked + .red {
+    border: none;
+    color: #fff;
+    background: red;
+    border: 1px solid red;
+}
+.usertype label > input:checked + .blue {
+    border: none;
+    color: #fff;
+    background: blue;
+    border: 1px solid blue;
+}
+.usertype label > input:checked + .green {
+    border: none;
+    color: #fff;
+    background: green;
+    border: 1px solid green;
+}
+.usertype label > input:checked + .violet {
+    border: none;
+    color: #fff;
+    background: violet;
+    border: 1px solid violet;
+}
+.onTip{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99999;
+}
+.onTip button{
+    pointer-events: none;
+    padding: 0 10px 0 0;
+    opacity: 1 !important;
+}
+.sm-customers tr th{
+    padding: 3px 0px;
+    font-size: 16px;
+}
+.sm-customers tr td{
+    padding: 0;
+    font-size: 16px;
+}
+.set-fonts td, .set-fonts th{
+    font-size: 15.5px;
+}
+@media (min-width: 768px) and (max-width: 4000px){
+.changeBlock{
+  display: unset !important;
+}
+.hidden-sm{
+    display: none;
+}
+.customer-tabs .card-header{
+    background: #fff;
+}
+.customer-tabs .card-header{
+    background: #fff;
+    padding-top: 4px !important;
+}
+.customer-tabs .card-dark:not(.card-outline)>.card-header{
+    background: #fff !important;
+    padding-top: 0 !important;;
+}
+.customer-tabs .nav-tabs .nav-item{
+    margin-right: 3px;
+}
+.customer-tabs .nav-tabs .nav-item:first-child{
+    border-left: 1px solid #000;
+}
+.customer-tabs .nav-tabs .nav-item:last-child{
+    margin-right: 0;
+}
+.customer-tabs .nav-tabs .nav-link{
+    background: #fff !important;
+    border-radius: 0;
+    color: #000 !important;
+    border: 1px solid #000;
+    font-size: 16px;
+}
+.customer-tabs .nav-tabs .nav-link.active{
+    background: #000 !important;
+    color: #fff !important;
+}
+}
+@media (max-width: 767px){
+.header-mobile{
+    padding-bottom: 0;
+}
+.header-mobile ul.navbar-nav{
+    padding-top: 30px;
+}
+.header-mobile div.nav-item{
+    position: absolute;
+    top: 0;
+}
+.set-fonts td, .set-fonts th{
+    font-size: 13px;
+}
+.content-header h1 {
+  font-size: 24px;
+  margin-bottom: 8px !important;
+}
+.hidden-xs{
+    display: none;
+}
+.schedule-xs{
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    cursor: move;
+    border-left: 4px solid #000;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding: 5px 7px;
+    background: #f9f9f9;
+}
+.schedule-xs button.direct-chat-infos{
+    border: none;
+    box-shadow: none;
+    background: none;
+}
+#schedule-modal{
+    top: 100px;
+}
+.customer-tabs .card-header{
+    background: #fff;
+}
+.customer-tabs .card-header{
+    background: #fff;
+    padding-top: 4px !important;
+}
+.customer-tabs .card-dark:not(.card-outline)>.card-header{
+    background: #fff !important;
+}
+.customer-tabs .nav-tabs .nav-item{
+    min-width: 49%;
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+.customer-tabs .nav-tabs .nav-link{
+    background: #fff !important;
+    border-radius: 0;
+    color: #000 !important;
+    border: 1px solid #000;
+    font-size: 16px;
+}
+.customer-tabs .nav-tabs .nav-link.active{
+    background: #000 !important;
+    color: #fff !important;
+}
+.cardforResponsive{
+    padding: 10px;
+}
+.cardforResponsive .noteDate{
+    font-size: 14px;
+}
+.cardforResponsive .noteUser{
+    font-size: 14px;
+    margin-top: 5px;
+}
+.cardforResponsive .noteUser img{
+    position: relative;
+    top: -5px;
+}
+.jobviewPop h4.main-title{
+    font-size: 18px;
+}
+.jobviewPop .scButtons button{
+    font-size: 14px;
+    width: 46%;
+}
+.view-job-page .jobviewPop .vcButtons a{
+    width: 47%;
+    font-size: 13px;
+}
+.jobviewPop h5 {
+    font-size: 16px;
+}
+.jobviewPop p{
+    font-size: 14px;
+}
+.jobviewPop .job-details, .jobviewPop .bookingStatus, .jobviewPop .bookingTime, .jobviewPop .bookLocation{
+    margin-top: 10px;
+}
+.jobviewPop .bookingStatus label{
+    font-size: 15px;
+}
+.jobviewPop .bookingStatus select{
+    width: 100% !important;
+    font-size: 14px;
+    height: 33px;
+}
+.jobviewPop .bookingTime label{
+    font-size: 14px;
+    margin-top: 0;
+}
+.jobviewPop .bookingTime input{
+    font-size: 14px;
+    height: 33px;
+}
+.jobviewPop .bookingTime .btn-success{
+    font-size: 14px;
+}
+.jobviewPop .vcButtons {
+    padding: 0px 10px;
+}
+.jobviewPop .vcButtons a {
+    width: 31%;
+    margin-right: 2px;
+    font-size: 11px;
+}
+#ui-datepicker-div{
+    width: 84%;
+}
+.ui-datepicker-header .ui-datepicker-prev, .ui-datepicker-header .ui-datepicker-next{
+    width: 19%;
+}
+.ui-datepicker-header .ui-datepicker-title{
+    width: 62%;
+    font-size: 18px;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr td{
+    font-size: 13px;
+    padding: 5px;
+}
+#ui-datepicker-div .ui-datepicker-calendar tr th{
+    font-size: 13px;
+}
+.afterIcon{
+    padding: 5px 2px 5px 34px;
+    margin-top: -30px;
+    margin-right: 20px;
+}
+.cutclose{
+    font-size: 16px;
+    background: red !important;
+    opacity: 1;
+    padding: 10px 24px !important;
+    color: #fff;
+    text-shadow: none;
+    font-weight: normal;
+}
+#schedule-modal #mobileStarts, #schedule-modal #mobileEnds, #schedule-modal #mobileStartTime, #schedule-modal #mobileEndTime{
+    background: #e5f2ff;
+    border: 1px solid #c0defd;
+}
+.linePaddingItems{
+    padding: 10px;
+}
+.estimFonts table tr td, .estimFonts table tr th{
+    font-size: 13px;
+}
+.min252{
+    min-height: 252px;
+}
+.buttonBlocks{
+    min-height: 255px;
+    padding-bottom: 0;
+}
+.m-pad-0{
+    padding: 0;
+}
+}
