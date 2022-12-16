@@ -512,6 +512,11 @@
                 job_id: '{{ $job->id }}',
                 user_id: value,
             };
+            if(window.matchMedia("(max-width: 767px)").matches){
+                var redirect_route = "{{ route('jobs.index', ['scheduled' => 'no']) }}";
+            }else{
+                var redirect_route = "{{ route('schedules.index') }}";
+            }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -526,6 +531,7 @@
                     if (data.success) {
                         $('#assign_message').css('color', 'green');
                         $('#assign_message').text(data.success);
+                        window.location.href = redirect_route;
                     } else {
                         $('#assign_message').css('color', 'red');
                         $('#assign_message').text(data.danger);

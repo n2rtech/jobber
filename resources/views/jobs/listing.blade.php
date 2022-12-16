@@ -68,6 +68,11 @@
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
+
+                    @php
+                    if(!is_null($job->user_id))
+                     $color = App\Models\User::find($job->user_id)->color;
+                    @endphp
                         <tr>
                             <td>
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
@@ -85,18 +90,18 @@
                             <td>
                                 {{ $job->jobTitle->title }}
                             </td>
-                            <td>
+                            <td style="color:{{$color}}">
                                 @if ($job->scheduled == 'no')
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <span>{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span>{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span>{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
-                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                <span>{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>
