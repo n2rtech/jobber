@@ -99,9 +99,9 @@
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <span style="color:{{$color}}">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span style="color:{{$color}}">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
                                 <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
