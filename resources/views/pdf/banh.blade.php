@@ -57,6 +57,109 @@
 
         </table>
 
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Client</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ $banh->firstname }} {{ $banh->lastname }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ getBanhAddress($banh->id) }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Phone : @isset($banh->mobile_1)
+                    {{ $banh->mobile_1 }}
+                    @endisset @isset($banh->phone)
+                    , {{ $banh->phone }}
+                @endisset</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Order date: {{ $banh->created_at }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ $banh->email }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Moving in on {{ $banh->move_in_date }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Building Info</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ $banh->dwelling_type }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Area: {{ $banh->area }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Floor Type: {{ $banh->floor_type }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    Wall Type: {{ $banh->wall_type }}</td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
 
         <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
             <tr>
@@ -1019,110 +1122,6 @@
         </table>
 
         <div class="page-break"></div>
-
-        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
-            <tr>
-                <th
-                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
-                    Client</th>
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    {{ $banh->firstname }} {{ $banh->lastname }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    {{ getBanhAddress($banh->id) }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Phone : @isset($banh->mobile_1)
-                    {{ $banh->mobile_1 }}
-                    @endisset @isset($banh->phone)
-                    , {{ $banh->phone }}
-                @endisset</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Order date: {{ $banh->created_at }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    {{ $banh->email }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Moving in on {{ $banh->move_in_date }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                </td>
-
-            </tr>
-        </table>
-
-        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
-            <tr>
-                <th
-                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
-                    Building Info</th>
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                </td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    {{ $banh->dwelling_type }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Area: {{ $banh->area }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Floor Type: {{ $banh->floor_type }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Wall Type: {{ $banh->wall_type }}</td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                </td>
-
-            </tr>
-            <tr>
-                <td
-                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                </td>
-
-            </tr>
-        </table>
 
     </div>
 

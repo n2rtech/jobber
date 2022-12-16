@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <input type="text" name="firstname" id="firstname" class="form-control form-control-sm" placeholder="Firstname" required>
+                                        <input type="text" name="firstname" id="firstname" class="form-control form-control-sm" placeholder="Firstname" value="{{ $job->customer->name }}" required>
                                     </div>
                                 </div>
 
@@ -36,31 +36,31 @@
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" placeholder="Street Address" required>
+                                        <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" placeholder="Street Address" value="{{ $job->customer->address_1 }}"  required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" placeholder="Street Address 2">
+                                        <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" placeholder="Street Address 2" value="{{ $job->customer->address_1 }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="city" id="city" class="form-control form-control-sm" placeholder="City">
+                                        <input type="text" name="city" id="city" class="form-control form-control-sm" placeholder="City" value="{{ $job->customer->city }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="county" id="county" class="form-control form-control-sm" placeholder="County">
+                                        <input type="text" name="county" id="county" class="form-control form-control-sm" placeholder="County" value="{{ $job->customer->county }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <input type="text" name="eir_code" id="eir_code" class="form-control form-control-sm" placeholder="Eircode">
+                                        <input type="text" name="eir_code" id="eir_code" class="form-control form-control-sm" placeholder="Eircode" value="{{ $job->customer->eir_code }}">
                                     </div>
                                 </div>
 
@@ -77,14 +77,14 @@
                                 <div class="col-lg-6">
                                     <div class="mb-1">
                                         <label class="form-label" for="mobile_1">Phone Mobile</label><span class="text-danger">*</span>
-                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile" required>
+                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile" value="{{ $job->customer->mobile_1 }}" required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
                                         <label class="form-label" for="phone">Phone Other</label>
-                                        <input type="text" name="phone" id="phone" class="form-control form-control-sm" placeholder="Phone Other">
+                                        <input type="text" name="phone" id="phone" class="form-control form-control-sm" value="{{ $job->customer->phone }}" placeholder="Phone Other">
                                     </div>
                                 </div>
 
@@ -92,7 +92,7 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="email">Email</label><span class="text-danger">*</span>
                                         <input type="email" name="email" id="email" class="form-control form-control-sm"
-                                            placeholder="your@email.com" required>
+                                            placeholder="your@email.com" value="{{ $job->customer->email }}" required>
                                     </div>
                                 </div>
                             </div>
