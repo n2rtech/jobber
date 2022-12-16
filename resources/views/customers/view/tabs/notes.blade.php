@@ -1,12 +1,18 @@
 {{-- Notes Tab Start --}}
-
+<style>
+    .odd{ background-color: rgba(0,0,0,.05);;}
+    .even{ background:#fff;}
+</style>
 <div class="tab-pane fade active show" id="customer-notes" role="tabpanel"
 aria-labelledby="customer-notes-tab">
 
 <div class="card card-widget widget-user-2">
     <div class="card-body card-comments cardforResponsive">
         @forelse($customer->allnotes as $note)
-        <div class="card-comment">
+        @php
+        ($loop->iteration%2 == 0) ? $cls = "even" : $cls = "odd";
+        @endphp
+        <div class="card-comment {{ $cls }}">
             <div class="row">
                 <div class="col-sm-7 col-6">
                     <span class="noteDate" style="font-weight: 600">{{ \Carbon\Carbon::parse($note->created_at)->format('d-m-Y h:i') }} <br/>@isset($note->file)<span class="badge badge-warning text-dark"> <a href="{{ $note->path }}" download>{{ $note->file }}</a></span>@endisset</span>

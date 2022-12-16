@@ -8,7 +8,7 @@
              background-color: #fff !important;
         }
         .mytable tr:nth-child(4n+1), .mytable tr:nth-child(4n+2) {
-            background: rgba(0,0,0,.05) !important;
+            background: rgb(0 0 0 / 16%) !important;
         }
         </style>
         <div class="table-responsive">
@@ -21,20 +21,24 @@
                 </thead>
                 <tbody class="mytable">
                     @foreach ($jobs as $job)
+                    @php
+                    if(!is_null($job->user_id))
+                     $color = App\Models\User::find($job->user_id)->color;
+                    @endphp
                         <tr>
-                            <td style="font-size: 17px;border-right:none;border-bottom:none">
-                                <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
+                            <td style="font-size: 17px;border-right:none;border-bottom:none;font-weight:bold;">
+                                <a href="{{ route('customers.show', $job->customer_id) }}" style="color:black">{{ $job->customer->name }}</a>
                             </td>
-                            <td style="font-size: 17px;border-left:none;border-bottom:none">
+                            <td style="font-size: 17px;border-left:none;border-bottom:none;text-align:center;">
                                 @if ($job->scheduled == 'no')
                                 <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
-                                <a href="{{ route('jobs.show', $job->id) }}">
-                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
-                                    <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
+                                <a href="{{ route('jobs.show', $job->id) }}" style="color:{{$color}}">
+                                    <span>{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span>{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
                                     <br/>
-                                    <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
-                                    <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
+                                    <span>{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
+                                    <span>{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
                                     </a>
                                 @endif
                             </td>
