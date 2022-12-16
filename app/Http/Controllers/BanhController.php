@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banh;
+use App\Models\CompanyDetail;
+use App\Models\Customer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -13,9 +15,11 @@ class BanhController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $customer = Customer::find($request->customer_id);
+        return view('customers.survey', compact('customer'));
     }
 
     /**
@@ -36,7 +40,15 @@ class BanhController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data                = [];
+        $customer            = Customer::find($request->customer_id);
+        $company             = CompanyDetail::first();
+        $data['request']                = $request->all();
+        $data['company']                = $company;
+        $data['customer']               = $customer;
+        // return $data;
+        $pdf                 = Pdf::loadView('pdf.survey', $data);
+        return $pdf->download('survey.pdf');
     }
 
     /**

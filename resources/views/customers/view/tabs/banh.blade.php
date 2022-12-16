@@ -2,7 +2,7 @@
 
  <div class="tab-pane" id="customer-banh" role="tabpanel" aria-labelledby="customer-banh-tab">
     <div class="col-sm-12 text-right mb-2">
-        <a href="{{ route('customers.survey')}}" class="btn btn-danger">Create Survey</a>
+        <a href="{{ route('banh.index', ['customer_id' => $customer->id])}}" class="btn btn-danger">Create Survey</a>
     </div>
      @if (count($customer->banh) > 0)
          <div class="table-responsive">
