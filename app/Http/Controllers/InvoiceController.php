@@ -106,8 +106,12 @@ class InvoiceController extends Controller
             $invoices->whereDate('invoice_date', '<=', $to);
         }
 
+        if(isset($filter_status)){
+            $invoices                   = $invoices->whereNot('total', '0.00')->orderBy('id', 'desc')->get();
+        }else{
+            $invoices                   = $invoices->orderBy('id', 'desc')->get();
+        }
 
-        $invoices                   = $invoices->whereNot('total', '0.00')->orderBy('id', 'desc')->get();
 
         $template_confirmation      = EmailTemplate::where('type', 'invoices')->where('mode', 'confirmation')->first();
 
