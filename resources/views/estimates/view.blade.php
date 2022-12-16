@@ -45,11 +45,14 @@
                                     {{ $estimate->customer->name }}<br />
                                     Address: {{ $estimate->customer->address_1 }} @isset($estimate->customer->address_2)
                                         , {{ $estimate->customer->address_2 }}
-                                    @endisset <br />
+                                    @endisset<br>
                                     @isset($estimate->customer->city)
                                         {{ $estimate->customer->city }}
                                         @endisset @isset($estimate->customer->state)
                                         , {{ $estimate->customer->state }}
+                                    @endisset
+                                    @isset($estimate->customer->county)
+                                         {{ $estimate->customer->county }} ,
                                     @endisset
                                     <br>
                                     {{ $estimate->customer->country }}, {{ $estimate->customer->eir_code }}<br>

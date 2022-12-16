@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th class="all" style="width: 50%">{{ __('Customer') }}</th>
-                        <th class="all" style="width: 50%">{{ __('Scheduled') }}</th>
+                        <th class="all" style="width: 50%;text-align: right;">{{ __('Scheduled') }}</th>
                     </tr>
                 </thead>
                 <tbody class="mytable">
@@ -29,16 +29,16 @@
                             <td style="font-size: 17px;border-right:none;border-bottom:none;font-weight:bold;">
                                 <a href="{{ route('customers.show', $job->customer_id) }}" style="color:black">{{ $job->customer->name }}</a>
                             </td>
-                            <td style="font-size: 17px;border-left:none;border-bottom:none;text-align:center;">
+                            <td style="font-size: 17px;border-left:none;border-bottom:none;text-align: right;">
                                 @if ($job->scheduled == 'no')
                                 <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
-                                <a href="{{ route('jobs.show', $job->id) }}" style="color:{{$color}}">
-                                    <span>{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
-                                    <span>{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
+                                <a href="{{ route('jobs.show', $job->id) }}">
+                                    <span style="color:{{$color}}" >{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span style="color:{{$color}}" >{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
                                     <br/>
-                                    <span>{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
-                                    <span>{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
+                                    <span class="text-info" >{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
+                                    <span class="text-danger" >{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
                                     </a>
                                 @endif
                             </td>
@@ -94,18 +94,18 @@
                             <td>
                                 {{ $job->jobTitle->title }}
                             </td>
-                            <td style="color:{{$color}}">
+                            <td>
                                 @if ($job->scheduled == 'no')
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span>{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span>{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span class="text-info">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span>{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
-                                <span>{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
+                                <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                 @endif
                             </td>
                             <td>€ {{ $job->invoice->total }}</td>

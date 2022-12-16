@@ -1,6 +1,6 @@
     {{-- Page Load Scripts --}}
     <script>
-        $(document).ready(function () {
+        jQuery(document).ready(function ($) {
             setDueDate();
             $("#name").focus();
         });
