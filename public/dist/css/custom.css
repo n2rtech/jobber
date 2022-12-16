@@ -814,3 +814,8 @@ a.nav-link .active{
     color: #fff;
     font-weight: normal;
 }
+label.form-label {
+    color: #FF5927;
+    font-size: 15px;
+    margin-top: 11px;
+}
