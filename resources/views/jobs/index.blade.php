@@ -101,6 +101,7 @@
         $("#filter").click(function(){
             $("#filterBox").slideToggle();
         });
+        $('input[type="search"]').focus();
 
     });
 </script>

@@ -513,7 +513,7 @@
                 user_id: value,
             };
             if(window.matchMedia("(max-width: 767px)").matches){
-                var redirect_route = "{{ route('jobs.index', ['scheduled' => 'no']) }}";
+                var redirect_route = "{{ route('jobs.index') }}";
             }else{
                 var redirect_route = "{{ route('schedules.index') }}";
             }
@@ -565,6 +565,10 @@
                 $("#filterBox").slideToggle();
             }
 
+        });
+
+        $('select[name="start_time"], #starts').on("change",function(){
+                $('select[name="end_time"] option:eq(0)').prop('selected',true)
         });
 
 

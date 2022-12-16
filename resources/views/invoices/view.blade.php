@@ -52,6 +52,9 @@
                                         @endisset @isset($invoice->customer->state)
                                         , {{ $invoice->customer->state }}
                                     @endisset
+                                    @isset($invoice->customer->county)
+                                        , {{ $invoice->customer->county }}
+                                    @endisset
                                     <br>
                                     {{ $invoice->customer->country }}, {{ $invoice->customer->eir_code }}<br>
                                     Phone: @isset($invoice->customer->phone)
