@@ -21,10 +21,13 @@
                 </thead>
                 <tbody class="mytable">
                     @foreach ($jobs as $job)
+                   
                     @php
-                    if(!is_null($job->user_id))
+                     if(!is_null($job->user_id))
                      $color = App\Models\User::find($job->user_id)->color;
-                    @endphp
+                     else
+                     $color = '';
+                     @endphp
                         <tr>
                             <td style="font-size: 17px;border-right:none;border-bottom:none;font-weight:bold;">
                                 <a href="{{ route('customers.show', $job->customer_id) }}" style="color:black">{{ $job->customer->name }}</a>
@@ -72,11 +75,13 @@
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
-
-                    @php
-                    if(!is_null($job->user_id))
+                    
+                     @php
+                     if(!is_null($job->user_id))
                      $color = App\Models\User::find($job->user_id)->color;
-                    @endphp
+                     else
+                     $color = '';
+                     @endphp
                         <tr>
                             <td>
                                 <a href="{{ route('customers.show', $job->customer_id) }}">{{ $job->customer->name }}</a>
@@ -99,9 +104,9 @@
                                     <span class="badge bg-danger">{{ __('No') }}</span>
                                 @else
                                 <br class="hidden-sm" />
-                                <span style="color:{{$color}}">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
+                                <span style="color:{{ $color }}">{{ \Carbon\Carbon::parse($job->start)->format('d-m-Y')}}</span>
                                 <br/>
-                                    <span style="color:{{$color}}">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
+                                    <span style="color:{{ $color }}">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
                                 <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
