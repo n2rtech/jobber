@@ -26,6 +26,10 @@
                         <i class="btn-icon fas fa-filter"></i> {{ __('Filter') }}
                     </a>
 
+                    <a href="{{ route('invoices.report') }}" class="btn btn-warning">
+                        <i class="btn-icon fas fa-sterling-sign"></i> {{ __('Generate Report') }}
+                    </a>
+
                     <a href="{{ route('invoices.create') }}" class="btn btn-danger">
                         <i class="btn-icon fas fa-plus-circle"></i> {{ __('Add New') }}
                     </a>

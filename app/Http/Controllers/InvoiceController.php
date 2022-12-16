@@ -14,6 +14,7 @@ use App\Models\JobProduct;
 use App\Models\Product;
 use App\Models\SentEmail;
 use App\Models\Setting;
+use App\Models\Payment;
 use App\Models\TaxRate;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -384,5 +385,54 @@ class InvoiceController extends Controller
 
         return redirect()->back()->with('success', 'Invoice has been sent for Invoice No. '.$invoice->id.' !');
 
+    }
+
+    public function report(){
+        $filter_name = null;
+        $filter_invoice_from = null;
+        $filter_status          = '';
+        $filter_invoice_to = null;
+        $paid_amount = 0;
+        $due_amount = 0;
+        return view('invoices.report', compact('filter_status', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount'));
+    }
+
+    public function generateReport(Request $request){
+        $customer               = Customer::find($request->customer_id);
+
+        $invoices               = Invoice::query();
+        $filter_status          = $request->status;
+        $filter_name            = $request->name;
+        $filter_invoice_from    = $request->invoice_from;
+        $filter_invoice_to      = $request->invoice_to;
+        $payments               = [];
+
+        if (isset($customer)) {
+            $invoices->where('customer_id', $customer->id);
+            $payments = Payment::where('customer_id', $customer->id)->get();
+        }
+
+        isset($filter_status)       ? $invoices->where('status', $filter_status) : $invoices;
+
+        if ($request->invoice_from && $request->invoice_to) {
+
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereBetween('invoice_date', [$from, $to]);
+        }
+
+        if ($request->invoice_from) {
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $invoices->whereDate('invoice_date', '>=', $from);
+        }
+
+        if ($request->invoice_to) {
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereDate('invoice_date', '<=', $to);
+        }
+        $invoices               = $invoices->orderBy('id', 'desc')->get();
+        $paid_amount            = $invoices->sum('paid');
+        $due_amount             = $invoices->sum('total') - $invoices->sum('paid');;
+        return view('invoices.report', compact('filter_status', 'customer', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount', 'payments'));
     }
 }
