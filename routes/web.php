@@ -101,6 +101,10 @@ Route::post('job/notes/add', [UtilityController::class, 'jobNotesUpload'])->name
 # Invoice Route
 Route::resource('invoices', InvoiceController::class);
 
+Route::get('invoice/generate-report', [InvoiceController::class, 'report'])->name('invoices.report');
+
+Route::post('invoice/generate-report', [InvoiceController::class, 'generateReport'])->name('invoices.generate-report');
+
 # Invoice Templates
 Route::post('invoices/email-template', [InvoiceController::class, 'emailTemplate'])->name('invoices.email-template');
 

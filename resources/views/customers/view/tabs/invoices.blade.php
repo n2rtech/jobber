@@ -2,6 +2,13 @@
 
 <div class="tab-pane customer-jobs-tabs" id="customer-invoices" role="tabpanel" aria-labelledby="customer-invoices-tab">
     @if (count($customer->invoices) > 0)
+    <div class="col-sm-12 text-right mb-2">
+        <form id="reportForm" action="{{ route('invoices.generate-report') }}" method="POST">
+            @csrf
+            <input type="hidden" name="customer_id" id="customer_id" value="{{ $customer->id }}">
+        </form>
+        <button type="submit" form="reportForm" class="btn btn-danger">Generate Report</button>
+    </div>
     <div class="table-responsive">
         <table id="dataTable" class="table table-sm table-bordered">
             <thead>
