@@ -298,6 +298,7 @@ a.nav-link .active{
 }
 .content-header h1{
     font-size: 26px;
+    color: #3498db;
 }
 .maxWidthControl .col-sm-6 h1{
     position: relative;
@@ -414,12 +415,13 @@ a.nav-link .active{
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     background: #f9f9f9;
     width: 100%;
-    padding: 28px 0;
+    padding: 20px 0;
     border-radius: 10px;
+    border: 1px solid #3498db;
 }
 .buttonBlocks .btn:hover{
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
-    background: #000;
+    background: #3498db;
     color: #fff;
 }
 #ui-datepicker-div{
@@ -614,21 +616,18 @@ a.nav-link .active{
 .customer-tabs .nav-tabs .nav-item{
     margin-right: 3px;
 }
-.customer-tabs .nav-tabs .nav-item:first-child{
-    border-left: 1px solid #000;
-}
 .customer-tabs .nav-tabs .nav-item:last-child{
     margin-right: 0;
 }
 .customer-tabs .nav-tabs .nav-link{
     background: #fff !important;
-    border-radius: 0;
-    color: #000 !important;
-    border: 1px solid #000;
+    border-radius: 10px;
+    color: #3e5774 !important;
+    border: 1px solid #3498db;
     font-size: 16px;
 }
 .customer-tabs .nav-tabs .nav-link.active{
-    background: #000 !important;
+    background: #3498db !important;
     color: #fff !important;
 }
 }
@@ -818,4 +817,19 @@ label.form-label {
     color: #FF5927;
     font-size: 15px;
     margin-top: 11px;
+}
+.content-wrapper {
+    background-color: #DEE2E6;
+}
+[class*=sidebar-dark-] {
+    background-color: #2b3c50;
+}
+[class*=sidebar-dark-] .sidebar a {
+    color: #ffffff;
+}
+.bg-dark {
+    background-color: #2b3c50!important;
+}
+.nav-tabs {
+    border-bottom: 1px solid transparent;
 }

@@ -8,10 +8,10 @@
     @include('customers.view.sections.content-header')
     <section class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 @include('customers.view.sections.details')
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 @include('customers.view.sections.action-buttons')
             </div>
         </div>

@@ -38,6 +38,14 @@
                 <a href="{{ route('estimates.create', ['customer_id' => $customer->id]) }}"
                     class="btn mb-3">New Estimate</a>
             </div>
+            <div class="col-sm-3 col-6">
+                <a style="background-color: #3e5774;color:#ffffff;" href="{{ route('schedules.index') }}"
+                    class="btn mb-3">Schedule</a>
+            </div>
+            <div class="col-sm-3 col-6">
+                <a style="background-color: #3e5774;color:#ffffff;" href="{{ route('customers.index') }}"
+                    class="btn mb-3">Search</a>
+            </div>
         </div>
     </div>
 </div>
