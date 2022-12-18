@@ -19,9 +19,9 @@
 <script>
     function dwellingOptions(value) {
         if (value == 'I have a copy of my plans') {
-            $('.uploadplan').slideToggle();
+            $('.uploadplan').css('display', 'block');
         } else {
-            $('.uploadplan').slideToggle();
+            $('.uploadplan').css('display', 'none');
         }
     }
 </script>
