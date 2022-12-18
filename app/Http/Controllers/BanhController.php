@@ -102,7 +102,7 @@ class BanhController extends Controller
             }
         }
 
-        return redirect()->route('customers.show', ['customer' => $survey->customer_id])->with('success', 'Survey Form saved successfully');
+        return redirect()->route('customers.show', ['customer' => $survey->customer_id, 'activeTab' => 'customer-banh'])->with('success', 'Survey Form saved successfully');
     }
 
     /**
@@ -210,7 +210,7 @@ class BanhController extends Controller
             }
         }
 
-        return redirect()->route('customers.show', ['customer' => $survey->customer_id])->with('success', 'Survey Form updated successfully');
+        return redirect()->route('customers.show', ['customer' => $survey->customer_id, 'activeTab' => 'customer-banh'])->with('success', 'Survey Form updated successfully');
     }
 
     /**
