@@ -620,7 +620,7 @@ a.nav-link .active{
     margin-right: 0;
 }
 .customer-tabs .nav-tabs .nav-link{
-    background: #fff !important;
+    background: #fff;
     border-radius: 10px;
     color: #3e5774 !important;
     border: 1px solid #3498db;

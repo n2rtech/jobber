@@ -343,3 +343,21 @@ tinymce.init({
                 });
     }
 </script>
+<script>
+    $(function() {
+        $('.buttonBlocks a').hover(function() {
+            $('#' + this.id +'-tab').css({'background':'#3498db','color':'#fff!important'});
+        }, function() {
+            // on mouseout, reset the background colour
+            $('#' + this.id+'-tab').css({'background':'#ffffff','color':'#fff'});
+        });
+    });
+    $(function() {
+        $('.customer-tabs li .nav-item a.nav-link').click(function() {
+            alert($(".customer-tabs .nav-link.active").attr("id"));
+        }, function() {
+            // on mouseout, reset the background colour
+            $('#' + this.id+'-tab').css({'background':'#ffffff','color':'#fff'});
+        });
+    });
+</script>

@@ -5,7 +5,7 @@
     <div class="card-body buttonBlocks">
         <div class="row pt-4">
             <div class="col-sm-3 col-6">
-                <a href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}"
+                <a id ="customer-jobs" href="{{ route('jobs.create', ['customer_id' => $customer->id]) }}"
                     class="btn mb-4">Add Job</a>
             </div>
             <div class="col-sm-3 col-6">
@@ -13,29 +13,29 @@
                     Record</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('customer.upload-photos', $customer->id) }}"
+                <a id ="customer-photos" href="{{ route('customer.upload-photos', $customer->id) }}"
                     class="btn mb-4">Upload
                     Photo</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('invoices.create', ['customer_id' => $customer->id]) }}"
+                <a id ="customer-invoices" href="{{ route('invoices.create', ['customer_id' => $customer->id]) }}"
                     class="btn mb-3">New Invoice</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('customer.add-notes', $customer->id) }}"
+                <a id ="customer-notes" href="{{ route('customer.add-notes', $customer->id) }}"
                     class="btn mb-4">Add Note</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('customer.send-email', $customer->id) }}"
+                <a id ="customer-sentemails" href="{{ route('customer.send-email', $customer->id) }}"
                     class="btn mb-4">Send Email</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('customer.upload-documents', $customer->id) }}"
+                <a id ="customer-documents" href="{{ route('customer.upload-documents', $customer->id) }}"
                     class="btn mb-4">Upload
                     File</a>
             </div>
             <div class="col-sm-3 col-6">
-                <a href="{{ route('estimates.create', ['customer_id' => $customer->id]) }}"
+                <a id ="customer-estimates" href="{{ route('estimates.create', ['customer_id' => $customer->id]) }}"
                     class="btn mb-3">New Estimate</a>
             </div>
             <div class="col-sm-3 col-6">

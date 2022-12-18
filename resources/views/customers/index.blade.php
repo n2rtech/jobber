@@ -168,15 +168,5 @@
 
 });
 </script>
-<script>
-    $(function() {
-        $('.buttonBlocks .btn').hover(function() {
-            $('#b').css('background-color', 'yellow');
-        }, function() {
-            // on mouseout, reset the background colour
-            $('#b').css('background-color', '');
-        });
-    });
-</script>
 <!-- Filter Box Scripts End -->
 @endpush
