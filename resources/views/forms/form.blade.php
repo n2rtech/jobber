@@ -31,6 +31,35 @@
                                 </div>
 
                                 <div class="col-lg-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="mobile_1">Phone Mobile</label><span class="text-danger">*</span>
+                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile" value="{{ $job->customer->mobile_1 }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <label class="form-label" for="partner_firstname">Partner</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="partner_firstname" id="partner_firstname" class="form-control form-control-sm" placeholder="Firstname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="partner_lastname" id="partner_lastname" class="form-control form-control-sm" placeholder="Lastname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="partner_mobile_1">Phone Mobile</label>
+                                        <input type="text" name="partner_mobile_1" id="partner_mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
                                     <label class="form-label" for="address_1">Address</label><span class="text-danger">*</span>
                                 </div>
 
@@ -42,7 +71,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" placeholder="Street Address 2" value="{{ $job->customer->address_1 }}">
+                                        <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" placeholder="Street Address 2" value="{{ $job->customer->address_2 }}">
                                     </div>
                                 </div>
 
@@ -71,20 +100,6 @@
                                                 <option value="{{ $country->country_name }}" @if($country->country_name == "Ireland") selected @endif>{{ $country->country_name }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="mobile_1">Phone Mobile</label><span class="text-danger">*</span>
-                                        <input type="text" name="mobile_1" id="mobile_1" class="form-control form-control-sm" placeholder="Phone Mobile" value="{{ $job->customer->mobile_1 }}" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="phone">Phone Other</label>
-                                        <input type="text" name="phone" id="phone" class="form-control form-control-sm" value="{{ $job->customer->phone }}" placeholder="Phone Other">
                                     </div>
                                 </div>
 
@@ -444,12 +459,115 @@
                              </div>
                              <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="mobile_operator">Mobile Operator</label><span class="text-danger">*</span>
-                                        <input type="text" name="mobile_operator" id="mobile_operator" class="form-control form-control-sm" placeholder="Mobile Operator" required>
-                                    </div>
+                                    <label class="form-label">Select your one or more mobile operators</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Vodafone" name="mobile_operator[]">
+                                        <span class="form-check-label">Vodafone</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Meteor" name="mobile_operator[]">
+                                        <span class="form-check-label">Meteor</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Three Mobile" name="mobile_operator[]">
+                                        <span class="form-check-label">Three Mobile</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Virgin" name="mobile_operator[]">
+                                        <span class="form-check-label">Virgin</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Eir" name="mobile_operator[]">
+                                        <span class="form-check-label">Eir</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Tesco" name="mobile_operator[]">
+                                        <span class="form-check-label">Tesco</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Other" name="mobile_operator[]">
+                                        <span class="form-check-label">Other</span>
+                                    </label>
                                 </div>
                              </div>
+                        </fieldset>
+
+                        <h6>Contacts</h6>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label class="form-label" for="building_contractor_firstname">Building Contractor - Foreman (enter your name for self-build)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="building_contractor_firstname" id="building_contractor_firstname" class="form-control form-control-sm" placeholder="Firstname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="building_contractor_lastname" id="building_contractor_lastname" class="form-control form-control-sm" placeholder="Lastname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="building_contractor_phone">Phone</label>
+                                        <input type="text" name="building_contractor_phone" id="building_contractor_phone" class="form-control form-control-sm" placeholder="Phone">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="building_contractor_email">Email</label>
+                                        <input type="text" name="building_contractor_email" id="building_contractor_email" class="form-control form-control-sm" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <label class="form-label" for="electrical_contractor_firstname">Electrical Contractor</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="electrical_contractor_firstname" id="electrical_contractor_firstname" class="form-control form-control-sm" placeholder="Firstname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="electrical_contractor_lastname" id="electrical_contractor_lastname" class="form-control form-control-sm" placeholder="Lastname">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="electrical_contractor_phone">Phone</label>
+                                        <input type="text" name="electrical_contractor_phone" id="electrical_contractor_phone" class="form-control form-control-sm" placeholder="Phone">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="electrical_contractor_email">Email</label>
+                                        <input type="text" name="electrical_contractor_email" id="electrical_contractor_email" class="form-control form-control-sm" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
                         </fieldset>
 
                         <h6>Further Information</h6>
@@ -469,6 +587,100 @@
                                     </div>
                                 </div>
                             </div>
+                        </fieldset>
+
+                        <h6>ISP</h6>
+                        <fieldset>
+                            <div class="row mb-3">
+                                <div class="col-lg-12">
+                                    <label class="form-label">ISP Checklist</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Telecom Pole" name="isp[]" onchange="$('.telecompoldiv').slideToggle();">
+                                        <span class="form-check-label">Telecom Pole</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="ESB Pole" name="isp[]"  onchange="$('.esbpolediv').slideToggle();">
+                                        <span class="form-check-label">ESB Pole</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Virgin Media" name="isp[]" onchange="$('.virginmediadiv').slideToggle();">
+                                        <span class="form-check-label">Virgin Media</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Wireless Operator" name="isp[]" onchange="$('.wirelessopeartordiv').slideToggle();">
+                                        <span class="form-check-label">Wireless Operator</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Other" name="isp[]" onchange="$('.otherispdiv').slideToggle();">
+                                        <span class="form-check-label">Other</span>
+                                    </label>
+                                </div>
+                            </div>
+                             <div class="row mb-3">
+                                <div class="col-lg-12 telecompoldiv">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="telecompolfield">Telecom Pole</label>
+                                        <input type="text" name="telecompolfield" id="telecompolfield" class="form-control form-control-sm" value="I am interested in Telecom Pole." readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 esbpolediv">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="esbpolefield">ESB Pole</label>
+                                        <input type="text" name="esbpolefield" id="esbpolefield" class="form-control form-control-sm" value="I am interested in ESB Pole" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 virginmediadiv">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="virginmediafield">Virgin Media</label>
+                                        <input type="text" name="virginmediafield" id="virginmediafield" class="form-control form-control-sm" value="I am interested in Virgin Media" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 wirelessopeartordiv">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="wirelessopeartorfield">Wireless Operator</label>
+                                        <input type="text" name="wirelessopeartorfield" id="wirelessopeartorfield" class="form-control form-control-sm" value="I am interested in Wireless Operator" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 otherispdiv">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="otherispfield">Other ISP</label>
+                                        <input type="text" name="otherispfield" id="otherispfield" class="form-control form-control-sm" value="I am interested in Other ISP" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-label">Broadband Speeds</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input form-check-input-dark" value="Discussed" name="discussed">
+                                        <span class="form-check-label">Discussed</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="form-label">Customer Signature</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <input type="text" name="signature" id="signature" class="form-control form-control-sm" placeholder="Customer Signature">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date</label>
+                                        <input type="date" name="signature_date" id="signature_date" class="form-control form-control-sm" placeholder="Date">
+                                    </div>
+                                </div>
+                             </div>
                         </fieldset>
 
                     </form>

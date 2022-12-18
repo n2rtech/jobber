@@ -86,3 +86,18 @@ a.btn.btn-primary:hover {
     background-color: #ff5927d1;
     border: 1px solid black;
 }
+.telecompoldiv{
+    display:none;
+}
+.esbpolediv{
+    display: none;
+}
+.virginmediadiv{
+    display: none;
+}
+.wirelessopeartordiv{
+    display: none;
+}
+.otherispdiv{
+    display: none;
+}
