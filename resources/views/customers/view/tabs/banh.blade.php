@@ -1,9 +1,6 @@
  {{-- Banh Tab Start --}}
 
  <div class="tab-pane" id="customer-banh" role="tabpanel" aria-labelledby="customer-banh-tab">
-    <div class="col-sm-12 text-right mb-2">
-        <a href="{{ route('banh.index', ['customer_id' => $customer->id])}}" class="btn btn-danger">Create Survey</a>
-    </div>
      @if (count($customer->banh) > 0)
          <div class="table-responsive">
              <table id="dataTable" class="table table-sm table-bordered">
@@ -13,6 +10,7 @@
                          <th>{{ __('Date Added') }}</th>
                          <th>{{ __('Job Type') }}</th>
                          <th width="45%">{{ __('Products / Services') }}</th>
+                         <th>{{ __('Survey') }}</th>
                          <th width="5%"></th>
                      </tr>
                  </thead>
@@ -31,6 +29,14 @@
                                         <li>{{ $product->product->name }}</li>
                                     @endforeach
                                 </ul>
+                            </td>
+                            <td>
+                                @isset($banh->survey)
+                                <a href="{{ route('banh.edit', $banh->survey->id)}}" class="btn btn-sm btn-warning">Edit Survey</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-primary">Generate PDF (pending)</a>
+                                @else
+                                <a href="{{ route('banh.index', ['customer_id' => $customer->id, 'banh_id' => $banh->id])}}" class="btn btn-sm btn-success">Create Survey</a>
+                                @endisset
                             </td>
                              <td>
                                  <div class="btn-group">

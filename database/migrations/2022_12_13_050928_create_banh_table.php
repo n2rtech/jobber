@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile_1')->nullable();
+            $table->string('partner_firstname')->nullable();
+            $table->string('partner_lastname')->nullable();
+            $table->string('partner_mobile_1')->nullable();
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
             $table->string('city')->nullable();
@@ -43,9 +46,21 @@ return new class extends Migration
             $table->longText('wifi')->nullable();
             $table->longText('multiroom_music')->nullable();
             $table->longText('mobile_phone_repeaters')->nullable();
-            $table->string('mobile_operator')->nullable();
+            $table->longText('mobile_operator')->nullable();
+            $table->string('building_contractor_firstname')->nullable();
+            $table->string('building_contractor_lastname')->nullable();
+            $table->string('building_contractor_phone')->nullable();
+            $table->string('building_contractor_email')->nullable();
+            $table->string('electrical_contractor_firstname')->nullable();
+            $table->string('electrical_contractor_lastname')->nullable();
+            $table->string('electrical_contractor_phone')->nullable();
+            $table->string('electrical_contractor_email')->nullable();
             $table->longText('information')->nullable();
             $table->date('move_in_date')->nullable();
+            $table->longText('isp')->nullable();
+            $table->longText('discussed')->nullable();
+            $table->longText('signature')->nullable();
+            $table->date('signature_date')->nullable();
             $table->timestamps();
         });
     }

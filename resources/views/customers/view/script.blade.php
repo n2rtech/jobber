@@ -22,6 +22,22 @@
         })
     };
 
+    function confirmCableDelete(no) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete Cable!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('cable_' + no).remove();
+            }
+        })
+    };
+
     function confirmEstimateDelete(no) {
         Swal.fire({
             title: 'Are you sure?',
