@@ -1122,17 +1122,16 @@
             </tr>
         </table>
 
-
-
         <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
             <tr>
                 <th
                     style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
-                    Notes</th>
+                    ESB Pole</th>
             </tr>
             <tr>
                 <td
                     style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('ESB Pole', $banh->isp) ? 'I am interested in ESB Pole' : '' }}
                 </td>
 
             </tr>
@@ -1173,6 +1172,8 @@
 
             </tr>
         </table>
+
+
 
         <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
             <tr>
@@ -1331,12 +1332,11 @@
             <tr>
                 <th
                     style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
-                    ESB Pole</th>
+                    Notes</th>
             </tr>
             <tr>
                 <td
                     style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    {{ in_array('ESB Pole', $banh->isp) ? 'I am interested in ESB Pole' : '' }}
                 </td>
 
             </tr>
