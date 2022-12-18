@@ -213,5 +213,6 @@ Route::resource('form', FormController::class);
 
 Route::post('form/banh', [ FormController::class, 'banh'])->name('form.banh');
 
+Route::get('download/survey/{id}', [BanhController::class, 'downloadSurvey'])->name('download.survey');
 
 Route::get('/copyeir',[CustomerController::class,'copyeir'])->name('copyeir');

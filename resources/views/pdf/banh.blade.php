@@ -992,7 +992,7 @@
             <tr>
                 <td
                     style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
-                    Mobile Operator: {{ $banh->mobile_operator }}</td>
+                    Mobile Operator: @foreach($banh->mobile_operator as $operator) {{ $operator }} @if($loop->last) @else ,  @endif @endforeach</td>
 
             </tr>
             <tr>
@@ -1075,11 +1075,268 @@
             <tr>
                 <th
                     style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Telecom Pole</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('Telecom Pole', $banh->isp) ? 'I am interested in Telecom Pole' : '' }}
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
                     Notes</th>
             </tr>
             <tr>
                 <td
                     style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Virgin Media</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('Virgin Media', $banh->isp) ? 'I am interested in Virgin Media' : '' }}
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Wireless Operator</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('Wireless Operator', $banh->isp) ? 'I am interested in Wireless Operator' : '' }}
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    Other ISP</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('Other', $banh->isp) ? 'I am interested in Other ISP' : '' }}
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border: 1px solid #000;margin-top: 50px;border-collapse: collapse;" class="table">
+            <tr>
+                <th
+                    style="background-color: #000;color: #fff;line-height: 36px;padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;">
+                    ESB Pole</th>
+            </tr>
+            <tr>
+                <td
+                    style="border: 1px solid #000;padding-left: 15px;padding-right: 15px;text-align: left;line-height: 30px;font-size: 16px;height: 30px;">
+                    {{ in_array('ESB Pole', $banh->isp) ? 'I am interested in ESB Pole' : '' }}
                 </td>
 
             </tr>
