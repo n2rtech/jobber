@@ -224,4 +224,19 @@ class BanhController extends Controller
         Banh::find($id)->delete();
         return redirect()->back()->with('success', 'BANH Form deleted successfully!');
     }
+
+    public function downloadSurvey($id){
+        $data                           = [];
+        $survey                         = Survey::find($id);
+        $company                        = CompanyDetail::first();
+        $data['company']                = $company;
+        $data['survey']                 = $survey;
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+        // die();
+
+        $pdf                 = Pdf::loadView('pdf.survey', $data);
+        return $pdf->download('survey.pdf');
+    }
 }

@@ -74,6 +74,7 @@ class Banh extends Model
 
     public function survey()
     {
-        return $this->hasOne(Survey::class);
+        return $this->hasOne(Survey::class, 'banh_id');
     }
+
 }

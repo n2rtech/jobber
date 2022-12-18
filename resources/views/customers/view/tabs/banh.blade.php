@@ -33,7 +33,7 @@
                             <td>
                                 @isset($banh->survey)
                                 <a href="{{ route('banh.edit', $banh->survey->id)}}" class="btn btn-sm btn-warning">Edit Survey</a>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-primary">Generate PDF (pending)</a>
+                                <a href="{{ route('download.survey', $banh->survey->id) }}" class="btn btn-sm btn-primary">Generate Pdf</a>
                                 @else
                                 <a href="{{ route('banh.index', ['customer_id' => $customer->id, 'banh_id' => $banh->id])}}" class="btn btn-sm btn-success">Create Survey</a>
                                 @endisset

@@ -285,10 +285,10 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="type{{ $loop->iteration }}" class="form-label">Cable
+                                                                <label for="type1" class="form-label">Cable
                                                                     Type</label>
                                                                 <select class="form-control selectstyle"
-                                                                    name="cable[{{ $loop->iteration }}][type]" id="type{{ $loop->iteration }}">
+                                                                    name="cable[1][type]" id="type1">
                                                                     <option value="">Select a value</option>
                                                                     <option value="TV Coaxial Cable 75 Ohm">TV Coaxial
                                                                         Cable 75 Ohm</option>
@@ -301,10 +301,10 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <label for="terminate{{ $loop->iteration }}"
+                                                                <label for="terminate1"
                                                                     class="form-label">Terminate</label>
                                                                 <select class="form-control selectstyle"
-                                                                    name="cable[{{ $loop->iteration }}][terminate]" id="terminate{{ $loop->iteration }}">
+                                                                    name="cable[1][terminate]" id="terminate1">
                                                                     <option value="">Select a value</option>
                                                                     <option value="RJ45 plug both ends">RJ45 plug both ends
                                                                     </option>
@@ -316,8 +316,8 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <label for="note{{ $loop->iteration }}" class="form-label">Note</label>
-                                                                <textarea class="form-control textareastyle" name="cable[{{ $loop->iteration }}][note]" id="note{{ $loop->iteration }}" cols="3" rows="3"></textarea>
+                                                                <label for="note1" class="form-label">Note</label>
+                                                                <textarea class="form-control textareastyle" name="cable[1][note]" id="note1" cols="3" rows="3"></textarea>
                                                             </div>
                                                         </div>
 

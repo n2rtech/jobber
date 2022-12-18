@@ -33,13 +33,13 @@
               <td colspan="3" style="font-size:22px;font-weight: 500;padding-top: 30px;padding-bottom: 20px;text-align: center;line-height: 26px;">Client</td>
           </tr>
           <tr>
-              <td colspan="3" style="font-size:24px;padding-top: 20px;padding-bottom: 20px;text-align: center;line-height: 26px;font-weight: 400;">{{ $customer->name }}</td>
+              <td colspan="3" style="font-size:24px;padding-top: 20px;padding-bottom: 20px;text-align: center;line-height: 26px;font-weight: 400;">{{ $survey->firstname }} {{ $survey->lastname }}</td>
           </tr>
           <tr>
               <td colspan="3" style="font-size:22px;padding-top: 20px;padding-bottom: 20px;text-align: center;line-height: 26px;font-weight: 500;">Site Address</td>
           </tr>
           <tr>
-              <td colspan="3" style="font-size:18px;padding-bottom: 20px;text-align: center;line-height: 26px;font-weight: 300;">{{ getCustomerAddress($customer->id) }}</td>
+              <td colspan="3" style="font-size:18px;padding-bottom: 20px;text-align: center;line-height: 26px;font-weight: 300;">{{ getCustomerAddress($survey->customer_id) }}</td>
           </tr>
 
         </tbody>
@@ -85,7 +85,7 @@
 
           <tr>
             <td style="vertical-align: top;letter-spacing: 4px;color: #f17500;font-size: 17px;">Page | 1</td>
-            <td style="color: #f17500;">Client: <b>{{ $customer->name }}</b><br>{{ getCustomerAddress($customer->id) }} </td>
+            <td style="color: #f17500;">Client: <b>{{ $survey->firstname }} {{ $survey->lastname }}</b><br>{{ getCustomerAddress($survey->customer_id) }} </td>
           </tr>
         </tbody>
 
@@ -93,7 +93,7 @@
 
 
       <!--Page-2-->
-      @foreach($request['cable'] as $value)
+      @foreach($survey->cables as $cable)
       <table style="width:100%;border-bottom: 1px dashed #f17500;padding-bottom: 10px;padding-top: 10px;" border="0" cellspacing="0" cellpadding="0" class="table">
         <thead>
           <tr>
@@ -106,37 +106,37 @@
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>From</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['from'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->from }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>To</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['to'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->to  }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>Quantity</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['quantity'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->quantity }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>Cable Type</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['type'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->type }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>Terminate</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['terminate'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->terminate }}</td>
 
         </tr>
          <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;"><b>Notes</b></td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $value['note'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;">{{ $cable->note }}</td>
         </tr>
 
          <tr>
@@ -155,7 +155,7 @@
 
           <tr>
             <td style="vertical-align: top;letter-spacing: 4px;color: #f17500;font-size: 17px;">Page | 2</td>
-            <td style="color: #f17500;">Client: <b>{{ $customer->name }}</b><br>{{ getCustomerAddress($customer->id) }} </td>
+            <td style="color: #f17500;">Client: <b>{{ $survey->firstname }} {{ $survey->lastname }}</b><br>{{ getCustomerAddress($survey->customer_id) }} </td>
           </tr>
         </tbody>
 
@@ -188,18 +188,18 @@
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Name</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $customer->name }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->firstname }} {{ $survey->lastname }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Phone</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">@isset($customer->mobile_1) {{ $customer->mobile_1 }} @endisset @isset($customer->phone), {{ $customer->phone }} @endisset @isset($customer->mobile_2), {{ $customer->mobile_2 }} @endisset</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">@isset($survey->mobile_1) {{ $survey->mobile_1 }} @endisset @isset($survey->phone), {{ $survey->phone }} @endisset @isset($survey->mobile_2), {{ $survey->mobile_2 }} @endisset</td>
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Email</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $customer->email }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->email }}</td>
 
         </tr>
 
@@ -220,19 +220,19 @@
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Name</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['electrical_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->electrical_contractor }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Phone</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['phone_electrical_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->electrical_contractor_phone }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Email</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['email_electrical_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->electrical_contractor_email }}</td>
 
         </tr>
 
@@ -253,19 +253,19 @@
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Name</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['building_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->building_contractor }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Phone</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['phone_building_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->building_contractor_phone }}</td>
 
         </tr>
         <tr>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 15%;line-height: 20px;">Email</td>
           <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 10%;line-height: 20px;"><b>:</b></td>
-          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $request['email_building_contractor'] }}</td>
+          <td style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;width: 75%;line-height: 20px;">{{ $survey->building_contractor_email }}</td>
 
         </tr>
 
@@ -311,7 +311,7 @@
 
           <tr>
             <td style="vertical-align: top;letter-spacing: 4px;color: #f17500;font-size: 17px;">Page | 3</td>
-            <td style="color: #f17500;">Client: <b>{{ $customer->name }}</b><br>{{ getCustomerAddress($customer->id) }} </td>
+            <td style="color: #f17500;">Client: <b>{{ $survey->firstname }} {{ $survey->lastname }}</b><br>{{ getCustomerAddress($survey->customer_id) }} </td>
           </tr>
         </tbody>
 
@@ -338,7 +338,7 @@
         </tr>
 
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $request['dish_location'] }}</td>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $survey->dish_location }}</td>
         </tr>
 
         <tr>
@@ -347,7 +347,7 @@
         </tr>
 
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $request['saorview_location'] }}</td>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $survey->saorview_location }}</td>
         </tr>
 
         <tr>
@@ -356,7 +356,7 @@
         </tr>
 
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $request['repeater_location'] }}</td>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 10px;">{{ $survey->repeater_location }}</td>
         </tr>
 
 
@@ -371,35 +371,68 @@
             <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;text-decoration: underline;padding-bottom: 20px;"><b>Technical Notes</b></td>
 
         </tr>
-
+        @if(in_array('TV Socket', $survey->item))
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">TV outlet socket should be F Type NON isolated to allow DC voltage pass.</td>
-
+            <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+                {{ $survey->tvsocketfield }}
+            </td>
         </tr>
+        @endif
 
+        @if(in_array('HDMI', $survey->item))
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 22px;padding-bottom: 20px;">HDMI socket boxes should be 40 mm deep. HDMI cable plug ends should be protected. </td>
+         <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->hdmifield }}
+        </td>
         </tr>
+        @endif
 
+        @if(in_array('Ceiling Speakers', $survey->item))
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">All CAT 5/6 cables should be labeled and terminated at both ends and tested. </td>
-
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->ceilingspeakersfield }}
+        </td>
         </tr>
+        @endif
 
+        @if(in_array('Electrical sockets', $survey->item))
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 22px;padding-bottom: 20px;">Confirm height of socket outlets for wall mounted TVs with client. Wall mounted TVs may also require HDMI cables to be installed.</td>
+         <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->electricalsocketfield }}
+        </td>
         </tr>
+        @endif
 
+        @if(in_array('CAT5/6', $survey->item))
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 22px;padding-top: 40px;">Electrical socket required in attic. One also required in utility at TV cabinet.</td>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->cat56field }}
+        </td>
         </tr>
+        @endif
+
+        @if(in_array('Wall Mounted TVs', $survey->item))
+        <tr>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->wallmountedtvfield }}
+        </td>
+        </tr>
+        @endif
+
+        @if(in_array('MPR', $survey->item))
+        <tr>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;padding-bottom: 20px;">
+            {{ $survey->mprfield }}
+        </td>
+        </tr>
+        @endif
 
         <tr>
           <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 18px;text-decoration: underline;padding-bottom: 20px;padding-top: 30px;"><b>General Notes</b></td>
         </tr>
 
         <tr>
-          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 22px;padding-top: 20px;">{{ $request['notes_general'] }}</td>
+          <td colspan="3" style="padding-left: 15px;padding-right: 15px;text-align: left;font-size: 16px;line-height: 22px;padding-top: 20px;">{{ $survey->notes_general }}</td>
         </tr>
 
 
@@ -414,7 +447,7 @@
 
           <tr>
             <td style="vertical-align: top;letter-spacing: 4px;color: #f17500;font-size: 17px;">Page |  4</td>
-            <td style="color: #f17500;">Client: <b>{{ $customer->name }}</b><br>{{ getCustomerAddress($customer->id) }} </td>
+            <td style="color: #f17500;">Client: <b>{{ $survey->firstname }} {{ $survey->lastname }}</b><br>{{ getCustomerAddress($survey->customer_id) }} </td>
           </tr>
         </tbody>
 
@@ -461,7 +494,7 @@
 
           <tr>
             <td style="vertical-align: top;letter-spacing: 4px;color: #f17500;font-size: 17px;">Page |  5</td>
-            <td style="color: #f17500;">Client: <b>{{ $customer->name }}</b><br>{{ getCustomerAddress($customer->id) }} </td>
+            <td style="color: #f17500;">Client: <b>{{ $survey->firstname }} {{ $survey->lastname }}</b><br>{{ getCustomerAddress($survey->customer_id) }} </td>
           </tr>
         </tbody>
 
