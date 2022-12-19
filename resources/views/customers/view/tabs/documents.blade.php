@@ -1,7 +1,7 @@
 {{-- Documents Tab Start --}}
 <div class="tab-pane fade" id="customer-documents" role="tabpanel" aria-labelledby="customer-documents-tab">
     <div class="row">
-        <div class="col-xl-8">
+        <div class="col-xl-6">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-6">
             <div class="card card-widget widget-user-2">
                 <div class="card-header bg-dark">
                     <small>Uploaded Document</small>

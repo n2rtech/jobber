@@ -401,7 +401,7 @@ a.nav-link .active{
     padding: 8px 12px;
 }
 .customer-jobs-tabs table thead th{
-    background: darkblue;
+    background: #2b3c50;
     color: #fff;
     font-weight: normal;
 }
@@ -607,7 +607,7 @@ a.nav-link .active{
 }
 .customer-tabs .card-header{
     background: #fff;
-    padding-top: 4px !important;
+    padding: 10px !important;
 }
 .customer-tabs .card-dark:not(.card-outline)>.card-header{
     background: #fff !important;
@@ -832,4 +832,8 @@ label.form-label {
 }
 .nav-tabs {
     border-bottom: 1px solid transparent;
+    padding: 10px 1.25rem 0px 1.25rem;
+}
+.card.card-tabs:not(.card-outline)>.card-header .nav-item:first-child .nav-link {
+    border-left-color: #3498db !important;
 }

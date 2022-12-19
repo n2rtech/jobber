@@ -40,7 +40,7 @@
                                     <span style="color:{{$color}}" >{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                     <span style="color:{{$color}}" >{{ \Carbon\Carbon::parse($job->start)->format('d-M')}}</span>
                                     <br/>
-                                    <span class="text-info" >{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
+                                    <span class="text-success" >{{ \Carbon\Carbon::parse($job->start)->format('H:i') }} - </span>
                                     <span class="text-danger" >{{ \Carbon\Carbon::parse($job->end)->format('H:i') }}</span>
                                     </a>
                                 @endif
@@ -114,7 +114,7 @@
                                 <br/>
                                     <span style="color:{{ $color }}">{{ substr(\Carbon\Carbon::parse($job->start)->format('l'), 0, 3) }}</span>
                                 <br/>
-                                <span class="text-info">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
+                                <span class="text-success">{{ \Carbon\Carbon::parse($job->start)->format('H:i:s') }}</span>
                                 <br/>
                                 <span class="text-danger">{{ \Carbon\Carbon::parse($job->end)->format('H:i:s') }}</span>
                                 @endif

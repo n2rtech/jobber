@@ -41,7 +41,7 @@
         <div class="col-md-3">
             <div class="sticky-top mb-3">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dark">
                   <h4 class="card-calender-title">Unscheduled</h4>
                   <div class="card-tools">
                     <div class="circle">{{ count($unscheduled_jobs) }}</div>
