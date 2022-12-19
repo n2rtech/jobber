@@ -497,6 +497,8 @@ class InvoiceController extends Controller
         $company                = CompanyDetail::first();
 
         $company                        = CompanyDetail::first();
+
+        // return view('invoices.report.pdf', compact('filter_status', 'customer', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount', 'invoices', 'company'));
         $data['company']                = $company;
         $data['customer']               = $customer;
         $data['invoices']               = $invoices;
