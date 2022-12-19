@@ -105,6 +105,8 @@ Route::get('invoice/generate-report', [InvoiceController::class, 'report'])->nam
 
 Route::post('invoice/generate-report', [InvoiceController::class, 'generateReport'])->name('invoices.generate-report');
 
+Route::post('invoice/download-report', [InvoiceController::class, 'downloadReport'])->name('invoices.download-report');
+
 # Invoice Templates
 Route::post('invoices/email-template', [InvoiceController::class, 'emailTemplate'])->name('invoices.email-template');
 

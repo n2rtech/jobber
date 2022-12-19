@@ -394,10 +394,21 @@ class InvoiceController extends Controller
         $filter_invoice_to = null;
         $paid_amount = 0;
         $due_amount = 0;
-        return view('invoices.report', compact('filter_status', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount'));
+        return view('invoices.report.report', compact('filter_status', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount'));
     }
 
     public function generateReport(Request $request){
+
+        $rules = [
+            'customer_id'                  => 'required',
+        ];
+
+        $messages = [
+            'customer_id.required'             => "Please select Customer.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
         $customer               = Customer::find($request->customer_id);
 
         $invoices               = Invoice::query();
@@ -432,7 +443,67 @@ class InvoiceController extends Controller
         }
         $invoices               = $invoices->orderBy('id', 'desc')->get();
         $paid_amount            = $invoices->sum('paid');
-        $due_amount             = $invoices->sum('total') - $invoices->sum('paid');;
-        return view('invoices.report', compact('filter_status', 'customer', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount', 'payments'));
+        $due_amount             = $invoices->sum('total') - $invoices->sum('paid');
+        return view('invoices.report.report', compact('filter_status', 'customer', 'filter_name', 'filter_invoice_from', 'filter_invoice_to', 'paid_amount', 'due_amount', 'invoices'));
+    }
+
+    public function downloadReport(Request $request){
+
+        $rules = [
+            'customer_id'                  => 'required',
+        ];
+
+        $messages = [
+            'customer_id.required'             => "Please select Customer.",
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $customer               = Customer::find($request->customer_id);
+
+        $invoices               = Invoice::query();
+        $filter_status          = $request->status;
+        $filter_name            = $request->name;
+        $filter_invoice_from    = $request->invoice_from;
+        $filter_invoice_to      = $request->invoice_to;
+        $payments               = [];
+
+        if (isset($customer)) {
+            $invoices->where('customer_id', $customer->id);
+            $payments = Payment::where('customer_id', $customer->id)->get();
+        }
+
+        isset($filter_status)       ? $invoices->where('status', $filter_status) : $invoices;
+
+        if ($request->invoice_from && $request->invoice_to) {
+
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereBetween('invoice_date', [$from, $to]);
+        }
+
+        if ($request->invoice_from) {
+            $from   = date("Y-m-d", strtotime($request->input('invoice_from')));
+            $invoices->whereDate('invoice_date', '>=', $from);
+        }
+
+        if ($request->invoice_to) {
+            $to     = date('Y-m-d', strtotime($request->input('invoice_to')));
+            $invoices->whereDate('invoice_date', '<=', $to);
+        }
+        $invoices               = $invoices->orderBy('id', 'desc')->get();
+        $paid_amount            = $invoices->sum('paid');
+        $due_amount             = $invoices->sum('total') - $invoices->sum('paid');
+        $company                = CompanyDetail::first();
+
+        $company                        = CompanyDetail::first();
+        $data['company']                = $company;
+        $data['customer']               = $customer;
+        $data['invoices']               = $invoices;
+        $data['paid_amount']            = $paid_amount;
+        $data['due_amount']             = $due_amount;
+
+        $pdf                 = Pdf::loadView('invoices.report.pdf', $data);
+        return $pdf->download('statement.pdf');
     }
 }
