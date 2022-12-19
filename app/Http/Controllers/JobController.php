@@ -513,7 +513,7 @@ class JobController extends Controller
             $sent_email->medium      = 'text';
             $sent_email->type        = 'jobs';
             $sent_email->mode        = 'confirmation';
-            $sent_email->text        =  nl2br($request->message);
+            $sent_email->text        =  nl2br($request->text_message);
             $sent_email->save();
             return response()->json(['success' => 'Booking Confirmation has been sent via Text!']);
         }
