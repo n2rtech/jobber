@@ -21,7 +21,7 @@
                 </thead>
                 <tbody class="mytable">
                     @foreach ($jobs as $job)
-                   
+
                     @php
                      if(!is_null($job->user_id))
                      $color = App\Models\User::find($job->user_id)->color;
@@ -47,10 +47,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <th style="border-top:none;" class="all" colspan="2">{{ __('Address') }}
+                            <th style="border-top:none;border-right:none;" class="all" colspan="1">{{ __('Address') }}
                             <br/>
                                <span style="font-size: 17px;font-weight: 400"> {!! getCity($job->customer_id) !!} </span>
 
+                        </th>
+                        <th style="font-size: 17px;border-left:none;border-bottom:none;border-top:none;text-align: right;">
+                            @if($job->status == "provisional") <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Provisional" style="color:#fc9003"> <i class="fas fa-dot-circle"> </i> </a> @endif
+                            @if($job->status == "provisional") <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Provisional" style="color:#01FF70"> <i class="fas fa-dot-circle"> </i> </a> @endif
+                            <br>
+                            <a href="{{ route('jobs.show', $job->id) }}"><i class="fas fa-eye"></i></a>
                         </th>
                         </tr>
                     @endforeach
@@ -75,7 +81,7 @@
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
-                    
+
                      @php
                      if(!is_null($job->user_id))
                      $color = App\Models\User::find($job->user_id)->color;
