@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Invoice</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
@@ -48,103 +49,121 @@
             </tbody>
 
         </table>
-        <table class="table" style="width:41%;padding-top: 30px;padding-bottom: 10px;float: right;">
+        <table style="width: 100%;display: inline-table;margin-bottom: 50px;">
             <tbody>
                 <tr>
-                    <td colspan="3"
-                        style="font-size:26px;font-weight: 500;text-align: right;line-height: 22px;padding-top: 5px;padding-bottom: 10px;border-bottom: 1px solid #6a6969;">
-                        <b>Statement of Accounts</b></td>
-                </tr>
-                <tr>
-                    <td colspan="3"
-                        style="font-size:15px;font-weight: 500;text-align: right;line-height: 22px;border-bottom: 1px solid #6a6969;">
-                        @isset($filter_invoice_from)
-                            {{ $filter_invoice_from }} to {{ $filter_invoice_to }}
-                        @else
-                            All time
-                        @endisset
+                    <td colspan="2" style="width: 100%">
+                        <table class="table" style="width:40%;padding-top: 30px;padding-bottom: 10px;float: right;">
+                            <tbody>
+                                <tr>
+                                    <td colspan="3"
+                                        style="font-size:26px;font-weight: 500;text-align: right;line-height: 22px;padding-top: 5px;padding-bottom: 10px;border-bottom: 1px solid #6a6969;">
+                                        <b>Statement of Accounts</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"
+                                        style="font-size:15px;font-weight: 500;text-align: right;line-height: 22px;border-bottom: 1px solid #6a6969;">
+                                        @isset($filter_invoice_from)
+                                            {{ $filter_invoice_from }} to {{ $filter_invoice_to }}
+                                        @else
+                                            All time
+                                        @endisset
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
                     </td>
                 </tr>
-
             </tbody>
-
         </table>
-        <table border="0" cellspacing="0" cellpadding="0" class="table" style="width:60%;float: left;">
 
+        <table style="width: 100%;display: inline-table;">
             <tbody>
                 <tr>
-                    <td colspan="3" style="text-align: left;"><b>To</b></td>
-                </tr>
-                <tr>
-                    <td colspan="3"
-                        style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;padding-top: 5px;">
-                        <b>Customer Name:-</b> {{ $customer->name }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;">
-                        <b>Address:-</b>{{ $customer->address_1 }}<br>
-                        {{ $customer->address_2 }} {{ $customer->city }} {{ $customer->county }}
-                        {{ $customer->country }} {{ $customer->eir_code }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;">
-                        <b>Phone Number:-</b> @isset($customer->phone)
-                            {{ $customer->phone }} |
-                            @endisset @isset($customer->mobile_1)
-                            {{ $customer->mobile_1 }}
-                            @endisset @isset($customer->mobile_2)
-                            | {{ $customer->mobile_2 }}
-                        @endisset
+                    <td style="width:60%;">
+                        <table cellspacing="0" cellpadding="0" class="table">
+
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style="text-align: left;"><b>To</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"
+                                        style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;padding-top: 5px;">
+                                        <b>Customer Name:-</b> {{ $customer->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;">
+                                        <b>Address:-</b>{{ $customer->address_1 }}<br>
+                                        {{ $customer->address_2 }} {{ $customer->city }} {{ $customer->county }}
+                                        {{ $customer->country }} {{ $customer->eir_code }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="font-size:15px;font-weight: 500;text-align: left;line-height: 22px;">
+                                        <b>Phone Number:-</b> @isset($customer->phone)
+                                            {{ $customer->phone }} |
+                                            @endisset @isset($customer->mobile_1)
+                                            {{ $customer->mobile_1 }}
+                                            @endisset @isset($customer->mobile_2)
+                                            | {{ $customer->mobile_2 }}
+                                        @endisset
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </td>
+                    <td style="width:40%;padding-top:70px;">
+                        <table class="table" style="width:100%;">
+
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="text-align: left;background-color: #f6f6f6;padding: 5px 10px;"><b>Account
+                                            Summary</b></td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        Opening Balance</td>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        € 0.00</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        Invoiced Amount</td>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        € {{ $paid_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;border-bottom: 2px solid #6a6969;padding-right: 0px;">
+                                        Amount Paid</td>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;border-bottom: 2px solid #6a6969;padding-left: 0px;">
+                                        € 7,052.00</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        Balance Due</td>
+                                    <td
+                                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
+                                        € {{ $due_amount }}</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
                     </td>
                 </tr>
-
             </tbody>
-
         </table>
-        <table class="table" style="width:40%;">
-
-            <tbody>
-                <tr>
-                    <td colspan="2" style="text-align: left;background-color: #f6f6f6;padding: 5px 10px;"><b>Account
-                            Summary</b></td>
-                </tr>
-                <tr>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        Opening Balance</td>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        $ 0.00</td>
-                </tr>
-                <tr>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        Invoiced Amount</td>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        $ {{ $paid_amount }}</td>
-                </tr>
-                <tr>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;border-bottom: 2px solid #6a6969;padding-right: 0px;">
-                        Amount Paid</td>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;border-bottom: 2px solid #6a6969;padding-left: 0px;">
-                        $ 7,052.00</td>
-                </tr>
-                <tr>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: left;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        Balance Due</td>
-                    <td
-                        style="font-size:15px;font-weight: 400;text-align: right;line-height: 22px;padding-top: 5px;padding: 5px 10px;">
-                        $ {{ $due_amount }}</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
 
         <table class="table item table-dark table-striped" border="0" cellspacing="0" cellpadding="0"
             style="width: 100%;padding-top: 30px;">
