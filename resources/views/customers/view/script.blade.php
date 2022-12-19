@@ -368,12 +368,4 @@ tinymce.init({
             $('#' + this.id+'-tab').css({'background':'#ffffff','color':'#fff'});
         });
     });
-    $(function() {
-        $('.customer-tabs li .nav-item a.nav-link').click(function() {
-            alert($(".customer-tabs .nav-link.active").attr("id"));
-        }, function() {
-            // on mouseout, reset the background colour
-            $('#' + this.id+'-tab').css({'background':'#ffffff','color':'#fff'});
-        });
-    });
 </script>
