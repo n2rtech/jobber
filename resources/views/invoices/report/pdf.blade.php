@@ -183,13 +183,13 @@
                 @endphp
                 @foreach ($invoices as $invoice)
                     <tr>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">
                             {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('Y-m-d') }}</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">***Opening Balance***</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;"></td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $balance }}</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;"></td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $balance }}</td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">***Opening Balance***</td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;"></td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $balance }}</td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;"></td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $balance }}</td>
                     </tr>
                     @if ($loop->first)
                     @break
@@ -204,17 +204,17 @@
                     }
                 @endphp
                 <tr>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">
                         {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('Y-m-d') }}</td>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">
                         Invoice</td>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">
                         INV-{{ $invoice->id }} - due on
                         {{ \Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') }}</td>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€
                         {{ $invoice->total }}</td>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;"></td>
-                    <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;"></td>
+                    <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€
                         {{ $balance }}</td>
                 </tr>
                 @foreach ($invoice->payments as $payment)
@@ -222,15 +222,15 @@
                         $balance = $balance - $payment->amount;
                     @endphp
                     <tr>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">
                             {{ \Carbon\Carbon::parse($payment->date)->format('Y-m-d') }}</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">Payment Received</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $payment->amount }}
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">Payment Received</td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $payment->amount }}
                             for Payment of INV-{{ $invoice->id }}</td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;"></td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $payment->amount }}
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;"></td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $payment->amount }}
                         </td>
-                        <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $balance }}</td>
+                        <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $balance }}</td>
                     </tr>
                 @endforeach
             @endforeach
@@ -239,8 +239,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;"><b>Balance Due</b></td>
-                <td style="font-weight: 400;padding: 10px 10px;font-size: 14px;">€ {{ $due_amount }}</td>
+                <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;"><b>Balance Due</b></td>
+                <td style="font-weight: 400;padding: 10px 10px;font-size: 13px;">€ {{ $due_amount }}</td>
             </tr>
         </tbody>
 
