@@ -34,6 +34,6 @@ deploy_production:
     - ~/.composer/vendor/bin/dep deploy
   environment:
     name: production
-    url: http://216.158.229.197
+    url: http://daltontvcrm.n2rtech.com/
   only:
     - main

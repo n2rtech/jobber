@@ -15,9 +15,9 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('216.158.229.197')
+host('38.242.196.238')
     ->set('remote_user', 'root')
-    ->set('deploy_path', '/var/www/daltontvcrm');
+    ->set('deploy_path', '/var/www/php81/daltontvcrm');
 
 task('deploy', [
     'deploy:prepare',
