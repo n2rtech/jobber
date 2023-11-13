@@ -19,7 +19,7 @@ Clone the Repository and RUN Migration and Seeder.
 
 http://jobber-crm.n2rtech.com/login
 
-****Email: admin@admin**
+****Email: admin@admin.com**
 **Pass:  password****
 
 
