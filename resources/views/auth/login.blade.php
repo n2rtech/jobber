@@ -83,6 +83,13 @@
                         Login
                     </button>
                 </div>
+                <div class="credential">
+                    <h4>Use this credential</h4>
+                    <ul class="list-ustyled">
+                        <li>Email Address:<span> admin@admin.com</span></li>
+                        <li>Password:<span> password</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -1,3 +1,21 @@
+.credential h4 {
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+}
+.credential ul{
+    padding: 0;
+    margin: 0;
+}
+.credential ul li{
+    list-style: none;
+    font-size: 14px;
+    color: #111;
+    text-align: center;
+}
+.credential ul li span{
+    font-weight: 600;
+}
 .view-job-page h3{
     margin-top: 10px;
     font-weight: bold;
