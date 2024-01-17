@@ -19,6 +19,14 @@ host('38.242.196.238')
     ->set('remote_user', 'root')
     ->set('deploy_path', '/var/www/php81/daltontvcrm');
 
+    host('portfolio')
+    ->set('hostname','216.158.239.213' )
+    ->set('branch', 'portfolio')
+    ->set('remote_user', 'root')
+    ->set('deploy_path', '/var/www/daltontvcrm')
+    ->set('ssh_multiplexing', false)
+    ->set('keep_releases', 1);
+
 task('deploy', [
     'deploy:prepare',
     'deploy:vendors',
