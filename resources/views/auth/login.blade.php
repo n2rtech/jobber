@@ -30,7 +30,7 @@
 
                 <form method="POST" action="{{ route('login') }}" id="loginForm">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                             name="email" value="{{ old('email') }}" autocomplete="email" placeholder="Email Address"
                             autofocus>
@@ -43,9 +43,10 @@
                             <span id="email-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
+                    <span style="display:block;margin-top:5px;margin-bottom:15px">Email: <strong>admin@admin.com</strong> </span>
 
 
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <input id="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" name="password"
                             autocomplete="current-password" placeholder="Password">
@@ -58,6 +59,7 @@
                             <span id="email-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
+                    <span style="display:block;margin-top:5px;margin-bottom:15px">Password: <strong>password</strong> </span>
 
                     <div class="row">
                         <div class="col-6">
@@ -83,13 +85,13 @@
                         Login
                     </button>
                 </div>
-                <div class="credential">
+                <!-- <div class="credential">
                     <h4>Use this credential</h4>
                     <ul class="list-ustyled">
                         <li>Email Address:<span> admin@admin.com</span></li>
                         <li>Password:<span> password</span></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
