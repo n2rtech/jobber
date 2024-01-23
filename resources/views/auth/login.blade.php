@@ -32,8 +32,8 @@
                     @csrf
                     <div class="input-group">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                            name="email" value="{{ old('email') }}" autocomplete="email" placeholder="Email Address"
-                            autofocus>
+                            name="email" autocomplete="email" placeholder="Email Address"
+                            autofocus value="admin@admin.com">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -43,13 +43,12 @@
                             <span id="email-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
-                    <span style="display:block;margin-top:5px;margin-bottom:15px">Email: <strong>admin@admin.com</strong> </span>
 
 
                     <div class="input-group">
                         <input id="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" name="password"
-                            autocomplete="current-password" placeholder="Password">
+                            autocomplete="current-password" placeholder="Password" value="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -59,7 +58,6 @@
                             <span id="email-error" class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
-                    <span style="display:block;margin-top:5px;margin-bottom:15px">Password: <strong>password</strong> </span>
 
                     <div class="row">
                         <div class="col-6">
